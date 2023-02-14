@@ -150,5 +150,6 @@ enum K {
     enum UserDefaults {
         static let user = "user"
         static let isGuest = "isGuest"
+        static let showTutorial = "shouldShowTutorial"
     }
 }

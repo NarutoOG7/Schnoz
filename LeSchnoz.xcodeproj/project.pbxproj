@@ -62,12 +62,11 @@
 		C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7D299B19B400B77DBD /* MoreReviewsSheet.swift */; };
 		C99EEBF4299B19B400B77DBD /* FullImageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7E299B19B400B77DBD /* FullImageDisplay.swift */; };
 		C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7F299B19B400B77DBD /* ShareActivitySheet.swift */; };
-		C99EEBF6299B19B400B77DBD /* FiveStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB80299B19B400B77DBD /* FiveStars.swift */; };
+		C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB80299B19B400B77DBD /* Stars.swift */; };
 		C99EEBF7299B19B400B77DBD /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB81299B19B400B77DBD /* ReviewCard.swift */; };
 		C99EEBF8299B19B400B77DBD /* LD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB82299B19B400B77DBD /* LD.swift */; };
 		C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C99EEB84299B19B400B77DBD /* LaunchScreen.storyboard */; };
 		C99EEBFA299B19B400B77DBD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB85299B19B400B77DBD /* SplashScreen.swift */; };
-		C99EEBFB299B19B400B77DBD /* LaunchScreen 2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C99EEB86299B19B400B77DBD /* LaunchScreen 2.storyboard */; };
 		C99EEBFC299B19B400B77DBD /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB88299B19B400B77DBD /* Favorites.swift */; };
 		C99EEBFD299B19B400B77DBD /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB89299B19B400B77DBD /* FavoritesCell.swift */; };
 		C99EEBFE299B19B400B77DBD /* LocationCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB8B299B19B400B77DBD /* LocationCollection.swift */; };
@@ -152,12 +151,11 @@
 		C99EEB7D299B19B400B77DBD /* MoreReviewsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreReviewsSheet.swift; sourceTree = "<group>"; };
 		C99EEB7E299B19B400B77DBD /* FullImageDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullImageDisplay.swift; sourceTree = "<group>"; };
 		C99EEB7F299B19B400B77DBD /* ShareActivitySheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareActivitySheet.swift; sourceTree = "<group>"; };
-		C99EEB80299B19B400B77DBD /* FiveStars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveStars.swift; sourceTree = "<group>"; };
+		C99EEB80299B19B400B77DBD /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		C99EEB81299B19B400B77DBD /* ReviewCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		C99EEB82299B19B400B77DBD /* LD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LD.swift; sourceTree = "<group>"; };
 		C99EEB84299B19B400B77DBD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C99EEB85299B19B400B77DBD /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		C99EEB86299B19B400B77DBD /* LaunchScreen 2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "LaunchScreen 2.storyboard"; sourceTree = "<group>"; };
 		C99EEB88299B19B400B77DBD /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		C99EEB89299B19B400B77DBD /* FavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		C99EEB8B299B19B400B77DBD /* LocationCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCollection.swift; sourceTree = "<group>"; };
@@ -460,7 +458,7 @@
 				C99EEB7D299B19B400B77DBD /* MoreReviewsSheet.swift */,
 				C99EEB7E299B19B400B77DBD /* FullImageDisplay.swift */,
 				C99EEB7F299B19B400B77DBD /* ShareActivitySheet.swift */,
-				C99EEB80299B19B400B77DBD /* FiveStars.swift */,
+				C99EEB80299B19B400B77DBD /* Stars.swift */,
 				C99EEB81299B19B400B77DBD /* ReviewCard.swift */,
 				C99EEB82299B19B400B77DBD /* LD.swift */,
 			);
@@ -472,7 +470,6 @@
 			children = (
 				C99EEB84299B19B400B77DBD /* LaunchScreen.storyboard */,
 				C99EEB85299B19B400B77DBD /* SplashScreen.swift */,
-				C99EEB86299B19B400B77DBD /* LaunchScreen 2.storyboard */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -620,7 +617,6 @@
 				C99EEC01299B19B400B77DBD /* overlay.json in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
-				C99EEBFB299B19B400B77DBD /* LaunchScreen 2.storyboard in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);
@@ -700,7 +696,7 @@
 				C99EEBD6299B19B400B77DBD /* LocationModel.swift in Sources */,
 				C99EEBE3299B19B400B77DBD /* SearchBar.swift in Sources */,
 				C99EEBF1299B19B400B77DBD /* Header.swift in Sources */,
-				C99EEBF6299B19B400B77DBD /* FiveStars.swift in Sources */,
+				C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
 				C99EEBF4299B19B400B77DBD /* FullImageDisplay.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
@@ -886,6 +882,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -916,6 +913,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

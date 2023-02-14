@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct FiveStars: View {
+struct Stars: View {
+    
+    var count: Int = 5
     
     var isEditable = false
     
@@ -20,7 +22,7 @@ struct FiveStars: View {
         
          HStack {
              
-             ForEach(1...5, id: \.self) { index in
+             ForEach(1...count, id: \.self) { index in
                  
                  Image(systemName: self.starImageNameFromRating(index))
                      .foregroundColor(color)
@@ -42,7 +44,7 @@ struct FiveStars: View {
 
 struct FiveStars_Previews: PreviewProvider {
     static var previews: some View {
-        FiveStars(
+        Stars(
             isEditable: true,
             color: K.Colors.OceanBlue.yellow,
             rating: .constant(3))

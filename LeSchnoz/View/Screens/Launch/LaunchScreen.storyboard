@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -17,15 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="PinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="9ue-0w-EDk">
-                                <rect key="frame" x="111.66666666666669" y="322" width="170" height="208"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="9ue-0w-EDk">
+                                <rect key="frame" x="10" y="282" width="373" height="288"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="9ue-0w-EDk" secondAttribute="height" multiplier="1000:773" id="PS5-It-baN"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" name="WeenyWitch/ColorFive"/>
+                        <color key="backgroundColor" name="OceanBlue/Blue"/>
                         <constraints>
                             <constraint firstItem="9ue-0w-EDk" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="5zC-KX-Lvi"/>
+                            <constraint firstItem="9ue-0w-EDk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="10" id="8mn-EL-KPn"/>
                             <constraint firstItem="9ue-0w-EDk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="o6x-kc-Kbt"/>
+                            <constraint firstAttribute="trailing" secondItem="9ue-0w-EDk" secondAttribute="trailing" constant="10" id="y9r-vq-xfa"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -35,9 +39,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="PinIcon" width="170" height="208"/>
-        <namedColor name="WeenyWitch/ColorFive">
-            <color red="0.12600000202655792" green="0.12300000339746475" blue="0.10199999809265137" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <image name="Logo" width="1000" height="773"/>
+        <namedColor name="OceanBlue/Blue">
+            <color red="0.40784314269999999" green="0.58431375029999999" blue="0.78039217000000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

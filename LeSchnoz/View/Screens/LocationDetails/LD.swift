@@ -141,7 +141,7 @@ struct LD: View {
         let reviewCount = location.reviews.count
         let textEnding = reviewCount == 1 ? "" : "s"
         return HStack {
-            FiveStars(
+            Stars(
                 color: oceanBlue.yellow,
                 rating: $location.avgRating)
             Text("(\(reviewCount) review\(textEnding))")

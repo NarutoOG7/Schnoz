@@ -15,21 +15,25 @@ struct ContentView: View {
     @StateObject var errorManager = ErrorManager.instance
     @StateObject var loginVM = LoginVM.instance
     
+    @ObservedObject var contentViewVM = ContentViewVM.instance
+    
     var body: some View {
 
                 GeometryReader { geo in
             ZStack {
                 if userStore.isSignedIn {
-                    TabBarSetup(userStore: userStore,
-                                errorManager: errorManager,
-                                loginVM: loginVM)
+                    if contentViewVM.showTutorial {
+                        SplashScreen(contentViewVM: contentViewVM)
+                    } else {
+                        TabBarSetup(userStore: userStore,
+                                    errorManager: errorManager,
+                                    loginVM: loginVM)
+                    }
                 } else {
                     CreativeSignInUp(loginVM: loginVM,
                                      userStore: userStore,
                                      errorManager: errorManager)
                 }
-
-//                splashScreen
 
                 errorBanner
                     .offset(y: geo.size.height / 9)
@@ -37,19 +41,6 @@ struct ContentView: View {
             }
         }
         
-    }
-    
-    private var splashScreen: some View {
-        SplashScreen()
-          .opacity(showSplash ? 1 : 0)
-
-          .task {
-              DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                withAnimation() {
-                  self.showSplash = false
-                }
-              }
-          }
     }
     
     private var errorBanner: some View {
@@ -63,5 +54,21 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+class ContentViewVM: ObservableObject {
+    
+    static let instance = ContentViewVM()
+    
+    @Published var showTutorial = false
+    
+    init() {
+        if !UserDefaults.standard.bool(forKey: K.UserDefaults.showTutorial) {
+            UserDefaults.standard.set(true, forKey: K.UserDefaults.showTutorial)
+            self.showTutorial = true
+        } else {
+            self.showTutorial = false
+        }
     }
 }

@@ -46,7 +46,7 @@ struct FavoritesCell: View {
             Text(location.location.name)
                 .font(.avenirNext(size: 27))
                 .fontWeight(.heavy)
-                .foregroundColor(oceanBlue.lightBlue)
+                .foregroundColor(oceanBlue.white)
                 .shadow(color: .black, radius: 1, x: 0, y: 2)
                 .padding(10)
         }
