@@ -11,7 +11,7 @@ struct SettingsHeader: View {
     
     var settingType: SettingType
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +20,7 @@ struct SettingsHeader: View {
                 headerText
             }.padding(.horizontal)
             Rectangle()
-                .fill(weenyWitch.yellow)
+                .fill(oceanBlue.yellow)
                 .frame(height: 1)
                 .padding(.horizontal)
         }
@@ -30,14 +30,14 @@ struct SettingsHeader: View {
         settingType.image
             .resizable()
             .frame(width: 20, height: 20)
-            .foregroundColor(weenyWitch.yellow)
+            .foregroundColor(oceanBlue.yellow)
     }
     
     private var headerText: some View {
         Text(settingType.rawValue.capitalized)
             .font(.avenirNext(size: 22))
             .fontWeight(.semibold)
-            .foregroundColor(weenyWitch.blue)
+            .foregroundColor(oceanBlue.blue)
     }
     
     enum SettingType: String {

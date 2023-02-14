@@ -27,7 +27,7 @@ struct LD: View {
     let collapsedImageHeight: CGFloat = 10
     
     private let images = K.Images.self
-    private let weenyWitch = K.Colors.OceanBlue.self
+    private let oceanBlue = K.Colors.OceanBlue.self
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -126,7 +126,7 @@ struct LD: View {
         Text(location.location.name)
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
-            .foregroundColor(weenyWitch.blue)
+            .foregroundColor(oceanBlue.blue)
     }
     
     
@@ -134,7 +134,7 @@ struct LD: View {
         Text(location.location.address?.fullAddress() ?? "")
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
-            .foregroundColor(weenyWitch.blue)
+            .foregroundColor(oceanBlue.blue)
     }
     
     private var avgRatingDisplay: some View {
@@ -142,11 +142,11 @@ struct LD: View {
         let textEnding = reviewCount == 1 ? "" : "s"
         return HStack {
             FiveStars(
-                color: weenyWitch.yellow,
+                color: oceanBlue.yellow,
                 rating: $location.avgRating)
             Text("(\(reviewCount) review\(textEnding))")
                 .font(.avenirNextRegular(size: 17))
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
         }
     }
     
@@ -155,7 +155,7 @@ struct LD: View {
         Text(location.location.description ?? "")
             .font(.avenirNext(size: 17))
             .lineLimit(nil)
-            .foregroundColor(weenyWitch.blue)
+            .foregroundColor(oceanBlue.blue)
     }
     
     private var reviewHelper: some View {
@@ -164,7 +164,7 @@ struct LD: View {
                 Divider()
                 Text("No Reviews")
                     .font(.avenirNext(size: 17))
-                    .foregroundColor(weenyWitch.blue)
+                    .foregroundColor(oceanBlue.blue)
             } else {
                 if let last = location.reviews.last {
                     ReviewCard(review: last)
@@ -202,7 +202,7 @@ struct LD: View {
                     Link(destination: url, label: {
                         Text("Get More Info")
                             .underline()
-                            .foregroundColor(weenyWitch.yellow)
+                            .foregroundColor(oceanBlue.lightBlue)
                             .font(.avenirNextRegular(size: 17))
                     })
                 }
@@ -219,7 +219,7 @@ struct LD: View {
             Text("Been here before?")
                 .italic()
                 .font(.avenirNextRegular(size: 17))
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
             Button {
                 self.isCreatingNewReview = true
                 
@@ -227,7 +227,7 @@ struct LD: View {
                 Text("Leave A Review")
                     .underline()
                     .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(weenyWitch.yellow)
+                    .foregroundColor(oceanBlue.lightBlue)
             }
         }
     }
@@ -250,8 +250,8 @@ struct LD: View {
         CircleButton(
             size: .medium,
             image: images.Trip.directions,
-            mainColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            mainColor: oceanBlue.lightBlue,
+            accentColor: oceanBlue.white,
             title: "Directions",
             clicked: directionsTapped)
     }
@@ -260,8 +260,8 @@ struct LD: View {
         CircleButton(
             size: .medium,
             image: images.share,
-            mainColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            mainColor: oceanBlue.lightBlue,
+            accentColor: oceanBlue.white,
             title: "Share",
             clicked: shareTapped)
     }
@@ -272,8 +272,8 @@ struct LD: View {
             image: favoritesLogic.contains(location) ?
             Image(systemName: "heart.fill") :
                 Image(systemName: "heart"),
-            mainColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            mainColor: oceanBlue.lightBlue,
+            accentColor: oceanBlue.white,
             title: "Favorites",
             clicked: favoritesTapped)
     }
@@ -285,7 +285,7 @@ struct LD: View {
                 Text("More Reviews")
                     .font(.avenirNextRegular(size: 17))
                     .fontWeight(.medium)
-                    .foregroundColor(weenyWitch.blue)
+                    .foregroundColor(oceanBlue.blue)
             }
         }.padding(.vertical)
     }
@@ -295,7 +295,7 @@ struct LD: View {
             Image(systemName: "chevron.left")
                 .resizable()
                 .frame(width: 25, height: 35)
-                .tint(weenyWitch.yellow)
+                .tint(oceanBlue.yellow)
         }
     }
     

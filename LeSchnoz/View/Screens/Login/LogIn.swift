@@ -15,7 +15,7 @@ struct LogIn: View {
     
     let geo: GeometryProxy
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     let images = K.Images.Login.self
     
     @FocusState private var focusedField: Field?
@@ -36,10 +36,10 @@ struct LogIn: View {
                     }
                     .padding()
                     .padding(.bottom, 65)
-                    .background(weenyWitch.white)
+                    .background(oceanBlue.white)
                     .clipShape(CurvedShapeLeft())
                     .contentShape(CurvedShapeLeft())
-                    .shadow(color: weenyWitch.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
+                    .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
                     .onTapGesture(perform: authTypeLoginTapped)
                     .cornerRadius(45)
                     .padding(.horizontal, 20)
@@ -70,13 +70,13 @@ struct LogIn: View {
             VStack(spacing: 50) {
                 Text("Login")
                     .foregroundColor(self.index == 0 ?
-                                     weenyWitch.blue : weenyWitch.lightBlue)
+                                     oceanBlue.blue : oceanBlue.blue.opacity(0.7))
                     .font(.avenirNext(size: 27))
                     .fontWeight(.bold)
                 
                 Capsule()
                     .fill(self.index == 0 ?
-                          weenyWitch.blue : Color.clear)
+                          oceanBlue.blue : Color.clear)
                     .frame(width: 90, height: 4)
                     .offset(y: -35)
                 
@@ -91,8 +91,8 @@ struct LogIn: View {
             input: $loginVM.emailInput,
             shouldShowErrorMessage: $loginVM.shouldShowEmailErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: images.email,
             placeholderText: "Email Address",
             errorMessage: loginVM.emailErrorMessage)
@@ -106,8 +106,8 @@ struct LogIn: View {
             input: $loginVM.passwordInput,
             shouldShowErrorMessage: $loginVM.shouldShowPasswordErrorMessage,
             isSecured: $isSecured,
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: isSecured ? images.eyeWithSlash : images.eye,
             placeholderText: "Password",
             errorMessage: loginVM.passwordErrorMessage,
@@ -125,7 +125,7 @@ struct LogIn: View {
             Button(action: loginVM.forgotPasswordTapped) {
                 Text("Forgot Password?")
                     .font(.avenirNext(size: 18))
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .foregroundColor(oceanBlue.lightBlue)
             }
         }
         .padding(.horizontal)
@@ -135,14 +135,14 @@ struct LogIn: View {
     private var loginButton: some View {
         Button(action: self.loginTapped) {
             Text("LOGIN")
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 20))
                 .fontWeight(.bold)
                 .padding(.vertical)
                 .padding(.horizontal, 50)
-                .background(weenyWitch.yellow)
+                .background(oceanBlue.yellow)
                 .clipShape(Capsule())
-                .shadow(color: weenyWitch.lightBlue.opacity(0.1),
+                .shadow(color: oceanBlue.lightBlue.opacity(0.1),
                         radius: 5, x: 0, y: 5)
         }
         .offset(y: 25)

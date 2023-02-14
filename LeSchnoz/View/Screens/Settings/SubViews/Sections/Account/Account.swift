@@ -22,7 +22,7 @@ struct Account: View {
     
     var auth = Authorization.instance
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
@@ -31,17 +31,17 @@ struct Account: View {
                 if userStore.isGuest {
                     createAccountButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(weenyWitch.black)
+                        .listRowBackground(oceanBlue.black)
                 } else {
                     editProfile
                     manageReviews
                     sendPasswordResetButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(weenyWitch.black)
+                        .listRowBackground(oceanBlue.black)
                     
                     signOutButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(weenyWitch.black)
+                        .listRowBackground(oceanBlue.black)
                 }
             }
             .modifier(DisabledScroll())
@@ -84,12 +84,12 @@ struct Account: View {
                                                 errorManager: errorManager,
                                                 loginVM: loginVM)) {
             Text("Edit Profile")
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 18))
         }
 
             .listRowSeparator(.hidden)
-            .listRowBackground(weenyWitch.black)
+            .listRowBackground(oceanBlue.black)
     }
     
     private var manageReviews: some View {
@@ -98,19 +98,19 @@ struct Account: View {
                                                   locationStore: locationStore,
                                                   errorManager: errorManager)) {
             Text("Manage Reviews")
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 18))
         }
 
             .listRowSeparator(.hidden)
-            .listRowBackground(weenyWitch.black)
+            .listRowBackground(oceanBlue.black)
     }
     
     //MARK: - Buttons
     private var sendPasswordResetButton: some View {
         Button(action: changePasswordTapped) {
             Text("Change Password")
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 18))
         }
     }
@@ -120,7 +120,7 @@ struct Account: View {
             Text("SIGN OUT")
                 .font(.avenirNext(size: 17))
                 .fontWeight(.light)
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
         }
     }
 
@@ -128,7 +128,7 @@ struct Account: View {
         Button(action: createAccountTapped) {
             Text("Create Account")
                 .font(.avenirNext(size: 17))
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
         }
     }
     

@@ -23,7 +23,7 @@ struct ExploreByList: View {
     
     @Environment(\.managedObjectContext) var moc
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         GeometryReader { geo in
@@ -54,12 +54,12 @@ struct ExploreByList: View {
                 .font(.avenirNext(size: nameSizeIsLarge ? 20 : 27))
                 .fontWeight(.ultraLight)
                 .padding(.horizontal)
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .lineLimit(1)
             Text("\(user.name)")
                 .font(.avenirNext(size: nameSizeIsLarge ? 20 : 27))
                 .fontWeight(.medium)
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.blue)
                 .lineLimit(1)
             Spacer()
         }
@@ -96,7 +96,7 @@ struct ExploreByList: View {
     private var divider: some View {
         Divider()
             .frame(height: 1.5)
-            .background(weenyWitch.blue)
+            .background(oceanBlue.blue)
             .padding(.top, 12)
             .padding(.bottom, -8)
     }
@@ -123,8 +123,8 @@ struct ExploreByList: View {
             Spacer()
             CircleButton(size: .small,
                          image: Image(systemName: "map"),
-                         mainColor: K.Colors.OceanBlue.blue,
-                         accentColor: K.Colors.OceanBlue.lightBlue,
+                         mainColor: K.Colors.OceanBlue.lightBlue,
+                         accentColor: K.Colors.OceanBlue.white,
                          clicked: isShowingMap)
         }
         .padding(.horizontal)

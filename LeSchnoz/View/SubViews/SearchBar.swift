@@ -48,11 +48,12 @@ struct SearchBar: View {
             .placeholder(when: exploreVM.searchText == "", placeholder: {
                 Text("Hotel, City, or State")
                     .font(.avenirNext(size: 16))
-                    .fontWeight(.thin)
+                    .fontWeight(.light)
+                    .foregroundColor(oceanBlue.white)
             })
         .padding()
         .font(.avenirNext(size: 18))
-        .foregroundColor(oceanBlue.blue)
+        .foregroundColor(oceanBlue.white)
         .accentColor(oceanBlue.yellow)
         
     }
@@ -71,9 +72,10 @@ struct SearchBar: View {
                        errorManager: errorManager)
                 } label: {
                     Text(exploreVM.searchedLocations[index].location.name)
-                        .foregroundColor(oceanBlue.blue)
+                        .foregroundColor(oceanBlue.white)
                         .font(.avenirNext(size: 18))
                 }
+                .foregroundColor(oceanBlue.white)
                 .listRowBackground(Color.clear)
             }
             
@@ -96,8 +98,8 @@ struct SearchBar: View {
     private var cancelButton: some View {
         Button(action: cancelSearchTapped) {
             Text("Cancel")
-                .font(.avenirNext(size: 18))
-                .foregroundColor(oceanBlue.blue)
+                .font(.avenirNext(size: 15))
+                .foregroundColor(oceanBlue.white)
         }
         .opacity(exploreVM.searchText.isEmpty ? 0 : 1)
         .padding()

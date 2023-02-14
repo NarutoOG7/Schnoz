@@ -26,7 +26,7 @@ struct ProfilePage: View {
     
     @Environment(\.dismiss) var dismiss
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         ZStack {
@@ -40,7 +40,7 @@ struct ProfilePage: View {
                 deleteAcctButton
                 Spacer()
             }
-            .background(weenyWitch.black)
+            .background(oceanBlue.black)
             
             if confirmDeleteAlertShouldShow {
                 ConfirmDeleteView(shouldShow: $confirmDeleteAlertShouldShow,
@@ -57,19 +57,19 @@ struct ProfilePage: View {
     private var displayName: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Name:")
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
                 .font(.avenirNext(size: 18))
 
                 
                 TextField("", text: $displayNameInput)
                     .placeholder(when: displayNameInput.isEmpty) {
                         Text(userStore.user.name)
-                            .foregroundColor(weenyWitch.lightBlue)
+                            .foregroundColor(oceanBlue.lightBlue)
                             .font(.avenirNext(size: 24))
 
                     }
-                    .tint(weenyWitch.yellow)
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .tint(oceanBlue.yellow)
+                    .foregroundColor(oceanBlue.lightBlue)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
@@ -83,17 +83,17 @@ struct ProfilePage: View {
     private var emailView: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Email:")
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
                 .font(.avenirNext(size: 18))
             
                 TextField("", text: $emailInput)
                     .placeholder(when: emailInput.isEmpty) {
                         Text(userStore.user.email)
-                            .foregroundColor(weenyWitch.lightBlue)
+                            .foregroundColor(oceanBlue.lightBlue)
                             .font(.avenirNext(size: 24))
                     }
-                    .tint(weenyWitch.yellow)
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .tint(oceanBlue.yellow)
+                    .foregroundColor(oceanBlue.lightBlue)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
@@ -109,11 +109,11 @@ struct ProfilePage: View {
     private var saveButton: some View {
         Button(action: saveTapped) {
             Text("SAVE")
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
                 .font(.avenirNext(size: 24))
                 .padding()
                 .overlay(RoundedRectangle(cornerRadius: 15)
-                    .stroke(weenyWitch.yellow))
+                    .stroke(oceanBlue.yellow))
         }.disabled(!wasEdited)
             .padding()
         

@@ -11,11 +11,11 @@ struct MoreReviewsSheet: View {
     
     var reviews: [ReviewModel] = []
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         list
-            .background(weenyWitch.black)
+            .background(oceanBlue.black)
     }
     
     private var list: some View {
@@ -33,12 +33,12 @@ struct MoreReviewsSheet: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(review.title)
                 .font(.avenirNextRegular(size: 25))
-                .foregroundColor(weenyWitch.lightBlue)
-            FiveStars(color: weenyWitch.yellow,
+                .foregroundColor(oceanBlue.lightBlue)
+            FiveStars(color: oceanBlue.yellow,
                       rating: .constant(review.rating))
             Text(review.review)
                 .font(.avenirNextRegular(size: 18))
-                .foregroundColor(weenyWitch.white)
+                .foregroundColor(oceanBlue.white)
             
         }
     }

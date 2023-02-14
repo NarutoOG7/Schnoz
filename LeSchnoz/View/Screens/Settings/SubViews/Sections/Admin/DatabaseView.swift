@@ -16,7 +16,7 @@ struct DatabaseView: View {
     @State var showingMoreAllLocations = false
     @State var showingMoreFailedLocations = false
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
@@ -27,7 +27,7 @@ struct DatabaseView: View {
                     .padding(.vertical)
             }
         }
-        .background(weenyWitch.black)
+        .background(oceanBlue.black)
         .navigationTitle("Database")
     }
     
@@ -39,7 +39,7 @@ struct DatabaseView: View {
                 Text("All Locations")
                     .font(.avenirNext(size: 24))
                     .fontWeight(.thin)
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .foregroundColor(oceanBlue.lightBlue)
                 Spacer()
                 allLocationsButton
             }.padding()
@@ -52,7 +52,7 @@ struct DatabaseView: View {
         VStack(alignment: .leading) {
             ForEach(locationStore.hauntedHotels.prefix(self.showingMoreAllLocations ? .max : 4)) { location in
                 Text("\(location.location.id): \(location.location.name)")
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .foregroundColor(oceanBlue.lightBlue)
                     .font(.avenirNext(size: 18))
 
             }
@@ -71,7 +71,7 @@ struct DatabaseView: View {
                 Text("Failed Locations")
                     .font(.avenirNext(size: 24))
                     .fontWeight(.thin)
-                    .foregroundColor(weenyWitch.lightBlue)
+                    .foregroundColor(oceanBlue.lightBlue)
 
                 Spacer()
                 failedLocationsButton
@@ -85,7 +85,7 @@ struct DatabaseView: View {
         
         List(failedLocations) { location in
             Text("\(location.location.id): \(location.location.name)")
-                .foregroundColor(weenyWitch.lightBlue)
+                .foregroundColor(oceanBlue.lightBlue)
 
         }
         .modifier(ClearListBackgroundMod())
@@ -98,7 +98,7 @@ struct DatabaseView: View {
         Button(action: allTapped) {
             Text(self.showingMoreAllLocations ? "Less" : "More")
                 .font(.avenirNext(size: 18))
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
         }
     }
     
@@ -106,7 +106,7 @@ struct DatabaseView: View {
         Button(action: moreFailedTapped) {
             Text(self.showingMoreFailedLocations ? "Less" : "More")
                 .font(.avenirNext(size: 18))
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
         }
     }
     
@@ -115,10 +115,10 @@ struct DatabaseView: View {
             Text("Create GeoFire Coordinates")
                 .font(.avenirNext(size: 18))
                 .fontWeight(.black)
-                .foregroundColor(weenyWitch.yellow)
+                .foregroundColor(oceanBlue.yellow)
                 .padding()
                 .overlay(RoundedRectangle(cornerRadius: 25)
-                    .stroke(weenyWitch.yellow, lineWidth: 3))
+                    .stroke(oceanBlue.yellow, lineWidth: 3))
         }
     }
     

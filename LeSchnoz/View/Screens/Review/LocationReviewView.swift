@@ -35,11 +35,11 @@ struct LocationReviewView: View {
     
     @Environment(\.presentationMode) var presentationMode
         
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         ZStack {
-            weenyWitch.black
+            oceanBlue.blue
                 .edgesIgnoringSafeArea(.vertical)
         
             VStack(spacing: 20) {
@@ -77,8 +77,8 @@ struct LocationReviewView: View {
             input: $titleInput,
             shouldShowErrorMessage: $shouldShowTitleErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Title",
             errorMessage: "Please add a title.")
@@ -99,8 +99,8 @@ struct LocationReviewView: View {
             input: $descriptionInput,
             shouldShowErrorMessage: $shouldShowDescriptionErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Description",
             errorMessage: "Please add a description.")
@@ -115,8 +115,8 @@ struct LocationReviewView: View {
                     input: $nameInput,
                     shouldShowErrorMessage: .constant(false),
                     isSecured: .constant(false),
-                    primaryColor: weenyWitch.yellow,
-                    accentColor: weenyWitch.white,
+                    primaryColor: oceanBlue.yellow,
+                    accentColor: oceanBlue.white,
                     icon: nil,
                     placeholderText: userStore.user.name,
                     errorMessage: "")
@@ -127,9 +127,9 @@ struct LocationReviewView: View {
                 Text("Leave Review Anonymously?")
                     .italic()
                     .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(weenyWitch.blue)
+                    .foregroundColor(oceanBlue.yellow)
             }.padding(.horizontal)
-                .tint(weenyWitch.yellow)
+                .tint(oceanBlue.yellow)
         }
     }
     //MARK: - Error Banner
@@ -148,7 +148,7 @@ struct LocationReviewView: View {
     private var submitButton: some View {
         let isReview = review != nil
         let isDisabled = !requisiteFieldsAreFilled() || !isUpdated()
-        let color = isDisabled ? weenyWitch.blue.opacity(0.1) : weenyWitch.yellow
+        let color = isDisabled ? oceanBlue.blue.opacity(0.1) : oceanBlue.yellow
         return Button(action: submitTapped) {
             Text(isReview && isUpdated() ? "Update" : "Submit")
                 .foregroundColor(color)

@@ -12,7 +12,7 @@ struct FavoritesCell: View {
     
     var location: LocationModel
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     @State private var imageURL = URL(string: "")
     
@@ -46,7 +46,7 @@ struct FavoritesCell: View {
             Text(location.location.name)
                 .font(.avenirNext(size: 27))
                 .fontWeight(.heavy)
-                .foregroundColor(weenyWitch.lightBlue)
+                .foregroundColor(oceanBlue.lightBlue)
                 .shadow(color: .black, radius: 1, x: 0, y: 2)
                 .padding(10)
         }

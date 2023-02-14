@@ -18,7 +18,7 @@ struct SignUp: View {
     
     var auth = Authorization()
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     let images = K.Images.Login.self
     
     //MARK: - TextField Focus State
@@ -43,10 +43,10 @@ struct SignUp: View {
             }
             .padding()
             .padding(.bottom, 45)
-            .background(weenyWitch.white)
+            .background(oceanBlue.white)
             .clipShape(CurvedShapeRight())
             .contentShape(CurvedShapeRight())
-            .shadow(color: weenyWitch.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
+            .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
             .onTapGesture(perform: authTypeSignUpTapped)
             .cornerRadius(45)
             .padding(.horizontal, 20)
@@ -75,13 +75,13 @@ struct SignUp: View {
             VStack(spacing: 50) {
                 Text("Sign Up")
                     .foregroundColor(self.index == 1 ?
-                                     weenyWitch.blue : weenyWitch.lightBlue)
+                                     oceanBlue.blue : oceanBlue.blue.opacity(0.7))
                     .font(.avenirNext(size: 27))
                     .fontWeight(.bold)
                 
                 Capsule()
                     .fill(self.index == 1 ?
-                          weenyWitch.blue : Color.clear)
+                          oceanBlue.blue : Color.clear)
                     .frame(width: 90, height: 4)
                     .offset(y: -35)
                 
@@ -95,8 +95,8 @@ struct SignUp: View {
             input: $signupVM.usernameInput,
             shouldShowErrorMessage: $signupVM.shouldShowUserNameErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: Image(systemName: "person.fill"),
             placeholderText: "Your Name",
             errorMessage: "Please provide a name.")
@@ -111,8 +111,8 @@ struct SignUp: View {
             input: $signupVM.emailInput,
             shouldShowErrorMessage: $signupVM.shouldShowEmailErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: images.email,
             placeholderText: "Email Address",
             errorMessage: signupVM.emailErrorMessage)
@@ -125,8 +125,8 @@ struct SignUp: View {
             input: $signupVM.passwordInput,
             shouldShowErrorMessage: $signupVM.shouldShowPasswordErrorMessage,
             isSecured: $passwordIsSecured,
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: passwordIsSecured ? images.eyeWithSlash : images.eye,
             placeholderText: "Password",
             errorMessage: signupVM.passwordErrorMessage,
@@ -140,8 +140,8 @@ struct SignUp: View {
             input: $signupVM.confirmPasswordInput,
             shouldShowErrorMessage: $signupVM.shouldShowConfirmPasswordError,
             isSecured: $confirmPasswordIsSecured,
-            primaryColor: weenyWitch.blue,
-            accentColor: weenyWitch.lightBlue,
+            primaryColor: oceanBlue.blue,
+            accentColor: oceanBlue.lightBlue,
             icon: confirmPasswordIsSecured ? images.eyeWithSlash : images.eye,
             placeholderText: "Confirm Password",
             errorMessage: K.ErrorHelper.Messages.Auth.passwordsDontMatch.rawValue,
@@ -155,14 +155,14 @@ struct SignUp: View {
     private var signUpButton: some View {
         Button(action: signupVM.signupTapped) {
             Text("SIGNUP")
-                .foregroundColor(weenyWitch.blue)
+                .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 20))
                 .fontWeight(.bold)
                 .padding(.vertical)
                 .padding(.horizontal, 50)
-                .background(weenyWitch.yellow)
+                .background(oceanBlue.yellow)
                 .clipShape(Capsule())
-                .shadow(color: weenyWitch.lightBlue.opacity(0.1),
+                .shadow(color: oceanBlue.lightBlue.opacity(0.1),
                         radius: 5, x: 0, y: 5)
         }
         .offset(y: 25)

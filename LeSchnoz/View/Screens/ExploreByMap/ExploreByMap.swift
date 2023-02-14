@@ -156,16 +156,16 @@ struct ExploreByMap: View {
     private var listButton: some View {
         CircleButton(size: .small,
                      image: K.Images.Favorites.list,
-                     mainColor: K.Colors.OceanBlue.blue,
-                     accentColor: K.Colors.OceanBlue.lightBlue,
+                     mainColor: K.Colors.OceanBlue.lightBlue,
+                     accentColor: K.Colors.OceanBlue.white,
                      clicked: listButtonPressed)
     }
     
     private var currentLocationButton: some View {
         CircleButton(size: .small,
                      image: Image(systemName: "location"),
-                     mainColor: K.Colors.OceanBlue.blue,
-                     accentColor: K.Colors.OceanBlue.lightBlue,
+                     mainColor: K.Colors.OceanBlue.lightBlue,
+                     accentColor: K.Colors.OceanBlue.white,
                      clicked: currentLocationPressed)
     }
     

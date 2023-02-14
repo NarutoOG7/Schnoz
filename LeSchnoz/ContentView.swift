@@ -17,26 +17,25 @@ struct ContentView: View {
     
     var body: some View {
 
-        TabBarSetup(userStore: userStore, errorManager: errorManager, loginVM: loginVM)
-        //        GeometryReader { geo in
-//            ZStack {
-//                if userStore.isSignedIn {
-//                    TabBarSetup(userStore: userStore,
-//                                errorManager: errorManager,
-//                                loginVM: loginVM)
-//                } else {
-//                    CreativeSignInUp(loginVM: loginVM,
-//                                     userStore: userStore,
-//                                     errorManager: errorManager)
-//                }
-//
-////                splashScreen
-//
-//                errorBanner
-//                    .offset(y: geo.size.height / 9)
-//
-//            }
-//        }
+                GeometryReader { geo in
+            ZStack {
+                if userStore.isSignedIn {
+                    TabBarSetup(userStore: userStore,
+                                errorManager: errorManager,
+                                loginVM: loginVM)
+                } else {
+                    CreativeSignInUp(loginVM: loginVM,
+                                     userStore: userStore,
+                                     errorManager: errorManager)
+                }
+
+//                splashScreen
+
+                errorBanner
+                    .offset(y: geo.size.height / 9)
+
+            }
+        }
         
     }
     

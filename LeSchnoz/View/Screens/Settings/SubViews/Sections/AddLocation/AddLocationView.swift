@@ -42,7 +42,7 @@ struct AddLocationView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -118,7 +118,7 @@ struct AddLocationView: View {
             } else {
                 Image(systemName: "photo")
                     .resizable()
-                    .tint(weenyWitch.yellow)
+                    .tint(oceanBlue.yellow)
                     .frame(width: screen.width / 2, height: screen.height / 6)
                     .padding()
             }
@@ -134,8 +134,8 @@ struct AddLocationView: View {
             input: $imageSourceInput,
             shouldShowErrorMessage: .constant(false),
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Photographer Name (optional)",
             errorMessage: "")
@@ -149,8 +149,8 @@ struct AddLocationView: View {
             input: $nameInput,
             shouldShowErrorMessage: $shouldShowLocationNameError,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Location Name",
             errorMessage: "Please provide a name for this place.")
@@ -174,8 +174,8 @@ struct AddLocationView: View {
             input: $addressInput,
             shouldShowErrorMessage: .constant(false),
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Street Address (optional)",
             errorMessage: "")
@@ -188,8 +188,8 @@ struct AddLocationView: View {
             input: $cityInput,
             shouldShowErrorMessage: $shouldShowCityErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "City",
             errorMessage: "Please provide a city.")
@@ -201,8 +201,8 @@ struct AddLocationView: View {
             input: $stateInput,
             shouldShowErrorMessage: .constant(false),
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "State (optional)",
             errorMessage: "")
@@ -214,8 +214,8 @@ struct AddLocationView: View {
             input: $countryInput,
             shouldShowErrorMessage: $shouldShowCountryErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Country",
             errorMessage: "Please provide a country.")
@@ -227,8 +227,8 @@ struct AddLocationView: View {
             input: $zipCodeInput,
             shouldShowErrorMessage: .constant(false),
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "Zip Code (optional)",
             errorMessage: "")
@@ -242,21 +242,21 @@ struct AddLocationView: View {
             .clearTextEditorBackground()
             .placeholder(when: descriptionInput.isEmpty, alignment: .topLeading, placeholder: {
                 Text("Description (optional)")
-                    .foregroundColor(weenyWitch.white)
+                    .foregroundColor(oceanBlue.white)
                     .padding(.top, 7)
                     .padding(.leading, 5)
             })
-            .tint(weenyWitch.yellow)
+            .tint(oceanBlue.yellow)
             .font(.avenirNext(size: 18))
             .padding()
             .frame(height: 250)
-            .foregroundColor(weenyWitch.yellow)
+            .foregroundColor(oceanBlue.yellow)
             .focused($focusedField, equals: .description)
             .submitLabel(.next)
             .overlay(
                 
             RoundedRectangle(cornerRadius: 16)
-                .stroke(weenyWitch.yellow, lineWidth: 0.5)
+                .stroke(oceanBlue.yellow, lineWidth: 0.5)
             ).padding()
             .padding(.top, 20)
 
@@ -267,8 +267,8 @@ struct AddLocationView: View {
             input: $moreInfoLinkInput,
             shouldShowErrorMessage: .constant(false),
             isSecured: .constant(false),
-            primaryColor: weenyWitch.yellow,
-            accentColor: weenyWitch.white,
+            primaryColor: oceanBlue.yellow,
+            accentColor: oceanBlue.white,
             icon: nil,
             placeholderText: "More Info Link (optional)",
             errorMessage: "")
@@ -281,11 +281,11 @@ struct AddLocationView: View {
     var submitButton: some View {
          Button(action: submitTapped) {
             Capsule()
-                .fill(weenyWitch.yellow)
+                .fill(oceanBlue.yellow)
                 .frame(width: 150, height: 45)
                 .overlay(Text("Submit")
                     .font(.avenirNext(size: 18))
-                    .foregroundColor(weenyWitch.blue))
+                    .foregroundColor(oceanBlue.blue))
             
         }
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct LocationCollection: View {
     
     var collectionType: LocationCollectionTypes
-    let weenyWitch = K.Colors.OceanBlue.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     @State var nearbyLocations = [LocationModel]()
     @State var featuredLocations = [LocationModel]()
@@ -37,7 +37,7 @@ struct LocationCollection: View {
             .font(.avenirNext(size: 22))
             .fontWeight(.bold)
             .offset(x: 15, y: 17)
-            .foregroundColor(weenyWitch.blue)
+            .foregroundColor(oceanBlue.blue)
     }
     
     private var locationsList: some View {
