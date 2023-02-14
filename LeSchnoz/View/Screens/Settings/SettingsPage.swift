@@ -23,7 +23,7 @@ struct SettingsPage: View {
     
     var auth = Authorization.instance
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
             ScrollView {
@@ -51,14 +51,14 @@ struct SettingsPage: View {
     private var addLocationView: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Know of any spooky locations that you would like to share?")
-                .foregroundColor(weenyWitch.light)
+                .foregroundColor(weenyWitch.white)
                 .font(.avenirNextRegular(size: 18))
                 .italic()
             NavigationLink {
                 AddLocationView()
             } label: {
                 Text("Submit basic information")
-                    .foregroundColor(weenyWitch.orange)
+                    .foregroundColor(weenyWitch.yellow)
                     .font(.avenirNextRegular(size: 18))
                     .underline()
             }

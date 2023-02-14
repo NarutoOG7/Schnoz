@@ -22,7 +22,7 @@ struct Account: View {
     
     var auth = Authorization.instance
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
@@ -84,7 +84,7 @@ struct Account: View {
                                                 errorManager: errorManager,
                                                 loginVM: loginVM)) {
             Text("Edit Profile")
-                .foregroundColor(weenyWitch.lighter)
+                .foregroundColor(weenyWitch.blue)
                 .font(.avenirNext(size: 18))
         }
 
@@ -98,7 +98,7 @@ struct Account: View {
                                                   locationStore: locationStore,
                                                   errorManager: errorManager)) {
             Text("Manage Reviews")
-                .foregroundColor(weenyWitch.lighter)
+                .foregroundColor(weenyWitch.blue)
                 .font(.avenirNext(size: 18))
         }
 
@@ -110,7 +110,7 @@ struct Account: View {
     private var sendPasswordResetButton: some View {
         Button(action: changePasswordTapped) {
             Text("Change Password")
-                .foregroundColor(weenyWitch.lighter)
+                .foregroundColor(weenyWitch.blue)
                 .font(.avenirNext(size: 18))
         }
     }
@@ -120,7 +120,7 @@ struct Account: View {
             Text("SIGN OUT")
                 .font(.avenirNext(size: 17))
                 .fontWeight(.light)
-                .foregroundColor(weenyWitch.lighter)
+                .foregroundColor(weenyWitch.blue)
         }
     }
 
@@ -128,7 +128,7 @@ struct Account: View {
         Button(action: createAccountTapped) {
             Text("Create Account")
                 .font(.avenirNext(size: 17))
-                .foregroundColor(weenyWitch.lighter)
+                .foregroundColor(weenyWitch.blue)
         }
     }
     

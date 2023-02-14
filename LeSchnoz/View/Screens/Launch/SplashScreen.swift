@@ -12,7 +12,7 @@ struct SplashScreen: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                K.Colors.WeenyWitch.black
+                K.Colors.OceanBlue.black
                     .edgesIgnoringSafeArea(.all)
                 K.Images.logo
                     .frame(height: 313)

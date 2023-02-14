@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConfirmDeleteView: View {
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     let images = K.Images.Login.self
     
     @State var isSecured = true
@@ -73,14 +73,14 @@ struct ConfirmDeleteView: View {
     private var titleView: some View {
         Text("Confirm Delete")
             .font(.avenirNext(size: 22))
-            .foregroundColor(weenyWitch.lightest)
+            .foregroundColor(weenyWitch.lightBlue)
             .bold()
     }
     
     private var subtitleView: some View {
         Text("Please enter your credentials to confirm this action.")
             .font(.avenirNext(size: 18))
-            .foregroundColor(weenyWitch.lightest)
+            .foregroundColor(weenyWitch.lightBlue)
             .multilineTextAlignment(.center)
     }
     
@@ -88,8 +88,8 @@ struct ConfirmDeleteView: View {
         UserInputCellWithIcon(input: $loginVM.emailInput,
                               shouldShowErrorMessage: $loginVM.shouldShowEmailErrorMessage,
                               isSecured: .constant(false),
-                              primaryColor: weenyWitch.lightest,
-                              accentColor: weenyWitch.orange,
+                              primaryColor: weenyWitch.lightBlue,
+                              accentColor: weenyWitch.yellow,
                               icon: images.email,
                               placeholderText: "Email",
                               errorMessage: loginVM.emailErrorMessage)
@@ -100,8 +100,8 @@ struct ConfirmDeleteView: View {
         UserInputCellWithIcon(input: $loginVM.passwordInput,
                               shouldShowErrorMessage: $loginVM.shouldShowPasswordErrorMessage,
                               isSecured: $isSecured,
-                              primaryColor: weenyWitch.lightest,
-                              accentColor: weenyWitch.orange,
+                              primaryColor: weenyWitch.lightBlue,
+                              accentColor: weenyWitch.yellow,
                               icon: isSecured ? images.eyeWithSlash : images.eye,
                               placeholderText: "Password",
                               errorMessage: loginVM.passwordErrorMessage,
@@ -112,7 +112,7 @@ struct ConfirmDeleteView: View {
         Button(action: cancelTapped) {
             Text("Cancel")
                 .font(.avenirNext(size: 22))
-                .foregroundColor(weenyWitch.lightest)
+                .foregroundColor(weenyWitch.lightBlue)
         }
     }
     
@@ -120,7 +120,7 @@ struct ConfirmDeleteView: View {
         Button(action: deleteTapped) {
             Text("DELETE")
                 .font(.avenirNext(size: 22))
-                .foregroundColor(weenyWitch.orange)
+                .foregroundColor(weenyWitch.yellow)
         }
     }
     

@@ -16,7 +16,7 @@ struct SearchBar: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
@@ -40,7 +40,7 @@ struct SearchBar: View {
     private var magGlass: some View {
         Image(systemName: "magnifyingglass")
             .padding()
-            .foregroundColor(weenyWitch.orange)
+            .foregroundColor(oceanBlue.yellow)
     }
     
     private var searchField: some View {
@@ -52,8 +52,8 @@ struct SearchBar: View {
             })
         .padding()
         .font(.avenirNext(size: 18))
-        .foregroundColor(weenyWitch.brown)
-        .accentColor(weenyWitch.orange)
+        .foregroundColor(oceanBlue.blue)
+        .accentColor(oceanBlue.yellow)
         
     }
     
@@ -71,7 +71,7 @@ struct SearchBar: View {
                        errorManager: errorManager)
                 } label: {
                     Text(exploreVM.searchedLocations[index].location.name)
-                        .foregroundColor(weenyWitch.brown)
+                        .foregroundColor(oceanBlue.blue)
                         .font(.avenirNext(size: 18))
                 }
                 .listRowBackground(Color.clear)
@@ -85,11 +85,11 @@ struct SearchBar: View {
     
     private var background: some View {
         RoundedRectangle(cornerRadius: 20)
-            .fill(weenyWitch.lightest)
+            .fill(oceanBlue.lightBlue)
             .padding(2)
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(weenyWitch.brown))
+                    .fill(oceanBlue.blue))
     }
     
     //MARK: - Buttons
@@ -97,7 +97,7 @@ struct SearchBar: View {
         Button(action: cancelSearchTapped) {
             Text("Cancel")
                 .font(.avenirNext(size: 18))
-                .foregroundColor(weenyWitch.brown)
+                .foregroundColor(oceanBlue.blue)
         }
         .opacity(exploreVM.searchText.isEmpty ? 0 : 1)
         .padding()

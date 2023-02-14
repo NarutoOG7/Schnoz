@@ -11,7 +11,7 @@ struct ReviewCard: View {
     
     let review: ReviewModel
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack(alignment: .leading,spacing: 7) {
@@ -24,18 +24,18 @@ struct ReviewCard: View {
         }
         .padding()
         .overlay(RoundedRectangle(cornerRadius: 14)
-            .strokeBorder(weenyWitch.brown, lineWidth: 3))
+            .strokeBorder(weenyWitch.blue, lineWidth: 3))
     }
     
     var title: some View {
         Text(review.title)
             .font(.avenirNext(size: 20))
             .fontWeight(.medium)
-            .foregroundColor(weenyWitch.brown)
+            .foregroundColor(weenyWitch.blue)
     }
     
     var stars: some View {
-        FiveStars(color: weenyWitch.orange,
+        FiveStars(color: weenyWitch.yellow,
                   rating: .constant(review.rating))
     }
     
@@ -43,7 +43,7 @@ struct ReviewCard: View {
         Text(review.review)
             .font(.avenirNext(size: 17))
             .fontWeight(.light)
-            .foregroundColor(weenyWitch.brown)
+            .foregroundColor(weenyWitch.blue)
             .fixedSize(horizontal: true, vertical: false)
     }
     
@@ -53,7 +53,7 @@ struct ReviewCard: View {
             Text("-\(review.username)")
                 .font(.avenirNext(size: 17))
                 .fontWeight(.medium)
-                .foregroundColor(weenyWitch.brown)
+                .foregroundColor(weenyWitch.blue)
         }
     }
 }

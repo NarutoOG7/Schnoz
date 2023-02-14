@@ -12,7 +12,7 @@ struct Admin: View {
     @ObservedObject var userStore: UserStore
     @ObservedObject var locationStore: LocationStore
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         if userStore.user.id == userStore.adminKey {
@@ -27,7 +27,7 @@ struct Admin: View {
                 NavigationLink(destination: DatabaseView(locationStore: locationStore)) {
                     Text("Database")
                         .font(.avenirNext(size: 18))
-                        .foregroundColor(weenyWitch.lighter)
+                        .foregroundColor(weenyWitch.blue)
                     
                 }.listRowSeparator(.hidden)
                     .listRowBackground(weenyWitch.black)

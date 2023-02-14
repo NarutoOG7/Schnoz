@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>452737267920-vrhp7hd6em6uk08rofgcquua43jsehck.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.452737267920-vrhp7hd6em6uk08rofgcquua43jsehck</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD_H_ro8dO6NknI1wHszVdnwD-yPYzu4vk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>452737267920</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Konoha7.LeSchnoz</string>
+	<key>PROJECT_ID</key>
+	<string>ghosttour-2b57b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ghosttour-2b57b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:452737267920:ios:ed41a9df0f992b31c9c6d5</string>
+	<key>DATABASE_URL</key>
+	<string>https://ghosttour-2b57b-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

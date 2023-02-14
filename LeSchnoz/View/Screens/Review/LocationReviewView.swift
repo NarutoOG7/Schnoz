@@ -35,7 +35,7 @@ struct LocationReviewView: View {
     
     @Environment(\.presentationMode) var presentationMode
         
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         ZStack {
@@ -77,8 +77,8 @@ struct LocationReviewView: View {
             input: $titleInput,
             shouldShowErrorMessage: $shouldShowTitleErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.orange,
-            accentColor: weenyWitch.light,
+            primaryColor: weenyWitch.yellow,
+            accentColor: weenyWitch.white,
             icon: nil,
             placeholderText: "Title",
             errorMessage: "Please add a title.")
@@ -89,7 +89,7 @@ struct LocationReviewView: View {
     private var stars: some View {
         HStack {
             FiveStars(isEditable: true,
-                      color: K.Colors.WeenyWitch.orange,
+                      color: K.Colors.OceanBlue.yellow,
                       rating: $pickerSelection)
         }
     }
@@ -99,8 +99,8 @@ struct LocationReviewView: View {
             input: $descriptionInput,
             shouldShowErrorMessage: $shouldShowDescriptionErrorMessage,
             isSecured: .constant(false),
-            primaryColor: weenyWitch.orange,
-            accentColor: weenyWitch.light,
+            primaryColor: weenyWitch.yellow,
+            accentColor: weenyWitch.white,
             icon: nil,
             placeholderText: "Description",
             errorMessage: "Please add a description.")
@@ -115,8 +115,8 @@ struct LocationReviewView: View {
                     input: $nameInput,
                     shouldShowErrorMessage: .constant(false),
                     isSecured: .constant(false),
-                    primaryColor: weenyWitch.orange,
-                    accentColor: weenyWitch.light,
+                    primaryColor: weenyWitch.yellow,
+                    accentColor: weenyWitch.white,
                     icon: nil,
                     placeholderText: userStore.user.name,
                     errorMessage: "")
@@ -127,9 +127,9 @@ struct LocationReviewView: View {
                 Text("Leave Review Anonymously?")
                     .italic()
                     .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(weenyWitch.lighter)
+                    .foregroundColor(weenyWitch.blue)
             }.padding(.horizontal)
-                .tint(weenyWitch.orange)
+                .tint(weenyWitch.yellow)
         }
     }
     //MARK: - Error Banner
@@ -148,7 +148,7 @@ struct LocationReviewView: View {
     private var submitButton: some View {
         let isReview = review != nil
         let isDisabled = !requisiteFieldsAreFilled() || !isUpdated()
-        let color = isDisabled ? weenyWitch.lighter.opacity(0.1) : weenyWitch.orange
+        let color = isDisabled ? weenyWitch.blue.opacity(0.1) : weenyWitch.yellow
         return Button(action: submitTapped) {
             Text(isReview && isUpdated() ? "Update" : "Submit")
                 .foregroundColor(color)

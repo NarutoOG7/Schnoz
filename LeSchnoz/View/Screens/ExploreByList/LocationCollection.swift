@@ -10,7 +10,7 @@ import SwiftUI
 struct LocationCollection: View {
     
     var collectionType: LocationCollectionTypes
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     @State var nearbyLocations = [LocationModel]()
     @State var featuredLocations = [LocationModel]()
@@ -21,7 +21,7 @@ struct LocationCollection: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
     
-    @EnvironmentObject var locationStore: LocationStore
+    @ObservedObject var locationStore: LocationStore
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -37,7 +37,7 @@ struct LocationCollection: View {
             .font(.avenirNext(size: 22))
             .fontWeight(.bold)
             .offset(x: 15, y: 17)
-            .foregroundColor(weenyWitch.brown)
+            .foregroundColor(weenyWitch.blue)
     }
     
     private var locationsList: some View {
@@ -194,8 +194,8 @@ struct LocationCollection_Previews: PreviewProvider {
                            userStore: UserStore(),
                            exploreVM: ExploreViewModel(),
                            firebaseManager: FirebaseManager(),
-                           errorManager: ErrorManager())
-        .environmentObject(locationStore)
+                           errorManager: ErrorManager(),
+                           locationStore: LocationStore())
     }
 }
 

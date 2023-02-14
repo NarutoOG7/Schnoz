@@ -23,7 +23,7 @@ struct ExploreByList: View {
     
     @Environment(\.managedObjectContext) var moc
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         GeometryReader { geo in
@@ -54,12 +54,12 @@ struct ExploreByList: View {
                 .font(.avenirNext(size: nameSizeIsLarge ? 20 : 27))
                 .fontWeight(.ultraLight)
                 .padding(.horizontal)
-                .foregroundColor(weenyWitch.brown)
+                .foregroundColor(weenyWitch.blue)
                 .lineLimit(1)
             Text("\(user.name)")
                 .font(.avenirNext(size: nameSizeIsLarge ? 20 : 27))
                 .fontWeight(.medium)
-                .foregroundColor(weenyWitch.orange)
+                .foregroundColor(weenyWitch.yellow)
                 .lineLimit(1)
             Spacer()
         }
@@ -72,19 +72,22 @@ struct ExploreByList: View {
                                userStore: userStore,
                                exploreVM: exploreVM,
                                firebaseManager: firebaseManager,
-                               errorManager: errorManager)
+                               errorManager: errorManager,
+                               locationStore: locationStore)
             
             LocationCollection(collectionType: .trending,
                                userStore: userStore,
                                exploreVM: exploreVM,
                                firebaseManager: firebaseManager,
-                               errorManager: errorManager)
+                               errorManager: errorManager,
+                               locationStore: locationStore)
             
             LocationCollection(collectionType: .featured,
                                userStore: userStore,
                                exploreVM: exploreVM,
                                firebaseManager: firebaseManager,
-                               errorManager: errorManager)
+                               errorManager: errorManager,
+                               locationStore: locationStore)
         }
         .frame(width: UIScreen.main.bounds.width)
         
@@ -93,7 +96,7 @@ struct ExploreByList: View {
     private var divider: some View {
         Divider()
             .frame(height: 1.5)
-            .background(weenyWitch.brown)
+            .background(weenyWitch.blue)
             .padding(.top, 12)
             .padding(.bottom, -8)
     }
@@ -120,8 +123,8 @@ struct ExploreByList: View {
             Spacer()
             CircleButton(size: .small,
                          image: Image(systemName: "map"),
-                         mainColor: K.Colors.WeenyWitch.brown,
-                         accentColor: K.Colors.WeenyWitch.lightest,
+                         mainColor: K.Colors.OceanBlue.blue,
+                         accentColor: K.Colors.OceanBlue.lightBlue,
                          clicked: isShowingMap)
         }
         .padding(.horizontal)

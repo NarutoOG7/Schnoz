@@ -22,7 +22,7 @@ struct TabBarSetup: View {
     @ObservedObject var userStore: UserStore
     @ObservedObject var loginVM: LoginVM
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     init(userStore: UserStore,
          errorManager: ErrorManager,
@@ -48,7 +48,7 @@ struct TabBarSetup: View {
             }
             
         }
-        .accentColor(weenyWitch.orange)
+        .accentColor(weenyWitch.yellow)
         .environmentObject(favoritesLogic)
         
         
@@ -154,12 +154,12 @@ struct TabBarSetup: View {
     func tabBarAppearance() {
         
         let tabBarAppearance =  UITabBar.appearance()
-        tabBarAppearance.barTintColor = UIColor(K.Colors.WeenyWitch.black)
-        tabBarAppearance.unselectedItemTintColor = UIColor(K.Colors.WeenyWitch.light)
+        tabBarAppearance.barTintColor = UIColor(K.Colors.OceanBlue.black)
+        tabBarAppearance.unselectedItemTintColor = UIColor(K.Colors.OceanBlue.white)
         
         ///This background color is to maintain the same color on scrolling.
-        tabBarAppearance.backgroundColor = UIColor(K.Colors.WeenyWitch.black).withAlphaComponent(0.92)
-        tabBarAppearance.tintColor = UIColor(K.Colors.WeenyWitch.orange)
+        tabBarAppearance.backgroundColor = UIColor(K.Colors.OceanBlue.black).withAlphaComponent(0.92)
+        tabBarAppearance.tintColor = UIColor(K.Colors.OceanBlue.yellow)
         
     }
     
@@ -170,17 +170,17 @@ struct TabBarSetup: View {
             let appearance = UINavigationBarAppearance()
             
             appearance.backgroundColor =
-            UIColor( weenyWitch.lightest)
+            UIColor( weenyWitch.lightBlue)
             
             appearance.titleTextAttributes =
-            [.foregroundColor : UIColor(weenyWitch.brown)]
+            [.foregroundColor : UIColor(weenyWitch.blue)]
             
             appearance.largeTitleTextAttributes =
             [.foregroundColor : UIColor(weenyWitch.black)]
             
             appearance.shadowColor = .clear
             appearance.backButtonAppearance.normal.titleTextAttributes =
-            [.foregroundColor : UIColor(weenyWitch.brown)]
+            [.foregroundColor : UIColor(weenyWitch.blue)]
             
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
@@ -192,7 +192,7 @@ struct TabBarSetup: View {
         
         let textViewAppearance = UITextField.appearance()
         textViewAppearance.backgroundColor = .clear
-        textViewAppearance.tintColor = UIColor(weenyWitch.orange)
+        textViewAppearance.tintColor = UIColor(weenyWitch.yellow)
         
     }
     

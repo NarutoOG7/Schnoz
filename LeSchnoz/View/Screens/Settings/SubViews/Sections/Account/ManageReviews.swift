@@ -19,7 +19,7 @@ struct ManageReviews: View {
     @ObservedObject var locationStore: LocationStore
     @ObservedObject var errorManager: ErrorManager
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         ZStack {
@@ -59,7 +59,7 @@ struct ManageReviews: View {
     
     private var noReviews: some View {
         Text("No Reviews")
-            .foregroundColor(weenyWitch.lightest)
+            .foregroundColor(weenyWitch.lightBlue)
             .font(.avenirNext(size: 22))
     }
     
@@ -74,11 +74,11 @@ struct ManageReviews: View {
                     
                 }, label: {
                     Text(review.title)
-                        .foregroundColor(weenyWitch.brown)
+                        .foregroundColor(weenyWitch.blue)
                         .font(.avenirNext(size: 18))
                         .italic()
                 })
-                .listRowBackground(weenyWitch.lightest)
+                .listRowBackground(weenyWitch.lightBlue)
                 
             }
             .onDelete(perform: delete)

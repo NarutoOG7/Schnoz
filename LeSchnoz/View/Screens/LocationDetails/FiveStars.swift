@@ -44,7 +44,7 @@ struct FiveStars_Previews: PreviewProvider {
     static var previews: some View {
         FiveStars(
             isEditable: true,
-            color: K.Colors.WeenyWitch.orange,
+            color: K.Colors.OceanBlue.yellow,
             rating: .constant(3))
     }
 }

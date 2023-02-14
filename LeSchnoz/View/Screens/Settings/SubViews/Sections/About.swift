@@ -9,7 +9,7 @@ import SwiftUI
 
 struct About: View {
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
@@ -41,7 +41,7 @@ struct About: View {
                 Link(destination: url, label: {
                     Text("Privacy Policy")
                         .font(.avenirNext(size: 18))
-                        .foregroundColor(weenyWitch.lighter)
+                        .foregroundColor(weenyWitch.blue)
                 })
             )
         } else {
@@ -57,7 +57,7 @@ struct About: View {
                 Link(destination: url, label: {
                     Text("Terms Of Use")
                         .font(.avenirNext(size: 18))
-                        .foregroundColor(weenyWitch.lighter)
+                        .foregroundColor(weenyWitch.blue)
                 })
             )
         } else {

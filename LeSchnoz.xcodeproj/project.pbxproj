@@ -93,6 +93,8 @@
 		C99EEC1D299B1A1500B77DBD /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */; };
 		C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC1E299B1A4000B77DBD /* Constants.swift */; };
 		C99EEC21299B1AD800B77DBD /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC20299B1AD800B77DBD /* Destination.swift */; };
+		C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */; };
+		C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -184,6 +186,8 @@
 		C99EEBB1299B19B400B77DBD /* LoginVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		C99EEC1E299B1A4000B77DBD /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C99EEC20299B1AD800B77DBD /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +215,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
+				C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
 				4D06D5FB5BC0E37911755A9E /* Pods */,
@@ -229,6 +234,7 @@
 		C99EEB0E299B121600B77DBD /* LeSchnoz */ = {
 			isa = PBXGroup;
 			children = (
+				C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */,
 				C99EEC1E299B1A4000B77DBD /* Constants.swift */,
 				C99EEB1D299B19B300B77DBD /* Model */,
 				C99EEB54299B19B400B77DBD /* View */,
@@ -641,6 +647,7 @@
 			files = (
 				C99EEC01299B19B400B77DBD /* overlay.json in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
+				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
 				C99EEBFB299B19B400B77DBD /* LaunchScreen 2.storyboard in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
@@ -704,6 +711,7 @@
 				C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */,
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
 				C99EEBC3299B19B400B77DBD /* LocationAnnotationModel.swift in Sources */,
+				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
 				C99EEC0F299B19B400B77DBD /* ExploreByMap.swift in Sources */,
 				C99EEBFE299B19B400B77DBD /* LocationCollection.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,

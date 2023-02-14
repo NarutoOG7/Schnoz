@@ -14,13 +14,12 @@ enum K {
     //MARK: - Colors
     enum Colors {
         
-        enum WeenyWitch {
-            static let lightest = Color("WeenyWitch/ColorZero")
-            static let lighter = Color("WeenyWitch/ColorOne")
-            static let light = Color("WeenyWitch/ColorTwo")
-            static let orange = Color("WeenyWitch/ColorThree")
-            static let brown = Color("WeenyWitch/ColorFour")
-            static let black = Color("WeenyWitch/ColorFive")
+        enum OceanBlue {
+            static let lightBlue = Color("OceanBlue/LightBlue")
+            static let white = Color("OceanBlue/White")
+            static let blue = Color("OceanBlue/Blue")
+            static let yellow = Color("OceanBlue/Yellow")
+            static let black = Color("OceanBlue/Black")
         }
         
     }

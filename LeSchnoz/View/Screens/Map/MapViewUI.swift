@@ -126,7 +126,7 @@ struct MapViewUI: UIViewRepresentable {
                     let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "SpookySpot") as? MKMarkerAnnotationView ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "Spooky Spot")
                     annotationView.canShowCallout = true
                     annotationView.clusteringIdentifier = "cluster"
-                    annotationView.markerTintColor = UIColor(K.Colors.WeenyWitch.black)
+                    annotationView.markerTintColor = UIColor(K.Colors.OceanBlue.black)
                     annotationView.largeContentTitle = "Spooky Spot"
                     annotationView.titleVisibility = exploreVM.searchRegion.span.latitudeDelta <= 0.02 ? .visible : .hidden
 
@@ -137,7 +137,7 @@ struct MapViewUI: UIViewRepresentable {
             case _ as MKClusterAnnotation:
                 
                 let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "cluster")
-                annotationView.markerTintColor = UIColor(K.Colors.WeenyWitch.lightest)
+                annotationView.markerTintColor = UIColor(K.Colors.OceanBlue.lightBlue)
                 annotationView.titleVisibility = .hidden
                 annotationView.subtitleVisibility = .hidden
                 return annotationView

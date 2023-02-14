@@ -12,7 +12,7 @@ struct LargeImageLocationView: View {
     
     var location: LocationModel
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     @State private var imageURL = URL(string: "")
     
@@ -62,14 +62,14 @@ struct LargeImageLocationView: View {
             .font(.avenirNext(size: 20))
             .fontWeight(.medium)
             .lineLimit(2)
-            .foregroundColor(weenyWitch.lightest)
+            .foregroundColor(weenyWitch.lightBlue)
             .padding(.horizontal)
     }
     
     private var address: some View {
         Text(location.location.address?.streetCityState() ?? "")
             .font(.avenirNextRegular(size: 17))
-            .foregroundColor(weenyWitch.light)
+            .foregroundColor(weenyWitch.white)
             .lineLimit(1)
             .padding(.horizontal)
     }

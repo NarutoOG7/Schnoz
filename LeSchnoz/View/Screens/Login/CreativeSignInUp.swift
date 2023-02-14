@@ -17,7 +17,7 @@ struct CreativeSignInUp: View {
     
     @State var showingAlertForFirebaseError = false
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     @StateObject var signupVM = SignupVM.instance
     
@@ -85,15 +85,15 @@ struct CreativeSignInUp: View {
         HStack(spacing: 15) {
             
             Rectangle()
-                .fill(weenyWitch.light)
+                .fill(weenyWitch.white)
                 .frame(height: 1)
             
             Text("OR")
-                .foregroundColor(weenyWitch.lightest)
+                .foregroundColor(weenyWitch.lightBlue)
                 .font(.avenirNext(size: 20))
             
             Rectangle()
-                .fill(weenyWitch.light)
+                .fill(weenyWitch.white)
                 .frame(height: 1)
             
         }
@@ -108,7 +108,7 @@ struct CreativeSignInUp: View {
             .font(.avenirNext(size: 23))
             .fontWeight(.light)
             .italic()
-            .foregroundColor(weenyWitch.orange)
+            .foregroundColor(weenyWitch.yellow)
             .onTapGesture(perform: continueAsGuestTapped)
             .padding()
     }

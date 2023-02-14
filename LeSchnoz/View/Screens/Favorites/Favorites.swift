@@ -18,12 +18,12 @@ struct Favorites: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
         
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     let images = K.Images.Favorites.self
     
     var body: some View {
         ZStack {
-            K.Colors.WeenyWitch.black
+            K.Colors.OceanBlue.black
             
             VStack {
                 displayOptionButton
@@ -48,14 +48,14 @@ struct Favorites: View {
     
     var guestView: some View {
         Text("Please create an account to add locations to your favorites list.")
-            .foregroundColor(weenyWitch.orange)
+            .foregroundColor(weenyWitch.yellow)
             .font(.avenirNext(size: 22))
             .multilineTextAlignment(.center)
     }
     
     var emptyLocationsView: some View {
         Text("Start exploring and track your favorites here!")
-            .foregroundColor(weenyWitch.orange)
+            .foregroundColor(weenyWitch.yellow)
             .font(.avenirNext(size: 22))
             .multilineTextAlignment(.center)
 
@@ -101,7 +101,7 @@ struct Favorites: View {
                             let location = locationStore.favoriteLocations[index].location
                             HStack {
                                 Text("\(location.name)")
-                                    .foregroundColor(weenyWitch.lightest)
+                                    .foregroundColor(weenyWitch.lightBlue)
                                     .font(.avenirNext(size: 20))
                                     .fontWeight(.bold)
                                     .padding(.leading)

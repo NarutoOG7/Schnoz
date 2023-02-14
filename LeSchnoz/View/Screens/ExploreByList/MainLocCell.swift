@@ -12,7 +12,7 @@ struct MainLocCell: View {
     
     var location: LocationModel
     
-    let weenyWitch = K.Colors.WeenyWitch.self
+    let weenyWitch = K.Colors.OceanBlue.self
     
     @State private var imageURL = URL(string: "")
     
@@ -44,7 +44,7 @@ struct MainLocCell: View {
             Text(location.location.name)
                 .fontWeight(.heavy)
                 .font(.avenirNext(size: 27))
-                .foregroundColor(weenyWitch.lightest)
+                .foregroundColor(weenyWitch.lightBlue)
                 .shadow(color: .black, radius: 1, x: 0, y: 2)
                 .padding(10)
         }
