@@ -23,7 +23,7 @@ struct ManageReviews: View {
     
     var body: some View {
         ZStack {
-            oceanBlue.black
+            oceanBlue.blue
                 .edgesIgnoringSafeArea(.all)
             
             if userStore.reviews.isEmpty {
@@ -59,7 +59,7 @@ struct ManageReviews: View {
     
     private var noReviews: some View {
         Text("No Reviews")
-            .foregroundColor(oceanBlue.lightBlue)
+            .foregroundColor(oceanBlue.white)
             .font(.avenirNext(size: 22))
     }
     
@@ -74,11 +74,11 @@ struct ManageReviews: View {
                     
                 }, label: {
                     Text(review.title)
-                        .foregroundColor(oceanBlue.blue)
+                        .foregroundColor(oceanBlue.white)
                         .font(.avenirNext(size: 18))
                         .italic()
                 })
-                .listRowBackground(oceanBlue.lightBlue)
+                .listRowBackground(Color.clear)
                 
             }
             .onDelete(perform: delete)

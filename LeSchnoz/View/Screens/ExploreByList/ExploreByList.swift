@@ -52,7 +52,7 @@ struct ExploreByList: View {
         return HStack(spacing: -7) {
             Text("\(exploreVM.greetingLogic()),")
                 .font(.avenirNext(size: nameSizeIsLarge ? 20 : 27))
-                .fontWeight(.ultraLight)
+                .fontWeight(.thin)
                 .padding(.horizontal)
                 .foregroundColor(oceanBlue.blue)
                 .lineLimit(1)

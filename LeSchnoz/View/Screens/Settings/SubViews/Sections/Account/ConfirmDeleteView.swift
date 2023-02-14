@@ -66,21 +66,21 @@ struct ConfirmDeleteView: View {
         .frame(width: geo.size.width - 60)
         .padding()
         .background(RoundedRectangle(cornerRadius: 15)
-            .fill(oceanBlue.black))
+            .fill(oceanBlue.white))
     }
     
     
     private var titleView: some View {
         Text("Confirm Delete")
             .font(.avenirNext(size: 22))
-            .foregroundColor(oceanBlue.lightBlue)
+            .foregroundColor(oceanBlue.blue)
             .bold()
     }
     
     private var subtitleView: some View {
         Text("Please enter your credentials to confirm this action.")
             .font(.avenirNext(size: 18))
-            .foregroundColor(oceanBlue.lightBlue)
+            .foregroundColor(oceanBlue.blue)
             .multilineTextAlignment(.center)
     }
     
@@ -120,7 +120,7 @@ struct ConfirmDeleteView: View {
         Button(action: deleteTapped) {
             Text("DELETE")
                 .font(.avenirNext(size: 22))
-                .foregroundColor(oceanBlue.yellow)
+                .foregroundColor(.red)
         }
     }
     

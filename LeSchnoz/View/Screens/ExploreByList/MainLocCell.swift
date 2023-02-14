@@ -35,7 +35,7 @@ struct MainLocCell: View {
         .aspectRatio(0.9, contentMode: .fill)
         .frame(width: 240, height: 270)
         .cornerRadius(15)
-        .shadow(color: oceanBlue.black, radius: 3, x: 0, y: 1.5)
+        .shadow(color: oceanBlue.lightBlue, radius: 3, x: 0, y: 1.5)
     }
     
     private var title: some View {
@@ -44,8 +44,8 @@ struct MainLocCell: View {
             Text(location.location.name)
                 .fontWeight(.heavy)
                 .font(.avenirNext(size: 27))
-                .foregroundColor(oceanBlue.lightBlue)
-                .shadow(color: .black, radius: 1, x: 0, y: 2)
+                .foregroundColor(oceanBlue.white)
+                .shadow(color: oceanBlue.black, radius: 1, x: 0, y: 2)
                 .padding(10)
         }
     }

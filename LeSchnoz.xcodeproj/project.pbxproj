@@ -53,14 +53,10 @@
 		C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB68299B19B400B77DBD /* CircularButton.swift */; };
 		C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB69299B19B400B77DBD /* NotificationBanner.swift */; };
 		C99EEBE8299B19B400B77DBD /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB6E299B19B400B77DBD /* About.swift */; };
-		C99EEBE9299B19B400B77DBD /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB70299B19B400B77DBD /* Admin.swift */; };
-		C99EEBEA299B19B400B77DBD /* DatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB71299B19B400B77DBD /* DatabaseView.swift */; };
 		C99EEBEB299B19B400B77DBD /* ManageReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB73299B19B400B77DBD /* ManageReviews.swift */; };
 		C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB74299B19B400B77DBD /* ProfilePage.swift */; };
 		C99EEBED299B19B400B77DBD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB75299B19B400B77DBD /* Account.swift */; };
 		C99EEBEE299B19B400B77DBD /* ConfirmDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */; };
-		C99EEBEF299B19B400B77DBD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB78299B19B400B77DBD /* ImagePicker.swift */; };
-		C99EEBF0299B19B400B77DBD /* AddLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB79299B19B400B77DBD /* AddLocationView.swift */; };
 		C99EEBF1299B19B400B77DBD /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7A299B19B400B77DBD /* Header.swift */; };
 		C99EEBF2299B19B400B77DBD /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7B299B19B400B77DBD /* SettingsPage.swift */; };
 		C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB7D299B19B400B77DBD /* MoreReviewsSheet.swift */; };
@@ -147,14 +143,10 @@
 		C99EEB68299B19B400B77DBD /* CircularButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
 		C99EEB69299B19B400B77DBD /* NotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
 		C99EEB6E299B19B400B77DBD /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
-		C99EEB70299B19B400B77DBD /* Admin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
-		C99EEB71299B19B400B77DBD /* DatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseView.swift; sourceTree = "<group>"; };
 		C99EEB73299B19B400B77DBD /* ManageReviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageReviews.swift; sourceTree = "<group>"; };
 		C99EEB74299B19B400B77DBD /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		C99EEB75299B19B400B77DBD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDeleteView.swift; sourceTree = "<group>"; };
-		C99EEB78299B19B400B77DBD /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		C99EEB79299B19B400B77DBD /* AddLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationView.swift; sourceTree = "<group>"; };
 		C99EEB7A299B19B400B77DBD /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		C99EEB7B299B19B400B77DBD /* SettingsPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		C99EEB7D299B19B400B77DBD /* MoreReviewsSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreReviewsSheet.swift; sourceTree = "<group>"; };
@@ -446,20 +438,9 @@
 			isa = PBXGroup;
 			children = (
 				C99EEB6E299B19B400B77DBD /* About.swift */,
-				C99EEB6F299B19B400B77DBD /* Admin */,
 				C99EEB72299B19B400B77DBD /* Account */,
-				C99EEB77299B19B400B77DBD /* AddLocation */,
 			);
 			path = Sections;
-			sourceTree = "<group>";
-		};
-		C99EEB6F299B19B400B77DBD /* Admin */ = {
-			isa = PBXGroup;
-			children = (
-				C99EEB70299B19B400B77DBD /* Admin.swift */,
-				C99EEB71299B19B400B77DBD /* DatabaseView.swift */,
-			);
-			path = Admin;
 			sourceTree = "<group>";
 		};
 		C99EEB72299B19B400B77DBD /* Account */ = {
@@ -471,15 +452,6 @@
 				C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */,
 			);
 			path = Account;
-			sourceTree = "<group>";
-		};
-		C99EEB77299B19B400B77DBD /* AddLocation */ = {
-			isa = PBXGroup;
-			children = (
-				C99EEB78299B19B400B77DBD /* ImagePicker.swift */,
-				C99EEB79299B19B400B77DBD /* AddLocationView.swift */,
-			);
-			path = AddLocation;
 			sourceTree = "<group>";
 		};
 		C99EEB7C299B19B400B77DBD /* LocationDetails */ = {
@@ -730,7 +702,6 @@
 				C99EEBF1299B19B400B77DBD /* Header.swift in Sources */,
 				C99EEBF6299B19B400B77DBD /* FiveStars.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
-				C99EEBF0299B19B400B77DBD /* AddLocationView.swift in Sources */,
 				C99EEBF4299B19B400B77DBD /* FullImageDisplay.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
 				C99EEBFA299B19B400B77DBD /* SplashScreen.swift in Sources */,
@@ -747,7 +718,6 @@
 				C99EEBFF299B19B400B77DBD /* MainLocCell.swift in Sources */,
 				C99EEBFC299B19B400B77DBD /* Favorites.swift in Sources */,
 				C99EEBEB299B19B400B77DBD /* ManageReviews.swift in Sources */,
-				C99EEBE9299B19B400B77DBD /* Admin.swift in Sources */,
 				C99EEBE1299B19B400B77DBD /* Placeholder.swift in Sources */,
 				C99EEBE0299B19B400B77DBD /* CNPostalAddress.swift in Sources */,
 				C99EEBE4299B19B400B77DBD /* UserInputCellWithIcon.swift in Sources */,
@@ -764,14 +734,12 @@
 				C99EEBE2299B19B400B77DBD /* Custom Fonts.swift in Sources */,
 				C99EEBCA299B19B400B77DBD /* ReviewModel.swift in Sources */,
 				C99EEC0E299B19B400B77DBD /* LocationReviewView.swift in Sources */,
-				C99EEBEF299B19B400B77DBD /* ImagePicker.swift in Sources */,
 				C99EEBED299B19B400B77DBD /* Account.swift in Sources */,
 				C99EEC00299B19B400B77DBD /* ExploreByList.swift in Sources */,
 				C99EEBC8299B19B400B77DBD /* HotelPriceModel.swift in Sources */,
 				C99EEC13299B19B400B77DBD /* SignUp.swift in Sources */,
 				C99EEBD9299B19B400B77DBD /* Binding.swift in Sources */,
 				C99EEBC9299B19B400B77DBD /* HotelPriceData.swift in Sources */,
-				C99EEBEA299B19B400B77DBD /* DatabaseView.swift in Sources */,
 				C99EEBB8299B19B400B77DBD /* HotelPriceManager.swift in Sources */,
 				C99EEBD1299B19B400B77DBD /* FavoriteLocation.swift in Sources */,
 				C99EEBDA299B19B400B77DBD /* UnabreviatedString.swift in Sources */,

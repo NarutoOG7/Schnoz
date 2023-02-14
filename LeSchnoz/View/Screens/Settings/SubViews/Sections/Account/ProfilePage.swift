@@ -40,7 +40,7 @@ struct ProfilePage: View {
                 deleteAcctButton
                 Spacer()
             }
-            .background(oceanBlue.black)
+            .background(oceanBlue.blue)
             
             if confirmDeleteAlertShouldShow {
                 ConfirmDeleteView(shouldShow: $confirmDeleteAlertShouldShow,
@@ -57,19 +57,19 @@ struct ProfilePage: View {
     private var displayName: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Name:")
-                .foregroundColor(oceanBlue.yellow)
+                .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
 
                 
                 TextField("", text: $displayNameInput)
                     .placeholder(when: displayNameInput.isEmpty) {
                         Text(userStore.user.name)
-                            .foregroundColor(oceanBlue.lightBlue)
+                            .foregroundColor(oceanBlue.white)
                             .font(.avenirNext(size: 24))
 
                     }
-                    .tint(oceanBlue.yellow)
-                    .foregroundColor(oceanBlue.lightBlue)
+                    .tint(oceanBlue.white)
+                    .foregroundColor(oceanBlue.white)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
@@ -83,17 +83,17 @@ struct ProfilePage: View {
     private var emailView: some View {
         HStack(alignment: .center, spacing: 24) {
             Text("Email:")
-                .foregroundColor(oceanBlue.yellow)
+                .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
             
                 TextField("", text: $emailInput)
                     .placeholder(when: emailInput.isEmpty) {
                         Text(userStore.user.email)
-                            .foregroundColor(oceanBlue.lightBlue)
+                            .foregroundColor(oceanBlue.white)
                             .font(.avenirNext(size: 24))
                     }
                     .tint(oceanBlue.yellow)
-                    .foregroundColor(oceanBlue.lightBlue)
+                    .foregroundColor(oceanBlue.white)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
@@ -126,8 +126,8 @@ struct ProfilePage: View {
         Button(action: deleteAcctTapped) {
             Text("Delete Account")
                 .font(.avenirNext(size: 16))
-                .fontWeight(.light)
-                .foregroundColor(Color.red.opacity(0.8))
+                .fontWeight(.medium)
+                .foregroundColor(Color.red)
         }.padding(.horizontal)
         }
     }

@@ -20,7 +20,7 @@ struct SettingsHeader: View {
                 headerText
             }.padding(.horizontal)
             Rectangle()
-                .fill(oceanBlue.yellow)
+                .fill(oceanBlue.lightBlue)
                 .frame(height: 1)
                 .padding(.horizontal)
         }
@@ -30,14 +30,14 @@ struct SettingsHeader: View {
         settingType.image
             .resizable()
             .frame(width: 20, height: 20)
-            .foregroundColor(oceanBlue.yellow)
+            .foregroundColor(oceanBlue.lightBlue)
     }
     
     private var headerText: some View {
         Text(settingType.rawValue.capitalized)
             .font(.avenirNext(size: 22))
             .fontWeight(.semibold)
-            .foregroundColor(oceanBlue.blue)
+            .foregroundColor(oceanBlue.white)
     }
     
     enum SettingType: String {

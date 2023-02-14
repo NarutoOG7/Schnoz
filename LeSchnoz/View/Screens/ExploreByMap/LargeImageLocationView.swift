@@ -62,7 +62,7 @@ struct LargeImageLocationView: View {
             .font(.avenirNext(size: 20))
             .fontWeight(.medium)
             .lineLimit(2)
-            .foregroundColor(oceanBlue.lightBlue)
+            .foregroundColor(oceanBlue.white)
             .padding(.horizontal)
     }
     

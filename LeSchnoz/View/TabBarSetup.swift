@@ -48,7 +48,7 @@ struct TabBarSetup: View {
             }
             
         }
-        .accentColor(oceanBlue.yellow)
+        .accentColor(oceanBlue.white)
         .environmentObject(favoritesLogic)
         
         
@@ -64,7 +64,6 @@ struct TabBarSetup: View {
                 .navigationBarHidden(true)
         }
         .background(Color.clear)
-        .accentColor(oceanBlue.black)
         
         .tabItem {
             Text("Explore")
@@ -88,7 +87,6 @@ struct TabBarSetup: View {
             .navigationTitle("Favorites")
             
         }
-        .accentColor(oceanBlue.black)
         
         .tabItem {
             Text("Favorites")
@@ -111,7 +109,6 @@ struct TabBarSetup: View {
                          loginVM: loginVM)
             .navigationTitle("Settings")
         }
-        .accentColor(oceanBlue.black)
         
         .tabItem {
             Text("Settings")
@@ -156,10 +153,10 @@ struct TabBarSetup: View {
         let tabBarAppearance =  UITabBar.appearance()
         tabBarAppearance.barTintColor = UIColor(K.Colors.OceanBlue.blue)
         tabBarAppearance.unselectedItemTintColor = UIColor(K.Colors.OceanBlue.white.opacity(0.5))
+        tabBarAppearance.tintColor = UIColor(K.Colors.OceanBlue.white)
         
         ///This background color is to maintain the same color on scrolling.
         tabBarAppearance.backgroundColor = UIColor(K.Colors.OceanBlue.blue).withAlphaComponent(0.92)
-        tabBarAppearance.tintColor = UIColor(K.Colors.OceanBlue.yellow)
         
     }
     
@@ -170,17 +167,17 @@ struct TabBarSetup: View {
             let appearance = UINavigationBarAppearance()
             
             appearance.backgroundColor =
-            UIColor( oceanBlue.lightBlue)
+            UIColor( oceanBlue.blue)
             
             appearance.titleTextAttributes =
-            [.foregroundColor : UIColor(oceanBlue.blue)]
+            [.foregroundColor : UIColor(oceanBlue.white)]
             
             appearance.largeTitleTextAttributes =
-            [.foregroundColor : UIColor(oceanBlue.black)]
+            [.foregroundColor : UIColor(oceanBlue.white)]
             
             appearance.shadowColor = .clear
             appearance.backButtonAppearance.normal.titleTextAttributes =
-            [.foregroundColor : UIColor(oceanBlue.blue)]
+            [.foregroundColor : UIColor(oceanBlue.white)]
             
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance

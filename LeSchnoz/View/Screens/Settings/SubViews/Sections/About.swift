@@ -17,11 +17,11 @@ struct About: View {
             List {
 
                 privacyPolicy
-                    .listRowBackground(oceanBlue.black)
+                    .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
 
                 termsOfUse
-                    .listRowBackground(oceanBlue.black)
+                    .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
 
                     .padding(.bottom)
@@ -41,7 +41,7 @@ struct About: View {
                 Link(destination: url, label: {
                     Text("Privacy Policy")
                         .font(.avenirNext(size: 18))
-                        .foregroundColor(oceanBlue.blue)
+                        .foregroundColor(oceanBlue.white)
                 })
             )
         } else {
@@ -57,7 +57,7 @@ struct About: View {
                 Link(destination: url, label: {
                     Text("Terms Of Use")
                         .font(.avenirNext(size: 18))
-                        .foregroundColor(oceanBlue.blue)
+                        .foregroundColor(oceanBlue.white)
                 })
             )
         } else {

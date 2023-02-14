@@ -31,17 +31,17 @@ struct Account: View {
                 if userStore.isGuest {
                     createAccountButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(oceanBlue.black)
+                        .listRowBackground(Color.clear)
                 } else {
                     editProfile
                     manageReviews
                     sendPasswordResetButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(oceanBlue.black)
+                        .listRowBackground(Color.clear)
                     
                     signOutButton
                         .listRowSeparator(.hidden)
-                        .listRowBackground(oceanBlue.black)
+                        .listRowBackground(Color.clear)
                 }
             }
             .modifier(DisabledScroll())
@@ -84,12 +84,12 @@ struct Account: View {
                                                 errorManager: errorManager,
                                                 loginVM: loginVM)) {
             Text("Edit Profile")
-                .foregroundColor(oceanBlue.blue)
+                .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
         }
 
             .listRowSeparator(.hidden)
-            .listRowBackground(oceanBlue.black)
+            .listRowBackground(Color.clear)
     }
     
     private var manageReviews: some View {
@@ -98,19 +98,19 @@ struct Account: View {
                                                   locationStore: locationStore,
                                                   errorManager: errorManager)) {
             Text("Manage Reviews")
-                .foregroundColor(oceanBlue.blue)
+                .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
         }
 
             .listRowSeparator(.hidden)
-            .listRowBackground(oceanBlue.black)
+            .listRowBackground(Color.clear)
     }
     
     //MARK: - Buttons
     private var sendPasswordResetButton: some View {
         Button(action: changePasswordTapped) {
             Text("Change Password")
-                .foregroundColor(oceanBlue.blue)
+                .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
         }
     }
@@ -120,7 +120,7 @@ struct Account: View {
             Text("SIGN OUT")
                 .font(.avenirNext(size: 17))
                 .fontWeight(.light)
-                .foregroundColor(oceanBlue.blue)
+                .foregroundColor(oceanBlue.white)
         }
     }
 
@@ -128,7 +128,7 @@ struct Account: View {
         Button(action: createAccountTapped) {
             Text("Create Account")
                 .font(.avenirNext(size: 17))
-                .foregroundColor(oceanBlue.blue)
+                .foregroundColor(oceanBlue.white)
         }
     }
     

@@ -34,37 +34,14 @@ struct SettingsPage: View {
                             errorManager: errorManager,
                             loginVM: loginVM)
                     About()
-                    Admin(userStore: userStore,
-                          locationStore: locationStore)
-                    addLocationView
-                        .padding(.top, -15)
+
                 }
             .padding(.vertical, 30)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(false)
         }
-            .background(oceanBlue.black)
-    }
-      
-    //MARK: - Add Location
-    private var addLocationView: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Know of any spooky locations that you would like to share?")
-                .foregroundColor(oceanBlue.white)
-                .font(.avenirNextRegular(size: 18))
-                .italic()
-            NavigationLink {
-                AddLocationView()
-            } label: {
-                Text("Submit basic information")
-                    .foregroundColor(oceanBlue.yellow)
-                    .font(.avenirNextRegular(size: 18))
-                    .underline()
-            }
-
-        }
-        .padding(.horizontal)
+            .background(oceanBlue.blue)
     }
     
 }
