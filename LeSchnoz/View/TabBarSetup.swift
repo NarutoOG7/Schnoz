@@ -10,14 +10,11 @@ import SwiftUI
 struct TabBarSetup: View {
     
     @State private var selection = 0
-    
-    @StateObject var favoritesLogic = FavoritesLogic.instance
+
     @StateObject var locationStore = LocationStore.instance
     @StateObject var exploreVM = ExploreViewModel.instance
     @StateObject var firebaseManager = FirebaseManager.instance
-    
-    var hotelPriceManager = HotelPriceManager.instance
-    
+        
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var userStore: UserStore
     @ObservedObject var loginVM: LoginVM
@@ -43,13 +40,11 @@ struct TabBarSetup: View {
         ZStack {
             TabView(selection: $selection) {
                 exploreTab
-                favoritesTab
                 settingsTab
             }
             
         }
         .accentColor(oceanBlue.white)
-        .environmentObject(favoritesLogic)
         
         
     }
@@ -74,30 +69,7 @@ struct TabBarSetup: View {
         .tag(0)
         
     }
-    
-    private var favoritesTab: some View {
-        
-        NavigationView {
-            
-            Favorites(locationStore: locationStore,
-                      userStore: userStore,
-                      firebaseManager: firebaseManager,
-                      errorManager: errorManager)
-            
-            .navigationTitle("Favorites")
-            
-        }
-        
-        .tabItem {
-            Text("Favorites")
-            Image(systemName: "heart")
-                .resizable()
-                .frame(width: 25, height: 25)
-        }
-        .tag(1)
-        
-    }
-    
+
     private var settingsTab: some View {
         
         NavigationView {
@@ -212,11 +184,6 @@ struct TabBarSetup: View {
                if let adminKey = dict["adminKey"] as? String {
                    
                    userStore.adminKey = adminKey
-                   
-               }
-               if let hotelPriceAPIKey = dict["hotelPriceAPIKey"] as? String {
-                   
-                   hotelPriceManager.hotelPriceURL = hotelPriceAPIKey
                    
                }
 

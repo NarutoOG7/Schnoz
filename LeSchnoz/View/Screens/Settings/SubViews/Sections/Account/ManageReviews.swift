@@ -52,9 +52,6 @@ struct ManageReviews: View {
         .navigationTitle("My Reviews")
         .navigationBarTitleDisplayMode(.large)
         
-        .onAppear {
-            self.assignReviews()
-        }
     }
     
     private var noReviews: some View {
@@ -98,22 +95,6 @@ struct ManageReviews: View {
         userStore.reviews.remove(atOffsets: offsets)
     }
     
-    private func assignReviews() {
-        
-        userStore.reviews = []
-        
-        firebaseManager.getReviewsForUser(userStore.user) { rev in
-            
-            var review = rev
-            
-            if let location = locationStore.hauntedHotels.first(where: { "\($0.location.id)" == review.locationID }) {
-                
-                review.location = location
-            }
-            
-            userStore.reviews.append(review)
-        }
-    }
 }
 
 struct ManageReviews_Previews: PreviewProvider {

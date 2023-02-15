@@ -30,7 +30,7 @@ class LocalSearchService: ObservableObject {
         search.start { (response, error) in
             
             if let error = error {
-                if error.localizedDescription.contains("network"){
+                if error.localizedDescription.contains("network") {
                     print(error.localizedDescription)
                     self.errorManager.message = "Connection issues. Please try again."
                     self.errorManager.shouldDisplay = true

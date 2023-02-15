@@ -26,11 +26,6 @@ class ExploreViewModel: ObservableObject {
         didSet {
             if let displayedLocation = displayedLocation {
                 setRegion(location: displayedLocation)
-                
-                if let highlightedLocation = geoFireManager.gfOnMapLocations.first(where: { $0.id == "\(displayedLocation.location.id)"}) {
-                    self.highlightedAnnotation = highlightedLocation
-                    
-                }
             }
         }
     }
@@ -38,41 +33,13 @@ class ExploreViewModel: ObservableObject {
     @Published var searchText = "" {
         willSet {
             self.searchedLocations = []
-            self.searchLogic(text: newValue) { locations in
-                if let locations = locations {
-                    self.searchedLocations = locations
-                }
-            }
+            // TODO: Google Places API
         }
     }
 
-    @ObservedObject var geoFireManager = GeoFireManager.instance
     @ObservedObject var locationStore = LocationStore.instance
     @ObservedObject var userLocManager = UserLocationManager.instance
     @ObservedObject var errorManager = ErrorManager.instance
-    
-    func supplyLocationLists() {
-        
-        geoFireManager.getNearbyLocations(
-            region: locServiceIsEnabled() ? self.searchRegion : MapDetails.defaultRegion,
-            radius: 700)
-        let firebaseManager = FirebaseManager.instance
-        
-        firebaseManager.getTrendingLocations { error in
-            self.errorManager.message = error
-            self.errorManager.shouldDisplay = true
-        }
-        firebaseManager.getFeaturedLocations { error in
-            self.errorManager.message = error
-            self.errorManager.shouldDisplay = true
-        }
-        firebaseManager.getHauntedHotels()
-        
-        firebaseManager.getAllReviews { review in
-            self.locationStore.reviewBucket.append(review)
-        }
-
-    }
     
     func locServiceIsEnabled() -> Bool {
         userLocManager.locationServicesEnabled
@@ -109,37 +76,6 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
-    func showLocation(_ loc: LocationModel) {
-        
-        withAnimation(.easeInOut) {
-            displayedLocation = loc
-        }
-        
-        if let anno = geoFireManager.gfOnMapLocations.first(where: { $0.id == "\(loc.location.id)" }) {
-            highlightedAnnotation = anno
-        }
-    }
-    
-    func showLocationOnSwipe(direction: SwipeDirection) {
-        
-        guard let currentIndex = locationStore.onMapLocations.firstIndex(where: { $0 == displayedLocation }) else {
-            print("Could not find current index in onMapLocations array. Should Never Happen!")
-            return
-        }
-        let nextIndex = (direction == .backward) ? currentIndex - 1 : currentIndex + 1
-        
-        guard locationStore.onMapLocations.indices.contains(nextIndex) else {
-            /// next index not valid
-            /// restart at zero
-            guard let first = locationStore.onMapLocations.first else { return }
-            showLocation(first)
-            return
-        }
-        
-        let nextLocation = locationStore.onMapLocations[nextIndex]
-        showLocation(nextLocation)
-    }
-    
     //MARK: - Greeting Logic
     
     func greetingLogic() -> String {
@@ -169,24 +105,6 @@ class ExploreViewModel: ObservableObject {
       }
       
       return greetingText
-    }
-    
-    
-    //MARK: - Search Logic
-    
-    func searchLogic(text: String, withCompletion completion: @escaping([LocationModel]?) -> () = {_ in}) {
-        if text != "" {
-            let nameContainsList = locationStore.hauntedHotels.filter({ $0.location.name.localizedCaseInsensitiveContains(text) })
-            let cityContainsList = locationStore.hauntedHotels.filter({ ($0.location.address?.city ?? "").localizedCaseInsensitiveContains(text) })
-            let stateCotainsList = locationStore.hauntedHotels.filter({ ($0.location.address?.state.unabreviatedUSState() ?? "").localizedCaseInsensitiveContains(text) })
-            
-            let filtered = nameContainsList + cityContainsList + stateCotainsList
-            let set = Array(Set(filtered)).sorted(by: { $0.location.name > $1.location.name })
-            
-            completion(set)
-        } else {
-            completion(nil)
-        }
     }
     
     //MARK: - Swipe Locations List

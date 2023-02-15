@@ -45,12 +45,6 @@ struct ExploreByMap: View {
             
         }
         
-        .onAppear {
-            GeoFireManager.instance.startLocationListener(region: map.getRegion())
-        } .onDisappear {
-            GeoFireManager.instance.endLocationListener()
-        }
-        
         .navigationTitle("Map")
         .navigationBarHidden(true)
         
@@ -79,41 +73,11 @@ struct ExploreByMap: View {
                 ForEach(locationStore.onMapLocations) { location in
                     
                     if exploreVM.displayedLocation == location {
-                        
-                        LargeImageLocationView(location: location)
+                        MainLocCell(location: location)
                             .onTapGesture {
                                 exploreVM.displayedLocation = location
                                 self.shouldNavigate = true
                             }
-                            .gesture(
-                                DragGesture(minimumDistance: 3.0,
-                                            coordinateSpace: .local)
-                                .onEnded({ value in
-                                    
-                                    switch (value.translation.width, value.translation.height) {
-                                        
-                                    case (...0, -200...200):
-                                        print("left swipe")
-                                        self.swipeDirection = .forward
-                                        exploreVM.showLocationOnSwipe(direction: .forward)
-                                        
-                                        
-                                    case (0..., -200...200):
-                                        print("right swipe")
-                                        self.swipeDirection = .backward
-                                        exploreVM.showLocationOnSwipe(direction: .backward)
-                                        
-                                    case (-100...100, 0...):
-                                        print("Up?")
-                                        exploreVM.displayedLocation = nil
-                                        exploreVM.highlightedAnnotation = nil
-                                        
-                                    default: print("no clue")
-                                    }
-                                }))
-                            .transition(.asymmetric(
-                                insertion: swipeDirection == .forward ? .move(edge: .trailing) : .move(edge: .leading),
-                                removal: swipeDirection == .forward ? .move(edge: .leading) : .move(edge: .trailing)))
                     }
                 }
             }
@@ -123,7 +87,6 @@ struct ExploreByMap: View {
     private var searchView: some View {
         VStack {
             SearchBar(exploreVM: exploreVM,
-                      locationStore: locationStore,
                       userStore: userStore,
                       firebaseManager: firebaseManager,
                       errorManager: errorManager)

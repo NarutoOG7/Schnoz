@@ -21,8 +21,6 @@ struct LD: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
     
-    @EnvironmentObject var favoritesLogic: FavoritesLogic
-    
     let imageMaxHeight = UIScreen.main.bounds.height * 0.38
     let collapsedImageHeight: CGFloat = 10
     
@@ -62,10 +60,6 @@ struct LD: View {
                     Spacer()
                 }
                 
-                .onAppear {
-                    loadImageFromFirebase()
-                    print(location.reviews.count)
-                }
                 .sheet(isPresented: $isSharing) {
                     ShareActivitySheet(itemsToShare: [location.location.name])
                 }
@@ -239,7 +233,6 @@ struct LD: View {
             Spacer()
             directionsButton
             shareButton
-            favoriteButton
             Spacer()
         }.padding(.top)
             .frame(height: 150)
@@ -264,18 +257,6 @@ struct LD: View {
             accentColor: oceanBlue.white,
             title: "Share",
             clicked: shareTapped)
-    }
-    
-    private var favoriteButton: some View {
-        CircleButton(
-            size: .medium,
-            image: favoritesLogic.contains(location) ?
-            Image(systemName: "heart.fill") :
-                Image(systemName: "heart"),
-            mainColor: oceanBlue.lightBlue,
-            accentColor: oceanBlue.white,
-            title: "Favorites",
-            clicked: favoritesTapped)
     }
     
     private var moreReviewsButton: some View {
@@ -325,31 +306,10 @@ struct LD: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
-    private func favoritesTapped() {
-        
-        if favoritesLogic.contains(location) {
-            
-            favoritesLogic.removeHotel(location)
-        } else {
-            favoritesLogic.addHotel(location)
-        }
-    }
-    
     private func moreReviewsTapped() {
         self.isShowingMoreReviews = true
     }
     
-    
-    private func loadImageFromFirebase()  {
-        
-        if let imageString = location.location.imageName {
-            
-            FirebaseManager.instance.getImageURLFromFBPath(imageString) { url in
-                
-                self.imageURL = url
-            }
-        }
-    }
 }
 
 //MARK: - Previews
@@ -359,7 +319,6 @@ struct LD_Previews: PreviewProvider {
            userStore: UserStore(),
            firebaseManager: FirebaseManager(),
            errorManager: ErrorManager())
-        .environmentObject(FavoritesLogic())
     }
 }
 

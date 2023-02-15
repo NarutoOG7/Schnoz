@@ -40,9 +40,7 @@ struct ExploreByList: View {
                 
             }
         }
-        .onAppear {
-            exploreVM.supplyLocationLists()
-        }
+
         .background(K.Images.paperBackground
             .edgesIgnoringSafeArea(.all))
     }
@@ -104,7 +102,6 @@ struct ExploreByList: View {
     private var searchView: some View {
         VStack {
             SearchBar(exploreVM: exploreVM,
-                      locationStore: locationStore,
                       userStore: userStore,
                       firebaseManager: firebaseManager,
                       errorManager: errorManager)

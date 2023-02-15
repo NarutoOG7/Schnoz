@@ -16,7 +16,6 @@ struct MapViewUI: UIViewRepresentable {
     
     @ObservedObject var exploreVM = ExploreViewModel.instance
     @ObservedObject var userStore = UserStore.instance
-    @ObservedObject var geoFireManager = GeoFireManager.instance
      
     var mapView = MKMapView()
     
@@ -56,7 +55,6 @@ struct MapViewUI: UIViewRepresentable {
     
     func addCorrectOverlays(to mapView: MKMapView) {
                     
-            mapView.addAnnotations(geoFireManager.gfOnMapLocations)
             mapView.region = exploreVM.searchRegion
             addCurrentLocation(to: mapView)
     }
@@ -65,7 +63,7 @@ struct MapViewUI: UIViewRepresentable {
         
         if let currentLocation = userStore.currentLocation {
             
-            let plc = StartAnnotation(coordinate: currentLocation.coordinate, locationID: "0")
+            let plc = MKPlacemark(coordinate: currentLocation.coordinate)
             
             view.addAnnotation(plc)
         }

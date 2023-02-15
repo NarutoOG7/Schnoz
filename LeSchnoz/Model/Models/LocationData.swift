@@ -1,8 +1,8 @@
 //
-//  Location.swift
-//  SpookySpots
+//  LocationData.swift
+//  LeSchnoz
 //
-//  Created by Spencer Belton on 3/24/22.
+//  Created by Spencer Belton on 2/14/23.
 //
 
 import MapKit
@@ -116,5 +116,3 @@ struct LocationData: Identifiable, Equatable, Codable, Hashable {
     
     
 }
-
-

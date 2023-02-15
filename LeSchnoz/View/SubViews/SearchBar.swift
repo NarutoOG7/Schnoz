@@ -11,7 +11,6 @@ struct SearchBar: View {
     
     @ObservedObject var exploreVM: ExploreViewModel
     
-    @ObservedObject var locationStore: LocationStore
     @ObservedObject var userStore: UserStore
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
@@ -122,7 +121,6 @@ struct SearchBar: View {
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         SearchBar(exploreVM: ExploreViewModel(),
-                  locationStore: LocationStore(),
                   userStore: UserStore(),
                   firebaseManager: FirebaseManager(),
                   errorManager: ErrorManager())

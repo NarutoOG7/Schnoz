@@ -1,14 +1,14 @@
 //
 //  LocationModel.swift
-//  SpookySpots
+//  LeSchnoz
 //
-//  Created by Spencer Belton on 4/25/22.
+//  Created by Spencer Belton on 2/14/23.
 //
 
 import Foundation
 
 struct LocationModel: Identifiable, Equatable, Hashable {
-
+    
     static let example = LocationModel(location: LocationData.example, imageURLs: [], reviews: [])
     
     var id = UUID()

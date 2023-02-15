@@ -188,7 +188,6 @@ struct LocationReviewView: View {
                     }
                     
                     self.location.reviews.append(rev)
-                    LocationStore.instance.switchNewLocationIntoAllBucketsIfExists(location)
                     self.shouldShowSuccessMessage = true
                 }
             } else {
@@ -201,7 +200,6 @@ struct LocationReviewView: View {
                     }
                     
                     self.location.reviews.append(rev)
-                    LocationStore.instance.switchNewLocationIntoAllBucketsIfExists(location)
                     self.shouldShowSuccessMessage = true
                 }
             }

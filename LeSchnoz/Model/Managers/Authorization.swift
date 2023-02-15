@@ -66,10 +66,7 @@ class Authorization {
                                 name: result.user.displayName ?? "",
                                 email: result.user.email ?? "")
                 
-                var favorites: [FavoriteLocation] = []
-                FirebaseManager.instance.getFavorites { favLoc in
-                    favorites.append(favLoc)
-                }
+                // TODO: Grab reviews here?
                 
                 DispatchQueue.main.async {
                     
@@ -203,7 +200,6 @@ class Authorization {
             
             self.userStore.isSignedIn = false
             self.userStore.user = User()
-            self.locationStore.favoriteLocations = []
             
             UserDefaults.standard.set(false, forKey: "signedIn")
             

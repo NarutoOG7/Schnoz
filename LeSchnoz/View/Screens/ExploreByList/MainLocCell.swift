@@ -22,10 +22,6 @@ struct MainLocCell: View {
             title
         }
         .frame(width: 240, height: 270)
-            .onAppear {
-                loadImageFromFirebase()
-            }
-        
         
     }
     
@@ -49,17 +45,7 @@ struct MainLocCell: View {
                 .padding(10)
         }
     }
-    
-    private func loadImageFromFirebase()  {
-        
-        if let imageString = location.location.imageName {
-            
-            FirebaseManager.instance.getImageURLFromFBPath(imageString) { url in
-                
-                self.imageURL = url
-            }
-        }
-    }
+
 }
 
 struct MainLocCell_Previews: PreviewProvider {
