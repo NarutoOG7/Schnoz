@@ -8,7 +8,6 @@
 import MapKit
 import CoreLocation
 import SwiftUI
-import Firebase
 import Contacts
 
 struct LocationData: Identifiable, Equatable, Codable, Hashable {

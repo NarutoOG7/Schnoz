@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 import MapKit
 import Contacts
 

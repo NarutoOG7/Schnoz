@@ -6,11 +6,11 @@ target 'LeSchnoz' do
   use_frameworks!
 
   # Pods for LeSchnoz
-pod 'GeoFire'
+
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
-pod 'FirebaseStorage'
 pod "MapKitGoogleStyler"
+pod 'GooglePlaces', '7.3.0'
 
 
 

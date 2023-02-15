@@ -79,6 +79,8 @@
 		C99EEC2D299C47EC00B77DBD /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2C299C47EC00B77DBD /* LocationData.swift */; };
 		C99EEC2F299C5D0D00B77DBD /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */; };
 		C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC30299C614400B77DBD /* HiddenKeys.plist */; };
+		C99EEC34299C635F00B77DBD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC33299C635F00B77DBD /* FirebaseAuth */; };
+		C99EEC36299C635F00B77DBD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC35299C635F00B77DBD /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +166,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C99EEC1D299B1A1500B77DBD /* SDWebImageSwiftUI in Frameworks */,
+				C99EEC36299C635F00B77DBD /* FirebaseFirestore in Frameworks */,
+				C99EEC34299C635F00B77DBD /* FirebaseAuth in Frameworks */,
 				A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +515,7 @@
 				C99EEB09299B121600B77DBD /* Frameworks */,
 				C99EEB0A299B121600B77DBD /* Resources */,
 				F536972D03096FBCEDB24683 /* [CP] Embed Pods Frameworks */,
+				501196DECB34FD621DD13893 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -519,6 +524,8 @@
 			name = LeSchnoz;
 			packageProductDependencies = (
 				C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */,
+				C99EEC33299C635F00B77DBD /* FirebaseAuth */,
+				C99EEC35299C635F00B77DBD /* FirebaseFirestore */,
 			);
 			productName = LeSchnoz;
 			productReference = C99EEB0C299B121600B77DBD /* LeSchnoz.app */;
@@ -550,6 +557,7 @@
 			mainGroup = C99EEB03299B121600B77DBD;
 			packageReferences = (
 				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C99EEB0D299B121600B77DBD /* Products */;
 			projectDirPath = "";
@@ -577,6 +585,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		501196DECB34FD621DD13893 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8B763368EC32274A7AE160B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -901,6 +926,14 @@
 				kind = branch;
 			};
 		};
+		C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -908,6 +941,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		C99EEC33299C635F00B77DBD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		C99EEC35299C635F00B77DBD /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

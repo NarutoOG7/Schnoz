@@ -6,8 +6,8 @@
 //
 
 import CoreData
-import Firebase
 import SwiftUI
+import Firebase
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -19,8 +19,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     @ObservedObject var userStore = UserStore.instance
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-
-        Database.database().isPersistenceEnabled = true
 
         locationManager.checkIfLocationServicesIsEnabled()
 

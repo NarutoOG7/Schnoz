@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
-import CoreLocation
-import GeoFire
 import Firebase
+import CoreLocation
 import MapKit
 
 
