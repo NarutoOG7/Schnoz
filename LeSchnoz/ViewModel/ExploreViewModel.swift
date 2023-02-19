@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import Contacts
+import GooglePlaces
 
 class ExploreViewModel: ObservableObject {
     
@@ -29,12 +30,14 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
+    @Published var searchLocation = ""
     @Published var searchText = "" {
         willSet {
             self.searchedLocations = []
             // TODO: Google Places API
         }
     }
+    @Published var selectedPlace: GMSPlace?
 
     @ObservedObject var locationStore = LocationStore.instance
     @ObservedObject var userLocManager = UserLocationManager.instance

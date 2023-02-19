@@ -15,6 +15,8 @@ struct SearchBar: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
     
+    @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
+    
     let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
@@ -26,9 +28,9 @@ struct SearchBar: View {
                 }
                 cancelButton
             }
-            if exploreVM.searchText != "" {
-                searchResults
-            }
+//            if exploreVM.searchText != "" {
+//                searchResults
+//            }
         }
         
         .background(background)
@@ -45,7 +47,7 @@ struct SearchBar: View {
     private var searchField: some View {
         TextField("", text: $exploreVM.searchText)
             .placeholder(when: exploreVM.searchText == "", placeholder: {
-                Text("Hotel, City, or State")
+                Text("Restaraunt, Bar, etc.")
                     .font(.avenirNext(size: 16))
                     .fontWeight(.light)
                     .foregroundColor(oceanBlue.white)
@@ -57,32 +59,32 @@ struct SearchBar: View {
         
     }
     
-    private var searchResults: some View {
-        let listHasMoreThanTenItems = exploreVM.searchedLocations.count > 10
-        let listHasNoItems = exploreVM.searchedLocations.count == 0
-        let screenHeight = UIScreen.main.bounds.height
-        let listHeight = listHasMoreThanTenItems ? (screenHeight / 3) : (CGFloat(exploreVM.searchedLocations.count) * 45)
-        return List {
-            ForEach(0..<exploreVM.searchedLocations.count, id: \.self) { index in
-                NavigationLink {
-                    LD(location: $exploreVM.searchedLocations[index],
-                       userStore: userStore,
-                       firebaseManager: firebaseManager,
-                       errorManager: errorManager)
-                } label: {
-                    Text(exploreVM.searchedLocations[index].location.name)
-                        .foregroundColor(oceanBlue.white)
-                        .font(.avenirNext(size: 18))
-                }
-                .foregroundColor(oceanBlue.white)
-                .listRowBackground(Color.clear)
-            }
-            
-        }
-        .modifier(ClearListBackgroundMod())
-        .frame(height: listHasNoItems ? 0 : listHeight)
-        .listStyle(.inset)
-    }
+//    private var searchResults: some View {
+//        let listHasMoreThanTenItems = googlePlacesManager.predictions?.count ?? 0 > 10
+//        let listHasNoItems = googlePlacesManager.predictions?.count == 0
+//        let screenHeight = UIScreen.main.bounds.height
+//        let listHeight = listHasMoreThanTenItems ? (screenHeight / 3) : (CGFloat(googlePlacesManager.predictions?.count ?? 0) * 45)
+//        return List {
+//            ForEach(0..<(googlePlacesManager.predictions?.count ?? 0), id: \.self) { index in
+//                NavigationLink {
+//                    LD(location: $exploreVM.searchedLocations[index],
+//                       userStore: userStore,
+//                       firebaseManager: firebaseManager,
+//                       errorManager: errorManager)
+//                } label: {
+//                    Text(googlePlacesManager.predictions[index].name)
+//                        .foregroundColor(oceanBlue.white)
+//                        .font(.avenirNext(size: 18))
+//                }
+//                .foregroundColor(oceanBlue.white)
+//                .listRowBackground(Color.clear)
+//            }
+//
+//        }
+//        .modifier(ClearListBackgroundMod())
+//        .frame(height: listHasNoItems ? 0 : listHeight)
+//        .listStyle(.inset)
+//    }
     
     private var background: some View {
         RoundedRectangle(cornerRadius: 20)

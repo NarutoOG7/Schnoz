@@ -58,10 +58,7 @@
 		C99EEBFE299B19B400B77DBD /* LocationCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB8B299B19B400B77DBD /* LocationCollection.swift */; };
 		C99EEBFF299B19B400B77DBD /* MainLocCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB8C299B19B400B77DBD /* MainLocCell.swift */; };
 		C99EEC00299B19B400B77DBD /* ExploreByList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB8D299B19B400B77DBD /* ExploreByList.swift */; };
-		C99EEC01299B19B400B77DBD /* overlay.json in Resources */ = {isa = PBXBuildFile; fileRef = C99EEB8F299B19B400B77DBD /* overlay.json */; };
-		C99EEC02299B19B400B77DBD /* MapViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB90299B19B400B77DBD /* MapViewUI.swift */; };
 		C99EEC0E299B19B400B77DBD /* LocationReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBA2299B19B400B77DBD /* LocationReviewView.swift */; };
-		C99EEC0F299B19B400B77DBD /* ExploreByMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBA4299B19B400B77DBD /* ExploreByMap.swift */; };
 		C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBA7299B19B400B77DBD /* LogIn.swift */; };
 		C99EEC12299B19B400B77DBD /* CreativeSignInUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBA8299B19B400B77DBD /* CreativeSignInUp.swift */; };
 		C99EEC13299B19B400B77DBD /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBA9299B19B400B77DBD /* SignUp.swift */; };
@@ -81,6 +78,10 @@
 		C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC30299C614400B77DBD /* HiddenKeys.plist */; };
 		C99EEC34299C635F00B77DBD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC33299C635F00B77DBD /* FirebaseAuth */; };
 		C99EEC36299C635F00B77DBD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC35299C635F00B77DBD /* FirebaseFirestore */; };
+		C99EEC38299C6DB200B77DBD /* PlacesViewControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC37299C6DB200B77DBD /* PlacesViewControllerBridge.swift */; };
+		C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */; };
+		C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */; };
+		C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,10 +139,7 @@
 		C99EEB8B299B19B400B77DBD /* LocationCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCollection.swift; sourceTree = "<group>"; };
 		C99EEB8C299B19B400B77DBD /* MainLocCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLocCell.swift; sourceTree = "<group>"; };
 		C99EEB8D299B19B400B77DBD /* ExploreByList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreByList.swift; sourceTree = "<group>"; };
-		C99EEB8F299B19B400B77DBD /* overlay.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = overlay.json; sourceTree = "<group>"; };
-		C99EEB90299B19B400B77DBD /* MapViewUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewUI.swift; sourceTree = "<group>"; };
 		C99EEBA2299B19B400B77DBD /* LocationReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationReviewView.swift; sourceTree = "<group>"; };
-		C99EEBA4299B19B400B77DBD /* ExploreByMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreByMap.swift; sourceTree = "<group>"; };
 		C99EEBA7299B19B400B77DBD /* LogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
 		C99EEBA8299B19B400B77DBD /* CreativeSignInUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreativeSignInUp.swift; sourceTree = "<group>"; };
 		C99EEBA9299B19B400B77DBD /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
@@ -158,6 +156,10 @@
 		C99EEC2C299C47EC00B77DBD /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		C99EEC30299C614400B77DBD /* HiddenKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = HiddenKeys.plist; sourceTree = "<group>"; };
+		C99EEC37299C6DB200B77DBD /* PlacesViewControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewControllerBridge.swift; sourceTree = "<group>"; };
+		C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
+		C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDataTable.swift; sourceTree = "<group>"; };
+		C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoogleResultCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +302,7 @@
 				C99EEB64299B19B400B77DBD /* SubViews */,
 				C99EEB6A299B19B400B77DBD /* Screens */,
 				C99EEBAA299B19B400B77DBD /* TabBarSetup.swift */,
+				C99EEC37299C6DB200B77DBD /* PlacesViewControllerBridge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			children = (
 				C99EEB56299B19B400B77DBD /* Extensions */,
 				C99EEB62299B19B400B77DBD /* Typography */,
+				C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -372,9 +376,7 @@
 				C99EEB7C299B19B400B77DBD /* LocationDetails */,
 				C99EEB83299B19B400B77DBD /* Launch */,
 				C99EEB8A299B19B400B77DBD /* ExploreByList */,
-				C99EEB8E299B19B400B77DBD /* Map */,
 				C99EEBA1299B19B400B77DBD /* Review */,
-				C99EEBA3299B19B400B77DBD /* ExploreByMap */,
 				C99EEBA6299B19B400B77DBD /* Login */,
 			);
 			path = Screens;
@@ -446,17 +448,10 @@
 				C99EEB8B299B19B400B77DBD /* LocationCollection.swift */,
 				C99EEB8C299B19B400B77DBD /* MainLocCell.swift */,
 				C99EEB8D299B19B400B77DBD /* ExploreByList.swift */,
+				C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */,
+				C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */,
 			);
 			path = ExploreByList;
-			sourceTree = "<group>";
-		};
-		C99EEB8E299B19B400B77DBD /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				C99EEB8F299B19B400B77DBD /* overlay.json */,
-				C99EEB90299B19B400B77DBD /* MapViewUI.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		C99EEBA1299B19B400B77DBD /* Review */ = {
@@ -465,14 +460,6 @@
 				C99EEBA2299B19B400B77DBD /* LocationReviewView.swift */,
 			);
 			path = Review;
-			sourceTree = "<group>";
-		};
-		C99EEBA3299B19B400B77DBD /* ExploreByMap */ = {
-			isa = PBXGroup;
-			children = (
-				C99EEBA4299B19B400B77DBD /* ExploreByMap.swift */,
-			);
-			path = ExploreByMap;
 			sourceTree = "<group>";
 		};
 		C99EEBA6299B19B400B77DBD /* Login */ = {
@@ -574,11 +561,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
-				C99EEC01299B19B400B77DBD /* overlay.json in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
+				C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +642,6 @@
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
 				C99EEBC3299B19B400B77DBD /* LocationAnnotationModel.swift in Sources */,
 				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
-				C99EEC0F299B19B400B77DBD /* ExploreByMap.swift in Sources */,
 				C99EEBFE299B19B400B77DBD /* LocationCollection.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,
 				C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */,
@@ -681,6 +667,7 @@
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
 				C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,
+				C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */,
 				C99EEBB7299B19B400B77DBD /* NetworkManager.swift in Sources */,
 				C99EEBFF299B19B400B77DBD /* MainLocCell.swift in Sources */,
 				C99EEBEB299B19B400B77DBD /* ManageReviews.swift in Sources */,
@@ -690,8 +677,8 @@
 				C99EEBE4299B19B400B77DBD /* UserInputCellWithIcon.swift in Sources */,
 				C99EEBF7299B19B400B77DBD /* ReviewCard.swift in Sources */,
 				C99EEBBB299B19B400B77DBD /* ErrorManager.swift in Sources */,
-				C99EEC02299B19B400B77DBD /* MapViewUI.swift in Sources */,
 				C99EEBF8299B19B400B77DBD /* LD.swift in Sources */,
+				C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */,
 				C99EEBCE299B19B400B77DBD /* ReviewData.swift in Sources */,
 				C99EEBE5299B19B400B77DBD /* SlideOverCard.swift in Sources */,
 				C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */,
@@ -699,6 +686,7 @@
 				C99EEC29299C468D00B77DBD /* LocationModel.swift in Sources */,
 				C99EEBE2299B19B400B77DBD /* Custom Fonts.swift in Sources */,
 				C99EEBCA299B19B400B77DBD /* ReviewModel.swift in Sources */,
+				C99EEC38299C6DB200B77DBD /* PlacesViewControllerBridge.swift in Sources */,
 				C99EEC0E299B19B400B77DBD /* LocationReviewView.swift in Sources */,
 				C99EEBED299B19B400B77DBD /* Account.swift in Sources */,
 				C99EEC00299B19B400B77DBD /* ExploreByList.swift in Sources */,
@@ -844,6 +832,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -875,6 +864,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

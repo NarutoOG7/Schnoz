@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 import Firebase
-
+import GooglePlaces
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
@@ -19,6 +19,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     @ObservedObject var userStore = UserStore.instance
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        GMSPlacesClient.provideAPIKey("AIzaSyDk8wNXaaOEDVZOQPD6riTsktkoWkI-IsI")
 
         locationManager.checkIfLocationServicesIsEnabled()
 

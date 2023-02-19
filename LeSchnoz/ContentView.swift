@@ -21,7 +21,8 @@ struct ContentView: View {
 
                 GeometryReader { geo in
             ZStack {
-                if userStore.isSignedIn {
+
+                                if userStore.isSignedIn {
                     if contentViewVM.showTutorial {
                         SplashScreen(contentViewVM: contentViewVM)
                     } else {

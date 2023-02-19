@@ -13,6 +13,8 @@ struct ExploreByList: View {
     @State var searchText = ""
     @State var showingSearchResults = false
     
+    @State var googleSheetVisible = false
+    
     @Binding var user: User
     
     @ObservedObject var exploreVM: ExploreViewModel
@@ -20,27 +22,40 @@ struct ExploreByList: View {
     @ObservedObject var userStore: UserStore
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
+    @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     
     @Environment(\.managedObjectContext) var moc
     
     let oceanBlue = K.Colors.OceanBlue.self
+    
+    var googleTable = GoogleDataTable()
     
     var body: some View {
         GeometryReader { geo in
             ZStack {
                 VStack {
                     greeting
-                    mapButton
+                    HStack {
+                        searchBar
+                        mapButton
+                    }
                     divider
                     ScrollView(showsIndicators: false) {
                         locationsCollections
                     }
                 }
-                searchView
-                
+//                searchBar
+                googleTable
+                    .frame(height: 100)
             }
+            
+
         }
 
+        .task {
+            googlePlacesManager.getNearbyLocation()
+        }
+        
         .background(K.Images.paperBackground
             .edgesIgnoringSafeArea(.all))
     }
@@ -65,30 +80,10 @@ struct ExploreByList: View {
     }
     
     private var locationsCollections: some View {
-        VStack {
-            LocationCollection(collectionType: .nearby,
-                               userStore: userStore,
-                               exploreVM: exploreVM,
-                               firebaseManager: firebaseManager,
-                               errorManager: errorManager,
-                               locationStore: locationStore)
+        List(googlePlacesManager.nearbyPlaces, id: \.self) { place in
+            Text(place.place.name ?? "no nearby location")
             
-            LocationCollection(collectionType: .trending,
-                               userStore: userStore,
-                               exploreVM: exploreVM,
-                               firebaseManager: firebaseManager,
-                               errorManager: errorManager,
-                               locationStore: locationStore)
-            
-            LocationCollection(collectionType: .featured,
-                               userStore: userStore,
-                               exploreVM: exploreVM,
-                               firebaseManager: firebaseManager,
-                               errorManager: errorManager,
-                               locationStore: locationStore)
         }
-        .frame(width: UIScreen.main.bounds.width)
-        
     }
     
     private var divider: some View {
@@ -105,25 +100,58 @@ struct ExploreByList: View {
                       userStore: userStore,
                       firebaseManager: firebaseManager,
                       errorManager: errorManager)
+            
             .padding(.top, 75)
             .padding(.horizontal)
             .padding(.trailing, 65)
+//            .sheet(isPresented: $googleSheetVisible) {
+//                PlacesViewControllerBridge { place in
+//                    exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
+//                    exploreVM.selectedPlace = place
+//                }
+//            }
+            
+            
             Spacer()
+        }
+    }
+    
+    private var searchBar: some View {
+        Button {
+            self.googleSheetVisible = true
+        } label: {
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(oceanBlue.lightBlue)
+                .padding(2)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(oceanBlue.blue))
+        }
+//        .padding(.top, 75)
+        .padding(.horizontal)
+//        .padding(.trailing, 65)
+        .frame(height: 40)
+        .fullScreenCover(isPresented: $googleSheetVisible) {
+            PlacesViewControllerBridge { place in
+                exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
+                exploreVM.selectedPlace = place
+            }
         }
     }
     
     //MARK: - Buttons
     
     private var mapButton: some View {
-        HStack {
-            Spacer()
-            Spacer()
+//        HStack {
+//            Spacer()
+//            Spacer()
             CircleButton(size: .small,
                          image: Image(systemName: "map"),
                          mainColor: K.Colors.OceanBlue.lightBlue,
                          accentColor: K.Colors.OceanBlue.white,
                          clicked: isShowingMap)
-        }
+//        }
         .padding(.horizontal)
     }
     

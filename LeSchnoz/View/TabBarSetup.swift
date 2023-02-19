@@ -32,7 +32,7 @@ struct TabBarSetup: View {
         handleHiddenKeys()
         
         tabBarAppearance()
-        navigationAppearance()
+//        navigationAppearance()
         tableViewAppearance()
     }
     
@@ -80,8 +80,8 @@ struct TabBarSetup: View {
                          errorManager: errorManager,
                          loginVM: loginVM)
             .navigationTitle("Settings")
+            .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
         }
-        
         .tabItem {
             Text("Settings")
             Image(systemName: "gear")
@@ -89,6 +89,7 @@ struct TabBarSetup: View {
                 .frame(width: 25, height: 25)
         }
         .tag(3)
+
     }
     
     
