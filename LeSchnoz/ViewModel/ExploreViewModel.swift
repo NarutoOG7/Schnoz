@@ -30,6 +30,7 @@ class ExploreViewModel: ObservableObject {
         }
     }
     
+    @Published var showingSearchController = false
     @Published var searchLocation = ""
     @Published var searchText = "" {
         willSet {

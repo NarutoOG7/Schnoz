@@ -53,7 +53,12 @@ struct TabBarSetup: View {
         
         NavigationView {
             
-            exploreHelperView
+            ExploreByList(user: $userStore.user,
+                                         exploreVM: exploreVM,
+                                         locationStore: locationStore,
+                                         userStore: userStore,
+                                         firebaseManager: firebaseManager,
+                                         errorManager: errorManager)
             
                 .navigationTitle("Explore")
                 .navigationBarHidden(true)
@@ -90,32 +95,6 @@ struct TabBarSetup: View {
         }
         .tag(3)
 
-    }
-    
-    
-    private var exploreHelperView: some View {
-        
-        let view: AnyView
-        
-        if exploreVM.isShowingMap {
-            
-            view = AnyView(ExploreByMap(locationStore: locationStore,
-                                        exploreVM: exploreVM,
-                                        userStore: userStore,
-                                        firebaseManager: firebaseManager,
-                                        errorManager: errorManager))
-            
-        } else {
-            
-            view = AnyView(ExploreByList(user: $userStore.user,
-                                         exploreVM: exploreVM,
-                                         locationStore: locationStore,
-                                         userStore: userStore,
-                                         firebaseManager: firebaseManager,
-                                         errorManager: errorManager))
-        }
-        
-        return view
     }
     
     

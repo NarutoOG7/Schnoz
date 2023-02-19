@@ -82,6 +82,9 @@
 		C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */; };
 		C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */; };
 		C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */; };
+		C99EEC4429A1B91700B77DBD /* DoubleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */; };
+		C99EEC4629A1C32A00B77DBD /* SearchControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */; };
+		C99EEC4829A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +163,9 @@
 		C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDataTable.swift; sourceTree = "<group>"; };
 		C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoogleResultCell.xib; sourceTree = "<group>"; };
+		C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSearchView.swift; sourceTree = "<group>"; };
+		C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerView.swift; sourceTree = "<group>"; };
+		C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesResultsViewControllerBridge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +384,9 @@
 				C99EEB8A299B19B400B77DBD /* ExploreByList */,
 				C99EEBA1299B19B400B77DBD /* Review */,
 				C99EEBA6299B19B400B77DBD /* Login */,
+				C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */,
+				C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */,
+				C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -658,6 +667,7 @@
 				C99EEBE3299B19B400B77DBD /* SearchBar.swift in Sources */,
 				C99EEBF1299B19B400B77DBD /* Header.swift in Sources */,
 				C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */,
+				C99EEC4429A1B91700B77DBD /* DoubleSearchView.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
 				C99EEBF4299B19B400B77DBD /* FullImageDisplay.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
@@ -665,6 +675,7 @@
 				C99EEBDE299B19B400B77DBD /* ClearListBackgroundMod.swift in Sources */,
 				C99EEBCD299B19B400B77DBD /* User.swift in Sources */,
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
+				C99EEC4829A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift in Sources */,
 				C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,
 				C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */,
@@ -679,6 +690,7 @@
 				C99EEBBB299B19B400B77DBD /* ErrorManager.swift in Sources */,
 				C99EEBF8299B19B400B77DBD /* LD.swift in Sources */,
 				C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */,
+				C99EEC4629A1C32A00B77DBD /* SearchControllerView.swift in Sources */,
 				C99EEBCE299B19B400B77DBD /* ReviewData.swift in Sources */,
 				C99EEBE5299B19B400B77DBD /* SlideOverCard.swift in Sources */,
 				C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */,
