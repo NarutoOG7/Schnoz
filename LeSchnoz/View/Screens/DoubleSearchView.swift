@@ -24,6 +24,10 @@ struct DoubleSearchView: View {
                 textField(searchCase: .searchArea,
                           input: $searchAreaInput)
             }
+            
+            .onChange(of: placeSearchInput) { newValue in
+//                <#code#>
+            }
         }
         .padding(.horizontal)
     }

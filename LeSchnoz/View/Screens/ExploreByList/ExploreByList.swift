@@ -133,10 +133,11 @@ struct ExploreByList: View {
 //        .padding(.trailing, 65)
         .frame(height: 40)
         .fullScreenCover(isPresented: $googleSheetVisible) {
-            PlacesViewControllerBridge { place in
-                exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
-                exploreVM.selectedPlace = place
-            }
+            SearchControllerBridge()
+//            PlacesViewControllerBridge { place in
+//                exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
+//                exploreVM.selectedPlace = place
+//            }
         }
     }
     

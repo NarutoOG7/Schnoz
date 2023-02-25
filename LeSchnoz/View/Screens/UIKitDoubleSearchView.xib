@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIKitDoubleSearchView" customModule="LeSchnoz" customModuleProvider="target">
+            <connections>
+                <outlet property="areaSearchBar" destination="oPf-af-N4O" id="gE7-aq-amA"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="KDc-Ke-uJL"/>
+                <outlet property="placeSearchBar" destination="Vmf-YE-LjL" id="tBi-J0-T8T"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UIKitDoubleSearchView" customModule="LeSchnoz" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="YjX-S4-WA3">
+                    <rect key="frame" x="11" y="-1" width="371" height="112"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVO-qr-Qv5">
+                            <rect key="frame" x="0.0" y="39" width="47" height="34.333333333333343"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cib-ZZ-Eex">
+                            <rect key="frame" x="53" y="0.0" width="318" height="112"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="What are you looking for?" translatesAutoresizingMaskIntoConstraints="NO" id="Vmf-YE-LjL">
+                                    <rect key="frame" x="0.0" y="0.0" width="318" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Near Me" translatesAutoresizingMaskIntoConstraints="NO" id="oPf-af-N4O">
+                                    <rect key="frame" x="0.0" y="56" width="318" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="112" id="SO0-BE-hy6"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="YjX-S4-WA3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ih6-RN-LSf"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YjX-S4-WA3" secondAttribute="trailing" constant="11" id="njx-QD-xGS"/>
+                <constraint firstItem="YjX-S4-WA3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="11" id="qb4-0o-RC2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

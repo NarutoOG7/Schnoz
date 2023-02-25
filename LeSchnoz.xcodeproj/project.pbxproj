@@ -83,8 +83,15 @@
 		C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */; };
 		C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */; };
 		C99EEC4429A1B91700B77DBD /* DoubleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */; };
-		C99EEC4629A1C32A00B77DBD /* SearchControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */; };
-		C99EEC4829A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */; };
+		C99EEC4A29A1F41600B77DBD /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4929A1F41600B77DBD /* SearchResultsController.swift */; };
+		C99EEC4C29A1F7CB00B77DBD /* TODOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */; };
+		C99EEC5229A3FAFF00B77DBD /* SearchControllerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5129A3FAFF00B77DBD /* SearchControllerBridge.swift */; };
+		C99EEC5429A4167100B77DBD /* UIKitDoubleSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */; };
+		C99EEC5629A41B6900B77DBD /* UIKitDoubleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */; };
+		C99EEC5929A44E2C00B77DBD /* SearchTableControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5729A44E2C00B77DBD /* SearchTableControllerViewController.swift */; };
+		C99EEC5A29A44E2C00B77DBD /* SearchTableControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC5829A44E2C00B77DBD /* SearchTableControllerViewController.xib */; };
+		C99EEC5C29A578D400B77DBD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5B29A578D400B77DBD /* SearchViewController.swift */; };
+		C99EEC5E29A5C43800B77DBD /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC5D29A5C43800B77DBD /* Search.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,8 +171,15 @@
 		C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDataTable.swift; sourceTree = "<group>"; };
 		C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoogleResultCell.xib; sourceTree = "<group>"; };
 		C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSearchView.swift; sourceTree = "<group>"; };
-		C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerView.swift; sourceTree = "<group>"; };
-		C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesResultsViewControllerBridge.swift; sourceTree = "<group>"; };
+		C99EEC4929A1F41600B77DBD /* SearchResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOS.swift; sourceTree = "<group>"; };
+		C99EEC5129A3FAFF00B77DBD /* SearchControllerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerBridge.swift; sourceTree = "<group>"; };
+		C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UIKitDoubleSearchView.xib; sourceTree = "<group>"; };
+		C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitDoubleSearchView.swift; sourceTree = "<group>"; };
+		C99EEC5729A44E2C00B77DBD /* SearchTableControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableControllerViewController.swift; sourceTree = "<group>"; };
+		C99EEC5829A44E2C00B77DBD /* SearchTableControllerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableControllerViewController.xib; sourceTree = "<group>"; };
+		C99EEC5B29A578D400B77DBD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C99EEC5D29A5C43800B77DBD /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +209,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
+				C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
@@ -309,6 +324,7 @@
 				C99EEB6A299B19B400B77DBD /* Screens */,
 				C99EEBAA299B19B400B77DBD /* TabBarSetup.swift */,
 				C99EEC37299C6DB200B77DBD /* PlacesViewControllerBridge.swift */,
+				C99EEC5D29A5C43800B77DBD /* Search.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,15 +394,20 @@
 		C99EEB6A299B19B400B77DBD /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C99EEC4929A1F41600B77DBD /* SearchResultsController.swift */,
+				C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */,
 				C99EEB6B299B19B400B77DBD /* Settings */,
 				C99EEB7C299B19B400B77DBD /* LocationDetails */,
 				C99EEB83299B19B400B77DBD /* Launch */,
 				C99EEB8A299B19B400B77DBD /* ExploreByList */,
 				C99EEBA1299B19B400B77DBD /* Review */,
 				C99EEBA6299B19B400B77DBD /* Login */,
-				C99EEC4329A1B91700B77DBD /* DoubleSearchView.swift */,
-				C99EEC4529A1C32A00B77DBD /* SearchControllerView.swift */,
-				C99EEC4729A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift */,
+				C99EEC5129A3FAFF00B77DBD /* SearchControllerBridge.swift */,
+				C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */,
+				C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */,
+				C99EEC5729A44E2C00B77DBD /* SearchTableControllerViewController.swift */,
+				C99EEC5829A44E2C00B77DBD /* SearchTableControllerViewController.xib */,
+				C99EEC5B29A578D400B77DBD /* SearchViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -570,11 +591,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
+				C99EEC5A29A44E2C00B77DBD /* SearchTableControllerViewController.xib in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
+				C99EEC5E29A5C43800B77DBD /* Search.storyboard in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 				C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */,
+				C99EEC5429A4167100B77DBD /* UIKitDoubleSearchView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,11 +673,14 @@
 				C99EEC17299B19B400B77DBD /* SignupVM.swift in Sources */,
 				C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */,
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
+				C99EEC5929A44E2C00B77DBD /* SearchTableControllerViewController.swift in Sources */,
 				C99EEBC3299B19B400B77DBD /* LocationAnnotationModel.swift in Sources */,
 				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
 				C99EEBFE299B19B400B77DBD /* LocationCollection.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,
+				C99EEC4C29A1F7CB00B77DBD /* TODOS.swift in Sources */,
 				C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */,
+				C99EEC4A29A1F41600B77DBD /* SearchResultsController.swift in Sources */,
 				C99EEBF2299B19B400B77DBD /* SettingsPage.swift in Sources */,
 				C99EEC12299B19B400B77DBD /* CreativeSignInUp.swift in Sources */,
 				C99EEC21299B1AD800B77DBD /* Destination.swift in Sources */,
@@ -675,7 +702,6 @@
 				C99EEBDE299B19B400B77DBD /* ClearListBackgroundMod.swift in Sources */,
 				C99EEBCD299B19B400B77DBD /* User.swift in Sources */,
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
-				C99EEC4829A1C39400B77DBD /* PlacesResultsViewControllerBridge.swift in Sources */,
 				C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,
 				C99EEC3C299EE06A00B77DBD /* GoogleDataTable.swift in Sources */,
@@ -690,7 +716,6 @@
 				C99EEBBB299B19B400B77DBD /* ErrorManager.swift in Sources */,
 				C99EEBF8299B19B400B77DBD /* LD.swift in Sources */,
 				C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */,
-				C99EEC4629A1C32A00B77DBD /* SearchControllerView.swift in Sources */,
 				C99EEBCE299B19B400B77DBD /* ReviewData.swift in Sources */,
 				C99EEBE5299B19B400B77DBD /* SlideOverCard.swift in Sources */,
 				C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */,
@@ -704,9 +729,12 @@
 				C99EEC00299B19B400B77DBD /* ExploreByList.swift in Sources */,
 				C99EEC13299B19B400B77DBD /* SignUp.swift in Sources */,
 				C99EEBD9299B19B400B77DBD /* Binding.swift in Sources */,
+				C99EEC5629A41B6900B77DBD /* UIKitDoubleSearchView.swift in Sources */,
 				C99EEBDA299B19B400B77DBD /* UnabreviatedString.swift in Sources */,
+				C99EEC5229A3FAFF00B77DBD /* SearchControllerBridge.swift in Sources */,
 				C99EEBB9299B19B400B77DBD /* LocalSearchService.swift in Sources */,
 				C99EEC1A299B19B400B77DBD /* LoginVM.swift in Sources */,
+				C99EEC5C29A578D400B77DBD /* SearchViewController.swift in Sources */,
 				C99EEBDF299B19B400B77DBD /* LogoStyle.swift in Sources */,
 				C99EEBB4299B19B400B77DBD /* Authorization.swift in Sources */,
 				C99EEBB5299B19B400B77DBD /* UserLocationManager.swift in Sources */,
