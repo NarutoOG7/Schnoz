@@ -15,6 +15,6 @@ struct SearchControllerBridge: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: SearchViewController, context: Context) {
-//        
+        
     }
 }

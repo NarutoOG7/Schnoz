@@ -17,6 +17,17 @@ class UIKitDoubleSearchView: UIView {
     
     var delegate: DoubleSearchDelegate?
     
+    var parent: SearchViewController?
+    
+    var width: CGFloat?
+    
+    init(parent: SearchViewController, width: CGFloat) {
+        let frame = CGRect(x: 0, y: 65, width: width, height: 100)
+        super.init(frame: frame)
+        self.parent = parent
+        commonInit()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -26,12 +37,7 @@ class UIKitDoubleSearchView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//
-//        commonInit()
-//    }
+
     
     private func commonInit() {
         Bundle.main.loadNibNamed("UIKitDoubleSearchView", owner: self)
@@ -40,6 +46,7 @@ class UIKitDoubleSearchView: UIView {
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         placeSearchBar.delegate = self
         areaSearchBar.delegate = self
+        parent?.delegate = self
     }
 }
 
@@ -56,12 +63,26 @@ extension UIKitDoubleSearchView: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchBar == placeSearchBar {
-            self.currentBar = .place
+            delegate?.currentBar(bar: .place)
         } else if searchBar == areaSearchBar {
-            self.currentBar = .area
+            delegate?.currentBar(bar: .area)
         }
     }
+        
+}
+
+extension UIKitDoubleSearchView: SearchControllerDelegate {
     
+    func placeSelected(name: String, selectedBar: SearchBarType) {
+        if selectedBar == .place {
+            placeSearchBar.text = name
+        } else {
+            areaSearchBar.text = name
+            areaSearchBar.endEditing(true)
+            delegate?.currentBar(bar: .place)
+            delegate?.placeSourceTextChanged(name)
+        }
+    }
 }
 
 

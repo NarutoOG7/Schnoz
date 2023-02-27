@@ -8,13 +8,15 @@
 /*
 
  
- So say that you choose a new location or simulate being in New York City, when you click on the result (the table cell), how do i tell the SearchViewController-GMSADelegate-placeSelected that it was selected by a specific searchbar?
-  
-    -Can I create/add to DoubleSearchDelegate with like a currentBar value?
-        -Yes, I think I solved that part
+- Search is kind of buggy. Not sure i can make it better though.
+    - When I delete text of area search, Need to update back to search by current location.
  
- OK now, I have the delegate in place and the data when a place is selected. Now I need to implement the logic into the search. Take the area search text and put it into the exploreVM search area.
+- Grab and use place search to fill location details page... keep it basic.
+ 
+- Big X Button Logic to go back to home
  
  
-
+ 
+ 
+ 
 */

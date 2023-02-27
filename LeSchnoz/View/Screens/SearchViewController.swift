@@ -8,6 +8,11 @@
 import UIKit
 import GooglePlaces
 
+//MARK: - Search Protocol
+protocol SearchControllerDelegate {
+    func placeSelected(name: String, selectedBar: SearchBarType)
+}
+
 class SearchViewController: UIViewController {
     
     private var tableView: UITableView!
@@ -17,17 +22,18 @@ class SearchViewController: UIViewController {
     private var exploreVM = ExploreViewModel.instance
     
     private var currentBar: SearchBarType?
+            
+    var delegate: SearchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         tableDataSource = GMSAutocompleteTableDataSource()
         tableDataSource?.delegate = self
         
         setUpGoogleResults(controller: tableDataSource)
         
-        let searchView = UIKitDoubleSearchView(frame: CGRect(x: 0, y: 65, width: view.bounds.width, height: 100))
+        let searchView = UIKitDoubleSearchView(parent: self, width: view.bounds.width)
         searchView.delegate = self
         view.addSubview(searchView)
         
@@ -42,7 +48,7 @@ class SearchViewController: UIViewController {
     func setUpGoogleResults(controller: GMSAutocompleteTableDataSource?) {
         
         if let controller = controller {
-            
+                        
             let fields: GMSPlaceField = GMSPlaceField(rawValue:UInt(GMSPlaceField.name.rawValue) |
                                                       UInt(GMSPlaceField.placeID.rawValue) |
                                                       UInt(GMSPlaceField.coordinate.rawValue) |
@@ -51,17 +57,9 @@ class SearchViewController: UIViewController {
                                                       GMSPlaceField.types.rawValue)
             
             let filter = GMSAutocompleteFilter()
-            
-            let location = exploreVM.searchLocation
-            self.geocodeAddressToCoordinates(location) { coordinates in
-                filter.locationBias = GMSPlaceRectangularLocationOption(coordinates, coordinates)
-            } onError: { error in
-                if let error = error {
-                    // TODO: handle error
-                }
-            }
+                        
             filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
-            
+                        
             controller.autocompleteFilter = filter
             controller.placeFields = fields
         }
@@ -106,11 +104,19 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
     }
     
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
-        // Do something with the selected place.
+        
+        
         if currentBar == .place {
-            
+            // Do something with the selected place.
+
         } else {
-            
+            if
+               let currentBar = self.currentBar, let name = place.name {
+
+                exploreVM.searchLocation = name
+                setUpGoogleResults(controller: tableDataSource)
+                delegate?.placeSelected(name: name, selectedBar: currentBar)
+            }
         }
         
     }
@@ -129,8 +135,8 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
 extension SearchViewController: DoubleSearchDelegate {
     
     func placeSourceTextChanged(_ text: String) {
-        setUpGoogleResults(controller: tableDataSource)
-        tableDataSource?.sourceTextHasChanged(text)
+//        setUpGoogleResults(controller: tableDataSource)
+        tableDataSource?.sourceTextHasChanged(exploreVM.searchLocation + " " + text)
     }
     
     func areaSearchTextChanged(_ text: String) {
