@@ -6,12 +6,20 @@
 //
 
 import UIKit
+import SwiftUI
+
+class SearchVM: ObservableObject {
+    static let instance = SearchVM()
+    
+    @Published var shouldShowSearchView = false
+}
 
 class UIKitDoubleSearchView: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var placeSearchBar: UISearchBar!
     @IBOutlet weak var areaSearchBar: UISearchBar!
+    @IBOutlet weak var backButton: UIButton!
     
     private var currentBar: SearchBarType?
     
@@ -20,9 +28,9 @@ class UIKitDoubleSearchView: UIView {
     var parent: SearchViewController?
     
     var width: CGFloat?
-    
-    init(parent: SearchViewController, width: CGFloat) {
-        let frame = CGRect(x: 0, y: 65, width: width, height: 100)
+        
+    init(parent: SearchViewController, frame: CGRect) {
+//        let frame = CGRect(x: 0, y: 65, width: width, height: 100)
         super.init(frame: frame)
         self.parent = parent
         commonInit()
@@ -48,6 +56,15 @@ class UIKitDoubleSearchView: UIView {
         areaSearchBar.delegate = self
         parent?.delegate = self
     }
+    
+    
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        
+        let searchVM = SearchVM.instance
+        searchVM.shouldShowSearchView = false
+        
+    }
+    
 }
 
 extension UIKitDoubleSearchView: UISearchBarDelegate {
@@ -68,7 +85,7 @@ extension UIKitDoubleSearchView: UISearchBarDelegate {
             delegate?.currentBar(bar: .area)
         }
     }
-        
+     
 }
 
 extension UIKitDoubleSearchView: SearchControllerDelegate {

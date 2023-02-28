@@ -23,6 +23,7 @@ struct ExploreByList: View {
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
+    @ObservedObject var searchVM = SearchVM.instance
     
     @Environment(\.managedObjectContext) var moc
     
@@ -35,18 +36,9 @@ struct ExploreByList: View {
             ZStack {
                 VStack {
                     greeting
-                    HStack {
                         searchBar
-                        mapButton
-                    }
                     divider
-                    ScrollView(showsIndicators: false) {
-                        locationsCollections
-                    }
                 }
-//                searchBar
-                googleTable
-                    .frame(height: 100)
             }
             
 
@@ -94,31 +86,9 @@ struct ExploreByList: View {
             .padding(.bottom, -8)
     }
     
-    private var searchView: some View {
-        VStack {
-            SearchBar(exploreVM: exploreVM,
-                      userStore: userStore,
-                      firebaseManager: firebaseManager,
-                      errorManager: errorManager)
-            
-            .padding(.top, 75)
-            .padding(.horizontal)
-            .padding(.trailing, 65)
-//            .sheet(isPresented: $googleSheetVisible) {
-//                PlacesViewControllerBridge { place in
-//                    exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
-//                    exploreVM.selectedPlace = place
-//                }
-//            }
-            
-            
-            Spacer()
-        }
-    }
-    
     private var searchBar: some View {
         Button {
-            self.googleSheetVisible = true
+            searchVM.shouldShowSearchView = true
         } label: {
             
             RoundedRectangle(cornerRadius: 20)
@@ -128,33 +98,13 @@ struct ExploreByList: View {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(oceanBlue.blue))
         }
-//        .padding(.top, 75)
         .padding(.horizontal)
-//        .padding(.trailing, 65)
         .frame(height: 40)
-        .fullScreenCover(isPresented: $googleSheetVisible) {
+        .fullScreenCover(isPresented: $searchVM.shouldShowSearchView) {
             SearchControllerBridge()
-//            PlacesViewControllerBridge { place in
-//                exploreVM.searchText = place.name ?? "Doododoodoodododododoodo"
-//                exploreVM.selectedPlace = place
-//            }
         }
     }
-    
-    //MARK: - Buttons
-    
-    private var mapButton: some View {
-//        HStack {
-//            Spacer()
-//            Spacer()
-            CircleButton(size: .small,
-                         image: Image(systemName: "map"),
-                         mainColor: K.Colors.OceanBlue.lightBlue,
-                         accentColor: K.Colors.OceanBlue.white,
-                         clicked: isShowingMap)
-//        }
-        .padding(.horizontal)
-    }
+
     
     //MARK: - Methods
     

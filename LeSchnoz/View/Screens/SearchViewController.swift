@@ -33,14 +33,20 @@ class SearchViewController: UIViewController {
         
         setUpGoogleResults(controller: tableDataSource)
         
-        let searchView = UIKitDoubleSearchView(parent: self, width: view.bounds.width)
+        let searchView = UIKitDoubleSearchView(parent: self,
+                                               frame: CGRect(x: 0,
+                                                             y: 20,
+                                                             width: self.view.frame.size.width,
+                                                             height: 100))
         searchView.delegate = self
         view.addSubview(searchView)
         
-        tableView = UITableView(frame: CGRect(x: 0, y: 264, width: self.view.frame.size.width, height: self.view.frame.size.height - 44))
+        tableView = UITableView(frame: CGRect(x: 0,
+                                              y: 140,
+                                              width: self.view.frame.size.width,
+                                              height: self.view.frame.size.height))
         tableView.delegate = tableDataSource
         tableView.dataSource = tableDataSource
-        
         view.addSubview(tableView)
     }
     
@@ -111,7 +117,8 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
 
         } else {
             if
-               let currentBar = self.currentBar, let name = place.name {
+               let currentBar = self.currentBar,
+                let name = place.name {
 
                 exploreVM.searchLocation = name
                 setUpGoogleResults(controller: tableDataSource)
@@ -135,7 +142,7 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
 extension SearchViewController: DoubleSearchDelegate {
     
     func placeSourceTextChanged(_ text: String) {
-//        setUpGoogleResults(controller: tableDataSource)
+        setUpGoogleResults(controller: tableDataSource)
         tableDataSource?.sourceTextHasChanged(exploreVM.searchLocation + " " + text)
     }
     
@@ -144,6 +151,9 @@ extension SearchViewController: DoubleSearchDelegate {
         newFilter.types = ["locality"]
         tableDataSource?.autocompleteFilter = newFilter
         tableDataSource?.sourceTextHasChanged(text)
+    
+        // Acts as cancel tapped
+        exploreVM.searchLocation = ""
     }
     
     func currentBar(bar: SearchBarType) {

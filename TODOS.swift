@@ -6,15 +6,13 @@
 //
 
 /*
+ 
+ 
+ - Show nearby locations when fields are empty
+    - How did I show locations when area prediction was tapped?
+ 
+ - Grab and use place search to fill location details page... keep it basic.
 
- 
-- Search is kind of buggy. Not sure i can make it better though.
-    - When I delete text of area search, Need to update back to search by current location.
- 
-- Grab and use place search to fill location details page... keep it basic.
- 
-- Big X Button Logic to go back to home
- 
  
  
  

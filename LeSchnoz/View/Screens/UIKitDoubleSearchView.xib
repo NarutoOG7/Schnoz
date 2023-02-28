@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIKitDoubleSearchView" customModule="LeSchnoz" customModuleProvider="target">
             <connections>
                 <outlet property="areaSearchBar" destination="oPf-af-N4O" id="gE7-aq-amA"/>
+                <outlet property="backButton" destination="BVO-qr-Qv5" id="ekn-g0-dYT"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="KDc-Ke-uJL"/>
                 <outlet property="placeSearchBar" destination="Vmf-YE-LjL" id="tBi-J0-T8T"/>
             </connections>
@@ -27,6 +28,9 @@
                             <rect key="frame" x="0.0" y="39" width="47" height="34.333333333333343"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="BZH-DH-m4P"/>
+                            </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cib-ZZ-Eex">
                             <rect key="frame" x="53" y="0.0" width="318" height="112"/>
