@@ -7,6 +7,7 @@
 
 import UIKit
 import GooglePlaces
+import SwiftUI
 
 //MARK: - Search Protocol
 protocol SearchControllerDelegate {
@@ -15,24 +16,65 @@ protocol SearchControllerDelegate {
 
 class SearchViewController: UIViewController {
     
-    private var tableView: UITableView!
+    private var searchContainerView: UIView?
+    
+    private var tableView: UITableView?
     
     private var tableDataSource: GMSAutocompleteTableDataSource?
     
-    private var exploreVM = ExploreViewModel.instance
+    private var searchVM = SearchVM.instance
     
     private var currentBar: SearchBarType?
+    
+    private let userStore = UserStore.instance
             
     var delegate: SearchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         tableDataSource = GMSAutocompleteTableDataSource()
         tableDataSource?.delegate = self
         
         setUpGoogleResults(controller: tableDataSource)
         
+//        setUpSwiftUIView()
+        setUpUIKitView()
+        setUpTableView()
+
+    }
+    
+    func setUpTableView() {
+        tableView = UITableView(frame: CGRect(x: 0,
+                                              y: 140,
+                                              width: self.view.frame.size.width,
+                                              height: self.view.frame.size.height))
+        if let tableView = tableView {
+            tableView.delegate = tableDataSource
+            tableView.dataSource = tableDataSource
+            view.addSubview(tableView)
+        }
+    }
+    
+    func setUpSwiftUIView() {
+        searchContainerView = UIView(frame: CGRect(x: 0,
+                                                   y: 20,
+                                                   width: self.view.frame.size.width,
+                                                   height: 120))
+        if let searchContainerView = searchContainerView {
+            view.addSubview(searchContainerView)
+
+
+            let searchView = UIHostingController(rootView: SearchView(delegate: self, exploreVM: ExploreViewModel.instance))
+            addChild(searchView)
+            searchView.view.frame = searchContainerView.bounds
+            searchContainerView.addSubview(searchView.view)
+            searchView.didMove(toParent: self)
+        }
+    }
+    
+    func setUpUIKitView() {
         let searchView = UIKitDoubleSearchView(parent: self,
                                                frame: CGRect(x: 0,
                                                              y: 20,
@@ -40,14 +82,6 @@ class SearchViewController: UIViewController {
                                                              height: 100))
         searchView.delegate = self
         view.addSubview(searchView)
-        
-        tableView = UITableView(frame: CGRect(x: 0,
-                                              y: 140,
-                                              width: self.view.frame.size.width,
-                                              height: self.view.frame.size.height))
-        tableView.delegate = tableDataSource
-        tableView.dataSource = tableDataSource
-        view.addSubview(tableView)
     }
     
     
@@ -70,28 +104,6 @@ class SearchViewController: UIViewController {
             controller.placeFields = fields
         }
     }
-    
-    func geocodeAddressToCoordinates(_ address: String,
-                                     withCompletion completion: @escaping(CLLocationCoordinate2D) -> Void,
-                                     onError: @escaping(Error?) -> Void) {
-        
-        let geoCoder = CLGeocoder()
-        
-        geoCoder.geocodeAddressString(address) { (placemarks, error) in
-            guard
-                let placemarks = placemarks,
-                let location = placemarks.first?.location
-            else {
-                // handle no location found
-                onError(error)
-                return
-            }
-            
-            // Use location
-            completion(location.coordinate)
-            
-        }
-    }
 }
 
 extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
@@ -99,14 +111,14 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
         // Turn the network activity indicator off.
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         // Reload table data.
-        tableView.reloadData()
+        tableView?.reloadData()
     }
     
     func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator on.
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         // Reload table data.
-        tableView.reloadData()
+        tableView?.reloadData()
     }
     
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
@@ -120,7 +132,7 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
                let currentBar = self.currentBar,
                 let name = place.name {
 
-                exploreVM.searchLocation = name
+                searchVM.placeSearchText = name
                 setUpGoogleResults(controller: tableDataSource)
                 delegate?.placeSelected(name: name, selectedBar: currentBar)
             }
@@ -141,23 +153,49 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
 
 extension SearchViewController: DoubleSearchDelegate {
     
-    func placeSourceTextChanged(_ text: String) {
+    func placeSourceTextChanged() {
         setUpGoogleResults(controller: tableDataSource)
-        tableDataSource?.sourceTextHasChanged(exploreVM.searchLocation + " " + text)
+        changeSearchText()
     }
     
     func areaSearchTextChanged(_ text: String) {
         let newFilter = GMSAutocompleteFilter()
         newFilter.types = ["locality"]
         tableDataSource?.autocompleteFilter = newFilter
+//        changeSearchText()
         tableDataSource?.sourceTextHasChanged(text)
-    
-        // Acts as cancel tapped
-        exploreVM.searchLocation = ""
     }
     
     func currentBar(bar: SearchBarType) {
         self.currentBar = bar
     }
+    
+    func changeSearchText() {
+        
+        let searchVM = SearchVM.instance
+        
+        let placeIsEmpty = searchVM.placeSearchText == ""
+        let searchIsEmpty = searchVM.areaSearchText == ""
+        let bothFieldsEmpty = placeIsEmpty && searchIsEmpty
+        
+        if bothFieldsEmpty {
+            // current location, update tabledatasource
+            if let coordinates = userStore.currentLocation?.coordinate {
+                FirebaseManager.instance.getAddressFrom(coordinates: coordinates) { address in
+                    let text = address.city
+                    self.tableDataSource?.sourceTextHasChanged(text)
+                }
+            }
+        } else {
+            tableDataSource?.sourceTextHasChanged(searchVM.areaSearchText + " " + searchVM.placeSearchText)
+        }
+    }
 }
 
+extension SearchViewController: SearchViewDelegate {
+    func searchInputChanged(searchBar: SearchBarType, text: String) {
+        tableDataSource?.sourceTextHasChanged(text)
+    }
+    
+    
+}

@@ -24,25 +24,32 @@
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="YjX-S4-WA3">
                     <rect key="frame" x="11" y="-1" width="371" height="112"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVO-qr-Qv5">
-                            <rect key="frame" x="0.0" y="39" width="47" height="34.333333333333343"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVO-qr-Qv5">
+                            <rect key="frame" x="0.0" y="40" width="40" height="32"/>
+                            <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                                <color key="baseForegroundColor" systemColor="linkColor"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="BZH-DH-m4P"/>
+                                <action selector="backButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="msd-Dl-l7G"/>
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cib-ZZ-Eex">
-                            <rect key="frame" x="53" y="0.0" width="318" height="112"/>
+                            <rect key="frame" x="46" y="0.0" width="325" height="112"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="What are you looking for?" translatesAutoresizingMaskIntoConstraints="NO" id="Vmf-YE-LjL">
-                                    <rect key="frame" x="0.0" y="0.0" width="318" height="56"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="325" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
-                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Near Me" translatesAutoresizingMaskIntoConstraints="NO" id="oPf-af-N4O">
-                                    <rect key="frame" x="0.0" y="56" width="318" height="56"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </searchBar>
+                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ohg-x3-e9h">
+                                    <rect key="frame" x="0.0" y="56" width="325" height="56"/>
+                                    <subviews>
+                                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Near Me" translatesAutoresizingMaskIntoConstraints="NO" id="oPf-af-N4O">
+                                            <rect key="frame" x="0.0" y="0.0" width="325" height="56"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </searchBar>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                         </stackView>
                     </subviews>
@@ -59,11 +66,19 @@
                 <constraint firstItem="YjX-S4-WA3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="11" id="qb4-0o-RC2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="areaSearchBar" destination="oPf-af-N4O" id="4ej-ib-5PL"/>
+                <outlet property="backButton" destination="BVO-qr-Qv5" id="dqW-M5-vZ5"/>
+                <outlet property="placeSearchBar" destination="Vmf-YE-LjL" id="ChN-zY-7gK"/>
+            </connections>
             <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ExploreByList: View {
     
+    @Namespace var namespace
+    
     @State var searchText = ""
     @State var showingSearchResults = false
     
@@ -36,7 +38,7 @@ struct ExploreByList: View {
             ZStack {
                 VStack {
                     greeting
-                        searchBar
+                    searchBar
                     divider
                 }
             }
@@ -88,9 +90,31 @@ struct ExploreByList: View {
     
     private var searchBar: some View {
         Button {
-            searchVM.shouldShowSearchView = true
+            withAnimation {
+                exploreVM.showSearchTableView = true
+            }
         } label: {
             
+            RoundedRectangle(cornerRadius: 20)
+                .fill(oceanBlue.lightBlue)
+                .padding(2)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(oceanBlue.blue))
+                .matchedGeometryEffect(id: "bar", in: namespace)
+
+        }
+        .padding(.horizontal)
+        .frame(height: 40)
+        
+//        .fullScreenCover(isPresented: $searchVM.shouldShowSearchView) {
+////            SearchControllerBridge()
+//            SearchView(exploreVM: exploreVM)
+//        }
+    }
+    
+    private var searchNavigationView: some View {
+        NavigationLink(destination: SearchControllerBridge()) {
             RoundedRectangle(cornerRadius: 20)
                 .fill(oceanBlue.lightBlue)
                 .padding(2)
@@ -100,17 +124,9 @@ struct ExploreByList: View {
         }
         .padding(.horizontal)
         .frame(height: 40)
-        .fullScreenCover(isPresented: $searchVM.shouldShowSearchView) {
-            SearchControllerBridge()
-        }
     }
 
     
-    //MARK: - Methods
-    
-    func isShowingMap() {
-        exploreVM.isShowingMap = true
-    }
 }
 
 struct ExplorePage_Previews: PreviewProvider {

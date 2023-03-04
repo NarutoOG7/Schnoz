@@ -7,11 +7,23 @@
 
 import UIKit
 import SwiftUI
+import CoreLocation
+import CoreLocationUI
 
 class SearchVM: ObservableObject {
     static let instance = SearchVM()
     
     @Published var shouldShowSearchView = false
+    @Published var placeSearchText = ""
+    @Published var areaSearchText = ""
+    
+    func getDefaultSearchTextFromCurrentLocation(onCompletion: @escaping(String) -> Void) {
+        if let coordinates = UserStore.instance.currentLocation?.coordinate {
+            FirebaseManager.instance.getAddressFrom(coordinates: coordinates) { address in
+                onCompletion(address.city)
+            }
+        }
+    }
 }
 
 class UIKitDoubleSearchView: UIView {
@@ -28,6 +40,10 @@ class UIKitDoubleSearchView: UIView {
     var parent: SearchViewController?
     
     var width: CGFloat?
+    
+    let searchVM = SearchVM.instance
+    let exploreVM = ExploreViewModel.instance
+    let userLocManager = UserLocationManager.instance
         
     init(parent: SearchViewController, frame: CGRect) {
 //        let frame = CGRect(x: 0, y: 65, width: width, height: 100)
@@ -55,16 +71,20 @@ class UIKitDoubleSearchView: UIView {
         placeSearchBar.delegate = self
         areaSearchBar.delegate = self
         parent?.delegate = self
+        
+       searchVM.getDefaultSearchTextFromCurrentLocation(onCompletion: { text in
+           self.searchVM.areaSearchText = text
+           self.delegate?.placeSourceTextChanged()
+        })
     }
     
+    //MARK: - IBAction
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        
-        let searchVM = SearchVM.instance
-        searchVM.shouldShowSearchView = false
-        
+        withAnimation {
+            exploreVM.showSearchTableView = false
+        }
     }
-    
 }
 
 extension UIKitDoubleSearchView: UISearchBarDelegate {
@@ -72,9 +92,22 @@ extension UIKitDoubleSearchView: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       
       if searchBar == placeSearchBar {
-          delegate?.placeSourceTextChanged(searchText)
+          searchVM.placeSearchText = searchText
+          delegate?.placeSourceTextChanged()
+          
       } else {
           delegate?.areaSearchTextChanged(searchText)
+          
+          /*   Acts As Cancel Tapped   */
+            searchVM.areaSearchText = ""
+          
+          if searchText == "" {
+              searchVM.getDefaultSearchTextFromCurrentLocation { text in
+                  self.searchVM.placeSearchText = text
+                  self.delegate?.placeSourceTextChanged()
+              }
+          }
+
       }
   }
     
@@ -93,18 +126,20 @@ extension UIKitDoubleSearchView: SearchControllerDelegate {
     func placeSelected(name: String, selectedBar: SearchBarType) {
         if selectedBar == .place {
             placeSearchBar.text = name
+            searchVM.placeSearchText = name
         } else {
+            searchVM.areaSearchText = name
             areaSearchBar.text = name
             areaSearchBar.endEditing(true)
             delegate?.currentBar(bar: .place)
-            delegate?.placeSourceTextChanged(name)
+            delegate?.placeSourceTextChanged()
         }
     }
 }
 
 
 protocol DoubleSearchDelegate {
-    func placeSourceTextChanged(_ text: String)
+    func placeSourceTextChanged()
     func areaSearchTextChanged(_ text: String)
     func currentBar(bar: SearchBarType)
 }

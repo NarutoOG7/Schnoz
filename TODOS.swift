@@ -7,12 +7,11 @@
 
 /*
  
- 
- - Show nearby locations when fields are empty
-    - How did I show locations when area prediction was tapped?
+ - Session Tokens?
  
  - Grab and use place search to fill location details page... keep it basic.
 
+ - Milestone 2
  
  
  

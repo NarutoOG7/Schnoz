@@ -9,8 +9,10 @@ import SwiftUI
 
 struct TabBarSetup: View {
     
+    @Namespace var namespace
+    
     @State private var selection = 0
-
+    
     @StateObject var locationStore = LocationStore.instance
     @StateObject var exploreVM = ExploreViewModel.instance
     @StateObject var firebaseManager = FirebaseManager.instance
@@ -53,15 +55,23 @@ struct TabBarSetup: View {
         
         NavigationView {
             
-            ExploreByList(user: $userStore.user,
-                                         exploreVM: exploreVM,
-                                         locationStore: locationStore,
-                                         userStore: userStore,
-                                         firebaseManager: firebaseManager,
-                                         errorManager: errorManager)
-            
+            if exploreVM.showSearchTableView {
+                
+                SearchControllerBridge()
+                    .matchedGeometryEffect(id: "search", in: namespace)
+                
+            } else {
+                
+                ExploreByList(user: $userStore.user,
+                              exploreVM: exploreVM,
+                              locationStore: locationStore,
+                              userStore: userStore,
+                              firebaseManager: firebaseManager,
+                              errorManager: errorManager)
+                .matchedGeometryEffect(id: "search", in: namespace)
                 .navigationTitle("Explore")
                 .navigationBarHidden(true)
+            }
         }
         .background(Color.clear)
         

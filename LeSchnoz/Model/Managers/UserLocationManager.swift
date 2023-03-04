@@ -82,7 +82,6 @@ class UserLocationManager: NSObject, ObservableObject {
                 
                 userStore.currentLocation = currentLoc
 
-                exploreVM.setCurrentLocRegion(currentLoc)
             }
         @unknown default:
             break
@@ -101,15 +100,7 @@ class UserLocationManager: NSObject, ObservableObject {
 extension UserLocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        locations.last.map {
-            
-            let region = MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
-                span: MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2))
-            
-            exploreVM.searchRegion = region
-        }
+        userStore.currentLocation = locations.last
     }
     
     //MARK: - Handling user loction choice

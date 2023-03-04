@@ -35,7 +35,6 @@
 		C99EEBE0299B19B400B77DBD /* CNPostalAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB60299B19B400B77DBD /* CNPostalAddress.swift */; };
 		C99EEBE1299B19B400B77DBD /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB61299B19B400B77DBD /* Placeholder.swift */; };
 		C99EEBE2299B19B400B77DBD /* Custom Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB63299B19B400B77DBD /* Custom Fonts.swift */; };
-		C99EEBE3299B19B400B77DBD /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB65299B19B400B77DBD /* SearchBar.swift */; };
 		C99EEBE4299B19B400B77DBD /* UserInputCellWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB66299B19B400B77DBD /* UserInputCellWithIcon.swift */; };
 		C99EEBE5299B19B400B77DBD /* SlideOverCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB67299B19B400B77DBD /* SlideOverCard.swift */; };
 		C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB68299B19B400B77DBD /* CircularButton.swift */; };
@@ -86,6 +85,10 @@
 		C99EEC5429A4167100B77DBD /* UIKitDoubleSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */; };
 		C99EEC5629A41B6900B77DBD /* UIKitDoubleSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */; };
 		C99EEC5C29A578D400B77DBD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC5B29A578D400B77DBD /* SearchViewController.swift */; };
+		C99EEC6229AFA18C00B77DBD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6129AFA18C00B77DBD /* SearchView.swift */; };
+		C99EEC6429B0EE2F00B77DBD /* SearchStoryboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC6329B0EE2F00B77DBD /* SearchStoryboard.xib */; };
+		C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6529B165E600B77DBD /* UserDefaults.swift */; };
+		C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC8129B2A14100B77DBD /* TapGesture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,7 +123,6 @@
 		C99EEB60299B19B400B77DBD /* CNPostalAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNPostalAddress.swift; sourceTree = "<group>"; };
 		C99EEB61299B19B400B77DBD /* Placeholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		C99EEB63299B19B400B77DBD /* Custom Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Fonts.swift"; sourceTree = "<group>"; };
-		C99EEB65299B19B400B77DBD /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C99EEB66299B19B400B77DBD /* UserInputCellWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInputCellWithIcon.swift; sourceTree = "<group>"; };
 		C99EEB67299B19B400B77DBD /* SlideOverCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOverCard.swift; sourceTree = "<group>"; };
 		C99EEB68299B19B400B77DBD /* CircularButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -168,6 +170,10 @@
 		C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UIKitDoubleSearchView.xib; sourceTree = "<group>"; };
 		C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitDoubleSearchView.swift; sourceTree = "<group>"; };
 		C99EEC5B29A578D400B77DBD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C99EEC6129AFA18C00B77DBD /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		C99EEC6329B0EE2F00B77DBD /* SearchStoryboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchStoryboard.xib; sourceTree = "<group>"; };
+		C99EEC6529B165E600B77DBD /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		C99EEC8129B2A14100B77DBD /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +252,7 @@
 				C99EEB2D299B19B300B77DBD /* Stores */,
 				C99EEB34299B19B300B77DBD /* Models */,
 				C99EEC20299B1AD800B77DBD /* Destination.swift */,
+				C99EEC6529B165E600B77DBD /* UserDefaults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -321,6 +328,7 @@
 				C99EEB56299B19B400B77DBD /* Extensions */,
 				C99EEB62299B19B400B77DBD /* Typography */,
 				C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */,
+				C99EEC8129B2A14100B77DBD /* TapGesture.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -368,7 +376,6 @@
 		C99EEB64299B19B400B77DBD /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				C99EEB65299B19B400B77DBD /* SearchBar.swift */,
 				C99EEB66299B19B400B77DBD /* UserInputCellWithIcon.swift */,
 				C99EEB67299B19B400B77DBD /* SlideOverCard.swift */,
 				C99EEB68299B19B400B77DBD /* CircularButton.swift */,
@@ -390,6 +397,8 @@
 				C99EEC5329A4167100B77DBD /* UIKitDoubleSearchView.xib */,
 				C99EEC5529A41B6900B77DBD /* UIKitDoubleSearchView.swift */,
 				C99EEC5B29A578D400B77DBD /* SearchViewController.swift */,
+				C99EEC6129AFA18C00B77DBD /* SearchView.swift */,
+				C99EEC6329B0EE2F00B77DBD /* SearchStoryboard.xib */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -576,6 +585,7 @@
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
+				C99EEC6429B0EE2F00B77DBD /* SearchStoryboard.xib in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 				C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */,
 				C99EEC5429A4167100B77DBD /* UIKitDoubleSearchView.xib in Resources */,
@@ -650,6 +660,7 @@
 			files = (
 				C99EEBDD299B19B400B77DBD /* DispatchQueue.swift in Sources */,
 				C99EEBDC299B19B400B77DBD /* MKMapItem.swift in Sources */,
+				C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */,
 				C99EEC17299B19B400B77DBD /* SignupVM.swift in Sources */,
 				C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */,
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
@@ -661,6 +672,7 @@
 				C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */,
 				C99EEBF2299B19B400B77DBD /* SettingsPage.swift in Sources */,
 				C99EEC12299B19B400B77DBD /* CreativeSignInUp.swift in Sources */,
+				C99EEC6229AFA18C00B77DBD /* SearchView.swift in Sources */,
 				C99EEC21299B1AD800B77DBD /* Destination.swift in Sources */,
 				C99EEC2B299C46F100B77DBD /* LocationStore.swift in Sources */,
 				C99EEB12299B121600B77DBD /* ContentView.swift in Sources */,
@@ -669,10 +681,10 @@
 				C99EEC2D299C47EC00B77DBD /* LocationData.swift in Sources */,
 				C99EEC14299B19B400B77DBD /* TabBarSetup.swift in Sources */,
 				C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */,
-				C99EEBE3299B19B400B77DBD /* SearchBar.swift in Sources */,
 				C99EEBF1299B19B400B77DBD /* Header.swift in Sources */,
 				C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
+				C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */,
 				C99EEBF4299B19B400B77DBD /* FullImageDisplay.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
 				C99EEBFA299B19B400B77DBD /* SplashScreen.swift in Sources */,
@@ -848,7 +860,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -880,7 +892,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

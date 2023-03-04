@@ -56,7 +56,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 let isGuest = try decoder.decode(Bool.self, from: data)
                 userStore.isGuest = isGuest
             } catch {
-                print("Unable to Decode Note (\(error)")
+                print("Unable to Decode Note (\(error))")
             }
         }
     }
