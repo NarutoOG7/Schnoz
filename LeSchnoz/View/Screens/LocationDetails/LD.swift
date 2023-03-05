@@ -7,19 +7,21 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import GooglePlaces
 
 struct LD: View {
     
-    @Binding var location: LocationModel
+    @State var location: SchnozPlace
     
     @State private var imageURL = URL(string: "")
     @State private var isSharing = false
     @State private var isCreatingNewReview = false
     @State private var isShowingMoreReviews = false
     
-    @ObservedObject var userStore: UserStore
-    @ObservedObject var firebaseManager: FirebaseManager
-    @ObservedObject var errorManager: ErrorManager
+    @ObservedObject var userStore = UserStore.instance
+    @ObservedObject var firebaseManager = FirebaseManager.instance
+    @ObservedObject var errorManager = ErrorManager.instance
+    @ObservedObject var ldvm = LDVM.instance
     
     let imageMaxHeight = UIScreen.main.bounds.height * 0.38
     let collapsedImageHeight: CGFloat = 10
@@ -38,8 +40,6 @@ struct LD: View {
                     avgRatingDisplay
                     buttons
                     Divider()
-                    description
-                    Spacer()
                     moreInfoLink
                     Spacer()
                     reviewHelper
@@ -61,11 +61,11 @@ struct LD: View {
                 }
                 
                 .sheet(isPresented: $isSharing) {
-                    ShareActivitySheet(itemsToShare: [location.location.name])
+                    ShareActivitySheet(itemsToShare: [location])
                 }
                 
                 .sheet(isPresented: $isShowingMoreReviews) {
-                    MoreReviewsSheet(reviews: location.reviews)
+                    MoreReviewsSheet(reviews: location.schnozReviews)
                 }
             }
             .background(images.paperBackground)
@@ -91,7 +91,7 @@ struct LD: View {
     }
     
     private var headerText: some View {
-        Text(location.location.name)
+        Text(location.gmsPlace?.name ?? "")
             .font(.avenirNext(size: 20))
             .fontWeight(.bold)
             .foregroundColor(.white)
@@ -117,7 +117,7 @@ struct LD: View {
     }
     
     private var title: some View {
-        Text(location.location.name)
+        Text(location.gmsPlace?.name ?? "")
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
@@ -125,14 +125,14 @@ struct LD: View {
     
     
     private var address: some View {
-        Text(location.location.address?.fullAddress() ?? "")
+        Text(location.gmsPlace?.formattedAddress ?? "")
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
     }
     
     private var avgRatingDisplay: some View {
-        let reviewCount = location.reviews.count
+        let reviewCount = location.schnozReviews.count
         let textEnding = reviewCount == 1 ? "" : "s"
         return HStack {
             Stars(
@@ -145,50 +145,55 @@ struct LD: View {
     }
     
 
-    private var description: some View {
-        Text(location.location.description ?? "")
-            .font(.avenirNext(size: 17))
-            .lineLimit(nil)
-            .foregroundColor(oceanBlue.blue)
-    }
+//    private var description: some View {
+//        Text(location.)
+//            .font(.avenirNext(size: 17))
+//            .lineLimit(nil)
+//            .foregroundColor(oceanBlue.blue)
+//    }
     
     private var reviewHelper: some View {
         VStack(alignment: .leading) {
-            if location.reviews.isEmpty {
+            if location.schnozReviews.isEmpty {
                 Divider()
                 Text("No Reviews")
                     .font(.avenirNext(size: 17))
                     .foregroundColor(oceanBlue.blue)
             } else {
-                if let last = location.reviews.last {
+                if let last = location.schnozReviews.last {
                     ReviewCard(review: last)
                     
                 }
             }
             HStack {
                 leaveAReviewView
-                if location.reviews.count > 1 {
+                if location.schnozReviews.count > 1 {
                     moreReviewsButton
                 }
             }
                 .padding(.vertical, 30)
             Spacer(minLength: 200)
         }
-        .sheet(isPresented: $isCreatingNewReview) {
+        .sheet(isPresented: $isCreatingNewReview, onDismiss: {
+            if let recentlyPublishedReview = ldvm.recentlyPublishedReview {
+                self.location.schnozReviews.append(recentlyPublishedReview)
+                ldvm.recentlyPublishedReview = nil
+            }
+        }, content: {
             LocationReviewView(location: $location,
                                isPresented: $isCreatingNewReview,
                                review: .constant(nil),
                                userStore: userStore,
                                firebaseManager: firebaseManager,
                                errorManager: errorManager)
-        }
+        })
     }
     
     private var moreInfoLink: some View {
         
         let view: AnyView
         
-        if let url = URL(string: location.location.moreInfoLink ?? "") {
+        if let url = location.gmsPlace?.website {
             
             view = AnyView(
                 HStack {
@@ -287,7 +292,7 @@ struct LD: View {
 
         var addressString: String {
             
-            location.location.name.replacingOccurrences(of: " ", with: "+")
+            location.gmsPlace?.name?.replacingOccurrences(of: " ", with: "+") ?? ""
         }
         
         guard let url = URL(string: "maps://?daddr=\(addressString)") else { return }
@@ -315,7 +320,7 @@ struct LD: View {
 //MARK: - Previews
 struct LD_Previews: PreviewProvider {
     static var previews: some View {
-        LD(location: .constant(LocationModel.example),
+        LD(location: SchnozPlace(gmsPlace: nil),
            userStore: UserStore(),
            firebaseManager: FirebaseManager(),
            errorManager: ErrorManager())

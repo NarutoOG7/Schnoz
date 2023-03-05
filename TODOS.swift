@@ -6,13 +6,19 @@
 //
 
 /*
+   
  
- - Session Tokens?
  
- - Grab and use place search to fill location details page... keep it basic.
-
- - Milestone 2
+  - Fetch Reviews for place
  
+  - UI
+    - Mimick Foursquare
+ 
+  - Images
+ 
+  - Privacy Policy / Terms
+ 
+  - Tutorial / Walkthrough in Settings as well as at first launch
  
  
  

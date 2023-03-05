@@ -20,7 +20,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        GMSPlacesClient.provideAPIKey("AIzaSyDk8wNXaaOEDVZOQPD6riTsktkoWkI-IsI")
+        GMSPlacesClient.provideAPIKey("AIzaSyBPTme7RzG4HL4VglZEZW96f1BXMb3CT_4")
 
         locationManager.checkIfLocationServicesIsEnabled()
 

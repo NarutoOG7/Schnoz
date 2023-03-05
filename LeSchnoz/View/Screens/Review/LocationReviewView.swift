@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LocationReviewView: View {
     
-    @Binding var location: LocationModel
+    @Binding var location: SchnozPlace
     @Binding var isPresented: Bool
     @Binding var review: ReviewModel?
     
@@ -52,7 +52,7 @@ struct LocationReviewView: View {
                     .padding(.top, 35)
             }
             .padding()
-            .navigationTitle(location.location.name)
+            .navigationTitle(location.gmsPlace?.name ?? "")
             
             firebaseErrorBanner
 
@@ -175,8 +175,8 @@ struct LocationReviewView: View {
                 review: descriptionInput,
                 title: titleInput,
                 username: isAnonymous ? "Anonymous" : name,
-                locationID: "\(location.location.id)",
-                locationName: location.location.name)
+                locationID: location.gmsPlace?.placeID ?? "",
+                locationName: location.gmsPlace?.name ?? "")
             
             if self.review != nil && isUpdated() {
                 
@@ -187,20 +187,21 @@ struct LocationReviewView: View {
                         self.shouldShowFirebaseError = true
                     }
                     
-                    self.location.reviews.append(rev)
+                    self.location.schnozReviews.append(rev)
                     self.shouldShowSuccessMessage = true
+                    
                 }
             } else {
                 
-                firebaseManager.addReviewToFirestoreBucket(rev, location: location.location) { error in
+                firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
                     
                     if let error = error {
                         self.firebaseErrorMessage = error.rawValue
                         self.shouldShowFirebaseError = true
                     }
                     
-                    self.location.reviews.append(rev)
                     self.shouldShowSuccessMessage = true
+                    LDVM.instance.recentlyPublishedReview = rev
                 }
             }
         }
@@ -240,9 +241,7 @@ struct LocationReviewView: View {
 
 struct LocationReviewView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationReviewView(location: .constant(LocationModel(location: .example,
-                                                             imageURLs: [],
-                                                             reviews: [])),
+        LocationReviewView(location: .constant(SchnozPlace(gmsPlace: nil)),
                            isPresented: .constant(true),
                            review: .constant(nil),
                            userStore: UserStore(),
@@ -251,3 +250,9 @@ struct LocationReviewView_Previews: PreviewProvider {
     }
 }
 
+
+class LDVM: ObservableObject {
+    static let instance = LDVM()
+    
+    @Published var recentlyPublishedReview: ReviewModel?
+}

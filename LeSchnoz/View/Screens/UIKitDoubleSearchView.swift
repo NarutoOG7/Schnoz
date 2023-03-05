@@ -124,10 +124,7 @@ extension UIKitDoubleSearchView: UISearchBarDelegate {
 extension UIKitDoubleSearchView: SearchControllerDelegate {
     
     func placeSelected(name: String, selectedBar: SearchBarType) {
-        if selectedBar == .place {
-            placeSearchBar.text = name
-            searchVM.placeSearchText = name
-        } else {
+        if selectedBar == .area {
             searchVM.areaSearchText = name
             areaSearchBar.text = name
             areaSearchBar.endEditing(true)

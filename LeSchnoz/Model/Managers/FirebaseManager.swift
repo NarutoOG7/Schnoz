@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import CoreLocation
 import MapKit
+import GooglePlaces
 
 
 class FirebaseManager: ObservableObject {
@@ -28,7 +29,7 @@ class FirebaseManager: ObservableObject {
     }
 
     //MARK: - Reviews
-    func addReviewToFirestoreBucket(_ review: ReviewModel, location: LocationData, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+    func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         
         guard let db = db else { return }
         
@@ -41,8 +42,8 @@ class FirebaseManager: ObservableObject {
             "review" : review.review,
             "rating" : review.rating,
             "username" : review.username,
-            "locationID" : "\(location.id)",
-            "locationName" : location.name
+            "locationID" : location.gmsPlace?.placeID ?? "",
+            "locationName" : location.gmsPlace?.name ?? ""
             
         ]) { error in
             
@@ -137,6 +138,37 @@ class FirebaseManager: ObservableObject {
                 }
             }
     }
+    
+    func getReviewsForLocation(_ place: GMSPlace, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
+        
+        guard let db = db else { return }
+
+        db.collection("Reviews")
+            .whereField("locationID", isEqualTo: place.placeID ?? "")
+            .getDocuments { snapshot, error in
+                
+                if let error = error {
+                    
+                    print(error.localizedDescription)
+                    self.errorManager.message = "Check your network connection and try again."
+                    self.errorManager.shouldDisplay = true
+                    
+                } else if let snapshot = snapshot {
+                    
+                    var reviews: [ReviewModel] = []
+                    
+                    for doc in snapshot.documents {
+                        let dict = doc.data()
+                        let review = ReviewModel(dictionary: dict)
+                        reviews.append(review)
+                    }
+                    
+                    completion(reviews)
+                }
+            }
+        
+    }
+    
     
     //MARK: - Coordinates & Address
     

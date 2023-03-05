@@ -35,7 +35,7 @@ struct ManageReviews: View {
         }
         .sheet(item: $selectedReview, content: { review in
             LocationReviewView(
-                location: .constant(review.location ?? LocationModel.example),
+                location: .constant(SchnozPlace(gmsPlace: nil)),
                 isPresented: $isEditingReview,
                 review: $selectedReview,
                 titleInput: review.title,

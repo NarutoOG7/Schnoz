@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */; };
+		C96622B429B44A3800C4ABD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C96622B329B44A3800C4ABD0 /* GoogleService-Info.plist */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
 		C99EEB12299B121600B77DBD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB11299B121600B77DBD /* ContentView.swift */; };
 		C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C99EEB13299B121700B77DBD /* Assets.xcassets */; };
@@ -69,7 +70,6 @@
 		C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC1E299B1A4000B77DBD /* Constants.swift */; };
 		C99EEC21299B1AD800B77DBD /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC20299B1AD800B77DBD /* Destination.swift */; };
 		C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */; };
-		C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */; };
 		C99EEC29299C468D00B77DBD /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC28299C468D00B77DBD /* LocationModel.swift */; };
 		C99EEC2B299C46F100B77DBD /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2A299C46F100B77DBD /* LocationStore.swift */; };
 		C99EEC2D299C47EC00B77DBD /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2C299C47EC00B77DBD /* LocationData.swift */; };
@@ -95,6 +95,7 @@
 		3C2F3CD7513111610A94D255 /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 		5C2E337B7638DE427F094D05 /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
 		A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C96622B329B44A3800C4ABD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeSchnozApp.swift; sourceTree = "<group>"; };
 		C99EEB11299B121600B77DBD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,7 +157,6 @@
 		C99EEC1E299B1A4000B77DBD /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C99EEC20299B1AD800B77DBD /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C99EEC28299C468D00B77DBD /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C99EEC2A299C46F100B77DBD /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		C99EEC2C299C47EC00B77DBD /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
@@ -203,9 +203,9 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
+				C96622B329B44A3800C4ABD0 /* GoogleService-Info.plist */,
 				C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
-				C99EEC26299B1E8B00B77DBD /* GoogleService-Info.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
 				4D06D5FB5BC0E37911755A9E /* Pods */,
@@ -583,8 +583,8 @@
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
-				C99EEC27299B1E8B00B77DBD /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
+				C96622B429B44A3800C4ABD0 /* GoogleService-Info.plist in Resources */,
 				C99EEC6429B0EE2F00B77DBD /* SearchStoryboard.xib in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 				C99EEC3E299EF9B700B77DBD /* GoogleResultCell.xib in Resources */,
@@ -860,6 +860,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -872,7 +873,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.LeSchnoz;
+				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -892,6 +893,7 @@
 				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -904,7 +906,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.LeSchnoz;
+				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

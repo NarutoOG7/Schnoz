@@ -8,7 +8,6 @@ target 'LeSchnoz' do
   # Pods for LeSchnoz
 
 pod 'FirebaseAuth'
-pod 'FirebaseFirestore'
 pod "MapKitGoogleStyler"
 pod 'GooglePlaces', '7.3.0'
 pod 'GoogleMaps', '7.3.0'

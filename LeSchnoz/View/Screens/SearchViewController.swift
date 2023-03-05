@@ -27,22 +27,22 @@ class SearchViewController: UIViewController {
     private var currentBar: SearchBarType?
     
     private let userStore = UserStore.instance
-            
+    
     var delegate: SearchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         tableDataSource = GMSAutocompleteTableDataSource()
         tableDataSource?.delegate = self
         
         setUpGoogleResults(controller: tableDataSource)
         
-//        setUpSwiftUIView()
+        //        setUpSwiftUIView()
         setUpUIKitView()
         setUpTableView()
-
+        
     }
     
     func setUpTableView() {
@@ -64,8 +64,8 @@ class SearchViewController: UIViewController {
                                                    height: 120))
         if let searchContainerView = searchContainerView {
             view.addSubview(searchContainerView)
-
-
+            
+            
             let searchView = UIHostingController(rootView: SearchView(delegate: self, exploreVM: ExploreViewModel.instance))
             addChild(searchView)
             searchView.view.frame = searchContainerView.bounds
@@ -88,7 +88,7 @@ class SearchViewController: UIViewController {
     func setUpGoogleResults(controller: GMSAutocompleteTableDataSource?) {
         
         if let controller = controller {
-                        
+            
             let fields: GMSPlaceField = GMSPlaceField(rawValue:UInt(GMSPlaceField.name.rawValue) |
                                                       UInt(GMSPlaceField.placeID.rawValue) |
                                                       UInt(GMSPlaceField.coordinate.rawValue) |
@@ -97,9 +97,9 @@ class SearchViewController: UIViewController {
                                                       GMSPlaceField.types.rawValue)
             
             let filter = GMSAutocompleteFilter()
-                        
+            
             filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
-                        
+            
             controller.autocompleteFilter = filter
             controller.placeFields = fields
         }
@@ -122,22 +122,39 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
     }
     
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
-        
-        
-        if currentBar == .place {
-            // Do something with the selected place.
-
-        } else {
-            if
-               let currentBar = self.currentBar,
-                let name = place.name {
-
-                searchVM.placeSearchText = name
-                setUpGoogleResults(controller: tableDataSource)
-                delegate?.placeSelected(name: name, selectedBar: currentBar)
+                    
+            switch currentBar {
+                
+            case .place:
+                placeSelected(place)
+            case .area:
+                areaPlaceSelected(place)
+            case .none:
+                placeSelected(place)
             }
+    }
+    
+    func placeSelected(_ place: GMSPlace) {
+        
+        // Fetch reviews from FIREBASE
+        FirebaseManager.instance.getReviewsForLocation(place) { reviews in
+            let schnozPlace = SchnozPlace(gmsPlace: place)
+            schnozPlace.schnozReviews = reviews
+            
+            // Do something with the selected place.
+            let hostingVC = UIHostingController(rootView: LD(location: schnozPlace))
+            self.present(hostingVC, animated: true)
+            
+            self.tableView?.reloadData()
         }
         
+
+    }
+    
+    func areaPlaceSelected(_ place: GMSPlace) {
+        searchVM.placeSearchText = place.name ?? ""
+        setUpGoogleResults(controller: tableDataSource)
+        delegate?.placeSelected(name: place.name ?? "", selectedBar: .area)
     }
     
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error) {
@@ -162,7 +179,7 @@ extension SearchViewController: DoubleSearchDelegate {
         let newFilter = GMSAutocompleteFilter()
         newFilter.types = ["locality"]
         tableDataSource?.autocompleteFilter = newFilter
-//        changeSearchText()
+        //        changeSearchText()
         tableDataSource?.sourceTextHasChanged(text)
     }
     
@@ -197,5 +214,55 @@ extension SearchViewController: SearchViewDelegate {
         tableDataSource?.sourceTextHasChanged(text)
     }
     
+    
+}
+
+class SchnozPlace {
+    
+    init(gmsPlace: GMSPlace?) {
+        if let gmsPlace = gmsPlace {
+            self.gmsPlace = gmsPlace
+        }
+    }
+    
+    var gmsPlace: GMSPlace?
+    
+    var schnozReviews: [ReviewModel] = [] {
+        willSet {
+            avgRating = self.getAvgRatingIntAndString().number
+            print(avgRating)
+        }
+    }
+    
+    var avgRating: Int {
+        get {
+            self.getAvgRatingIntAndString().number
+        }
+        set { }
+    }
+    
+    func getAvgRatingIntAndString() -> (number: Int, string: String) {
+        
+        var avgRatingString = ""
+        var avgRatingNum = 0
+        
+        var totalRatingNumber = 0
+        var totalReviewCount = 0
+        
+        for review in schnozReviews {
+            
+            totalRatingNumber += review.rating
+            totalReviewCount += 1
+        }
+        if totalReviewCount > 0 {
+        avgRatingNum = totalRatingNumber / totalReviewCount
+            avgRatingString = String(format: "%g", avgRatingNum)
+            
+            if avgRatingString == "" {
+                avgRatingString = "(No Reviews Yet)"
+            }
+        }
+        return (avgRatingNum , avgRatingString)
+    }
     
 }
