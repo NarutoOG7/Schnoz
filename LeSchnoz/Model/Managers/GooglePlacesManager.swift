@@ -27,6 +27,10 @@ class GooglePlacesManager: ObservableObject {
     }
     
     
+    func getBreakfast() {
+        
+    }
+    
     func getNearbyLocation() {
         
         let placeFields: GMSPlaceField = [.name, .formattedAddress]
@@ -41,7 +45,8 @@ class GooglePlacesManager: ObservableObject {
             
             if let places = placeLikelihoods {
                 for place in places {
-                    strongSelf.nearbyPlaces.append(place)
+                        strongSelf.nearbyPlaces.append(place)
+                    
                 }
             }
         }

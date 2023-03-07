@@ -134,10 +134,11 @@ struct LD: View {
     private var avgRatingDisplay: some View {
         let reviewCount = location.schnozReviews.count
         let textEnding = reviewCount == 1 ? "" : "s"
-        return HStack {
-            Stars(
+        return VStack(alignment: .leading) {
+            Stars(count: 10,
                 color: oceanBlue.yellow,
                 rating: $location.avgRating)
+            
             Text("(\(reviewCount) review\(textEnding))")
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.blue)

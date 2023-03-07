@@ -35,8 +35,9 @@ struct ReviewCard: View {
     }
     
     var stars: some View {
-        Stars(color: oceanBlue.yellow,
-                  rating: .constant(review.rating))
+        Stars(count: 10,
+               color: oceanBlue.yellow,
+               rating: .constant(review.rating))
     }
     
     var description: some View {

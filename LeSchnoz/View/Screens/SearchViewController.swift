@@ -95,7 +95,6 @@ class SearchViewController: UIViewController {
                                                       GMSPlaceField.addressComponents.rawValue |
                                                       GMSPlaceField.formattedAddress.rawValue |
                                                       GMSPlaceField.types.rawValue)
-            
             let filter = GMSAutocompleteFilter()
             
             filter.types = ["food", "bar", "bowling_alley", "movie_theater"]

@@ -6,13 +6,12 @@
 //
 
 /*
-   
  
- 
-  - Fetch Reviews for place
+  - Breakfast/Lunch/Dinner search?
  
   - UI
     - Mimick Foursquare
+    - Login / Signup redesign
  
   - Images
  
