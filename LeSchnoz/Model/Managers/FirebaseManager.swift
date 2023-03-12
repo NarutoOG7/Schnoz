@@ -139,12 +139,12 @@ class FirebaseManager: ObservableObject {
             }
     }
     
-    func getReviewsForLocation(_ place: GMSPlace, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
+    func getReviewsForLocation(_ placeID: String, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
         
         guard let db = db else { return }
 
         db.collection("Reviews")
-            .whereField("locationID", isEqualTo: place.placeID ?? "")
+            .whereField("locationID", isEqualTo: placeID)
             .getDocuments { snapshot, error in
                 
                 if let error = error {

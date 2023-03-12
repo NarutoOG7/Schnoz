@@ -57,7 +57,8 @@ struct TabBarSetup: View {
             
             if exploreVM.showSearchTableView {
                 
-                SearchControllerBridge()
+//                SearchControllerBridge()
+                ListResultsView()
                     .matchedGeometryEffect(id: "search", in: namespace)
                 
             } else {

@@ -33,9 +33,10 @@ struct ManageReviews: View {
                     .padding(.vertical, 30)
             }
         }
+        //TODO: verifty this location down here on line 39 is ok to have blank placeID
         .sheet(item: $selectedReview, content: { review in
             LocationReviewView(
-                location: .constant(SchnozPlace(gmsPlace: nil)),
+                location: .constant(SchnozPlace(placeID: "")),
                 isPresented: $isEditingReview,
                 review: $selectedReview,
                 titleInput: review.title,

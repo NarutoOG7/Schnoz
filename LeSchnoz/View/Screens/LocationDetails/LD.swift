@@ -321,7 +321,7 @@ struct LD: View {
 //MARK: - Previews
 struct LD_Previews: PreviewProvider {
     static var previews: some View {
-        LD(location: SchnozPlace(gmsPlace: nil),
+        LD(location: SchnozPlace(placeID: "PLace01"),
            userStore: UserStore(),
            firebaseManager: FirebaseManager(),
            errorManager: ErrorManager())

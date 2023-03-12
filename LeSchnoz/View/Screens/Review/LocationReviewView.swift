@@ -242,7 +242,7 @@ struct LocationReviewView: View {
 
 struct LocationReviewView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationReviewView(location: .constant(SchnozPlace(gmsPlace: nil)),
+        LocationReviewView(location: .constant(SchnozPlace(placeID: "Place01")),
                            isPresented: .constant(true),
                            review: .constant(nil),
                            userStore: UserStore(),

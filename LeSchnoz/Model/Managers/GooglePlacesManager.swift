@@ -20,10 +20,12 @@ class GooglePlacesManager: ObservableObject {
     @Published var nearbyPlaces: [GMSPlaceLikelihood] = []
     
     private let placesClient: GMSPlacesClient
+    private var autocompleteSessionToken: GMSAutocompleteSessionToken?
     
     
     init() {
         placesClient = GMSPlacesClient.shared()
+        refreshToken()
     }
     
     
@@ -51,5 +53,46 @@ class GooglePlacesManager: ObservableObject {
             }
         }
     }
+ 
+    func filter() -> GMSAutocompleteFilter {
+        let filter = GMSAutocompleteFilter()
+        filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
+        return filter
+    }
     
+    func refreshToken() {
+        self.autocompleteSessionToken = GMSAutocompleteSessionToken()
+    }
+    
+    func performAutocompleteQuery(_ query: String, withCompletion completion: @escaping ([SchnozPlace]?, Error?) -> Void) {
+        
+//        autocompleteSessionToken = GMSAutocompleteSessionToken()
+        placesClient.findAutocompletePredictions(fromQuery: query, filter: filter(), sessionToken: autocompleteSessionToken) { results, error in
+            
+            if let error = error {
+                // TODO: Verify error handling
+//                let errorManager = ErrorManager.instance
+//                errorManager.message = error.localizedDescription
+//                errorManager.shouldDisplay = true
+                completion(nil, error)
+            }
+            
+            var schnozResults = [SchnozPlace]()
+            if let results = results {
+                for result in results {
+                    let schnozPlace = SchnozPlace(placeID: result.placeID)
+                    schnozPlace.primaryText = result.attributedPrimaryText.string
+                    schnozPlace.secondaryText = result.attributedSecondaryText?.string
+                    schnozPlace.placeID = result.placeID
+                    FirebaseManager.instance.getReviewsForLocation(result.placeID) { reviews in
+                        schnozPlace.schnozReviews = reviews
+                    }
+                    schnozResults.append(schnozPlace)
+                }
+                completion(schnozResults, nil)
+            }
+            
+        }
+    }
 }
+

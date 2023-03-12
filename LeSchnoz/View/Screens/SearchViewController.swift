@@ -28,21 +28,22 @@ class SearchViewController: UIViewController {
     
     private let userStore = UserStore.instance
     
+    private var schnozPlaces = [SchnozPlace]()
+    
     var delegate: SearchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        tableDataSource = GMSAutocompleteTableDataSource()
+//        tableDataSource?.delegate = self
         
-        tableDataSource = GMSAutocompleteTableDataSource()
-        tableDataSource?.delegate = self
-        
-        setUpGoogleResults(controller: tableDataSource)
+//        setUpGoogleResults(controller: tableDataSource)
         
         //        setUpSwiftUIView()
         setUpUIKitView()
         setUpTableView()
-        
+
     }
     
     func setUpTableView() {
@@ -51,8 +52,9 @@ class SearchViewController: UIViewController {
                                               width: self.view.frame.size.width,
                                               height: self.view.frame.size.height))
         if let tableView = tableView {
-            tableView.delegate = tableDataSource
-            tableView.dataSource = tableDataSource
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
             view.addSubview(tableView)
         }
     }
@@ -102,10 +104,13 @@ class SearchViewController: UIViewController {
             controller.autocompleteFilter = filter
             controller.placeFields = fields
         }
+        
+
     }
 }
 
 extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
+    
     func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
         // Turn the network activity indicator off.
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -136,8 +141,9 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func placeSelected(_ place: GMSPlace) {
         
         // Fetch reviews from FIREBASE
-        FirebaseManager.instance.getReviewsForLocation(place) { reviews in
-            let schnozPlace = SchnozPlace(gmsPlace: place)
+        FirebaseManager.instance.getReviewsForLocation(place.placeID ?? "") { reviews in
+            let schnozPlace = SchnozPlace(placeID: place.placeID ?? "")
+            schnozPlace.gmsPlace = place
             schnozPlace.schnozReviews = reviews
             
             // Do something with the selected place.
@@ -164,6 +170,40 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didSelect prediction: GMSAutocompletePrediction) -> Bool {
         return true
     }
+    
+    
+}
+
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        schnozPlaces.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        cell.largeContentTitle = schnozPlaces[indexPath.row].primaryText
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        let schnozPlace = schnozPlaces[indexPath.row]
+        
+        // Do something with the selected place.
+        let hostingVC = UIHostingController(rootView: LD(location: schnozPlace))
+        self.present(hostingVC, animated: true)
+        
+        self.tableView?.reloadData()
+        
+//        self.performSegue(withIdentifier: K.Segues.homeToDetails, sender: self)
+    }
+
 }
 
 
@@ -199,11 +239,25 @@ extension SearchViewController: DoubleSearchDelegate {
             if let coordinates = userStore.currentLocation?.coordinate {
                 FirebaseManager.instance.getAddressFrom(coordinates: coordinates) { address in
                     let text = address.city
-                    self.tableDataSource?.sourceTextHasChanged(text)
+                    GooglePlacesManager.instance.performAutocompleteQuery(text) { schnozPlaces, error in
+                        if let error = error {
+                            // TODO: Handle Error
+                        }
+                        if let schnozPlaces = schnozPlaces {
+                            self.schnozPlaces = schnozPlaces
+                        }
+                    }
                 }
             }
         } else {
-            tableDataSource?.sourceTextHasChanged(searchVM.areaSearchText + " " + searchVM.placeSearchText)
+            GooglePlacesManager.instance.performAutocompleteQuery(searchVM.areaSearchText + " " + searchVM.placeSearchText) { results, error in
+                if let schnozPlaces = results {
+                    
+                    self.schnozPlaces = schnozPlaces
+                }
+                self.tableView?.reloadData()
+            }
+//            tableDataSource?.sourceTextHasChanged(searchVM.areaSearchText + " " + searchVM.placeSearchText)
         }
     }
 }
@@ -216,28 +270,23 @@ extension SearchViewController: SearchViewDelegate {
     
 }
 
-class SchnozPlace {
+class SchnozPlace: Hashable {
     
-    init(gmsPlace: GMSPlace?) {
-        if let gmsPlace = gmsPlace {
-            self.gmsPlace = gmsPlace
-        }
-    }
-    
+    var placeID: String
+    var primaryText: String?
+    var secondaryText: String?
     var gmsPlace: GMSPlace?
     
     var schnozReviews: [ReviewModel] = [] {
         willSet {
             avgRating = self.getAvgRatingIntAndString().number
-            print(avgRating)
         }
     }
     
     var avgRating: Int {
         get {
             self.getAvgRatingIntAndString().number
-        }
-        set { }
+        } set { }
     }
     
     func getAvgRatingIntAndString() -> (number: Int, string: String) {
@@ -249,12 +298,12 @@ class SchnozPlace {
         var totalReviewCount = 0
         
         for review in schnozReviews {
-            
             totalRatingNumber += review.rating
             totalReviewCount += 1
         }
+        
         if totalReviewCount > 0 {
-        avgRatingNum = totalRatingNumber / totalReviewCount
+            avgRatingNum = totalRatingNumber / totalReviewCount
             avgRatingString = String(format: "%g", avgRatingNum)
             
             if avgRatingString == "" {
@@ -262,6 +311,21 @@ class SchnozPlace {
             }
         }
         return (avgRatingNum , avgRatingString)
+    }
+    
+    //MARK: - Equatable
+    static func == (lhs: SchnozPlace, rhs: SchnozPlace) -> Bool {
+        lhs.placeID == rhs.placeID
+    }
+ 
+    //MARK: - Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(placeID)
+    }
+    
+    //MARK: - Initializers
+    init(placeID: String) {
+        self.placeID = placeID
     }
     
 }
