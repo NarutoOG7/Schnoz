@@ -191,8 +191,12 @@ class FirebaseManager: ObservableObject {
                 return
             }
             
+            var lat = loc.coordinate.latitude.rounded(.up)
+            var lon = loc.coordinate.longitude.rounded(.up)
+            let newLoc = CLLocation(latitude: lat, longitude: lon)
+            
             print(loc)
-            completion(loc)
+            completion(newLoc)
         }
     }
     

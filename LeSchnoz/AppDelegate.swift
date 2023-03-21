@@ -22,6 +22,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         GMSPlacesClient.provideAPIKey("AIzaSyBPTme7RzG4HL4VglZEZW96f1BXMb3CT_4")
 
+//    https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=breakfast&location=40.54111%2C-105.09218&radius=1500&type=restaurant&key=AIzaSyAGCA2wJquQ5rECUYoMQWRBNHLD0T-3zgE
+        
         locationManager.checkIfLocationServicesIsEnabled()
 
         getUserIfSignedIn()

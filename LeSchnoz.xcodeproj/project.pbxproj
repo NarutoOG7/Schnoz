@@ -13,6 +13,7 @@
 		C96622B929BD248A00C4ABD0 /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96622B729BD248A00C4ABD0 /* ResultsCell.swift */; };
 		C96622BA29BD248A00C4ABD0 /* ResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C96622B829BD248A00C4ABD0 /* ResultsCell.xib */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
+		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
 		C99EEB12299B121600B77DBD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB11299B121600B77DBD /* ContentView.swift */; };
 		C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C99EEB13299B121700B77DBD /* Assets.xcassets */; };
@@ -104,6 +105,7 @@
 		C96622B729BD248A00C4ABD0 /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
 		C96622B829BD248A00C4ABD0 /* ResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsCell.xib; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
+		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeSchnozApp.swift; sourceTree = "<group>"; };
 		C99EEB11299B121600B77DBD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				C99EEB2B299B19B300B77DBD /* ErrorManager.swift */,
 				C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */,
 				C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */,
+				C98007D629C1580E00476D9B /* NetworkServices.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				C99EEB12299B121600B77DBD /* ContentView.swift in Sources */,
 				C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */,
 				C99EEBB6299B19B400B77DBD /* MapDetails.swift in Sources */,
+				C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */,
 				C99EEC2D299C47EC00B77DBD /* LocationData.swift in Sources */,
 				C99EEC14299B19B400B77DBD /* TabBarSetup.swift in Sources */,
 				C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */,

@@ -90,19 +90,19 @@ class SearchViewController: UIViewController {
     func setUpGoogleResults(controller: GMSAutocompleteTableDataSource?) {
         
         if let controller = controller {
-            
-            let fields: GMSPlaceField = GMSPlaceField(rawValue:UInt(GMSPlaceField.name.rawValue) |
-                                                      UInt(GMSPlaceField.placeID.rawValue) |
-                                                      UInt(GMSPlaceField.coordinate.rawValue) |
-                                                      GMSPlaceField.addressComponents.rawValue |
-                                                      GMSPlaceField.formattedAddress.rawValue |
-                                                      GMSPlaceField.types.rawValue)
+//
+//            let fields: GMSPlaceField = GMSPlaceField(rawValue:UInt(GMSPlaceField.name.rawValue) |
+//                                                      UInt(GMSPlaceField.placeID.rawValue) |
+//                                                      UInt(GMSPlaceField.coordinate.rawValue) |
+//                                                      GMSPlaceField.addressComponents.rawValue |
+//                                                      GMSPlaceField.formattedAddress.rawValue |
+//                                                      GMSPlaceField.types.rawValue)
             let filter = GMSAutocompleteFilter()
             
             filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
             
             controller.autocompleteFilter = filter
-            controller.placeFields = fields
+//            controller.placeFields = fields
         }
         
 
@@ -136,6 +136,7 @@ extension SearchViewController: GMSAutocompleteTableDataSourceDelegate {
             case .none:
                 placeSelected(place)
             }
+        GooglePlacesManager.instance.refreshToken()
     }
     
     func placeSelected(_ place: GMSPlace) {
@@ -215,11 +216,7 @@ extension SearchViewController: DoubleSearchDelegate {
     }
     
     func areaSearchTextChanged(_ text: String) {
-        let newFilter = GMSAutocompleteFilter()
-        newFilter.types = ["locality"]
-        tableDataSource?.autocompleteFilter = newFilter
-        //        changeSearchText()
-        tableDataSource?.sourceTextHasChanged(text)
+
     }
     
     func currentBar(bar: SearchBarType) {
@@ -270,12 +267,17 @@ extension SearchViewController: SearchViewDelegate {
     
 }
 
-class SchnozPlace: Hashable {
+class SchnozPlace: Hashable, Identifiable {
     
     var placeID: String
     var primaryText: String?
     var secondaryText: String?
-    var gmsPlace: GMSPlace?
+    var gmsPlace: GMSPlace? {
+        willSet {
+            primaryText = newValue?.name
+            secondaryText = newValue?.formattedAddress
+        }
+    }
     
     var schnozReviews: [ReviewModel] = [] {
         willSet {

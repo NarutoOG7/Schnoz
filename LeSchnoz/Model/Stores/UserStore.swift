@@ -17,12 +17,14 @@ class UserStore: ObservableObject {
         
     var adminKey = ""
     
+    @Published var currentLocAsAddress: Address?
     @Published var currentLocation: CLLocation? {
         willSet {
             if let newValue = newValue {
-                let region = MKCoordinateRegion(center: newValue.coordinate,
-                                                span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
-                ExploreViewModel.instance.searchRegion = region
+                FirebaseManager.instance.getAddressFrom(coordinates: newValue.coordinate) { address in
+                    self.currentLocAsAddress = address
+                    print(address.city)
+                }
             }
         }
     }

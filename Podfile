@@ -9,7 +9,7 @@ target 'LeSchnoz' do
 
 pod 'FirebaseAuth'
 pod "MapKitGoogleStyler"
-pod 'GooglePlaces', '7.3.0'
+pod 'GooglePlaces', '7.4.0'
 pod 'GoogleMaps', '7.3.0'
 
 
