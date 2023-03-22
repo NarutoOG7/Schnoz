@@ -20,7 +20,7 @@
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuthSettings.h"
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRMultiFactorResolver.h"
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRPhoneAuthProvider.h"
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
+#import "FirebaseCore/Extension/FirebaseCoreInternal.h"
 
 #import "FirebaseAuth/Sources/Auth/FIRAuthGlobalWorkQueue.h"
 #import "FirebaseAuth/Sources/Auth/FIRAuth_Internal.h"
@@ -593,6 +593,17 @@ extern NSString *const FIRPhoneMultiFactorID;
  */
 - (void)verifyClientWithUIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
                         completion:(FIRVerifyClientCallback)completion {
+// Remove the simulator check below after FCM supports APNs in simulators
+#if TARGET_OS_SIMULATOR
+  if (@available(iOS 16, *)) {
+    NSDictionary *environment = [[NSProcessInfo processInfo] environment];
+    if ((environment[@"XCTestConfigurationFilePath"] == nil)) {
+      [self reCAPTCHAFlowWithUIDelegate:UIDelegate completion:completion];
+      return;
+    }
+  }
+#endif
+
   if (_auth.appCredentialManager.credential) {
     completion(_auth.appCredentialManager.credential, nil, nil);
     return;
@@ -700,8 +711,8 @@ extern NSString *const FIRPhoneMultiFactorID;
                                      if (error) {
                                        if (completion) {
                                          completion(nil, error);
-                                         return;
                                        }
+                                       return;
                                      }
                                      NSString *bundleID = [NSBundle mainBundle].bundleIdentifier;
                                      NSString *clientID = self->_auth.app.options.clientID;

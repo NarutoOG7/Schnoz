@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import GooglePlaces
 
 struct ExploreByList: View {
     
@@ -26,6 +26,8 @@ struct ExploreByList: View {
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     @ObservedObject var searchVM = SearchVM.instance
+    @ObservedObject var listResultsVM = ListResultsVM.instance
+    
     
     @Environment(\.managedObjectContext) var moc
     
@@ -40,18 +42,13 @@ struct ExploreByList: View {
                     greeting
                     searchBar
                     divider
+                    searchTypeView
                 }
             }
             
 
         }
-
-        .task {
-            googlePlacesManager.getNearbyLocation()
-        }
         
-        .background(K.Images.paperBackground
-            .edgesIgnoringSafeArea(.all))
     }
     
     var greeting: some View {
@@ -71,13 +68,6 @@ struct ExploreByList: View {
             Spacer()
         }
         .padding(.top, 20)
-    }
-    
-    private var locationsCollections: some View {
-        List(googlePlacesManager.nearbyPlaces, id: \.self) { place in
-            Text(place.place.name ?? "no nearby location")
-            
-        }
     }
     
     private var divider: some View {
@@ -101,31 +91,63 @@ struct ExploreByList: View {
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(oceanBlue.blue))
+                .overlay {
+                    Text("Bars, Restaraunts, Breweries, etc.")
+                        .foregroundColor(K.Colors.OceanBlue.blue)
+                        .padding(.leading, -65)
+                }
                 .matchedGeometryEffect(id: "bar", in: namespace)
-
         }
         .padding(.horizontal)
         .frame(height: 40)
-        
-//        .fullScreenCover(isPresented: $searchVM.shouldShowSearchView) {
-////            SearchControllerBridge()
-//            SearchView(exploreVM: exploreVM)
-//        }
+
     }
     
-    private var searchNavigationView: some View {
-        NavigationLink(destination: SearchControllerBridge()) {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(oceanBlue.lightBlue)
-                .padding(2)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(oceanBlue.blue))
-        }
-        .padding(.horizontal)
-        .frame(height: 40)
-    }
+    private var searchTypeView: some View {
+        HStack {
+            searchTypeButton(searchType: .breakfast)
+            searchTypeButton(searchType: .lunch)
+            searchTypeButton(searchType: .dinner)
 
+        }
+    }
+    
+    private func searchTypeButton(searchType: SearchType) -> some View {
+        Button {
+            searchTypeTapped(searchType)
+        } label: {
+            Text(searchType.rawValue)
+                .foregroundColor(.red)
+        }
+
+    }
+    
+    
+    //MARK: - Methods
+    
+//    private func searchTypeTapped(_ searchType: SearchType) {
+//        listResultsVM.searchType = searchType
+//        print(searchType.rawValue)
+//        GooglePlacesManager.instance.getMealType(searchType: searchType) { results, error in
+//            if let error = error {
+//                // TODO: Handle Error
+//            }
+//            if let results = results {
+////                    DispatchQueue.main.async {
+//
+//                    listResultsVM.schnozPlaces = results
+////                    }
+//            }
+//        }
+//        ExploreViewModel.instance.showSearchTableView = true
+//    }
+    
+    private func searchTypeTapped(_ searchType: SearchType) {
+        listResultsVM.searchType = searchType
+        
+        NetworkServices.instance.getNearbyLocationsBySearchType(searchType)
+        ExploreViewModel.instance.showSearchTableView = true
+    }
     
 }
 
