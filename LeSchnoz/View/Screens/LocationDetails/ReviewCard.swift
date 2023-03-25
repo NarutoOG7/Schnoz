@@ -23,7 +23,7 @@ struct ReviewCard: View {
                 .padding(.trailing, 15)
         }
         .padding()
-        .overlay(RoundedRectangle(cornerRadius: 14)
+        .background(RoundedRectangle(cornerRadius: 14)
             .strokeBorder(oceanBlue.blue, lineWidth: 3))
     }
     
@@ -45,7 +45,7 @@ struct ReviewCard: View {
             .font(.avenirNext(size: 17))
             .fontWeight(.light)
             .foregroundColor(oceanBlue.blue)
-            .fixedSize(horizontal: true, vertical: false)
+//            .fixedSize(horizontal: true, vertical: false)
     }
     
     var name: some View {

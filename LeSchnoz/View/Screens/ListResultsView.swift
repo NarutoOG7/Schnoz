@@ -8,22 +8,29 @@
 import SwiftUI
 import GooglePlaces
 
-enum SearchType: String {
-    case breakfast, lunch, dinner, none
+enum SearchType: String, CaseIterable {
+    case breakfast, lunch, dinner
     
     var field: GMSPlaceField {
         switch self {
         case .breakfast:
             return .servesBreakfast
-//            return GMSPlaceField(rawValue: GMSPlaceField.servesBreakfast.rawValue)
-        default:
-            return GMSPlaceField(rawValue: UInt64(GMSPlaceField.servesBreakfast.rawValue))
-//        case .lunch:
-//            return GMSPlaceField(rawValue: GMSPlaceField.servesLunch.rawValue)
-//        case .dinner:
-//            return GMSPlaceField(rawValue: GMSPlaceField.servesDinner.rawValue)
-//        case .none:
-//            return GMSPlaceField(rawValue: GMSPlaceField.name.rawValue)
+        case .lunch:
+            return .servesLunch
+        case .dinner:
+            return .servesDinner
+        }
+    }
+    
+    var image: Image {
+        let images = K.Images.SearchTypes.self
+        switch self {
+        case .breakfast:
+            return images.blueBreakfast
+        case .lunch:
+            return images.blueLunch
+        case .dinner:
+            return images.blueDinner
         }
     }
 }
@@ -59,7 +66,7 @@ struct ListResultsView: View {
         
         .onChange(of: placeSearchText) { newValue in
             self.isEditingSearchArea = false
-            listResultsVM.searchType = .none
+            listResultsVM.searchType = nil
             let currentCity = UserStore.instance.currentLocAsAddress?.city
             let searchText = (areaSearchLocation == "" ? currentCity : areaSearchLocation) ?? ""
             let queryText = searchText + " " + newValue
@@ -159,7 +166,7 @@ class ListResultsVM: ObservableObject {
     static let instance = ListResultsVM()
     
     @Published var searchRegion = ""
-    @Published var searchType: SearchType = .none
+    @Published var searchType: SearchType?
     @Published var schnozPlaces: [SchnozPlace] = []
 
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance

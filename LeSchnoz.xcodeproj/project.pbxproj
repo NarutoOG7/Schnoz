@@ -94,6 +94,7 @@
 		C99EEC6429B0EE2F00B77DBD /* SearchStoryboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC6329B0EE2F00B77DBD /* SearchStoryboard.xib */; };
 		C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6529B165E600B77DBD /* UserDefaults.swift */; };
 		C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC8129B2A14100B77DBD /* TapGesture.swift */; };
+		C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -184,6 +185,7 @@
 		C99EEC6329B0EE2F00B77DBD /* SearchStoryboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchStoryboard.xib; sourceTree = "<group>"; };
 		C99EEC6529B165E600B77DBD /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C99EEC8129B2A14100B77DBD /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
+		C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDisplayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,6 +488,7 @@
 				C99EEB8D299B19B400B77DBD /* ExploreByList.swift */,
 				C99EEC3B299EE06A00B77DBD /* GoogleDataTable.swift */,
 				C99EEC3D299EF9B700B77DBD /* GoogleResultCell.xib */,
+				C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */,
 			);
 			path = ExploreByList;
 			sourceTree = "<group>";
@@ -579,7 +582,7 @@
 			);
 			mainGroup = C99EEB03299B121600B77DBD;
 			packageReferences = (
-				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */,
+				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C99EEB0D299B121600B77DBD /* Products */;
@@ -693,6 +696,7 @@
 				C99EEC2B299C46F100B77DBD /* LocationStore.swift in Sources */,
 				C99EEB12299B121600B77DBD /* ContentView.swift in Sources */,
 				C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */,
+				C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */,
 				C99EEBB6299B19B400B77DBD /* MapDetails.swift in Sources */,
 				C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */,
 				C99EEC2D299C47EC00B77DBD /* LocationData.swift in Sources */,
@@ -958,7 +962,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */ = {
+		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
 			requirement = {
@@ -979,7 +983,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */;
+			package = C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
 		};
 		C99EEC33299C635F00B77DBD /* FirebaseAuth */ = {

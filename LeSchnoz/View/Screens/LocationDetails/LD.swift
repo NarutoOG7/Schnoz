@@ -248,7 +248,7 @@ struct LD: View {
     private var directionsButton: some View {
         CircleButton(
             size: .medium,
-            image: images.Trip.directions,
+            image: Image(systemName: "arrow.triangle.turn.up.right.diamond"),
             mainColor: oceanBlue.lightBlue,
             accentColor: oceanBlue.white,
             title: "Directions",

@@ -63,12 +63,13 @@ struct TabBarSetup: View {
                 
             } else {
                 
-                ExploreByList(user: $userStore.user,
-                              exploreVM: exploreVM,
-                              locationStore: locationStore,
-                              userStore: userStore,
-                              firebaseManager: firebaseManager,
-                              errorManager: errorManager)
+//                ExploreByList(user: $userStore.user,
+//                              exploreVM: exploreVM,
+//                              locationStore: locationStore,
+//                              userStore: userStore,
+//                              firebaseManager: firebaseManager,
+//                              errorManager: errorManager)
+                HomeDisplayView(userStore: userStore)
                 .matchedGeometryEffect(id: "search", in: namespace)
                 .navigationTitle("Explore")
                 .navigationBarHidden(true)

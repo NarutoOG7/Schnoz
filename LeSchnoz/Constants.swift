@@ -20,6 +20,7 @@ enum K {
             static let blue = Color("OceanBlue/Blue")
             static let yellow = Color("OceanBlue/Yellow")
             static let black = Color("OceanBlue/Black")
+            static let grayPurp = Color("OceanBlue/GrayPurp")
         }
         
     }
@@ -118,23 +119,20 @@ enum K {
     //MARK: - Images
     
     enum Images {
-        enum Trip {
-            static let completed = Image(systemName: "checkmark.circle")
-            static let currentLocationIcon = Image("CurrentLocationIcon")
-            static let currentLocationIconWithDots = Image("CurrentLocationMarker.WithDots.orange")
-            static let lastDestinationIcon = Image("DestinationPin.WithDots.TopSide.orange")
-            static let destinationIcon = Image("DestinationPin.WithDots.bothSides.orange")
-            static let directions = Image(systemName:"arrow.triangle.turn.up.right.diamond.fill")
-        }
-        enum Favorites {
-            static let imageDisplayOption = Image(systemName: "square.split.1x2.fill")
-            static let list = Image(systemName: "list.bullet")
-        }
         
         enum Login {
             static let email = Image(systemName: "envelope.fill")
             static let eyeWithSlash = Image(systemName: "eye.slash.fill")
             static let eye = Image(systemName: "eye")
+        }
+        
+        enum SearchTypes {
+            static let breakfast = Image("breakfast")
+            static let lunch = Image("lunch")
+            static let dinner = Image("dinner")
+            static let blueBreakfast = Image("blueBreakfast")
+            static let blueLunch = Image("blueLunch")
+            static let blueDinner = Image("blueDinner")
         }
         
         static let splashOne = Image("SplashOne")
