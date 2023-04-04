@@ -7,10 +7,13 @@ target 'LeSchnoz' do
 
   # Pods for LeSchnoz
 
+
+pod 'Firebase'
 pod 'FirebaseAuth'
-pod "MapKitGoogleStyler"
+pod 'FirebaseFirestore'
 pod 'GooglePlaces', '7.4.0'
 pod 'GoogleMaps', '7.3.0'
+
 
 
 

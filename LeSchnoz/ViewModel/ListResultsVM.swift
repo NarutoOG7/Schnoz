@@ -60,44 +60,6 @@ class ListResultsVM: ObservableObject {
         }
     }
     
-//    func refreshData(_ review: ReviewModel, placeID: String) {
-//
-//        // Ask chat gpt if this is efficient
-//        if let nearbyIndex = nearbyPlaces.firstIndex(where: { $0.placeID == placeID }) {
-//            if let oldReviewIndex = nearbyPlaces[nearbyIndex].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-//                nearbyPlaces[nearbyIndex].schnozReviews[oldReviewIndex] = review
-//            }
-//        }
-//
-//        if let schnozIndex = schnozPlaces.firstIndex(where: { $0.placeID == placeID }) {
-//            if let oldReviewIndex = schnozPlaces[schnozIndex].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-//                schnozPlaces[schnozIndex].schnozReviews[oldReviewIndex] = review
-//                self.objectWillChange.send()
-//            }
-//        }
-//
-//        if let bfastIndex = breakfastPlaces.firstIndex(where: { $0.placeID == placeID }) {
-//            if let oldReviewIndex = breakfastPlaces[bfastIndex].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-//                breakfastPlaces[bfastIndex].schnozReviews[oldReviewIndex] = review
-//                self.objectWillChange.send()
-//            }
-//        }
-//
-//        if let lunchIndex = lunchPlaces.firstIndex(where: { $0.placeID == placeID }) {
-//            if let oldReviewIndex = lunchPlaces[lunchIndex].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-//                lunchPlaces[lunchIndex].schnozReviews[oldReviewIndex] = review
-//                self.objectWillChange.send()
-//            }
-//        }
-//
-//        if let dinnerIndex = dinnerPlaces.firstIndex(where: { $0.placeID == placeID }) {
-//            if let oldReviewIndex = dinnerPlaces[dinnerIndex].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-//                dinnerPlaces[dinnerIndex].schnozReviews[oldReviewIndex] = review
-//                self.objectWillChange.send()
-//            }
-//        }
-//    }
-    
     func locServiceIsEnabled() -> Bool {
         userLocManager.locationServicesEnabled
     }

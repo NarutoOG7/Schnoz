@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */; };
-		C96622B629B80E8100C4ABD0 /* NearbySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96622B529B80E8100C4ABD0 /* NearbySearchView.swift */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
 		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
@@ -22,7 +21,6 @@
 		C99EEBBB299B19B400B77DBD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB2B299B19B300B77DBD /* ErrorManager.swift */; };
 		C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */; };
 		C99EEBBD299B19B400B77DBD /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB2E299B19B300B77DBD /* UserStore.swift */; };
-		C99EEBC3299B19B400B77DBD /* LocationAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB38299B19B300B77DBD /* LocationAnnotationModel.swift */; };
 		C99EEBCA299B19B400B77DBD /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB42299B19B300B77DBD /* ReviewModel.swift */; };
 		C99EEBCC299B19B400B77DBD /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB44299B19B300B77DBD /* Address.swift */; };
 		C99EEBCD299B19B400B77DBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB45299B19B300B77DBD /* User.swift */; };
@@ -61,15 +59,11 @@
 		C99EEC14299B19B400B77DBD /* TabBarSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBAA299B19B400B77DBD /* TabBarSetup.swift */; };
 		C99EEC17299B19B400B77DBD /* SignupVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBAE299B19B400B77DBD /* SignupVM.swift */; };
 		C99EEC1A299B19B400B77DBD /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEBB1299B19B400B77DBD /* LoginVM.swift */; };
-		C99EEC1D299B1A1500B77DBD /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */; };
 		C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC1E299B1A4000B77DBD /* Constants.swift */; };
 		C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */; };
 		C99EEC2F299C5D0D00B77DBD /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */; };
 		C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC30299C614400B77DBD /* HiddenKeys.plist */; };
-		C99EEC34299C635F00B77DBD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC33299C635F00B77DBD /* FirebaseAuth */; };
-		C99EEC36299C635F00B77DBD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C99EEC35299C635F00B77DBD /* FirebaseFirestore */; };
 		C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */; };
-		C99EEC4C29A1F7CB00B77DBD /* TODOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */; };
 		C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6529B165E600B77DBD /* UserDefaults.swift */; };
 		C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC8129B2A14100B77DBD /* TapGesture.swift */; };
 		C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */; };
@@ -83,13 +77,13 @@
 		C9AC616C29D6BF1E0006FF32 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616B29D6BF1E0006FF32 /* SearchType.swift */; };
 		C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */; };
 		C9AC618029DB4A5B0006FF32 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */; };
+		C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3C2F3CD7513111610A94D255 /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 		5C2E337B7638DE427F094D05 /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
 		A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C96622B529B80E8100C4ABD0 /* NearbySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySearchView.swift; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
 		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +98,6 @@
 		C99EEB2B299B19B300B77DBD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		C99EEB2E299B19B300B77DBD /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
-		C99EEB38299B19B300B77DBD /* LocationAnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAnnotationModel.swift; sourceTree = "<group>"; };
 		C99EEB42299B19B300B77DBD /* ReviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		C99EEB44299B19B300B77DBD /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		C99EEB45299B19B300B77DBD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -148,7 +141,6 @@
 		C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
 		C99EEC30299C614400B77DBD /* HiddenKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = HiddenKeys.plist; sourceTree = "<group>"; };
 		C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
-		C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOS.swift; sourceTree = "<group>"; };
 		C99EEC6529B165E600B77DBD /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C99EEC8129B2A14100B77DBD /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
 		C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDisplayView.swift; sourceTree = "<group>"; };
@@ -162,6 +154,7 @@
 		C9AC616B29D6BF1E0006FF32 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsVM.swift; sourceTree = "<group>"; };
 		C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "LeSchnoz/Model/Managers/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchnozModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,9 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C99EEC1D299B1A1500B77DBD /* SDWebImageSwiftUI in Frameworks */,
-				C99EEC36299C635F00B77DBD /* FirebaseFirestore in Frameworks */,
-				C99EEC34299C635F00B77DBD /* FirebaseAuth in Frameworks */,
 				A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,7 +182,6 @@
 			isa = PBXGroup;
 			children = (
 				C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */,
-				C99EEC4B29A1F7CB00B77DBD /* TODOS.swift */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
@@ -270,19 +259,11 @@
 		C99EEB34299B19B300B77DBD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C99EEB35299B19B300B77DBD /* Annotations */,
 				C99EEB41299B19B300B77DBD /* FirebaseData */,
 				C9AC616829D6BE780006FF32 /* ScchnozPlace.swift */,
+				C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		C99EEB35299B19B300B77DBD /* Annotations */ = {
-			isa = PBXGroup;
-			children = (
-				C99EEB38299B19B300B77DBD /* LocationAnnotationModel.swift */,
-			);
-			path = Annotations;
 			sourceTree = "<group>";
 		};
 		C99EEB41299B19B300B77DBD /* FirebaseData */ = {
@@ -303,7 +284,6 @@
 				C99EEB64299B19B400B77DBD /* SubViews */,
 				C99EEB6A299B19B400B77DBD /* Screens */,
 				C99EEBAA299B19B400B77DBD /* TabBarSetup.swift */,
-				C96622B529B80E8100C4ABD0 /* NearbySearchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -528,19 +508,14 @@
 				C99EEB08299B121600B77DBD /* Sources */,
 				C99EEB09299B121600B77DBD /* Frameworks */,
 				C99EEB0A299B121600B77DBD /* Resources */,
-				7CE3C816B9D4AE57FBD67720 /* [CP] Embed Pods Frameworks */,
-				86386D1328701653ADA9BE68 /* [CP] Copy Pods Resources */,
+				6DD0C0440F912D77E90A38CB /* [CP] Embed Pods Frameworks */,
+				F36D342BD622239BF685B0FA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = LeSchnoz;
-			packageProductDependencies = (
-				C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */,
-				C99EEC33299C635F00B77DBD /* FirebaseAuth */,
-				C99EEC35299C635F00B77DBD /* FirebaseFirestore */,
-			);
 			productName = LeSchnoz;
 			productReference = C99EEB0C299B121600B77DBD /* LeSchnoz.app */;
 			productType = "com.apple.product-type.application";
@@ -598,7 +573,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7CE3C816B9D4AE57FBD67720 /* [CP] Embed Pods Frameworks */ = {
+		6DD0C0440F912D77E90A38CB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -613,23 +588,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		86386D1328701653ADA9BE68 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8B763368EC32274A7AE160B0 /* [CP] Check Pods Manifest.lock */ = {
@@ -654,6 +612,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F36D342BD622239BF685B0FA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -667,15 +642,14 @@
 				C99EEC17299B19B400B77DBD /* SignupVM.swift in Sources */,
 				C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */,
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
-				C99EEBC3299B19B400B77DBD /* LocationAnnotationModel.swift in Sources */,
 				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,
-				C99EEC4C29A1F7CB00B77DBD /* TODOS.swift in Sources */,
 				C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */,
 				C99EEC12299B19B400B77DBD /* CreativeSignInUp.swift in Sources */,
 				C9AC615929D11E990006FF32 /* SettingsPage.swift in Sources */,
 				C9AC616329D6BD350006FF32 /* NewSignup.swift in Sources */,
 				C99EEB12299B121600B77DBD /* ContentView.swift in Sources */,
+				C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */,
 				C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */,
 				C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */,
 				C99EEBB6299B19B400B77DBD /* MapDetails.swift in Sources */,
@@ -686,7 +660,6 @@
 				C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */,
 				C99EEBF1299B19B400B77DBD /* Header.swift in Sources */,
 				C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */,
-				C96622B629B80E8100C4ABD0 /* NearbySearchView.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
 				C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
@@ -868,11 +841,12 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -901,11 +875,12 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -955,24 +930,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C99EEC1C299B1A1500B77DBD /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-		C99EEC33299C635F00B77DBD /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		C99EEC35299C635F00B77DBD /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C99EEB04299B121600B77DBD /* Project object */;
 }
