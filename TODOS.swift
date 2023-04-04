@@ -7,18 +7,11 @@
 
 /*
  
-  - Breakfast/Lunch/Dinner search?
+  - Clean code
+  
+  - Jasper needs new privacy policy/terms ??
  
-  - UI
-    - Mimick Foursquare
-    - Login / Signup redesign
- 
-  - Images
- 
-  - Privacy Policy / Terms
- 
-  - Tutorial / Walkthrough in Settings as well as at first launch
- 
- 
+  - set up with Jaspers API KEY
+    
  
 */

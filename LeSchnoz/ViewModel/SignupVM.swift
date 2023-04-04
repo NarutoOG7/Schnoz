@@ -34,10 +34,11 @@ class SignupVM: ObservableObject {
 
     var auth = Authorization()
 
-    func signupTapped() {
+    func signupTapped(withCompletion completion: @escaping(Bool) -> Void = {_ in}) {
         
         guard isConnectedToNetwork() else {
             setErrorMessage(.firebase, message: "Please check your network connection and try again.")
+            completion(false)
             return
         }
         
@@ -47,8 +48,12 @@ class SignupVM: ObservableObject {
             auth.signUp(userName: usernameInput,
                         email: emailInput,
                         password: passwordInput,
-                        confirmPassword: confirmPasswordInput) { error in
-                self.handleError(error)
+                        confirmPassword: confirmPasswordInput) { status, error in
+                if let error = error {
+                    self.handleError(error)
+                    completion(false)
+                }
+                completion(status)
             }
         }
         

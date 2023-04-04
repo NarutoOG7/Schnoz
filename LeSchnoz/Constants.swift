@@ -138,9 +138,8 @@ enum K {
         static let splashOne = Image("SplashOne")
         static let splashTwo = Image("SplashTwo")
         static let logo = Image("Logo")
-        static let paperBackground = Image("PaperBackground")
         static let share = Image(systemName: "square.and.arrow.up")
-        static let placeholder = Image("placeholder")
+        static let placeholder = Image(systemName: "photo")
     }
     
     //MARK: - UserDefaults

@@ -12,9 +12,10 @@ struct ReviewCard: View {
     let review: ReviewModel
     
     let oceanBlue = K.Colors.OceanBlue.self
-    
+        
     var body: some View {
         VStack(alignment: .leading,spacing: 7) {
+            placeNameView
             title
             stars
                 .padding(.bottom, 6)
@@ -31,6 +32,12 @@ struct ReviewCard: View {
         Text(review.title)
             .font(.avenirNext(size: 20))
             .fontWeight(.medium)
+            .foregroundColor(oceanBlue.blue)
+    }
+    
+    var placeNameView: some View {
+        Text(review.locationName)
+            .font(.avenirNext(size: 16))
             .foregroundColor(oceanBlue.blue)
     }
     

@@ -12,9 +12,7 @@ import GoogleMaps
 class GooglePlacesManager: ObservableObject {
     
     static let instance = GooglePlacesManager()
-    
-    @ObservedObject var exploreVM = ExploreViewModel.instance
-    
+        
     @Published var error: Error?
     @Published var predictions: [GMSAutocompletePrediction]?
     
@@ -94,10 +92,6 @@ class GooglePlacesManager: ObservableObject {
         { results, error in
             
             if let error = error {
-                // TODO: Verify error handling
-                //                let errorManager = ErrorManager.instance
-                //                errorManager.message = error.localizedDescription
-                //                errorManager.shouldDisplay = true
                 completion(nil, error)
             }
             
@@ -127,19 +121,17 @@ class GooglePlacesManager: ObservableObject {
     
         self.placesClient.findAutocompletePredictions(fromQuery: "Fort Collins", filter: filter, sessionToken: autocompleteSessionToken) { results, error in
             
-        
-//        self.placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: .all) { results, error in
+            
+            //        self.placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: .all) { results, error in
             if let error = error {
-                // TODO: Handle Error
-                print(error.localizedDescription)
                 completion(nil, error)
             }
             var schnozResults = [SchnozPlace]()
             if let results = results {
                 for result in results {
-                                        
+                    
                     let schnozPlace = SchnozPlace(placeID: result.placeID)
-//                    schnozPlace.gmsPlace = result.place
+                    //                    schnozPlace.gmsPlace = result.place
                     schnozPlace.primaryText = result.attributedPrimaryText.string
                     FirebaseManager.instance.getReviewsForLocation(schnozPlace.placeID) { reviews in
                         schnozPlace.schnozReviews = reviews
@@ -151,5 +143,45 @@ class GooglePlacesManager: ObservableObject {
         }
     }
     
+    
+    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
+        
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
+        
+        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
+            (place: GMSPlace?, error: Error?) in
+            if let error = error {
+                completion(nil, error)
+            }
+            if let place = place {
+                completion(place, nil)
+            }
+        })
+    }
+    
+    func getPhotoForPlaceID(_ placeID: String, withCompletion completion: @escaping(UIImage?, Error?) -> Void) {
+        
+        self.placesClient.lookUpPlaceID(placeID) { (place, error) in
+            guard let place = place, error == nil else {
+                completion(nil, error)
+                return
+            }
+            // Get the first photo reference for the place.
+            guard let photoMetadata = place.photos?.first else {
+                completion(nil, error)
+                return
+            }
+//             Download the actual image data.
+            self.placesClient.loadPlacePhoto(photoMetadata) { (photo, error) in
+                guard let photo = photo, error == nil else {
+                    completion(nil, error)
+                    return
+                }
+
+                completion(photo, nil)
+            }
+        }
+
+    }
 }
 

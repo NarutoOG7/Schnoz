@@ -9,10 +9,11 @@ import SwiftUI
 
 struct LocationReviewView: View {
     
-    @Binding var location: SchnozPlace
     @Binding var isPresented: Bool
     @Binding var review: ReviewModel?
+    @Binding var location: SchnozPlace
     
+    @State var isUpdatingReview: Bool
     @State var titleInput: String = ""
     @State var pickerSelection: Int = 0
     @State var descriptionInput: String = ""
@@ -21,10 +22,7 @@ struct LocationReviewView: View {
     
     @State var shouldShowTitleErrorMessage = false
     @State var shouldShowDescriptionErrorMessage = false
-    @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
-    
-    @State var firebaseErrorMessage = ""
     
     //MARK: - Focused Text Field
     @FocusState private var focusedField: Field?
@@ -52,10 +50,9 @@ struct LocationReviewView: View {
                     .padding(.top, 35)
             }
             .padding()
-            .navigationTitle(location.gmsPlace?.name ?? "")
+            .navigationTitle(review?.locationName ?? location.primaryText ?? "")
+            .navigationBarTitleDisplayMode(.inline)
             
-            firebaseErrorBanner
-
         }
         .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
             Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
@@ -133,18 +130,6 @@ struct LocationReviewView: View {
                 .tint(oceanBlue.yellow)
         }
     }
-    //MARK: - Error Banner
-    private var firebaseErrorBanner: some View {
-
-            NotificationBanner(message: $firebaseErrorMessage,
-                               isVisible: $shouldShowFirebaseError,
-                               errorManager: errorManager)
-            .task {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-                    self.shouldShowFirebaseError = false
-                }
-            }
-    }
     
     private var submitButton: some View {
         let isReview = review != nil
@@ -164,11 +149,9 @@ struct LocationReviewView: View {
     }
     
     private func submitTapped() {
-                
         checkRequiredFieldsAndAssignErrorMessagesAsNeeded()
         
         if requisiteFieldsAreFilled() {
-            
             let name = nameInput == "" ? userStore.user.name : nameInput
             let rev = ReviewModel(
                 id: "",
@@ -176,33 +159,29 @@ struct LocationReviewView: View {
                 review: descriptionInput,
                 title: titleInput,
                 username: isAnonymous ? "Anonymous" : name,
-                locationID: location.gmsPlace?.placeID ?? "",
-                locationName: location.gmsPlace?.name ?? "")
-            
-            if self.review != nil && isUpdated() {
+                locationID: review?.locationID ?? "",
+                locationName: location.primaryText ?? "")
+                        
+            if isUpdatingReview && isUpdated() {
+                self.location.placeID = review?.locationID ?? ""
                 
                 firebaseManager.updateReviewInFirestore(rev, forID: self.review?.id ?? rev.id) { error in
-                    
                     if let error = error {
-                        self.firebaseErrorMessage = error.rawValue
-                        self.shouldShowFirebaseError = true
+                        self.errorManager.message = error.rawValue
+                        self.errorManager.shouldDisplay = true
                     }
-                    
-                    self.location.schnozReviews.append(rev)
+                    ListResultsVM.instance.refreshData(rev, placeID: location.placeID, isRemoving: false, isAddingNew: false)
                     self.shouldShowSuccessMessage = true
-                    
                 }
             } else {
-                
                 firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
-                    
                     if let error = error {
-                        self.firebaseErrorMessage = error.rawValue
-                        self.shouldShowFirebaseError = true
+                        self.errorManager.message = error.rawValue
+                        self.errorManager.shouldDisplay = true
                     }
-                    
                     self.shouldShowSuccessMessage = true
-                    LDVM.instance.recentlyPublishedReview = rev
+//                    LDVM.instance.recentlyPublishedReview = rev
+                    ListResultsVM.instance.refreshData(rev, placeID: location.placeID, isRemoving: false, isAddingNew: true)
                 }
             }
         }
@@ -242,9 +221,11 @@ struct LocationReviewView: View {
 
 struct LocationReviewView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationReviewView(location: .constant(SchnozPlace(placeID: "Place01")),
+        LocationReviewView(
                            isPresented: .constant(true),
                            review: .constant(nil),
+                           location: .constant(SchnozPlace(placeID: "Place01")),
+                           isUpdatingReview: false,
                            userStore: UserStore(),
                            firebaseManager: FirebaseManager(),
                            errorManager: ErrorManager())

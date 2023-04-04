@@ -10,6 +10,7 @@ import Firebase
 import CoreLocation
 import MapKit
 import GooglePlaces
+import Combine
 
 
 class FirebaseManager: ObservableObject {
@@ -17,21 +18,58 @@ class FirebaseManager: ObservableObject {
     let constantToNeverTouch: Void = FirebaseApp.configure()
     
     static let instance = FirebaseManager()
+    
+    @Published var latestReviewPublished = PassthroughSubject<DocumentSnapshot, Never>()
         
     @ObservedObject var errorManager = ErrorManager.instance
-    @ObservedObject var locationStore = LocationStore.instance
     @ObservedObject var userStore = UserStore.instance
     
     var db: Firestore?
+    private var listener: ListenerRegistration?
     
     init() {
         db = Firestore.firestore()
+    }
+    
+    func stopListeningForLatestReview() {
+         listener?.remove()
+         listener = nil
+     }
+    
+    func getLatestReview(withCompletion completion: @escaping(ReviewModel?, Error?) -> Void) {
+        
+        if userStore.isSignedIn {
+            
+            guard let db = db else { return }
+            
+            let query = db.collection("Reviews")
+                .order(by: "timestamp",
+                       descending: true)
+                .limit(to: 1)
+            listener = query
+                .addSnapshotListener { snapshot, error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        completion(nil, error)
+                    }
+                    if let snapshot = snapshot {
+                        for doc in snapshot.documents {
+                            let dict = doc.data()
+                            let review = ReviewModel(dictionary: dict)
+                            completion(review, nil)
+                        }
+                    }
+                }
+        }
+
     }
 
     //MARK: - Reviews
     func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         
         guard let db = db else { return }
+        
+        let timestamp = FieldValue.serverTimestamp()
         
         let id = review.title + review.username + review.locationID
         
@@ -42,8 +80,9 @@ class FirebaseManager: ObservableObject {
             "review" : review.review,
             "rating" : review.rating,
             "username" : review.username,
-            "locationID" : location.gmsPlace?.placeID ?? "",
-            "locationName" : location.gmsPlace?.name ?? ""
+            "locationID" : location.placeID,
+            "locationName" : location.primaryText ?? "",
+            "timestamp" : timestamp
             
         ]) { error in
             
@@ -59,10 +98,8 @@ class FirebaseManager: ObservableObject {
     func removeReviewFromFirestore(_ review: ReviewModel, withCompletion completion: @escaping(Error?) -> () = {_ in}) {
         
         guard let db = db else { return }
-        
-        let id = review.title + review.username + review.locationID
-        
-        db.collection("Reviews").document(id)
+                
+        db.collection("Reviews").document(review.id)
             .delete() { err in
                 
                 if let err = err {
@@ -83,6 +120,8 @@ class FirebaseManager: ObservableObject {
         
         guard let db = db else { return }
         
+        let timestamp = FieldValue.serverTimestamp()
+        
         db.collection("Reviews").document(id)
             .updateData([
                 "id" : id,
@@ -92,7 +131,8 @@ class FirebaseManager: ObservableObject {
                 "rating" : review.rating,
                 "username" : review.username,
                 "locationID" : review.locationID,
-                "locationName" : review.locationName
+                "locationName" : review.locationName,
+                "timestamp" : timestamp
                 
             ], completion: { err in
                 

@@ -13,65 +13,60 @@ class NetworkServices: ObservableObject {
     static let instance = NetworkServices()
     
     let baseURL = URL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?")
-//    let api_Key = "AIzaSyAGCA2wJquQ5rECUYoMQWRBNHLD0T-3zgE"
-    let api_Key = "AIzaSyC_KQ2JYEuka7IVvakx4DgjSNvtu0yG4qw"
+    @Published var apiKey = "AIzaSyC_KQ2JYEuka7IVvakx4DgjSNvtu0yG4qw"
     
     @Published var searchTypeLocations: [SchnozPlace] = []
     
     @ObservedObject var listResultsVM = ListResultsVM.instance
+    @ObservedObject var errorManager = ErrorManager.instance
     
-    func getFullURL(_ searchType: SearchType, withCompletion completion: @escaping(URL?, Error?) -> Void) {
+    func getFullURL(_ keyword: String, withCompletion completion: @escaping(URL?, Error?) -> Void) {
         if let currentLoc = UserStore.instance.currentLocation?.coordinate {
-            let keyword = "keyword=\(searchType.rawValue)"
+            let keyword = "keyword=\(keyword)"
             let location = "&location=\(currentLoc.asStringForURL())"
             let radius = "&radius=2500"
+            let rankby = "&rankby=distance"
             let type = "&type=restaraunt"
-            let apiKey = "&key=\(api_Key)"
+            let apiKey = "&key=\(apiKey)"
             let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + apiKey
             if let fullURL = URL(string: stringURL) {
-                //            let fullURL = baseURL?.appendingPathExtension(keyword+location+radius+type+apiKey)
-                //            let fullURL = baseURL?.absoluteURL
-                //                .appending(queryItems: [URLQueryItem(name: "keyword", value: searchType.rawValue),
-                //                                                          URLQueryItem(name: "location", value: str.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)),
-                //                                                         URLQueryItem(name: "radius", value: "1500"),
-                //                                                         URLQueryItem(name: "type", value: "restaraunt"),
-                //                                                         URLQueryItem(name: "key", value: api_Key)])
                 completion(fullURL, nil)
             }
         } else if ListResultsVM.instance.searchRegion != "" {
             FirebaseManager.instance.getCoordinatesFromAddress(address: ListResultsVM.instance.searchRegion) { cloc in
-                let fullURL = self.baseURL?.appending(queryItems: [URLQueryItem(name: "keyword", value: searchType.rawValue),
+                let fullURL = self.baseURL?.appending(queryItems: [URLQueryItem(name: "keyword", value: keyword),
                                                                    URLQueryItem(name: "location", value: cloc.coordinate.asStringForURL()),
                                                                    URLQueryItem(name: "radius", value: "1500"),
                                                                    URLQueryItem(name: "type", value: "restaraunt"),
-                                                                   URLQueryItem(name: "key", value: self.api_Key)])
+                                                                   URLQueryItem(name: "key", value: self.apiKey)])
                 completion(fullURL, nil)
             }
         } else {
-            print("no go")
+            errorManager.shouldDisplay = true
+            errorManager.message = "Error connecting to Google"
         }
 
     }
     
-    func getNearbyLocationsBySearchType(_ searchType: SearchType) {
+    func getNearbyLocationsWithKeyword(_ keyword: String, withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
+        self.listResultsVM.isLoading = true
         self.listResultsVM.schnozPlaces = []
-        getFullURL(searchType) { url, error in
+        getFullURL(keyword) { url, error in
             if let error = error {
-                // TODO: HAndle Error
-                print(error.localizedDescription)
+                completion(nil, error)
             }
             if let url = url {
-                print(url)
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     if let error = error {
-                        // TODO: Handle Error
-                        print(error.localizedDescription)
+                        completion(nil, error)
                     }
                     if let data = data {
-                        if let places = self.parseJSONTres(data) {
-                            for place in places {
-                                let schnozPlace = self.schnozModelToPlace(place)
-                                self.listResultsVM.schnozPlaces.append(schnozPlace)
+                        self.parseJSONTres(data) { schnozPlaces, error in
+                            if let error = error {
+                                completion(nil, error)
+                            }
+                            if let schnozPlaces = schnozPlaces {
+                                completion(schnozPlaces, nil)
                             }
                         }
                     }
@@ -81,56 +76,46 @@ class NetworkServices: ObservableObject {
         }
     }
     
-    func process(_ items: [SchnozModel]) {
-        listResultsVM.schnozPlaces = []
-        for item in items {
-            let schnozPlace = schnozModelToPlace(item)
-            listResultsVM.schnozPlaces.append(schnozPlace)
+    func parseJSONTres(_ data: Data, withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
+        do {
+            let result = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
+            if let places = result?["results"] as? [[String: Any]] {
+                
+                var schnozPlaces = [SchnozPlace]()
+                let group = DispatchGroup()
+                
+                for place in places {
+                    let placeID = place["place_id"] as? String ?? ""
+                    let schnozPlace = SchnozPlace(placeID: placeID)
+                    
+                    group.enter()
+                        GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
+                            if let error = error {
+                                completion(nil, error)
+                            }
+                            if let gmsPlace = gmsPlace {
+                                schnozPlace.gmsPlace = gmsPlace
+                            }
+                            group.leave()
+                        }
+                    
+                    group.enter()
+                    FirebaseManager.instance.getReviewsForLocation(placeID) { reviews in
+                        schnozPlace.schnozReviews = reviews
+                        group.leave()
+                    }
+                    
+                    schnozPlaces.append(schnozPlace)
+
+                }
+                
+                group.notify(queue: .main) {
+                    completion(schnozPlaces, nil)
+                }
+            }
+        } catch let error {
+            completion(nil, error)
         }
-    }
-    
-    func schnozModelToPlace(_ schnozModel: SchnozModel) -> SchnozPlace {
-        let schnozPlace = SchnozPlace(placeID: schnozModel.placeID ?? "")
-        schnozPlace.primaryText = schnozModel.name
-//        schnozPlace.secondaryText = schnozModel.formattedAddress
-        
-        return schnozPlace
-    }
-
-    func parseJSONTres(_ data: Data) -> [SchnozModel]? {
-               do {
-                   let result = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
-                   if let places = result?["results"] as? [[String: Any]] {
-                       
-                       var schnozModels = [SchnozModel]()
-                       // Loop through each place and extract the information you need
-                       for place in places {
-                           let name = place["name"] as? String ?? ""
-                           let placeID = place["place_id"] as? String ?? ""
-                           // Address
-                           let addressComp = place["address_components"] as? [String:Any] ?? [:]
-                           let addressLong = addressComp["long_name"] as? String ?? ""
-                           let addressShort = addressComp["short_name"] as? String ?? ""
-                           let addressTypes = addressComp["types"] as? [String] ?? []
-                           let adrComp = AddressComponents(longName: addressLong, shortName: addressShort, types: addressTypes)
-
-                           // Serves ...
-                           let servesBfast = place["serves_breakfast"] as? Bool ?? false
-                           let servesLunch = place["serves_lunch"] as? Bool ?? false
-                           let servesDinner = place["serves_dinner"] as? Bool ?? false
-
-                           
-                           print(adrComp.shortName)
-                           // Add the place information to an array or other data structure
-                           let newPlace = SchnozModel(addressComponents: adrComp, name: name, placeID: placeID, servesBreakfast: servesBfast, servesLunch: servesLunch, servesDinner: servesDinner)
-                           schnozModels.append(newPlace)
-                       }
-                       return schnozModels
-                   }
-               } catch let error {
-                   print("Error parsing JSON: \(error)")
-               }
-        return nil
     }
 }
 
@@ -141,7 +126,6 @@ extension CLLocationCoordinate2D {
         let comma = ","
         let allowedCharacterSet = CharacterSet(charactersIn: "0123456789.-_~")
         let encodedComma = comma.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? "nil"
-        print(encodedComma)
         let str = lat + encodedComma + lon
         return str
     }
@@ -157,28 +141,20 @@ struct Throwable<T: Decodable>: Decodable {
 
 struct SchnozModel: Codable {
     
-    var addressComponents: AddressComponents
+//    var addressComponents: AddressComponents
+    var formattedAddress: String
     var name: String
     var placeID: String
-    var servesBreakfast: Bool
-    var servesLunch: Bool
-    var servesDinner: Bool
-
     
     private enum CodingKeys: String, CodingKey {
-        case addressComponents = "address_components"
+//        case addressComponents = "address_components"
+        case formattedAddress = "formatted_address"
         case name
         case placeID = "place_id"
-        case servesBreakfast = "serves_breakfast"
-        case servesLunch = "serves_lunch"
-        case servesDinner = "serves_dinner"
-
     }
 }
 
-//struct Places: Codable {
-//    let items: [SchnozModel]
-//}
+
 
 struct NearbyResponse: Codable {
     

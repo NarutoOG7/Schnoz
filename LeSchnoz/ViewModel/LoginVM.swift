@@ -27,6 +27,11 @@ class LoginVM: ObservableObject {
     @ObservedObject var errorManager = ErrorManager.instance
 
     var auth = Authorization()
+    
+    func reset() {
+        emailInput = ""
+        passwordInput = ""
+    }
 
 
     func loginTapped(withCompletion completion: @escaping(Bool) -> Void = {_ in}) {

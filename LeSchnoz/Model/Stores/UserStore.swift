@@ -23,7 +23,6 @@ class UserStore: ObservableObject {
             if let newValue = newValue {
                 FirebaseManager.instance.getAddressFrom(coordinates: newValue.coordinate) { address in
                     self.currentLocAsAddress = address
-                    print(address.city)
                 }
             }
         }
@@ -36,7 +35,7 @@ class UserStore: ObservableObject {
     @Published var user = User()
 
     
-    
+    @Published var userSigningOut: Bool?
 }
 
 

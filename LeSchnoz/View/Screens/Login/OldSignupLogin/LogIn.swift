@@ -29,7 +29,10 @@ struct LogIn: View {
                     
                     VStack {
                         
-                        authTypeView
+                        HStack {
+                            authTypeView(.login)
+//                            authTypeView(.signup)
+                        }
                         email
                         password
                         forgotPasswordButton
@@ -39,8 +42,8 @@ struct LogIn: View {
                     .background(oceanBlue.white)
                     .clipShape(CurvedShapeLeft())
                     .contentShape(CurvedShapeLeft())
-                    .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
-                    .onTapGesture(perform: authTypeLoginTapped)
+//                    .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
+//                    .onTapGesture(perform: authTypeLoginTapped)
                     .cornerRadius(45)
                     .padding(.horizontal, 20)
                     .frame(height: 475)
@@ -65,25 +68,30 @@ struct LogIn: View {
         }
     }
     
-    private var authTypeView: some View {
-        HStack {
-            VStack(spacing: 50) {
-                Text("Login")
-                    .foregroundColor(self.index == 0 ?
-                                     oceanBlue.blue : oceanBlue.blue.opacity(0.7))
-                    .font(.avenirNext(size: 27))
-                    .fontWeight(.bold)
-                
-                Capsule()
-                    .fill(self.index == 0 ?
-                          oceanBlue.blue : Color.clear)
-                    .frame(width: 90, height: 4)
-                    .offset(y: -35)
-                
+    private func authTypeView(_ authType: AuthType) -> some View {
+        Button {
+            self.authTypeLoginTapped(authType)
+        } label: {
+            
+            HStack {
+                VStack(spacing: 50) {
+                    Text(authType.rawValue.uppercased())
+                        .foregroundColor(self.index == authType.index ?
+                                         oceanBlue.blue : oceanBlue.blue.opacity(0.7))
+                        .font(.avenirNext(size: 27))
+                        .fontWeight(.bold)
+                    
+                    Capsule()
+                        .fill(self.index == 0 ?
+                              oceanBlue.blue : Color.clear)
+                        .frame(width: 90, height: 4)
+                        .offset(y: -35)
+                    
+                }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
+            .padding(.top, 30)
         }
-        .padding(.top, 30)
     }
     
     private var email: some View {
@@ -152,8 +160,8 @@ struct LogIn: View {
     
     //MARK: - Methods
     
-    private func authTypeLoginTapped() {
-        self.index = 0
+    private func authTypeLoginTapped(_ authType: AuthType) {
+        self.index = authType.index
     }
     
     private func loginTapped() {
@@ -175,6 +183,7 @@ struct LogIn_Previews: PreviewProvider {
                   geo: geo,
                   loginVM: LoginVM(),
                   errorManager: ErrorManager())
+            .background(.yellow)
         }
     }
 }
@@ -185,6 +194,17 @@ struct CurvedShapeLeft : Shape {
     func path(in rect: CGRect) -> Path {
         return Path { path in
             path.move(to: CGPoint(x: rect.width, y: 125))
+            path.addLine(to: CGPoint(x: rect.width, y: rect.height))
+            path.addLine(to: CGPoint(x: 0, y: rect.height))
+            path.addLine(to: CGPoint(x: 0, y: 0))
+        }
+    }
+}
+
+struct CurvedRectnagle: Shape {
+    func path(in rect: CGRect) -> Path {
+        return Path { path in
+            path.move(to: CGPoint(x: rect.width, y: 0))
             path.addLine(to: CGPoint(x: rect.width, y: rect.height))
             path.addLine(to: CGPoint(x: 0, y: rect.height))
             path.addLine(to: CGPoint(x: 0, y: 0))

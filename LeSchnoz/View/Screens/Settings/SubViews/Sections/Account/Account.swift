@@ -15,10 +15,9 @@ struct Account: View {
     @State var firebaseErrorAlertShown = false
     
     @ObservedObject var userStore: UserStore
-    @ObservedObject var firebaseManager: FirebaseManager
-    @ObservedObject var locationStore: LocationStore
+    @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager: ErrorManager
-    @ObservedObject var loginVM: LoginVM
+    @ObservedObject var loginVM = LoginVM.instance
     
     var auth = Authorization.instance
     
@@ -95,7 +94,6 @@ struct Account: View {
     private var manageReviews: some View {
         NavigationLink(destination: ManageReviews(firebaseManager: firebaseManager,
                                                   userStore: userStore,
-                                                  locationStore: locationStore,
                                                   errorManager: errorManager)) {
             Text("Manage Reviews")
                 .foregroundColor(oceanBlue.white)
@@ -154,11 +152,16 @@ struct Account: View {
     
     private func signOutTapped() {
         self.confirmSignOutAlertShown = true
+        firebaseManager.stopListeningForLatestReview()
     }
     
     
     private func confirmSignOutTapped() {
         
+        loginVM.reset()
+        
+        UserDefaults.standard.set(false, forKey: "signedIn")
+        userStore.isSignedIn = false
         auth.signOut { error in
             
             if error == .failToSignOut {
@@ -171,6 +174,7 @@ struct Account: View {
     }
     
     private func createAccountTapped() {
+        UserDefaults.standard.set(false, forKey: "signedIn")
         userStore.isSignedIn = false
         userStore.user = User()
         UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
@@ -183,8 +187,7 @@ struct Account: View {
 struct Account_Previews: PreviewProvider {
     static var previews: some View {
         Account(userStore: UserStore(),
-                firebaseManager: FirebaseManager(),
-                locationStore: LocationStore(),
+//                firebaseManager: FirebaseManager(),
                 errorManager: ErrorManager(),
                 loginVM: LoginVM())
     }

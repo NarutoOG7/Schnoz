@@ -31,9 +31,10 @@ struct ContentView: View {
                                     loginVM: loginVM)
                     }
                 } else {
-                    CreativeSignInUp(loginVM: loginVM,
-                                     userStore: userStore,
-                                     errorManager: errorManager)
+                    SignupLogin()
+//                    CreativeSignInUp(loginVM: loginVM,
+//                                     userStore: userStore,
+//                                     errorManager: errorManager)
                 }
 
                 errorBanner

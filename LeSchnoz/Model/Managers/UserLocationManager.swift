@@ -12,9 +12,7 @@ import AVFAudio
 class UserLocationManager: NSObject, ObservableObject {
     
     static let instance = UserLocationManager()
-    
-    @StateObject var exploreVM = ExploreViewModel.instance
-    
+        
     @Published var displayedLocationRoute: MKRoute!
     @Published var locationServicesEnabled = false
     

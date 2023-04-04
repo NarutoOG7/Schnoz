@@ -89,6 +89,7 @@ struct SplashScreen: View {
     
     private func continueTapped() {
         contentViewVM.showTutorial = false
+        SettingsVM.instance.showsTutorial = false
     }
 }
 

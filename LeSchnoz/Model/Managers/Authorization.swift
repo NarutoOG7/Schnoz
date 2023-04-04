@@ -16,7 +16,6 @@ class Authorization {
         
     let auth = Auth.auth()
     
-    @ObservedObject var locationStore = LocationStore.instance
     @ObservedObject var userStore = UserStore.instance
     
     var isSignedIn: Bool {
@@ -32,9 +31,7 @@ class Authorization {
         auth.signIn(withEmail: email, password: password) { authResult, error in
             
             if let error = error {
-                
-                print(error.localizedDescription)
-                
+                                
                 switch error.localizedDescription {
                     
                 case let str where str.contains("no user record corresponding to this identifier"):
@@ -65,9 +62,7 @@ class Authorization {
                 let user = User(id: result.user.uid,
                                 name: result.user.displayName ?? "",
                                 email: result.user.email ?? "")
-                
-                // TODO: Grab reviews here?
-                
+                                
                 DispatchQueue.main.async {
                     
                     self.userStore.isSignedIn = true
@@ -89,41 +84,38 @@ class Authorization {
         }
     }
     
-    func signUp(userName: String, email: String, password: String, confirmPassword: String, error onError: @escaping(K.ErrorHelper.Errors) -> Void) {
+    func signUp(userName: String, email: String, password: String, confirmPassword: String, withCompletion completion: @escaping(Bool, K.ErrorHelper.Errors?) -> Void) {
         
         if confirmPassword == password {
             
             auth.createUser(withEmail: email, password: password) { (result, error) in
                 
                 if let error = error {
-                    
-                    print(error.localizedDescription)
-                    
+                                        
                     switch error.localizedDescription {
                         
                     case let str where str.contains("network error has occurred"):
-                        onError(.troubleConnectingToFirebase)
+                        completion(false, .troubleConnectingToFirebase)
                         
                     case let str where str.contains("email address is already in use"):
-                        onError(.emailInUse)
+                        completion(false, .emailInUse)
                         
                     case let str where str.contains("email address is badly formatted"):
-                        onError(.emailIsBadlyFormatted)
+                        completion(false, .emailIsBadlyFormatted)
                         
                     case let str where str.contains("password must be 6 characters"):
-                        onError(.insufficientPassword)
+                        completion(false, .insufficientPassword)
                         
                     case let str where str.contains("passwords do not match"):
-                        onError(.passwordsDontMatch)
+                        completion(false, .passwordsDontMatch)
                         
                     default:
-                        onError(.firebaseTrouble)
+                        completion(false, .firebaseTrouble)
                     }
                     
                 } else {
                     guard let result = result else {
-                        print("No result")
-                        onError(.firebaseTrouble)
+                        completion(false, .firebaseTrouble)
                         return
                     }
                     
@@ -140,10 +132,10 @@ class Authorization {
                         
                         self.saveUserToUserDefaults(user: user) { error in
                             if let _ = error {
-                                onError(.failedToSaveUser)
+                                completion(false, .failedToSaveUser)
                             }
                         }
-                        
+                        completion(true, nil)
                     }
                     
                     
@@ -151,11 +143,11 @@ class Authorization {
             }
             
             setCurrentUsersName(userName) { error in
-                onError(.failedToSaveUser)
+               completion(false, .failedToSaveUser)
             }
             
         } else {
-            onError(.passwordsDontMatch)
+          completion(false, .passwordsDontMatch)
         }
     }
     
@@ -171,9 +163,7 @@ class Authorization {
             changeRequest.commitChanges { error in
                 
                 if let error = error {
-                    
-                    print(error.localizedDescription)
-                    
+                                        
                     onError(.failedToSaveUser)
                 }
                 

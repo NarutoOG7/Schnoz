@@ -46,7 +46,7 @@ struct SignUp: View {
             .background(oceanBlue.white)
             .clipShape(CurvedShapeRight())
             .contentShape(CurvedShapeRight())
-            .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
+//            .shadow(color: oceanBlue.yellow.opacity(0.3), radius: 5, x: 0, y: -5)
             .onTapGesture(perform: authTypeSignUpTapped)
             .cornerRadius(45)
             .padding(.horizontal, 20)
@@ -153,7 +153,7 @@ struct SignUp: View {
     //MARK: - Buttons
     
     private var signUpButton: some View {
-        Button(action: signupVM.signupTapped) {
+        Button(action: self.signupTapped) {
             Text("SIGNUP")
                 .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 20))
@@ -174,6 +174,14 @@ struct SignUp: View {
     
     private func authTypeSignUpTapped() {
         self.index = 1
+    }
+    
+    private func signupTapped() {
+        signupVM.signupTapped { success in
+            if success {
+                //this file is deprecated
+            }
+        }
     }
       
     //MARK: - Field

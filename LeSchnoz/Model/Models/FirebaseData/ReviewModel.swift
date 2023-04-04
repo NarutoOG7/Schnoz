@@ -15,10 +15,16 @@ struct ReviewModel: Hashable, Identifiable {
     var title: String = ""
     var username: String = ""
     var locationID: String = ""
-    var location: LocationModel?
     var locationName: String = ""
+    var location: SchnozPlace?
     
-    init(id: String, rating: Int, review: String, title: String, username: String, locationID: String, locationName: String) {
+    init(id: String = "",
+         rating: Int = 0,
+         review: String = "",
+         title: String = "",
+         username: String = "",
+         locationID: String = "",
+         locationName: String = "") {
         self.id = id
         self.rating = rating
         self.review = review

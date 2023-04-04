@@ -9,13 +9,18 @@ import SwiftUI
 
 struct About: View {
     
+    
+    @ObservedObject  var settingsVM = SettingsVM.instance
     let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
         VStack {
             SettingsHeader(settingType: .about)
             List {
-
+                tutorials
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                
                 privacyPolicy
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
@@ -34,9 +39,20 @@ struct About: View {
 
     }
     
+    private var tutorials: some View {
+        Button {
+            settingsVM.showsTutorial = true
+        } label: {
+            Text("Show Tutorials")
+                .font(.avenirNext(size: 18))
+                .foregroundColor(oceanBlue.white)
+        }
+
+    }
+    
     private var privacyPolicy: some View {
         let view: AnyView
-        if let url = URL(string: "https://pages.flycricket.io/spookyspots/privacy.html") {
+        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-privacy-policy/4fac2ce8-7109-4893-a9d0-3f46e435630b/privacy") {
             view = AnyView(
                 Link(destination: url, label: {
                     Text("Privacy Policy")
@@ -52,7 +68,7 @@ struct About: View {
     
     private var termsOfUse: some View {
         let view: AnyView
-        if let url = URL(string: "https://pages.flycricket.io/spookyspots/terms.html") {
+        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-terms-of-use/708fee21-7d29-4bfc-909c-22d1fca17b84/terms") {
             view = AnyView(
                 Link(destination: url, label: {
                     Text("Terms Of Use")

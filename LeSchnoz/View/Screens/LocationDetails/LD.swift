@@ -18,10 +18,17 @@ struct LD: View {
     @State private var isCreatingNewReview = false
     @State private var isShowingMoreReviews = false
     
+    @State private var placeImage: Image = K.Images.placeholder
+    
+    @State var shouldShowFirebaseError = false
+    @State var shouldShowSuccessMessage = false
+    @State var firebaseErrorMessage = ""
+    
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager = ErrorManager.instance
     @ObservedObject var ldvm = LDVM.instance
+    @ObservedObject var listResultsVM = ListResultsVM.instance
     
     let imageMaxHeight = UIScreen.main.bounds.height * 0.38
     let collapsedImageHeight: CGFloat = 10
@@ -68,10 +75,21 @@ struct LD: View {
                     MoreReviewsSheet(reviews: location.schnozReviews)
                 }
             }
-            .background(images.paperBackground)
         }
         .edgesIgnoringSafeArea(.vertical)
         .navigationBarHidden(true)
+        
+        .task {
+            GooglePlacesManager.instance.getPhotoForPlaceID(self.location.placeID) { uiImage, error in
+                if let error = error {
+                    self.errorManager.message = error.localizedDescription
+                    self.errorManager.shouldDisplay = true
+                }
+                if let uiImage = uiImage {
+                    self.placeImage = Image(uiImage: uiImage)
+                }
+            }
+        }
     }
     
     //MARK: - SubViews
@@ -91,7 +109,7 @@ struct LD: View {
     }
     
     private var headerText: some View {
-        Text(location.gmsPlace?.name ?? "")
+        Text(location.primaryText ?? "")
             .font(.avenirNext(size: 20))
             .fontWeight(.bold)
             .foregroundColor(.white)
@@ -99,7 +117,7 @@ struct LD: View {
     
     private var image: some View {
         GeometryReader { geo in
-            WebImage(url: imageURL)
+            placeImage
                     .resizable()
                     .aspectRatio(1.75, contentMode: .fill)
                     .blur(radius: self.getBlurRadiusForImage(geo))
@@ -117,7 +135,7 @@ struct LD: View {
     }
     
     private var title: some View {
-        Text(location.gmsPlace?.name ?? "")
+        Text(location.primaryText ?? "")
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
@@ -125,7 +143,7 @@ struct LD: View {
     
     
     private var address: some View {
-        Text(location.gmsPlace?.formattedAddress ?? "")
+        Text(location.secondaryText ?? "")
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
@@ -154,7 +172,7 @@ struct LD: View {
 //    }
     
     private var reviewHelper: some View {
-        VStack(alignment: .leading) {
+         VStack(alignment: .leading) {
             if location.schnozReviews.isEmpty {
                 Divider()
                 Text("No Reviews")
@@ -175,19 +193,26 @@ struct LD: View {
                 .padding(.vertical, 30)
             Spacer(minLength: 200)
         }
-        .sheet(isPresented: $isCreatingNewReview, onDismiss: {
-            if let recentlyPublishedReview = ldvm.recentlyPublishedReview {
-                self.location.schnozReviews.append(recentlyPublishedReview)
-                ldvm.recentlyPublishedReview = nil
-            }
-        }, content: {
-            LocationReviewView(location: $location,
-                               isPresented: $isCreatingNewReview,
-                               review: .constant(nil),
-                               userStore: userStore,
-                               firebaseManager: firebaseManager,
-                               errorManager: errorManager)
-        })
+//         .sheet(isPresented: $isCreatingNewReview, onDismiss: {
+//             if let recentlyPublishedReview = ldvm.recentlyPublishedReview {
+//                 self.location.schnozReviews.append(recentlyPublishedReview)
+//                 ldvm.recentlyPublishedReview = nil
+//             }
+//         }, content: {
+//
+//             LocationReviewView(
+//                isPresented: $isCreatingNewReview,
+//                review: .constant(nil),
+//                location: $location,
+//                nameInput: userStore.user.name,
+//                userStore: userStore,
+//                firebaseManager: firebaseManager,
+//                errorManager: errorManager
+//             )
+//         })
+//
+        
+
     }
     
     private var moreInfoLink: some View {
@@ -220,9 +245,16 @@ struct LD: View {
                 .italic()
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.blue)
-            Button {
-                self.isCreatingNewReview = true
-                
+            NavigationLink {
+                LocationReviewView(
+                    isPresented: $isCreatingNewReview,
+                    review: .constant(nil),
+                    location: $location,
+                    isUpdatingReview: false,
+                    userStore: userStore,
+                    firebaseManager: firebaseManager,
+                    errorManager: errorManager
+                )
             } label: {
                 Text("Leave A Review")
                     .underline()
@@ -230,6 +262,18 @@ struct LD: View {
                     .foregroundColor(oceanBlue.lightBlue)
             }
         }
+    }
+    
+    private var firebaseErrorBanner: some View {
+
+            NotificationBanner(message: $firebaseErrorMessage,
+                               isVisible: $shouldShowFirebaseError,
+                               errorManager: errorManager)
+            .task {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                    self.shouldShowFirebaseError = false
+                }
+            }
     }
     
     //MARK: - Buttons
@@ -309,7 +353,9 @@ struct LD: View {
     }
     
     private func backButtonTapped() {
-        self.presentationMode.wrappedValue.dismiss()
+//        self.presentationMode.wrappedValue.dismiss()
+        listResultsVM.selectedPlace = nil
+        listResultsVM.shouldShowPlaceDetails = false
     }
     
     private func moreReviewsTapped() {

@@ -74,10 +74,10 @@ struct CreativeSignInUp: View {
     }
     
     var logo: some View {
-        Image("SimpleLogo")
+        Image("SchnozLogoOutline")
             .resizable()
             .aspectRatio(1, contentMode: .fill)
-            .frame(width: 50)
+            .frame(width: 100)
         
     }
     

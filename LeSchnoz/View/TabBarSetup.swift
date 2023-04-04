@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct TabBarSetup: View {
-    
-    @Namespace var namespace
-    
+        
     @State private var selection = 0
     
-    @StateObject var locationStore = LocationStore.instance
-    @StateObject var exploreVM = ExploreViewModel.instance
     @StateObject var firebaseManager = FirebaseManager.instance
-        
+    @StateObject var listResultsVM = ListResultsVM.instance
+    @StateObject var googlePlacesManager = GooglePlacesManager.instance
+    
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var userStore: UserStore
     @ObservedObject var loginVM: LoginVM
@@ -31,11 +29,12 @@ struct TabBarSetup: View {
         self.errorManager = errorManager
         self.loginVM = loginVM
         
-        handleHiddenKeys()
+//        handleHiddenKeys()
         
         tabBarAppearance()
 //        navigationAppearance()
         tableViewAppearance()
+        
     }
     
     var body: some View {
@@ -55,22 +54,17 @@ struct TabBarSetup: View {
         
         NavigationView {
             
-            if exploreVM.showSearchTableView {
+            if listResultsVM.showSearchTableView {
                 
-//                SearchControllerBridge()
-                ListResultsView()
-                    .matchedGeometryEffect(id: "search", in: namespace)
+                ListResultsView(googlePlacesManager: googlePlacesManager,
+                                listResultsVM: listResultsVM,
+                                userStore: userStore,
+                                errorManager: errorManager)
                 
             } else {
-                
-//                ExploreByList(user: $userStore.user,
-//                              exploreVM: exploreVM,
-//                              locationStore: locationStore,
-//                              userStore: userStore,
-//                              firebaseManager: firebaseManager,
-//                              errorManager: errorManager)
-                HomeDisplayView(userStore: userStore)
-                .matchedGeometryEffect(id: "search", in: namespace)
+                HomeDisplayView(
+                    userStore: userStore,
+                    listResultsVM: listResultsVM)
                 .navigationTitle("Explore")
                 .navigationBarHidden(true)
             }
@@ -90,10 +84,9 @@ struct TabBarSetup: View {
     private var settingsTab: some View {
         
         NavigationView {
-            
-            SettingsPage(userStore: userStore,
-                         locationStore: locationStore,
-                         firebaseManager: firebaseManager,
+            SettingsPage(
+                userStore: userStore,
+//                         firebaseManager: firebaseManager,
                          errorManager: errorManager,
                          loginVM: loginVM)
             .navigationTitle("Settings")
@@ -118,7 +111,6 @@ struct TabBarSetup: View {
         tabBarAppearance.barTintColor = UIColor(K.Colors.OceanBlue.blue)
         tabBarAppearance.unselectedItemTintColor = UIColor(K.Colors.OceanBlue.white.opacity(0.5))
         tabBarAppearance.tintColor = UIColor(K.Colors.OceanBlue.white)
-        
         ///This background color is to maintain the same color on scrolling.
         tabBarAppearance.backgroundColor = UIColor(K.Colors.OceanBlue.blue).withAlphaComponent(0.92)
         
@@ -169,16 +161,16 @@ struct TabBarSetup: View {
         var keys: NSDictionary?
 
         if let path = Bundle.main.path(forResource: "HiddenKeys", ofType: "plist") {
-               keys = NSDictionary(contentsOfFile: path)
-           }
-           if let dict = keys {
-               
-               if let adminKey = dict["adminKey"] as? String {
-                   
-                   userStore.adminKey = adminKey
-                   
-               }
-
+            keys = NSDictionary(contentsOfFile: path)
+        }
+            if let dict = keys {
+                
+                if let placesAPI = dict["placesAPIKey"] as? String {
+                    
+                    NetworkServices.instance.apiKey = placesAPI
+                    
+                
+            }
            }
     }
 }
@@ -192,3 +184,4 @@ struct TabBarSetup_Previews: PreviewProvider {
                     loginVM: LoginVM())
     }
 }
+

@@ -17,13 +17,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     @ObservedObject var locationManager = UserLocationManager.instance
     @ObservedObject var userStore = UserStore.instance
+    @ObservedObject var errorManager = ErrorManager.instance
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         GMSPlacesClient.provideAPIKey("AIzaSyBPTme7RzG4HL4VglZEZW96f1BXMb3CT_4")
-
-//    https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=breakfast&location=40.54111%2C-105.09218&radius=1500&type=restaurant&key=AIzaSyAGCA2wJquQ5rECUYoMQWRBNHLD0T-3zgE
-        
+     
         locationManager.checkIfLocationServicesIsEnabled()
 
         getUserIfSignedIn()
@@ -45,7 +44,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
                 userStore.user = user
             } catch {
-                print("Unable to Decode Note (\(error))")
+                errorManager.shouldDisplay = true
+                errorManager.message = "Error Siging In"
             }
         }
     }
@@ -58,7 +58,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 let isGuest = try decoder.decode(Bool.self, from: data)
                 userStore.isGuest = isGuest
             } catch {
-                print("Unable to Decode Note (\(error))")
+                errorManager.shouldDisplay = true
+                errorManager.message = "Error Siging In"
             }
         }
     }

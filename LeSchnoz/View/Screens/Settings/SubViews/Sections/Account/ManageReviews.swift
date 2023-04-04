@@ -11,12 +11,13 @@ struct ManageReviews: View {
     
     
     @State private var reviews: [ReviewModel] = []
-    @State private var selectedReview: ReviewModel?
+    @State private var selectedIndexSet: IndexSet?
     @State private var isEditingReview = false
+    
+    @State private var shouldShowRemoveReviewConfirmation = false
     
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var userStore: UserStore
-    @ObservedObject var locationStore: LocationStore
     @ObservedObject var errorManager: ErrorManager
     
     let oceanBlue = K.Colors.OceanBlue.self
@@ -33,22 +34,24 @@ struct ManageReviews: View {
                     .padding(.vertical, 30)
             }
         }
-        //TODO: verifty this location down here on line 39 is ok to have blank placeID
-        .sheet(item: $selectedReview, content: { review in
-            LocationReviewView(
-                location: .constant(SchnozPlace(placeID: "")),
-                isPresented: $isEditingReview,
-                review: $selectedReview,
-                titleInput: review.title,
-                pickerSelection: review.rating,
-                descriptionInput: review.review,
-                isAnonymous: review.username == "Anonymous",
-                nameInput: review.username,
-                userStore: userStore,
-                firebaseManager: firebaseManager,
-                errorManager: errorManager
+        
+        .alert(isPresented: $shouldShowRemoveReviewConfirmation) {
+            Alert(
+                title: Text("Delete items"),
+                message: Text("Are you sure you want to delete the selected items?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    // delete selected items here
+                    self.delete(at: self.selectedIndexSet ?? IndexSet())
+//                    userStore.reviews.remove(atOffsets: selectedIndexSet ?? IndexSet())
+                    selectedIndexSet = nil
+                },
+                secondaryButton: .cancel()
             )
-        })
+        }
+        
+        .task {
+            assignReviews()
+        }
         
         .navigationTitle("My Reviews")
         .navigationBarTitleDisplayMode(.large)
@@ -65,21 +68,35 @@ struct ManageReviews: View {
         
         List {
             ForEach(userStore.reviews, id: \.self) { review in
-                Button(action: {
-                    
-                    self.selectedReview = review
-                    self.isEditingReview = true
-                    
-                }, label: {
+                NavigationLink {
+                    LocationReviewView(
+                        isPresented: $isEditingReview,
+                        review: .constant(review),
+                        location: .constant(review.location ?? SchnozPlace(placeID: "")),
+                        isUpdatingReview: true,
+                        titleInput: review.title,
+                        pickerSelection: review.rating,
+                        descriptionInput: review.review,
+                        isAnonymous: review.username == "Anonymous",
+                        nameInput: review.username,
+                        userStore: userStore,
+                        firebaseManager: firebaseManager,
+                        errorManager: errorManager
+                    )
+                } label: {
                     Text(review.title)
                         .foregroundColor(oceanBlue.white)
                         .font(.avenirNext(size: 18))
                         .italic()
-                })
+                }
                 .listRowBackground(Color.clear)
                 
             }
-            .onDelete(perform: delete)
+            .onDelete(perform: { indexSet in
+                self.selectedIndexSet = indexSet
+                self.shouldShowRemoveReviewConfirmation = true
+            })
+//            .onDelete(perform: delete)
         }
         .modifier(ClearListBackgroundMod())
         .listStyle(.insetGrouped)
@@ -89,11 +106,23 @@ struct ManageReviews: View {
     private func delete(at offsets: IndexSet) {
         
         offsets.map { userStore.reviews[$0] }.forEach { review in
-            
+            ListResultsVM.instance.refreshData(review, placeID: review.locationID, isRemoving: true, isAddingNew: false)
             firebaseManager.removeReviewFromFirestore(review)
         }
-        
         userStore.reviews.remove(atOffsets: offsets)
+        self.reviews.remove(atOffsets: offsets)
+        ListResultsVM.instance.latestReview = nil
+    }
+    
+    private func assignReviews() {
+        
+        userStore.reviews = []
+        self.reviews = []
+        
+        firebaseManager.getReviewsForUser(userStore.user) { review in
+            userStore.reviews.append(review)
+            self.reviews.append(review)
+        }
     }
     
 }
@@ -102,7 +131,6 @@ struct ManageReviews_Previews: PreviewProvider {
     static var previews: some View {
         ManageReviews(firebaseManager: FirebaseManager(),
                       userStore: UserStore(),
-                      locationStore: LocationStore(),
                       errorManager: ErrorManager())
     }
 }
