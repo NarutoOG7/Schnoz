@@ -13,6 +13,8 @@ class SchnozPlace: Hashable, Identifiable {
     var placeID: String
     var primaryText: String?
     var secondaryText: String?
+//    var reviews: [ReviewModel]?
+    var averageRating: AverageRating?
     var gmsPlace: GMSPlace? {
         willSet {
             primaryText = newValue?.name
@@ -21,6 +23,13 @@ class SchnozPlace: Hashable, Identifiable {
     }
     
     var schnozReviews: [ReviewModel] = [] {
+//        get {
+//            var dictValues = [String : ReviewModel]()
+//            for review in self.reviews ?? [] {
+//                dictValues[review.id] = review
+//            }
+//            return Array(dictValues.values)
+//        }
         willSet {
             avgRating = self.getAvgRatingIntAndString().number
         }

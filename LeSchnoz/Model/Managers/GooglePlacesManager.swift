@@ -20,17 +20,31 @@ class GooglePlacesManager: ObservableObject {
     
     private let placesClient: GMSPlacesClient
     private var autocompleteSessionToken: GMSAutocompleteSessionToken?
-    
+    private var keys: NSDictionary?
     
     init() {
+        //        "AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
+        
+        if let path = Bundle.main.path(forResource: "HiddenKeys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = keys {
+            
+            if let placesAPI = dict["placesAPIKey"] as? String {
+                GMSPlacesClient.provideAPIKey(placesAPI)
+            }
+        }
         placesClient = GMSPlacesClient.shared()
-        refreshToken()
-    }
+            refreshToken()
+        }
+    
     
     func getNearbyLocation(withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
         
         let placeFields: GMSPlaceField = [.name, .formattedAddress]
-        
+        let group = DispatchGroup()
+
+        group.enter()
         placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: placeFields) { [weak self] (results, error) in
             
             guard let strongSelf = self else { return }
@@ -45,12 +59,19 @@ class GooglePlacesManager: ObservableObject {
                     let schnozPlace = SchnozPlace(placeID: result.place.placeID ?? "")
                     schnozPlace.primaryText = result.place.name
                     schnozPlace.secondaryText = result.place.formattedAddress
-                    FirebaseManager.instance.getReviewsForLocation(result.place.placeID ?? "") { reviews in
-                        schnozPlace.schnozReviews = reviews
+                    group.enter()
+                    FirebaseManager.instance.getAverageRatingForLocation(result.place.placeID ?? "") { averageRating in
+                        schnozPlace.averageRating = averageRating
+                    
+//                    FirebaseManager.instance.getReviewsForLocation(result.place.placeID ?? "") { reviews in
+//                        schnozPlace.schnozReviews = reviews
+                        group.leave()
                     }
                     schnozResults.append(schnozPlace)
                 }
-                completion(schnozResults, nil)
+                group.notify(queue: .main) {
+                    completion(schnozResults, nil)
+                }
             }
             
         }
@@ -82,9 +103,9 @@ class GooglePlacesManager: ObservableObject {
     func performAutocompleteQuery(_ query: String, isLocality: Bool = false, withCompletion completion: @escaping ([SchnozPlace]?, Error?) -> Void) {
         
         //        autoFilter { autoFilter in
+        let group = DispatchGroup()
         
         let filter = isLocality ? self.localityFilter() : autoFilter()
-        
         self.placesClient.findAutocompletePredictions(
             fromQuery: query,
             filter: filter,
@@ -103,12 +124,18 @@ class GooglePlacesManager: ObservableObject {
                     schnozPlace.primaryText = result.attributedPrimaryText.string
                     schnozPlace.secondaryText = result.attributedSecondaryText?.string
                     schnozPlace.placeID = result.placeID
-                    FirebaseManager.instance.getReviewsForLocation(result.placeID) { reviews in
-                        schnozPlace.schnozReviews = reviews
+                    group.enter()
+                    FirebaseManager.instance.getAverageRatingForLocation(result.placeID) { averageRating in
+                        schnozPlace.averageRating = averageRating
+//                    FirebaseManager.instance.getReviewsForLocation(result.placeID) { reviews in
+//                        schnozPlace.schnozReviews = reviews
+                        group.leave()
                     }
                     schnozResults.append(schnozPlace)
                 }
-                completion(schnozResults, nil)
+                group.notify(queue: .main) {
+                    completion(schnozResults, nil)
+                }
             }
         }
         
@@ -133,9 +160,12 @@ class GooglePlacesManager: ObservableObject {
                     let schnozPlace = SchnozPlace(placeID: result.placeID)
                     //                    schnozPlace.gmsPlace = result.place
                     schnozPlace.primaryText = result.attributedPrimaryText.string
-                    FirebaseManager.instance.getReviewsForLocation(schnozPlace.placeID) { reviews in
-                        schnozPlace.schnozReviews = reviews
+                    FirebaseManager.instance.getAverageRatingForLocation(schnozPlace.placeID) { avgRating in
+                        schnozPlace.averageRating = avgRating
                     }
+//                    FirebaseManager.instance.getReviewsForLocation(schnozPlace.placeID) { reviews in
+//                        schnozPlace.schnozReviews = reviews
+//                    }
                     schnozResults.append(schnozPlace)
                 }
                 completion(schnozResults, nil)
@@ -151,6 +181,7 @@ class GooglePlacesManager: ObservableObject {
         self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
             (place: GMSPlace?, error: Error?) in
             if let error = error {
+                print(error.localizedDescription)
                 completion(nil, error)
             }
             if let place = place {

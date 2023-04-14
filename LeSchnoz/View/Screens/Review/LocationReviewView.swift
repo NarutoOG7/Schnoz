@@ -12,6 +12,7 @@ struct LocationReviewView: View {
     @Binding var isPresented: Bool
     @Binding var review: ReviewModel?
     @Binding var location: SchnozPlace
+    @Binding var reviews: [ReviewModel]
     
     @State var isUpdatingReview: Bool
     @State var titleInput: String = ""
@@ -150,41 +151,79 @@ struct LocationReviewView: View {
     
     private func submitTapped() {
         checkRequiredFieldsAndAssignErrorMessagesAsNeeded()
-        
         if requisiteFieldsAreFilled() {
-            let name = nameInput == "" ? userStore.user.name : nameInput
-            let rev = ReviewModel(
-                id: "",
-                rating: pickerSelection,
-                review: descriptionInput,
-                title: titleInput,
-                username: isAnonymous ? "Anonymous" : name,
-                locationID: review?.locationID ?? "",
-                locationName: location.primaryText ?? "")
-                        
+            let rev = reviewModel()
             if isUpdatingReview && isUpdated() {
-                self.location.placeID = review?.locationID ?? ""
-                
-                firebaseManager.updateReviewInFirestore(rev, forID: self.review?.id ?? rev.id) { error in
-                    if let error = error {
-                        self.errorManager.message = error.rawValue
-                        self.errorManager.shouldDisplay = true
-                    }
-                    ListResultsVM.instance.refreshData(rev, placeID: location.placeID, isRemoving: false, isAddingNew: false)
-                    self.shouldShowSuccessMessage = true
-                }
+                update(rev)
             } else {
-                firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
-                    if let error = error {
-                        self.errorManager.message = error.rawValue
-                        self.errorManager.shouldDisplay = true
-                    }
-                    self.shouldShowSuccessMessage = true
-//                    LDVM.instance.recentlyPublishedReview = rev
-                    ListResultsVM.instance.refreshData(rev, placeID: location.placeID, isRemoving: false, isAddingNew: true)
-                }
+                add(rev)
             }
         }
+    }
+    
+    private func reviewModel() -> ReviewModel {
+        let name = nameInput == "" ? userStore.user.name : nameInput
+        return ReviewModel(
+            id: "",
+            rating: pickerSelection,
+            review: descriptionInput,
+            title: titleInput,
+            username: isAnonymous ? "Anonymous" : name,
+            locationID: review?.locationID ?? "",
+            locationName: location.primaryText ?? "")
+    }
+    
+    private func update(_ rev: ReviewModel) {
+        self.location.placeID = review?.locationID ?? ""
+        
+        firebaseManager.updateReviewInFirestore(rev, forID: self.review?.id ?? rev.id) { error in
+            if let error = error {
+                self.errorManager.message = error.rawValue
+                self.errorManager.shouldDisplay = true
+            }
+            if let oldReviewIndex = self.location.schnozReviews.firstIndex(where: { $0.id == review?.id }) {
+                self.location.schnozReviews[oldReviewIndex] = rev
+            }
+            if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
+                self.reviews[reviewIndex] = rev
+            }
+            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location.placeID, isRemoving: false, isAddingNew: false)
+            self.shouldShowSuccessMessage = true
+        }
+    }
+    
+    private func add(_ rev: ReviewModel) {
+        firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
+            if let error = error {
+                self.errorManager.message = error.rawValue
+                self.errorManager.shouldDisplay = true
+            }
+
+//            if !self.location.schnozReviews.contains(rev) {
+//                self.location.schnozReviews.append(rev)
+//            }
+            self.reviews.append(rev)
+            self.location.schnozReviews.append(rev)
+            ListResultsVM.instance.refreshData(
+                review: rev,
+                averageRating: updatedAverageRating(rev),
+                placeID: location.placeID,
+                isRemoving: false,
+                isAddingNew: true)
+            self.shouldShowSuccessMessage = true
+        }
+    }
+    
+    func updatedAverageRating(_ rev: ReviewModel) -> AverageRating {
+        var preExistingAVG = self.location.averageRating
+        var newAverageRating = AverageRating(totalStarCount: rev.rating, numberOfReviews: 1, placeID: location.placeID)
+
+        var returnableAVG = preExistingAVG ?? newAverageRating
+            returnableAVG.totalStarCount += rev.rating
+            returnableAVG.numberOfReviews += 1
+            firebaseManager.addAverageRating(returnableAVG)
+            return returnableAVG
+        
     }
     
     private func requisiteFieldsAreFilled() -> Bool {
@@ -225,6 +264,7 @@ struct LocationReviewView_Previews: PreviewProvider {
                            isPresented: .constant(true),
                            review: .constant(nil),
                            location: .constant(SchnozPlace(placeID: "Place01")),
+                           reviews: .constant([ReviewModel]()),
                            isUpdatingReview: false,
                            userStore: UserStore(),
                            firebaseManager: FirebaseManager(),

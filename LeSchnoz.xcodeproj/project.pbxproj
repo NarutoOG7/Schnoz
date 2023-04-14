@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */; };
+		6FC87B32421B8D2AE2B903D7 /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */; };
+		C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAD029E2577700C8971E /* AverageRating.swift */; };
+		C90DFAD529E9F97C00C8971E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
 		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
@@ -76,14 +78,14 @@
 		C9AC616929D6BE780006FF32 /* ScchnozPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616829D6BE780006FF32 /* ScchnozPlace.swift */; };
 		C9AC616C29D6BF1E0006FF32 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616B29D6BF1E0006FF32 /* SearchType.swift */; };
 		C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */; };
-		C9AC618029DB4A5B0006FF32 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */; };
 		C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3C2F3CD7513111610A94D255 /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
-		5C2E337B7638DE427F094D05 /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
-		A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
+		C90DFAD029E2577700C8971E /* AverageRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageRating.swift; sourceTree = "<group>"; };
+		C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
 		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,8 +155,8 @@
 		C9AC616829D6BE780006FF32 /* ScchnozPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScchnozPlace.swift; sourceTree = "<group>"; };
 		C9AC616B29D6BF1E0006FF32 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsVM.swift; sourceTree = "<group>"; };
-		C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "LeSchnoz/Model/Managers/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchnozModel.swift; sourceTree = "<group>"; };
+		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,18 +164,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0CD24E35FBED037F167C9EA /* Pods_LeSchnoz.framework in Frameworks */,
+				6FC87B32421B8D2AE2B903D7 /* Pods_LeSchnoz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DED28CD95298460B4C6C533 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D06D5FB5BC0E37911755A9E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5C2E337B7638DE427F094D05 /* Pods-LeSchnoz.debug.xcconfig */,
-				3C2F3CD7513111610A94D255 /* Pods-LeSchnoz.release.xcconfig */,
+				76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */,
+				E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -181,12 +191,12 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
-				C9AC617F29DB4A5B0006FF32 /* GoogleService-Info.plist */,
+				C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
 				4D06D5FB5BC0E37911755A9E /* Pods */,
-				DBB59DF242A98DC0036F757C /* Frameworks */,
+				2DED28CD95298460B4C6C533 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,6 +272,7 @@
 				C99EEB41299B19B300B77DBD /* FirebaseData */,
 				C9AC616829D6BE780006FF32 /* ScchnozPlace.swift */,
 				C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */,
+				C90DFAD029E2577700C8971E /* AverageRating.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -489,14 +500,6 @@
 			path = Results;
 			sourceTree = "<group>";
 		};
-		DBB59DF242A98DC0036F757C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A43B6D1B151DB62B23F15E1A /* Pods_LeSchnoz.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -504,12 +507,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C99EEB1A299B121700B77DBD /* Build configuration list for PBXNativeTarget "LeSchnoz" */;
 			buildPhases = (
-				8B763368EC32274A7AE160B0 /* [CP] Check Pods Manifest.lock */,
+				6EE3C946F4A0C1B9BA1A3B44 /* [CP] Check Pods Manifest.lock */,
 				C99EEB08299B121600B77DBD /* Sources */,
 				C99EEB09299B121600B77DBD /* Frameworks */,
 				C99EEB0A299B121600B77DBD /* Resources */,
-				6DD0C0440F912D77E90A38CB /* [CP] Embed Pods Frameworks */,
-				F36D342BD622239BF685B0FA /* [CP] Copy Pods Resources */,
+				7A4B6BC139BD795E49331BB8 /* [CP] Embed Pods Frameworks */,
+				2CC8138B9431EA5B493450D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -564,7 +567,7 @@
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
-				C9AC618029DB4A5B0006FF32 /* GoogleService-Info.plist in Resources */,
+				C90DFAD529E9F97C00C8971E /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);
@@ -573,24 +576,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6DD0C0440F912D77E90A38CB /* [CP] Embed Pods Frameworks */ = {
+		2CC8138B9431EA5B493450D2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B763368EC32274A7AE160B0 /* [CP] Check Pods Manifest.lock */ = {
+		6EE3C946F4A0C1B9BA1A3B44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -612,21 +615,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F36D342BD622239BF685B0FA /* [CP] Copy Pods Resources */ = {
+		7A4B6BC139BD795E49331BB8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -662,6 +665,7 @@
 				C99EEBF6299B19B400B77DBD /* Stars.swift in Sources */,
 				C99EEBDB299B19B400B77DBD /* ClearTextEditor.swift in Sources */,
 				C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */,
+				C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
 				C9AC616929D6BE780006FF32 /* ScchnozPlace.swift in Sources */,
 				C99EEBFA299B19B400B77DBD /* SplashScreen.swift in Sources */,
@@ -823,14 +827,14 @@
 		};
 		C99EEB1B299B121700B77DBD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C2E337B7638DE427F094D05 /* Pods-LeSchnoz.debug.xcconfig */;
+			baseConfigurationReference = 76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -846,8 +850,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -857,14 +861,14 @@
 		};
 		C99EEB1C299B121700B77DBD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C2F3CD7513111610A94D255 /* Pods-LeSchnoz.release.xcconfig */;
+			baseConfigurationReference = E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -880,8 +884,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Konoha7.Schnoz;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

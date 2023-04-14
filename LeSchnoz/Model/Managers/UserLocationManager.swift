@@ -99,6 +99,7 @@ extension UserLocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         userStore.currentLocation = locations.last
+        ListResultsVM.instance.currentLocationChanged = true
     }
     
     //MARK: - Handling user loction choice

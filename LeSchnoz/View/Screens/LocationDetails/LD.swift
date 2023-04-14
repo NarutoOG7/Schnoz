@@ -22,6 +22,7 @@ struct LD: View {
     @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
     @State var firebaseErrorMessage = ""
+    @State var reviews: [ReviewModel] = []
     
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var firebaseManager = FirebaseManager.instance
@@ -46,7 +47,6 @@ struct LD: View {
                     avgRatingDisplay
                     buttons
                     Divider()
-                    moreInfoLink
                     Spacer()
                     reviewHelper
                 }
@@ -71,7 +71,7 @@ struct LD: View {
                 }
                 
                 .sheet(isPresented: $isShowingMoreReviews) {
-                    MoreReviewsSheet(reviews: location.schnozReviews)
+                    MoreReviewsSheet(reviews: self.reviews)
                 }
             }
         }
@@ -84,9 +84,17 @@ struct LD: View {
                     self.errorManager.message = error.localizedDescription
                     self.errorManager.shouldDisplay = true
                 }
-                if let uiImage = uiImage {
-                    self.placeImage = Image(uiImage: uiImage)
-                }
+                    if let uiImage = uiImage {
+                        self.placeImage = Image(uiImage: uiImage)
+                    }
+
+            }
+
+            
+            firebaseManager.fetchLatestTenReviewsForLocation(self.location.placeID) { reviews in
+
+                self.location.schnozReviews = reviews
+                self.reviews = reviews
             }
         }
     }
@@ -149,14 +157,14 @@ struct LD: View {
     }
     
     private var avgRatingDisplay: some View {
-        let reviewCount = location.schnozReviews.count
-        let textEnding = reviewCount == 1 ? "" : "s"
+        let avg = location.averageRating?.avgRating ?? 0
+        let textEnding = avg == 1 ? "" : "s"
         return VStack(alignment: .leading) {
             Stars(count: 10,
                 color: oceanBlue.yellow,
                 rating: $location.avgRating)
             
-            Text("(\(reviewCount) review\(textEnding))")
+            Text("(\(avg) review\(textEnding))")
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.blue)
         }
@@ -172,69 +180,25 @@ struct LD: View {
     
     private var reviewHelper: some View {
          VStack(alignment: .leading) {
-            if location.schnozReviews.isEmpty {
+             if self.reviews.isEmpty {
                 Divider()
                 Text("No Reviews")
                     .font(.avenirNext(size: 17))
                     .foregroundColor(oceanBlue.blue)
             } else {
-                if let last = location.schnozReviews.last {
+                if let last = self.reviews.last {
                     ReviewCard(review: last)
-                    
                 }
             }
             HStack {
                 leaveAReviewView
-                if location.schnozReviews.count > 1 {
+                if self.reviews.count > 1 {
                     moreReviewsButton
                 }
             }
                 .padding(.vertical, 30)
             Spacer(minLength: 200)
         }
-//         .sheet(isPresented: $isCreatingNewReview, onDismiss: {
-//             if let recentlyPublishedReview = ldvm.recentlyPublishedReview {
-//                 self.location.schnozReviews.append(recentlyPublishedReview)
-//                 ldvm.recentlyPublishedReview = nil
-//             }
-//         }, content: {
-//
-//             LocationReviewView(
-//                isPresented: $isCreatingNewReview,
-//                review: .constant(nil),
-//                location: $location,
-//                nameInput: userStore.user.name,
-//                userStore: userStore,
-//                firebaseManager: firebaseManager,
-//                errorManager: errorManager
-//             )
-//         })
-//
-        
-
-    }
-    
-    private var moreInfoLink: some View {
-        
-        let view: AnyView
-        
-        if let url = location.gmsPlace?.website {
-            
-            view = AnyView(
-                HStack {
-                    Spacer()
-                    Link(destination: url, label: {
-                        Text("Get More Info")
-                            .underline()
-                            .foregroundColor(oceanBlue.lightBlue)
-                            .font(.avenirNextRegular(size: 17))
-                    })
-                }
-            )
-        } else {
-            view = AnyView(EmptyView())
-        }
-        return view
     }
     
     private var leaveAReviewView: some View {
@@ -249,6 +213,7 @@ struct LD: View {
                     isPresented: $isCreatingNewReview,
                     review: .constant(nil),
                     location: $location,
+                    reviews: $reviews,
                     isUpdatingReview: false,
                     userStore: userStore,
                     firebaseManager: firebaseManager,

@@ -34,8 +34,9 @@ struct MoreReviewsSheet: View {
             Text(review.title)
                 .font(.avenirNextRegular(size: 25))
                 .foregroundColor(oceanBlue.lightBlue)
-            Stars(color: oceanBlue.yellow,
-                      rating: .constant(review.rating))
+            Stars(count: 10,
+                  color: oceanBlue.yellow,
+                  rating: .constant(review.rating))
             Text(review.review)
                 .font(.avenirNextRegular(size: 18))
                 .foregroundColor(oceanBlue.white)

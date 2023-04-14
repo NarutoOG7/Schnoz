@@ -114,10 +114,10 @@ struct ListResultsView: View {
         HStack {
             Image(systemName: "star.fill")
                 .foregroundColor(oceanBlue.yellow)
-            Text("\(place.avgRating)")
+            Text("\(place.averageRating?.avgRating ?? 0)")
                 .foregroundColor(oceanBlue.yellow)
         }
-        .opacity(place.schnozReviews.isEmpty ? 0 : 1)
+        .opacity(place.averageRating == nil ? 0 : 1)
     }
     
     //MARK: - Buttons

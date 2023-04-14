@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct ManageReviews: View {
-    
-    
-    @State private var reviews: [ReviewModel] = []
+        
     @State private var selectedIndexSet: IndexSet?
     @State private var isEditingReview = false
-    
+    @State private var reviewsCount = 0
     @State private var shouldShowRemoveReviewConfirmation = false
-    
+        
     @ObservedObject var firebaseManager: FirebaseManager
     @ObservedObject var userStore: UserStore
     @ObservedObject var errorManager: ErrorManager
+    @ObservedObject var listResultsVM: ListResultsVM
     
     let oceanBlue = K.Colors.OceanBlue.self
     
@@ -30,8 +29,11 @@ struct ManageReviews: View {
             if userStore.reviews.isEmpty {
                 noReviews
             } else {
-                listOfReviews
-                    .padding(.vertical, 30)
+                VStack {
+                    listOfReviews
+                        .padding(.vertical, 30)
+                    moreButton
+                }
             }
         }
         
@@ -51,6 +53,7 @@ struct ManageReviews: View {
         
         .task {
             assignReviews()
+            getTotalReviewsCount()
         }
         
         .navigationTitle("My Reviews")
@@ -73,6 +76,7 @@ struct ManageReviews: View {
                         isPresented: $isEditingReview,
                         review: .constant(review),
                         location: .constant(review.location ?? SchnozPlace(placeID: "")),
+                        reviews: $userStore.reviews,
                         isUpdatingReview: true,
                         titleInput: review.title,
                         pickerSelection: review.rating,
@@ -103,34 +107,65 @@ struct ManageReviews: View {
         
     }
     
+    //MARK: - Buttons
+    
+    private var moreButton: some View {
+        Button(action: moreTapped) {
+            Text("Load All")
+        }
+        .opacity(self.reviewsCount > userStore.reviews.count ? 1 : 0)
+    }
+    
+
+    //MARK: - Methods
+    
+    private func moreTapped() {
+        
+        firebaseManager.getNextPageOfReviews { review in
+            userStore.reviews.append(review)
+        }
+
+    }
+    
     private func delete(at offsets: IndexSet) {
         
         offsets.map { userStore.reviews[$0] }.forEach { review in
-            ListResultsVM.instance.refreshData(review, placeID: review.locationID, isRemoving: true, isAddingNew: false)
+            firebaseManager.getAverageRatingForLocation(review.locationID) { avgRating in
+                if var avgRating = avgRating {
+                    avgRating.totalStarCount -= review.rating
+                    avgRating.numberOfReviews -= 1
+                    ListResultsVM.instance.refreshData(review: review, averageRating: avgRating, placeID: review.locationID, isRemoving: true, isAddingNew: false)
+                    
+                }
+            }
             firebaseManager.removeReviewFromFirestore(review)
         }
         userStore.reviews.remove(atOffsets: offsets)
-        self.reviews.remove(atOffsets: offsets)
         ListResultsVM.instance.latestReview = nil
     }
     
     private func assignReviews() {
         
-        userStore.reviews = []
-        self.reviews = []
-        
-        firebaseManager.getReviewsForUser(userStore.user) { review in
-            userStore.reviews.append(review)
-            self.reviews.append(review)
+        if userStore.reviews == [] {
+            firebaseManager.getReviewsForUser(userStore.user) { review in
+                userStore.reviews.append(review)
+            }
         }
     }
     
+    private func getTotalReviewsCount() {
+        firebaseManager.fetchTotalUserReviewsCount { count, error in
+            guard let count = count else { return }
+            self.reviewsCount = count
+        }
+    }
 }
 
 struct ManageReviews_Previews: PreviewProvider {
     static var previews: some View {
         ManageReviews(firebaseManager: FirebaseManager(),
                       userStore: UserStore(),
-                      errorManager: ErrorManager())
+                      errorManager: ErrorManager(),
+                      listResultsVM: ListResultsVM())
     }
 }

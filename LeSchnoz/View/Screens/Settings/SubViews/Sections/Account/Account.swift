@@ -18,6 +18,7 @@ struct Account: View {
     @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var loginVM = LoginVM.instance
+    @ObservedObject var listResultsVM = ListResultsVM.instance
     
     var auth = Authorization.instance
     
@@ -94,7 +95,8 @@ struct Account: View {
     private var manageReviews: some View {
         NavigationLink(destination: ManageReviews(firebaseManager: firebaseManager,
                                                   userStore: userStore,
-                                                  errorManager: errorManager)) {
+                                                  errorManager: errorManager,
+                                                 listResultsVM: listResultsVM)) {
             Text("Manage Reviews")
                 .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))

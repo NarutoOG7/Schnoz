@@ -166,7 +166,7 @@ struct HomeDisplayView: View {
     //MARK: - Methods
     
     private func searchTapped() {
-        if listResultsVM.nearbyPlaces.isEmpty {
+        if listResultsVM.nearbyPlaces.isEmpty && listResultsVM.currentLocationChanged == false {
             NetworkServices.instance.getNearbyLocationsWithKeyword("food") { places, error in
                 if let error = error {
                     self.errorManager.message = error.localizedDescription
@@ -192,8 +192,6 @@ struct HomeDisplayView: View {
         
 //        DispatchQueue.main.async {
         if searchType.hasEmptyBucket {
-                
-                
                 
                 NetworkServices.instance.getNearbyLocationsWithKeyword(searchType.rawValue) { places, error in
                     if let error = error {

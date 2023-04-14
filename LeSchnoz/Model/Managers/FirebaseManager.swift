@@ -23,13 +23,19 @@ class FirebaseManager: ObservableObject {
         
     @ObservedObject var errorManager = ErrorManager.instance
     @ObservedObject var userStore = UserStore.instance
+//    @ObservedObject var listResultsVM = ListResultsVM.instance
     
     var db: Firestore?
     private var listener: ListenerRegistration?
+    private var lastDocument: QueryDocumentSnapshot?
+    private var userReviewsLastDocument: QueryDocumentSnapshot?
+
     
     init() {
         db = Firestore.firestore()
     }
+    
+    //MARK: - Latest Review
     
     func stopListeningForLatestReview() {
          listener?.remove()
@@ -64,7 +70,8 @@ class FirebaseManager: ObservableObject {
 
     }
 
-    //MARK: - Reviews
+    //MARK: - Add Remove Update
+    
     func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         
         guard let db = db else { return }
@@ -146,38 +153,105 @@ class FirebaseManager: ObservableObject {
             })
     }
     
+    //MARK: - Fetch Reviews For User
+    
+    func handleQuerySnapshot(_ querySnapshot: QuerySnapshot?, _ error: Error?, withCompletion completion: @escaping(ReviewModel) -> Void) -> Void {
+        
+        guard let querySnapshot = querySnapshot else {
+            
+            self.errorManager.message = "Check your network connection and try again."
+            self.errorManager.shouldDisplay = true
+            return
+        }
+        for doc in querySnapshot.documents {
+            
+            let dict = doc.data()
+            
+            let review = ReviewModel(dictionary: dict)
+            self.userReviewsLastDocument = doc
+            completion(review)
+            
+        }
+    }
+    
     func getReviewsForUser(_ user: User, withCompletion completion: @escaping(_ review: ReviewModel) -> Void) {
         
         guard let db = db else { return }
-
-        db.collection("Reviews")
         
+        let collection = db.collection("Reviews")
             .whereField("userID", isEqualTo: user.id)
+            .order(by: "timestamp", descending: false)
+            .limit(to: 10)
         
-            .getDocuments { querySnapshot, error in
-                
-                if let error = error {
-                    
-                    print("Error getting reviews: \(error.localizedDescription)")
-                    self.errorManager.message = "Check your network connection and try again."
-                    self.errorManager.shouldDisplay = true
-                    
-                } else {
-                    
-                    if let snapshot = querySnapshot {
-                        
-                        for doc in snapshot.documents {
-                            
-                            let dict = doc.data()
-                            
-                            let review = ReviewModel(dictionary: dict)
-                            
-                            completion(review)
-                        }
-                    }
-                }
-            }
+        collection.getDocuments { snapshot, error in
+            self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
+        }
+        
+
     }
+    
+    func getNextPageOfReviews(withCompletion completion: @escaping(ReviewModel) -> Void) {
+        
+           if let userReviewsLastDocument = userReviewsLastDocument {
+               guard let db = db else { return }
+               
+               let collection = db.collection("Reviews")
+                   .whereField("userID", isEqualTo: userStore.user.id)
+                   .order(by: "timestamp", descending: false)
+                   .limit(to: 10)
+               
+            collection.start(atDocument: userReviewsLastDocument)
+               collection.getDocuments { snapshot, error in
+                   self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
+               }
+        }
+    }
+    
+    func fetchTotalUserReviewsCount(withCompletion completion: @escaping(Int?, Error?) -> Void) {
+        
+        guard let db = db else { return }
+        // use collectionGroup() to query for all reviews across all subcollection
+        let countQuery = db.collection("Reviews").count
+             countQuery.getAggregation(source: .server, completion: { snapshot, error in
+                guard let snapshot = snapshot else {
+                    return completion(nil, error)
+                }
+                completion(Int(truncating: snapshot.count), nil)
+            })
+    }
+    
+    //MARK: - Fetch Reviews For Location
+    
+    func fetchLatestTenReviewsForLocation(_ placeID: String, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
+        
+        guard let db = db else { return }
+        
+        let query = db.collection("Reviews")
+            .whereField("locationID", isEqualTo: placeID)
+            .order(by: "timestamp", descending: false)
+            .limit(to: 10)
+                        
+        query.getDocuments { (snapshot, error) in
+            
+            if let _ = error {
+                
+                self.errorManager.message = error?.localizedDescription ?? ""
+                self.errorManager.shouldDisplay = true
+                
+            } else if let snapshot = snapshot {
+                
+                var reviews: [ReviewModel] = []
+                
+                for doc in snapshot.documents {
+                    let dict = doc.data()
+                    let review = ReviewModel(dictionary: dict)
+                    reviews.append(review)
+                }
+                completion(reviews)
+            }
+        }
+    }
+
     
     func getReviewsForLocation(_ placeID: String, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
         
@@ -209,6 +283,52 @@ class FirebaseManager: ObservableObject {
         
     }
     
+    //MARK: - Average Rating
+    
+    func getAverageRatingForLocation(_ placeID: String, withCompletion completion: @escaping (AverageRating?) -> (Void)) {
+        
+        guard let db = db else { return }
+
+        db.collection("AverageRatings")
+            .whereField("placeID", isEqualTo: placeID)
+            .getDocuments { snapshot, error in
+                
+                if let error = error {
+                    
+                    print(error.localizedDescription)
+                    self.errorManager.message = "Check your network connection and try again."
+                    self.errorManager.shouldDisplay = true
+                } else if let snapshot = snapshot {
+                                        
+                    guard let doc = snapshot.documents.first else { return completion(nil) }
+                        let avgRating = AverageRating(dictionary: doc.data())
+                        completion(avgRating)
+                }
+            }
+    }
+    
+    
+    func addAverageRating(_ averageRating: AverageRating, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+        
+        guard let db = db else { return }
+                
+        let data: [String:Any] = [ "id" : averageRating.id,
+                       "avgRating" : averageRating.avgRating,
+                       "totalStarCount" : averageRating.totalStarCount,
+                       "numberOfReviews" : averageRating.numberOfReviews,
+                       "placeID" : averageRating.placeID ]
+        
+        db.collection("AverageRatings").document(averageRating.id).setData(data, merge: true) { error in
+            
+            if let error = error {
+                print(error.localizedDescription)
+                completion(.savingReview)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
     
     //MARK: - Coordinates & Address
     
@@ -276,5 +396,6 @@ class FirebaseManager: ObservableObject {
             }
         }
     }
+    
 }
 

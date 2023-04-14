@@ -18,6 +18,8 @@ class ListResultsVM: ObservableObject {
     @Published var shouldShowPlaceDetails = false
     @Published var showSearchTableView = false
     @Published var latestReview: ReviewModel?
+    @Published var currentLocationChanged = false
+    @Published var loadMoreButtonIsVisible = false
     
     @Published var schnozPlaces: [SchnozPlace] = []
     @Published var breakfastPlaces: [SchnozPlace] = []
@@ -28,36 +30,56 @@ class ListResultsVM: ObservableObject {
 
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     @ObservedObject var userLocManager = UserLocationManager.instance
+    @ObservedObject var userStore = UserStore.instance
 
     //MARK: - Refresh Data in Places Buckets
     
-    func refreshData(_ review: ReviewModel, placeID: String, isRemoving: Bool, isAddingNew: Bool) {
-        updateReviewInArray(&nearbyPlaces)
-        updateReviewInArray(&schnozPlaces)
-        updateReviewInArray(&breakfastPlaces)
-        updateReviewInArray(&lunchPlaces)
-        updateReviewInArray(&dinnerPlaces)
+    func refreshData(review: ReviewModel, averageRating: AverageRating, placeID: String, isRemoving: Bool, isAddingNew: Bool) {
+        updateReviewBuckets(&userStore.reviews)
+        updateReviewInPlaces(&nearbyPlaces)
+        updateReviewInPlaces(&schnozPlaces)
+        updateReviewInPlaces(&breakfastPlaces)
+        updateReviewInPlaces(&lunchPlaces)
+        updateReviewInPlaces(&dinnerPlaces)
 
         
-        func updateReviewInArray(_ array: inout [SchnozPlace]) {
-            if let index = array.firstIndex(where: { $0.placeID == placeID }) {
+        func updateReviewInPlaces(_ places: inout [SchnozPlace]) {
+
+            if let index = places.firstIndex(where: { $0.placeID == placeID }) {
                 if isAddingNew {
                     // Adding new review to all buckets where place exists
-                    array[index].schnozReviews.append(review)
+                    if !places[index].schnozReviews.contains(review) {
+                        places[index].schnozReviews.append(review)
+                    }
+                    places[index].averageRating = averageRating
                 } else
-                if let oldReviewIndex = array[index].schnozReviews.firstIndex(where: { $0.id == review.id }) {
+                if let oldReviewIndex = places[index].schnozReviews.firstIndex(where: { $0.id == review.id }) {
                     if isRemoving {
                         // Removing review from all buckets
-                        array[index].schnozReviews.remove(at: oldReviewIndex)
+                        places[index].schnozReviews.remove(at: oldReviewIndex)
                     } else {
                         // Updating old review in all buckets
-                        array[index].schnozReviews[oldReviewIndex] = review
+                        places[index].schnozReviews[oldReviewIndex] = review
                     }
-                                    self.objectWillChange.send()
+                    places[index].averageRating = averageRating
 
                 }
             }
         }
+        
+        func updateReviewBuckets(_ reviews: inout [ReviewModel]) {
+            if isAddingNew {
+                reviews.append(review)
+            } else
+            if let oldReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
+                if isRemoving {
+                    reviews.remove(at: oldReviewIndex)
+                } else {
+                    reviews[oldReviewIndex] = review
+                }
+            }
+        }
+        
     }
     
     func locServiceIsEnabled() -> Bool {

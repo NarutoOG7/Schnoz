@@ -168,7 +168,6 @@ struct TabBarSetup: View {
                 if let placesAPI = dict["placesAPIKey"] as? String {
                     
                     NetworkServices.instance.apiKey = placesAPI
-                    
                 
             }
            }

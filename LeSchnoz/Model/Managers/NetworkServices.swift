@@ -13,7 +13,7 @@ class NetworkServices: ObservableObject {
     static let instance = NetworkServices()
     
     let baseURL = URL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?")
-    @Published var apiKey = "AIzaSyC_KQ2JYEuka7IVvakx4DgjSNvtu0yG4qw"
+    @Published var apiKey: String = ""
     
     @Published var searchTypeLocations: [SchnozPlace] = []
     
@@ -27,7 +27,7 @@ class NetworkServices: ObservableObject {
             let radius = "&radius=2500"
             let rankby = "&rankby=distance"
             let type = "&type=restaraunt"
-            let apiKey = "&key=\(apiKey)"
+            let apiKey = "&key=AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
             let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + apiKey
             if let fullURL = URL(string: stringURL) {
                 completion(fullURL, nil)
@@ -100,8 +100,11 @@ class NetworkServices: ObservableObject {
                         }
                     
                     group.enter()
-                    FirebaseManager.instance.getReviewsForLocation(placeID) { reviews in
-                        schnozPlace.schnozReviews = reviews
+                    FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
+                        schnozPlace.averageRating = averageRating
+                    
+//                    FirebaseManager.instance.getReviewsForLocation(placeID) { reviews in
+//                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
                     
