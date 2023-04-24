@@ -33,6 +33,19 @@ class FirebaseManager: ObservableObject {
     
     init() {
         db = Firestore.firestore()
+        
+//        guard let db = db else { return }
+//        let avgRatings = db.collection("AverageRatings")
+//        
+//        avgRatings.getDocuments() { (querySnapshot, error) in
+//            if let error = error {
+//                print("Error getting documents: \(error)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    document.reference.delete()
+//                }
+//            }
+//        }
     }
     
     //MARK: - Latest Review
@@ -78,10 +91,10 @@ class FirebaseManager: ObservableObject {
         
         let timestamp = FieldValue.serverTimestamp()
         
-        let id = review.title + review.username + review.locationID
+//        let id = review.title + review.username + review.locationID
         
-        db.collection("Reviews").document(id).setData([
-            "id" : id,
+        db.collection("Reviews").document(review.id).setData([
+            "id" : review.id,
             "userID" : userStore.user.id,
             "title" : review.title,
             "review" : review.review,
@@ -123,15 +136,17 @@ class FirebaseManager: ObservableObject {
             }
     }
     
-    func updateReviewInFirestore(_ review: ReviewModel, forID id: String, withCompletion completion: @escaping(K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+    func updateReviewInFirestore(_ review: ReviewModel, withCompletion completion: @escaping(K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+        
+        print("review: \(review.review), id: \(review.id), placeID: \(review.locationID), placeName: \(review.locationName), rating: \(review.rating), title: \(review.title)")
         
         guard let db = db else { return }
         
         let timestamp = FieldValue.serverTimestamp()
         
-        db.collection("Reviews").document(id)
+        db.collection("Reviews").document(review.id)
             .updateData([
-                "id" : id,
+                "id" : review.id,
                 "userID" : userStore.user.id,
                 "title" : review.title,
                 "review" : review.review,
@@ -290,7 +305,7 @@ class FirebaseManager: ObservableObject {
         guard let db = db else { return }
 
         db.collection("AverageRatings")
-            .whereField("placeID", isEqualTo: placeID)
+            .whereField("id", isEqualTo: placeID)
             .getDocuments { snapshot, error in
                 
                 if let error = error {
@@ -315,11 +330,25 @@ class FirebaseManager: ObservableObject {
         let data: [String:Any] = [ "id" : averageRating.id,
                        "avgRating" : averageRating.avgRating,
                        "totalStarCount" : averageRating.totalStarCount,
-                       "numberOfReviews" : averageRating.numberOfReviews,
-                       "placeID" : averageRating.placeID ]
+                       "numberOfReviews" : averageRating.numberOfReviews
+        ]
         
         db.collection("AverageRatings").document(averageRating.id).setData(data, merge: true) { error in
             
+            if let error = error {
+                print(error.localizedDescription)
+                completion(.savingReview)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func removeAverageRating(_ averageRating: AverageRating, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+        
+        guard let db = db else { return }
+        
+        db.collection("AverageRatings").document(averageRating.id).delete { error in
             if let error = error {
                 print(error.localizedDescription)
                 completion(.savingReview)

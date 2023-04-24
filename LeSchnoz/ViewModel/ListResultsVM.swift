@@ -34,7 +34,7 @@ class ListResultsVM: ObservableObject {
 
     //MARK: - Refresh Data in Places Buckets
     
-    func refreshData(review: ReviewModel, averageRating: AverageRating, placeID: String, isRemoving: Bool, isAddingNew: Bool) {
+    func refreshData(review: ReviewModel, averageRating: AverageRating?, placeID: String, isRemoving: Bool, isAddingNew: Bool) {
         updateReviewBuckets(&userStore.reviews)
         updateReviewInPlaces(&nearbyPlaces)
         updateReviewInPlaces(&schnozPlaces)

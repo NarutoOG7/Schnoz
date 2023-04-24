@@ -10,7 +10,7 @@ import GooglePlaces
 
 struct LD: View {
     
-    @State var location: SchnozPlace
+    @State var location: SchnozPlace?
     
     @State private var imageURL = URL(string: "")
     @State private var isSharing = false
@@ -67,7 +67,7 @@ struct LD: View {
                 }
                 
                 .sheet(isPresented: $isSharing) {
-                    ShareActivitySheet(itemsToShare: [location])
+                    ShareActivitySheet(itemsToShare: [location?.primaryText ?? "SCHNOZ"])
                 }
                 
                 .sheet(isPresented: $isShowingMoreReviews) {
@@ -79,7 +79,7 @@ struct LD: View {
         .navigationBarHidden(true)
         
         .task {
-            GooglePlacesManager.instance.getPhotoForPlaceID(self.location.placeID) { uiImage, error in
+            GooglePlacesManager.instance.getPhotoForPlaceID(self.location?.placeID ?? "") { uiImage, error in
                 if let error = error {
                     self.errorManager.message = error.localizedDescription
                     self.errorManager.shouldDisplay = true
@@ -91,9 +91,9 @@ struct LD: View {
             }
 
             
-            firebaseManager.fetchLatestTenReviewsForLocation(self.location.placeID) { reviews in
+            firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
 
-                self.location.schnozReviews = reviews
+                self.location?.schnozReviews = reviews
                 self.reviews = reviews
             }
         }
@@ -116,7 +116,7 @@ struct LD: View {
     }
     
     private var headerText: some View {
-        Text(location.primaryText ?? "")
+        Text(location?.primaryText ?? "")
             .font(.avenirNext(size: 20))
             .fontWeight(.bold)
             .foregroundColor(.white)
@@ -142,7 +142,7 @@ struct LD: View {
     }
     
     private var title: some View {
-        Text(location.primaryText ?? "")
+        Text(location?.primaryText ?? "")
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
@@ -150,21 +150,21 @@ struct LD: View {
     
     
     private var address: some View {
-        Text(location.secondaryText ?? "")
+        Text(location?.secondaryText ?? "")
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
     }
     
     private var avgRatingDisplay: some View {
-        let avg = location.averageRating?.avgRating ?? 0
-        let textEnding = avg == 1 ? "" : "s"
+        let total = location?.averageRating?.numberOfReviews ?? 0
+        let textEnding = total == 1 ? "" : "s"
         return VStack(alignment: .leading) {
             Stars(count: 10,
                 color: oceanBlue.yellow,
-                rating: $location.avgRating)
+                  rating: .constant(location?.averageRating?.avgRating ?? 0))
             
-            Text("(\(avg) review\(textEnding))")
+            Text("(\(total) review\(textEnding))")
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.blue)
         }
@@ -301,7 +301,7 @@ struct LD: View {
 
         var addressString: String {
             
-            location.gmsPlace?.name?.replacingOccurrences(of: " ", with: "+") ?? ""
+            location?.gmsPlace?.name?.replacingOccurrences(of: " ", with: "+") ?? ""
         }
         
         guard let url = URL(string: "maps://?daddr=\(addressString)") else { return }

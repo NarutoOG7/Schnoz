@@ -68,22 +68,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "87B86C5A-24E3-42B1-9300-72C2AA23F903"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "getLatestReview(withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B5187272-D19F-4AAC-8A3F-A1F3D45E967E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -171,8 +155,8 @@
             filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "getAverageRatingForLocation(_:withCompletion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -235,10 +219,58 @@
             filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "getAverageRatingForLocation(_:withCompletion:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "updateReviewInFirestore(_:withCompletion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D - 3e4057f154c3c52f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in default argument 1 of LeSchnoz.FirebaseManager.updateReviewInFirestore(_: LeSchnoz.ReviewModel, withCompletion: (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/FirebaseManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "139"
+                  endingLineNumber = "139"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D - 5c2348c62b5afc63"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LeSchnoz.FirebaseManager.updateReviewInFirestore(_: LeSchnoz.ReviewModel, withCompletion: (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/FirebaseManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "141"
+                  endingLineNumber = "141"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

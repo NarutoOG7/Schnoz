@@ -11,7 +11,7 @@ struct LocationReviewView: View {
     
     @Binding var isPresented: Bool
     @Binding var review: ReviewModel?
-    @Binding var location: SchnozPlace
+    @Binding var location: SchnozPlace?
     @Binding var reviews: [ReviewModel]
     
     @State var isUpdatingReview: Bool
@@ -51,7 +51,7 @@ struct LocationReviewView: View {
                     .padding(.top, 35)
             }
             .padding()
-            .navigationTitle(review?.locationName ?? location.primaryText ?? "")
+            .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
             .navigationBarTitleDisplayMode(.inline)
             
         }
@@ -164,63 +164,69 @@ struct LocationReviewView: View {
     private func reviewModel() -> ReviewModel {
         let name = nameInput == "" ? userStore.user.name : nameInput
         return ReviewModel(
-            id: "",
+            id: review?.id ?? UUID().uuidString,
             rating: pickerSelection,
             review: descriptionInput,
             title: titleInput,
             username: isAnonymous ? "Anonymous" : name,
-            locationID: review?.locationID ?? "",
-            locationName: location.primaryText ?? "")
+            locationID:  review?.locationID ?? location?.placeID ?? "",
+            locationName: review?.locationName ?? location?.primaryText ?? "")
     }
     
     private func update(_ rev: ReviewModel) {
-        self.location.placeID = review?.locationID ?? ""
+        self.location?.placeID = review?.locationID ?? ""
         
-        firebaseManager.updateReviewInFirestore(rev, forID: self.review?.id ?? rev.id) { error in
+        firebaseManager.updateReviewInFirestore(rev) { error in
             if let error = error {
                 self.errorManager.message = error.rawValue
                 self.errorManager.shouldDisplay = true
             }
-            if let oldReviewIndex = self.location.schnozReviews.firstIndex(where: { $0.id == review?.id }) {
-                self.location.schnozReviews[oldReviewIndex] = rev
+            if let oldReviewIndex = self.location?.schnozReviews.firstIndex(where: { $0.id == review?.id }) {
+                self.location?.schnozReviews[oldReviewIndex] = rev
             }
             if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
                 self.reviews[reviewIndex] = rev
             }
-            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location.placeID, isRemoving: false, isAddingNew: false)
+            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", isRemoving: false, isAddingNew: false)
             self.shouldShowSuccessMessage = true
         }
     }
     
     private func add(_ rev: ReviewModel) {
-        firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
-            if let error = error {
-                self.errorManager.message = error.rawValue
-                self.errorManager.shouldDisplay = true
+        if let location = location {
+            firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
+                if let error = error {
+                    self.errorManager.message = error.rawValue
+                    self.errorManager.shouldDisplay = true
+                }
+                
+                //            if !self.location.schnozReviews.contains(rev) {
+                //                self.location.schnozReviews.append(rev)
+                //            }
+                self.reviews.append(rev)
+                self.location?.schnozReviews.append(rev)
+                ListResultsVM.instance.refreshData(
+                    review: rev,
+                    averageRating: updatedAverageRating(rev),
+                    placeID: location.placeID,
+                    isRemoving: false,
+                    isAddingNew: true)
+                self.shouldShowSuccessMessage = true
             }
-
-//            if !self.location.schnozReviews.contains(rev) {
-//                self.location.schnozReviews.append(rev)
-//            }
-            self.reviews.append(rev)
-            self.location.schnozReviews.append(rev)
-            ListResultsVM.instance.refreshData(
-                review: rev,
-                averageRating: updatedAverageRating(rev),
-                placeID: location.placeID,
-                isRemoving: false,
-                isAddingNew: true)
-            self.shouldShowSuccessMessage = true
         }
     }
     
     func updatedAverageRating(_ rev: ReviewModel) -> AverageRating {
-        var preExistingAVG = self.location.averageRating
-        var newAverageRating = AverageRating(totalStarCount: rev.rating, numberOfReviews: 1, placeID: location.placeID)
+        let placeID = location?.placeID ?? review?.locationID ?? ""
+        let preExistingAVG = self.location?.averageRating
+        let newAverageRating = AverageRating(placeID: placeID,
+                                             totalStarCount: 0,
+                                             numberOfReviews: 0)
 
         var returnableAVG = preExistingAVG ?? newAverageRating
             returnableAVG.totalStarCount += rev.rating
             returnableAVG.numberOfReviews += 1
+//        returnableAVG.avgRating = returnableAVG.totalStarCount / newValue
             firebaseManager.addAverageRating(returnableAVG)
             return returnableAVG
         

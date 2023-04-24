@@ -55,6 +55,11 @@ struct ListResultsView: View {
                 .onChange(of: areaSearchText) { newValue in
                     if newValue == "" {
                         self.areaSearchLocation = ""
+                        if placeSearchText == "" {
+                            self.handleNearby()
+                        } else {
+                            self.handleAutocompleteForQuery(placeSearchText)
+                        }
                     } else {
                         performLocalitySearch(newValue)
                     }
@@ -170,26 +175,29 @@ struct ListResultsView: View {
     
     private func performPlaceSearch(_ query: String) {
         if placeSearchText == "" {
-            if listResultsVM.nearbyPlaces.isEmpty {
-                self.getNearby()
+            if areaSearchText == "" {
+                isEditingSearchArea = false
+                listResultsVM.schnozPlaces = []
+                self.handleNearby()
             } else {
-                listResultsVM.schnozPlaces = listResultsVM.nearbyPlaces
+                self.handleAutocompleteForQuery(self.areaSearchText)
             }
+            
+            } else {
+                listResultsVM.searchType = nil
+                let currentCity = UserStore.instance.currentLocAsAddress?.city
+                let searchText = (areaSearchLocation == "" ? currentCity : areaSearchLocation) ?? ""
+                let queryText = searchText + " " + query
+                self.handleAutocompleteForQuery(queryText)
+            }
+        
+    }
+    
+    private func handleNearby() {
+        if listResultsVM.nearbyPlaces.isEmpty {
+            self.getNearby()
         } else {
-            self.isEditingSearchArea = false
-            listResultsVM.searchType = nil
-            let currentCity = UserStore.instance.currentLocAsAddress?.city
-            let searchText = (areaSearchLocation == "" ? currentCity : areaSearchLocation) ?? ""
-            let queryText = searchText + " " + query
-            googlePlacesManager.performAutocompleteQuery(queryText) { results, error in
-                if let error = error {
-                    self.errorManager.message = error.localizedDescription
-                    self.errorManager.shouldDisplay = true
-                }
-                if let results = results {
-                    listResultsVM.schnozPlaces = results
-                }
-            }
+            listResultsVM.schnozPlaces = listResultsVM.nearbyPlaces
         }
     }
     
@@ -203,6 +211,18 @@ struct ListResultsView: View {
                     listResultsVM.nearbyPlaces = places
                     listResultsVM.schnozPlaces = places
                 listResultsVM.isLoading = false
+            }
+        }
+    }
+    
+    private func handleAutocompleteForQuery(_ query: String) {
+        googlePlacesManager.performAutocompleteQuery(query) { results, error in
+            if let error = error {
+                self.errorManager.message = error.localizedDescription
+                self.errorManager.shouldDisplay = true
+            }
+            if let results = results {
+                listResultsVM.schnozPlaces = results
             }
         }
     }

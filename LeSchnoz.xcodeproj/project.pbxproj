@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6FC87B32421B8D2AE2B903D7 /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */; };
 		C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAD029E2577700C8971E /* AverageRating.swift */; };
-		C90DFAD529E9F97C00C8971E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */; };
+		C90DFAE129F0E34300C8971E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
 		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
@@ -85,7 +85,7 @@
 		3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
 		C90DFAD029E2577700C8971E /* AverageRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageRating.swift; sourceTree = "<group>"; };
-		C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
 		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +191,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
-				C90DFAD429E9F97C00C8971E /* GoogleService-Info.plist */,
+				C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
@@ -567,7 +567,7 @@
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
-				C90DFAD529E9F97C00C8971E /* GoogleService-Info.plist in Resources */,
+				C90DFAE129F0E34300C8971E /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);

@@ -75,7 +75,8 @@ struct ManageReviews: View {
                     LocationReviewView(
                         isPresented: $isEditingReview,
                         review: .constant(review),
-                        location: .constant(review.location ?? SchnozPlace(placeID: "")),
+                        location: .constant(review.location ?? nil),
+//                        location: .constant(review.location ?? SchnozPlace(placeID: "")),
                         reviews: $userStore.reviews,
                         isUpdatingReview: true,
                         titleInput: review.title,
@@ -134,8 +135,12 @@ struct ManageReviews: View {
                 if var avgRating = avgRating {
                     avgRating.totalStarCount -= review.rating
                     avgRating.numberOfReviews -= 1
-                    ListResultsVM.instance.refreshData(review: review, averageRating: avgRating, placeID: review.locationID, isRemoving: true, isAddingNew: false)
+
+                    let noReviews = avgRating.numberOfReviews == 0
+                    noReviews ? firebaseManager.removeAverageRating(avgRating) : firebaseManager.addAverageRating(avgRating)
                     
+                    let avg = noReviews ? nil : avgRating
+                    ListResultsVM.instance.refreshData(review: review, averageRating: avg, placeID: review.locationID, isRemoving: true, isAddingNew: false)
                 }
             }
             firebaseManager.removeReviewFromFirestore(review)

@@ -8,33 +8,37 @@
 import Foundation
 
 struct AverageRating: Codable {
-    var id = UUID().uuidString
-    var avgRating: Int
+    
+    var id: String
+    var avgRating: Int = 0 
     var totalStarCount: Int
     var numberOfReviews: Int {
         willSet {
-            self.avgRating = totalStarCount / newValue
+            if newValue == 0 {
+                self.avgRating = 0
+            } else {
+                self.avgRating = totalStarCount / newValue
+            }
         }
     }
-    var placeID: String
     
-    init(totalStarCount: Int,
-         numberOfReviews: Int,
-         placeID: String) {
+    init(placeID: String,
+         totalStarCount: Int,
+         numberOfReviews: Int) {
         
+        self.id = placeID
         self.totalStarCount = totalStarCount
         self.numberOfReviews = numberOfReviews
-        self.placeID = placeID
         
-        let avgRating = totalStarCount / numberOfReviews
-        self.avgRating = avgRating
+//        let avgRating = totalStarCount / numberOfReviews
+//        self.avgRating = avgRating
     }
     
     init(dictionary: [String:Any]) {
         self.avgRating = dictionary["avgRating"] as? Int ?? 0
         self.totalStarCount = dictionary["totalStarCount"] as? Int ?? 0
         self.numberOfReviews = dictionary["numberOfReviews"] as? Int ?? 0
-        self.placeID = dictionary["placeID"] as? String ?? ""
+        self.id = dictionary["id"] as? String ?? ""
 
     }
 }
