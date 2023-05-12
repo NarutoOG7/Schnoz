@@ -20,6 +20,8 @@ struct HomeDisplayView: View {
     let oceanBlue = K.Colors.OceanBlue.self
     
     @State var latestReview: ReviewModel?
+    @State var latestReviewPlace: SchnozPlace?
+    @State var shouldNavigateToLDForLatestReview = false
     
     @State var shouldShowSuccessMessage = false
         
@@ -44,11 +46,16 @@ struct HomeDisplayView: View {
                                 if let review = review {
                                     self.listResultsVM.latestReview = review
                                     self.latestReview = review
+                                    
+                                    self.latestReviewPlace = SchnozPlace(latestReview: review)
                                 }
                             
                         }
                     }
                 }
+        }
+        .fullScreenCover(isPresented: $shouldNavigateToLDForLatestReview) {
+            LD(location: self.latestReviewPlace)
         }
     }
 
@@ -66,7 +73,7 @@ struct HomeDisplayView: View {
                         }
                     }.listStyle(.insetGrouped)
                 }
-                latestReviews(geo)
+                latestReview(geo)
                     .padding(.top, -20)
                 Spacer()
             }
@@ -131,15 +138,26 @@ struct HomeDisplayView: View {
             .shadow(color: .white, radius: 10)
     }
     
-    private func latestReviews(_ geo: GeometryProxy) -> some View {
+    private func latestReview(_ geo: GeometryProxy) -> some View {
+        
+
 
              VStack(alignment: .leading) {
                 Text("Latest Review")
                     .font(.headline)
                     .foregroundColor(.gray)
                     .padding(.vertical)
-                 ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
-                    .frame(width:  geo.size.width - 60)
+                 NavigationLink {
+                     LD(location: self.latestReviewPlace)
+                 } label: {
+                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
+                        .frame(width:  geo.size.width - 60)
+                 }
+
+//                 Button(action: latestReviewTapped) {
+//                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
+//                        .frame(width:  geo.size.width - 60)
+//                 }
             }
         }
     
@@ -209,6 +227,28 @@ struct HomeDisplayView: View {
             listResultsVM.schnozPlaces = searchType.places
         }
         listResultsVM.showSearchTableView = true
+    }
+    
+    private func latestReviewTapped() {
+        self.shouldNavigateToLDForLatestReview = true
+    }
+    
+    private func getSchnozPlaceFromLatestReview(_ latestReview: ReviewModel, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+        let group = DispatchGroup()
+        let schnozPlace = SchnozPlace(placeID: latestReview.locationID)
+        FirebaseManager.instance.getAverageRatingForLocation(latestReview.locationID) { averageRating in
+            schnozPlace.averageRating = averageRating
+        }
+        
+        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, error in
+            if let error = error {
+                completion(nil, error)
+            }
+            // will this code be synchronous??
+            if let gmsPlace = gmsPlace {
+                schnozPlace.gmsPlace = gmsPlace
+            }
+        }
     }
 }
 

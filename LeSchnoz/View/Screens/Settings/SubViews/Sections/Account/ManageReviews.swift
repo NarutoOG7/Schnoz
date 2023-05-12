@@ -33,6 +33,7 @@ struct ManageReviews: View {
                     listOfReviews
                         .padding(.vertical, 30)
                     moreButton
+                        .padding(.bottom, 20)
                 }
             }
         }
@@ -89,10 +90,16 @@ struct ManageReviews: View {
                         errorManager: errorManager
                     )
                 } label: {
-                    Text(review.title)
-                        .foregroundColor(oceanBlue.white)
-                        .font(.avenirNext(size: 18))
-                        .italic()
+                    VStack(alignment: .leading) {
+                        Text(review.title)
+                            .foregroundColor(oceanBlue.white)
+                            .font(.avenirNext(size: 18))
+                            .italic()
+                        Text(review.locationName)
+                            .foregroundColor(oceanBlue.lightBlue)
+                            .font(.avenirNext(size: 16))
+                            .italic()
+                    }
                 }
                 .listRowBackground(Color.clear)
                 
@@ -122,7 +129,7 @@ struct ManageReviews: View {
     
     private func moreTapped() {
         
-        firebaseManager.getNextPageOfReviews { review in
+        firebaseManager.getNextPageOfUserReviews { review in
             userStore.reviews.append(review)
         }
 
@@ -159,9 +166,11 @@ struct ManageReviews: View {
     }
     
     private func getTotalReviewsCount() {
-        firebaseManager.fetchTotalUserReviewsCount { count, error in
-            guard let count = count else { return }
-            self.reviewsCount = count
+        if self.reviewsCount == 0 {
+            firebaseManager.fetchTotalUserReviewsCount { count, error in
+                guard let count = count else { return }
+                self.reviewsCount = count
+            }
         }
     }
 }

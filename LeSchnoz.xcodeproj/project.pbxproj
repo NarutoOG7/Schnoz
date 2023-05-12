@@ -10,6 +10,8 @@
 		6FC87B32421B8D2AE2B903D7 /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */; };
 		C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAD029E2577700C8971E /* AverageRating.swift */; };
 		C90DFAE129F0E34300C8971E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */; };
+		C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE329FC56D600C8971E /* FMAverage.swift */; };
+		C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE529FC572D00C8971E /* FMReviews.swift */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
 		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
@@ -86,6 +88,8 @@
 		76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
 		C90DFAD029E2577700C8971E /* AverageRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageRating.swift; sourceTree = "<group>"; };
 		C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C90DFAE329FC56D600C8971E /* FMAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAverage.swift; sourceTree = "<group>"; };
+		C90DFAE529FC572D00C8971E /* FMReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMReviews.swift; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
 		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +192,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C90DFAE229FC56C100C8971E /* FirebaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */,
+				C90DFAE329FC56D600C8971E /* FMAverage.swift */,
+				C90DFAE529FC572D00C8971E /* FMReviews.swift */,
+			);
+			path = FirebaseManager;
+			sourceTree = "<group>";
+		};
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
@@ -246,12 +260,12 @@
 		C99EEB23299B19B300B77DBD /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C90DFAE229FC56C100C8971E /* FirebaseManager */,
 				C99EEB24299B19B300B77DBD /* Authorization.swift */,
 				C99EEB25299B19B300B77DBD /* UserLocationManager.swift */,
 				C99EEB26299B19B300B77DBD /* MapDetails.swift */,
 				C99EEB27299B19B300B77DBD /* NetworkManager.swift */,
 				C99EEB2B299B19B300B77DBD /* ErrorManager.swift */,
-				C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */,
 				C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */,
 				C98007D629C1580E00476D9B /* NetworkServices.swift */,
 			);
@@ -672,6 +686,7 @@
 				C99EEBDE299B19B400B77DBD /* ClearListBackgroundMod.swift in Sources */,
 				C99EEBCD299B19B400B77DBD /* User.swift in Sources */,
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
+				C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */,
 				C99EEBF3299B19B400B77DBD /* MoreReviewsSheet.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,
 				C9AC615B29D1DB670006FF32 /* SettingsVM.swift in Sources */,
@@ -704,6 +719,7 @@
 				C99EEBB4299B19B400B77DBD /* Authorization.swift in Sources */,
 				C9AC616529D6BD760006FF32 /* NewLogin.swift in Sources */,
 				C99EEBB5299B19B400B77DBD /* UserLocationManager.swift in Sources */,
+				C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */,
 				C99EEBEE299B19B400B77DBD /* ConfirmDeleteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

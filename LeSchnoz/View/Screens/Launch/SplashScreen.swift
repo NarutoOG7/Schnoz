@@ -44,8 +44,7 @@ struct SplashScreen: View {
     }
     
     private var badReviewView: some View {
-        reviewView(starCount: 10,
-                   rating: 1,
+        reviewView(rating: 1,
                    message: Text("1 star means your clothes _**smelled like the restaraunt**_ when you left."))
 //            .foregroundColor(oceanBlue.white)
 //            .font(.avenirNext(size: 20))
@@ -53,17 +52,15 @@ struct SplashScreen: View {
     }
     
     private var goodReviewView: some View {
-        reviewView(starCount: 10,
-                   rating: 10,
+        reviewView(rating: 5,
                    message:
-            Text("10 stars mean your clothes _**smelled the same**_ as when you walked in."))
+            Text("5 stars mean your clothes _**smelled the same**_ as when you walked in."))
 
     }
 
-    private func reviewView(starCount: Int, rating: Int, message: Text) -> some View {
+    private func reviewView(rating: Int, message: Text) -> some View {
         VStack(spacing: 10) {
-            Stars(count: starCount,
-                  color: oceanBlue.yellow,
+            Stars(color: oceanBlue.yellow,
                   rating: .constant(rating))
             message
                 .foregroundColor(oceanBlue.white)

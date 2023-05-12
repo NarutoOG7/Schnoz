@@ -80,5 +80,23 @@ class SchnozPlace: Hashable, Identifiable {
         self.placeID = placeID
     }
 
+    // INIT From LatestReview
+    init(latestReview: ReviewModel) {
+        self.placeID = latestReview.locationID
+
+        FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
+            self.averageRating = averageRating
+        }
+        
+        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, error in
+            if let error = error {
+                
+            }
+            // will this code be synchronous??
+            if let gmsPlace = gmsPlace {
+                self.gmsPlace = gmsPlace
+            }
+        }
+    }
     
 }

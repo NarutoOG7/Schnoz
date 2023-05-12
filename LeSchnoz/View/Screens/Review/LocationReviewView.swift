@@ -86,8 +86,7 @@ struct LocationReviewView: View {
     
     private var stars: some View {
         HStack {
-            Stars(count: 10,
-                  isEditable: true,
+            Stars(isEditable: true,
                   color: K.Colors.OceanBlue.yellow,
                   rating: $pickerSelection)
         }

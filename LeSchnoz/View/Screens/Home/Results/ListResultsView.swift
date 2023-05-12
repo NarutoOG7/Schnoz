@@ -37,8 +37,14 @@ struct ListResultsView: View {
                         backButton
                         VStack(spacing: 4) {
                             searchField(title: "Bars, Restaraunts, Breweries, etc.", input: $placeSearchText)
+                                .onTapGesture {
+                                    self.isEditingSearchArea = false
+                                }
                             
                             searchField(title: "Near Me", input: $areaSearchText)
+                                .onTapGesture {
+                                    self.isEditingSearchArea = true
+                                }
                         }
                     }
                     list.overlay(listResultsVM.isLoading ? ProgressView() : nil)
@@ -145,8 +151,17 @@ struct ListResultsView: View {
             areaSearchLocation = text
             performPlaceSearch(text)
         } else {
-            listResultsVM.shouldShowPlaceDetails = true
-            listResultsVM.selectedPlace = place
+            listResultsVM.getPlaceImage(place) { image, error in
+                if let error = error {
+                    self.errorManager.message = error.localizedDescription
+                    self.errorManager.shouldDisplay = true
+                }
+                if let image = image {
+                    listResultsVM.placeImage = image
+                }
+            }
+                listResultsVM.shouldShowPlaceDetails = true
+                listResultsVM.selectedPlace = place
         }
     }
     
@@ -160,7 +175,7 @@ struct ListResultsView: View {
     
     private func performLocalitySearch(_ query: String) {
         if query != areaSearchLocation {
-            isEditingSearchArea = true
+//            isEditingSearchArea = true
             googlePlacesManager.performAutocompleteQuery(query, isLocality: true) { results, error in
                 if let error = error {
                     self.errorManager.message = error.localizedDescription
@@ -176,7 +191,7 @@ struct ListResultsView: View {
     private func performPlaceSearch(_ query: String) {
         if placeSearchText == "" {
             if areaSearchText == "" {
-                isEditingSearchArea = false
+//                isEditingSearchArea = false
                 listResultsVM.schnozPlaces = []
                 self.handleNearby()
             } else {

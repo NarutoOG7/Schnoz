@@ -86,7 +86,9 @@ class NetworkServices: ObservableObject {
                 
                 for place in places {
                     let placeID = place["place_id"] as? String ?? ""
+                    
                     let schnozPlace = SchnozPlace(placeID: placeID)
+                    
                     
                     group.enter()
                         GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
@@ -98,11 +100,11 @@ class NetworkServices: ObservableObject {
                             }
                             group.leave()
                         }
-                    
+
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
                         schnozPlace.averageRating = averageRating
-                    
+
 //                    FirebaseManager.instance.getReviewsForLocation(placeID) { reviews in
 //                        schnozPlace.schnozReviews = reviews
                         group.leave()
@@ -118,6 +120,33 @@ class NetworkServices: ObservableObject {
             }
         } catch let error {
             completion(nil, error)
+        }
+    }
+    
+    func getGMSPlaceAndAvgRatingFromPlaceID(_ placeID: String, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+        let group = DispatchGroup()
+        
+        let schnozPlace = SchnozPlace(placeID: placeID)
+
+        group.enter()
+            GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
+                if let error = error {
+                    completion(nil, error)
+                }
+                if let gmsPlace = gmsPlace {
+                    schnozPlace.gmsPlace = gmsPlace
+                }
+                group.leave()
+            }
+        
+        group.enter()
+        FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
+            schnozPlace.averageRating = averageRating
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion(schnozPlace, nil)
         }
     }
 }

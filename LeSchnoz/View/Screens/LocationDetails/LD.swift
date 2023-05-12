@@ -16,9 +16,7 @@ struct LD: View {
     @State private var isSharing = false
     @State private var isCreatingNewReview = false
     @State private var isShowingMoreReviews = false
-    
-    @State private var placeImage: Image = K.Images.placeholder
-    
+        
     @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
     @State var firebaseErrorMessage = ""
@@ -46,7 +44,6 @@ struct LD: View {
                     address
                     avgRatingDisplay
                     buttons
-                    Divider()
                     Spacer()
                     reviewHelper
                 }
@@ -71,7 +68,7 @@ struct LD: View {
                 }
                 
                 .sheet(isPresented: $isShowingMoreReviews) {
-                    MoreReviewsSheet(reviews: self.reviews)
+                    MoreReviewsSheet(placeID: location?.placeID ?? "", reviews: self.reviews)
                 }
             }
         }
@@ -79,18 +76,16 @@ struct LD: View {
         .navigationBarHidden(true)
         
         .task {
-            GooglePlacesManager.instance.getPhotoForPlaceID(self.location?.placeID ?? "") { uiImage, error in
-                if let error = error {
-                    self.errorManager.message = error.localizedDescription
-                    self.errorManager.shouldDisplay = true
-                }
-                    if let uiImage = uiImage {
-                        self.placeImage = Image(uiImage: uiImage)
-                    }
-
-            }
-
-            
+//            if let location = location {
+//                listResultsVM.getPlaceImage(location) { image, error in
+//                    if let error = error {
+//                        
+//                    }
+//                    if let image = image {
+//                        listResultsVM.placeImage = image
+//                    }
+//                }
+//            }
             firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
 
                 self.location?.schnozReviews = reviews
@@ -124,7 +119,7 @@ struct LD: View {
     
     private var image: some View {
         GeometryReader { geo in
-            placeImage
+                listResultsVM.placeImage
                     .resizable()
                     .aspectRatio(1.75, contentMode: .fill)
                     .blur(radius: self.getBlurRadiusForImage(geo))
@@ -160,13 +155,14 @@ struct LD: View {
         let total = location?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
         return VStack(alignment: .leading) {
-            Stars(count: 10,
-                color: oceanBlue.yellow,
+            Stars(color: oceanBlue.yellow,
                   rating: .constant(location?.averageRating?.avgRating ?? 0))
             
-            Text("(\(total) review\(textEnding))")
-                .font(.avenirNextRegular(size: 17))
-                .foregroundColor(oceanBlue.blue)
+            Button(action: moreReviewsTapped) {
+                Text("(\(total) review\(textEnding))")
+                    .font(.avenirNextRegular(size: 17))
+                    .foregroundColor(oceanBlue.blue)
+            }
         }
     }
     
@@ -181,7 +177,6 @@ struct LD: View {
     private var reviewHelper: some View {
          VStack(alignment: .leading) {
              if self.reviews.isEmpty {
-                Divider()
                 Text("No Reviews")
                     .font(.avenirNext(size: 17))
                     .foregroundColor(oceanBlue.blue)
@@ -317,8 +312,9 @@ struct LD: View {
     }
     
     private func backButtonTapped() {
-//        self.presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
         listResultsVM.selectedPlace = nil
+        listResultsVM.resetPlaceImage()
         listResultsVM.shouldShowPlaceDetails = false
     }
     

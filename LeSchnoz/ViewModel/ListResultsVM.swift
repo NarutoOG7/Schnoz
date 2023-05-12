@@ -27,6 +27,7 @@ class ListResultsVM: ObservableObject {
     @Published var dinnerPlaces: [SchnozPlace] = []
     @Published var nearbyPlaces: [SchnozPlace] = []
     
+    @Published var placeImage: Image = K.Images.placeholder
 
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     @ObservedObject var userLocManager = UserLocationManager.instance
@@ -80,6 +81,25 @@ class ListResultsVM: ObservableObject {
             }
         }
         
+    }
+    
+    func getPlaceImage(_ place: SchnozPlace, withCompletion completion: @escaping(Image?, Error?) -> Void) {
+        GooglePlacesManager.instance.getPhotoForPlaceID(place.placeID) { uiImage, error in
+            if let error = error {
+                completion(nil, error)
+//                self.errorManager.message = error.localizedDescription
+//                self.errorManager.shouldDisplay = true
+            }
+                if let uiImage = uiImage {
+                    completion(Image(uiImage: uiImage), nil)
+//                    self.placeImage = Image(uiImage: uiImage)
+                }
+
+        }
+    }
+    
+    func resetPlaceImage() {
+        self.placeImage =  K.Images.placeholder
     }
     
     func locServiceIsEnabled() -> Bool {
