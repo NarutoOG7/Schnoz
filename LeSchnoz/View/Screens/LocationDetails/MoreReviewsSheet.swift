@@ -12,6 +12,7 @@ struct MoreReviewsSheet: View {
     let placeID: String
     @State var reviews: [ReviewModel] = []
     @State var totalReviewsCount = 0
+    @State private var needToFetchMore = false
     
     let oceanBlue = K.Colors.OceanBlue.self
     
@@ -20,9 +21,14 @@ struct MoreReviewsSheet: View {
     var body: some View {
         ZStack {
             oceanBlue.black
-            list
+//                .shadow(color: oceanBlue.white, radius: 10, x: 0, y: 100)
+            VStack {
+                handle
+                list
+            }
 //            moreButton
         }
+        .background(oceanBlue.black)
         
             .task {
                 self.getTotalReviewsCount()
@@ -35,17 +41,16 @@ struct MoreReviewsSheet: View {
             ForEach(0..<reviews.count, id: \.self) { index in
                 
                 cellFor(reviews[index])
-                    .listRowBackground(Color.clear)
+                    .listRowBackground(oceanBlue.black)
                 
-                if index == reviews.endIndex - 1 {
-                    //                    .onAppear {
-                   let _ = moreTapped()
-                    //                    }
-                }
+//                if index == reviews.endIndex - 1 {
+//                   let _ = moreTapped()
+//                }
 
             }
-            .modifier(ClearListBackgroundMod())
         }
+        .modifier(ClearListBackgroundMod())
+//        .foregroundColor(oceanBlue.black)
     }
     
     
@@ -61,6 +66,14 @@ struct MoreReviewsSheet: View {
                 .foregroundColor(oceanBlue.white)
             
         }
+        
+    }
+    
+    private var handle: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .frame(width: 100, height: 5)
+            .foregroundColor(oceanBlue.lightBlue)
+            .padding(.top, 7)
         
     }
     
@@ -85,9 +98,12 @@ struct MoreReviewsSheet: View {
     }
     
     private func moreTapped() {
-        firebaseManager.getNextPageOfLocationReviews(placeID: placeID) { review in
-            if !self.reviews.contains(review) {
-                self.reviews.append(review)
+        if needToFetchMore {
+            firebaseManager.getNextPageOfLocationReviews(placeID: placeID) { review in
+                if !self.reviews.contains(review) {
+                    self.reviews.append(review)
+                }
+                needToFetchMore = false
             }
         }
     }

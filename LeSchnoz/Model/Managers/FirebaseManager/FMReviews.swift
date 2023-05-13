@@ -162,7 +162,7 @@ extension FirebaseManager {
         let collection = db.collection("Reviews")
             .whereField("userID", isEqualTo: user.id)
             .order(by: "timestamp", descending: false)
-            .limit(to: 10)
+//            .limit(to: 10)
         
         collection.getDocuments { snapshot, error in
             self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
@@ -223,7 +223,7 @@ extension FirebaseManager {
         let query = db.collection("Reviews")
             .whereField("locationID", isEqualTo: placeID)
             .order(by: "timestamp", descending: false)
-            .limit(to: 10)
+//            .limit(to: 10)
                         
         query.getDocuments { (snapshot, error) in
             

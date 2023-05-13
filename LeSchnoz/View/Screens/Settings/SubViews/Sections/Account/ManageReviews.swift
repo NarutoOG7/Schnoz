@@ -32,8 +32,8 @@ struct ManageReviews: View {
                 VStack {
                     listOfReviews
                         .padding(.vertical, 30)
-                    moreButton
-                        .padding(.bottom, 20)
+//                    moreButton
+//                        .padding(.bottom, 20)
                 }
             }
         }
@@ -71,36 +71,12 @@ struct ManageReviews: View {
     private var listOfReviews: some View {
         
         List {
-            ForEach(userStore.reviews, id: \.self) { review in
-                NavigationLink {
-                    LocationReviewView(
-                        isPresented: $isEditingReview,
-                        review: .constant(review),
-                        location: .constant(review.location ?? nil),
-//                        location: .constant(review.location ?? SchnozPlace(placeID: "")),
-                        reviews: $userStore.reviews,
-                        isUpdatingReview: true,
-                        titleInput: review.title,
-                        pickerSelection: review.rating,
-                        descriptionInput: review.review,
-                        isAnonymous: review.username == "Anonymous",
-                        nameInput: review.username,
-                        userStore: userStore,
-                        firebaseManager: firebaseManager,
-                        errorManager: errorManager
-                    )
-                } label: {
-                    VStack(alignment: .leading) {
-                        Text(review.title)
-                            .foregroundColor(oceanBlue.white)
-                            .font(.avenirNext(size: 18))
-                            .italic()
-                        Text(review.locationName)
-                            .foregroundColor(oceanBlue.lightBlue)
-                            .font(.avenirNext(size: 16))
-                            .italic()
-                    }
-                }
+            ForEach(0..<userStore.reviews.count, id: \.self) { index in
+//            ForEach(userStore.reviews, id: \.self) { review in
+//                if index == userStore.reviews.endIndex - 1 {
+//                   let _ = moreTapped()
+//                }
+                cellForReview(userStore.reviews[index])
                 .listRowBackground(Color.clear)
                 
             }
@@ -113,6 +89,47 @@ struct ManageReviews: View {
         .modifier(ClearListBackgroundMod())
         .listStyle(.insetGrouped)
         
+    }
+    
+    //MARK: - Cell For Reviews List
+    
+    private func cellForReview(_ review: ReviewModel) -> some View {
+        NavigationLink {
+            destinationLink(review)
+        } label: {
+            cellLabel(review)
+        }
+
+    }
+    
+    private func cellLabel(_ review: ReviewModel) -> some View {
+        VStack(alignment: .leading) {
+            Text(review.title)
+                .foregroundColor(oceanBlue.white)
+                .font(.avenirNext(size: 18))
+                .italic()
+            Text(review.locationName)
+                .foregroundColor(oceanBlue.lightBlue)
+                .font(.avenirNext(size: 16))
+                .italic()
+        }
+    }
+    
+    private func destinationLink(_ review: ReviewModel) -> some View {
+        LocationReviewView(
+            isPresented: $isEditingReview,
+            review: .constant(review),
+            location: .constant(review.location ?? nil),
+            reviews: $userStore.reviews,
+            isUpdatingReview: true,
+            titleInput: review.title,
+            pickerSelection: review.rating,
+            descriptionInput: review.review,
+            isAnonymous: review.username == "Anonymous",
+            nameInput: review.username,
+            userStore: userStore,
+            firebaseManager: firebaseManager,
+            errorManager: errorManager)
     }
     
     //MARK: - Buttons

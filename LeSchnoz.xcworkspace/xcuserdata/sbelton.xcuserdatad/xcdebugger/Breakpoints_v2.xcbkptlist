@@ -276,22 +276,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2815083C-01B1-4344-850E-BD0F7AFC79F2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/LocationDetails/MoreReviewsSheet.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "list"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "77D12E0F-668A-4E94-ABC1-53491DEF5033"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -367,6 +351,70 @@
             endingLineNumber = "144"
             landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B4F7C689-FF57-4D7C-BA0D-7A98C0878BA0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LeSchnoz/View/Screens/LocationDetails/MoreReviewsSheet.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "moreTapped()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521 - ccc81d6b8ef0762e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LeSchnoz.ManageReviews.moreTapped() -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521 - 8cbb80fd9d3c5b78"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (LeSchnoz.ReviewModel) -&gt; () in LeSchnoz.ManageReviews.moreTapped() -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

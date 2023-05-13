@@ -67,6 +67,7 @@ struct LD: View {
                     ShareActivitySheet(itemsToShare: [location?.primaryText ?? "SCHNOZ"])
                 }
                 
+                
                 .sheet(isPresented: $isShowingMoreReviews) {
                     MoreReviewsSheet(placeID: location?.placeID ?? "", reviews: self.reviews)
                 }
@@ -87,6 +88,7 @@ struct LD: View {
 //                }
 //            }
             firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
+                // Actually removed limit, fetches all
 
                 self.location?.schnozReviews = reviews
                 self.reviews = reviews
@@ -162,7 +164,7 @@ struct LD: View {
                 Text("(\(total) review\(textEnding))")
                     .font(.avenirNextRegular(size: 17))
                     .foregroundColor(oceanBlue.blue)
-            }
+            }.disabled(total == 0)
         }
     }
     
