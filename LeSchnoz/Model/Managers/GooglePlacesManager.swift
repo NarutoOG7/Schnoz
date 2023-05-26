@@ -23,10 +23,7 @@ class GooglePlacesManager: ObservableObject {
     private var keys: NSDictionary?
     
     init() {
-        //        "AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
-//        AIzaSyAdQJU-ns2repAtrh6x6GsUMsWUkm4ON2k
-        
-        if let path = Bundle.main.path(forResource: "HiddenKeys", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: K.GhostKeys.file, ofType: "plist") {
             keys = NSDictionary(contentsOfFile: path)
         }
         if let dict = keys {
@@ -36,8 +33,8 @@ class GooglePlacesManager: ObservableObject {
             }
         }
         placesClient = GMSPlacesClient.shared()
-            refreshToken()
-        }
+        refreshToken()
+    }
     
     
     func getNearbyLocation(withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {

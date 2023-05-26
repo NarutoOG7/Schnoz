@@ -20,15 +20,30 @@ class NetworkServices: ObservableObject {
     @ObservedObject var listResultsVM = ListResultsVM.instance
     @ObservedObject var errorManager = ErrorManager.instance
     
+    private var keys: NSDictionary?
+    
+    init() {
+        if let path = Bundle.main.path(forResource: K.GhostKeys.file, ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = keys {
+            
+            if let placesAPI = dict["placesAPIKey"] as? String {
+                self.apiKey = placesAPI
+            }
+        }
+    }
+    
     func getFullURL(_ keyword: String, withCompletion completion: @escaping(URL?, Error?) -> Void) {
         if let currentLoc = UserStore.instance.currentLocation?.coordinate {
             let keyword = "keyword=\(keyword)"
             let location = "&location=\(currentLoc.asStringForURL())"
             let radius = "&radius=2500"
+            let api = "&key=\(apiKey)"
             let type = "&type=restaraunt"
-            let apiKey = "&key=AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
-            let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + apiKey
+            let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + api
             if let fullURL = URL(string: stringURL) {
+                print(fullURL.absoluteString)
                 completion(fullURL, nil)
             }
         } else if ListResultsVM.instance.searchRegion != "" {

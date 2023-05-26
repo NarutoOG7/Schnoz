@@ -65,7 +65,6 @@
 		C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC1E299B1A4000B77DBD /* Constants.swift */; };
 		C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */; };
 		C99EEC2F299C5D0D00B77DBD /* GooglePlacesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */; };
-		C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99EEC30299C614400B77DBD /* HiddenKeys.plist */; };
 		C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */; };
 		C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6529B165E600B77DBD /* UserDefaults.swift */; };
 		C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC8129B2A14100B77DBD /* TapGesture.swift */; };
@@ -81,10 +80,8 @@
 		C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */; };
 		C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */; };
 		C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1B50B2A19927D004706BD /* SearchLogic.swift */; };
-		C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5112A204350004706BD /* GoogleService-Info.plist */; };
-		C9E1B5142A204D29004706BD /* Treasures.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5132A204D29004706BD /* Treasures.plist */; };
-		C9E1B5162A20587D004706BD /* HiddenGems.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5152A20587D004706BD /* HiddenGems.plist */; };
-		C9E1B5182A205A1D004706BD /* Invisibles.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5172A205A1D004706BD /* Invisibles.plist */; };
+		C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5192A205CD4004706BD /* GhostKeys.plist */; };
+		C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -148,7 +145,6 @@
 		C99EEC1E299B1A4000B77DBD /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesManager.swift; sourceTree = "<group>"; };
-		C99EEC30299C614400B77DBD /* HiddenKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = HiddenKeys.plist; sourceTree = "<group>"; };
 		C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		C99EEC6529B165E600B77DBD /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C99EEC8129B2A14100B77DBD /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
@@ -164,10 +160,8 @@
 		C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsVM.swift; sourceTree = "<group>"; };
 		C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchnozModel.swift; sourceTree = "<group>"; };
 		C9E1B50B2A19927D004706BD /* SearchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogic.swift; sourceTree = "<group>"; };
-		C9E1B5112A204350004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C9E1B5132A204D29004706BD /* Treasures.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Treasures.plist; sourceTree = "<group>"; };
-		C9E1B5152A20587D004706BD /* HiddenGems.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = HiddenGems.plist; sourceTree = "<group>"; };
-		C9E1B5172A205A1D004706BD /* Invisibles.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Invisibles.plist; sourceTree = "<group>"; };
+		C9E1B5192A205CD4004706BD /* GhostKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GhostKeys.plist; sourceTree = "<group>"; };
+		C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,11 +207,8 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
-				C9E1B5172A205A1D004706BD /* Invisibles.plist */,
-				C9E1B5152A20587D004706BD /* HiddenGems.plist */,
-				C9E1B5132A204D29004706BD /* Treasures.plist */,
-				C9E1B5112A204350004706BD /* GoogleService-Info.plist */,
-				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
+				C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */,
+				C9E1B5192A205CD4004706BD /* GhostKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
 				4D06D5FB5BC0E37911755A9E /* Pods */,
@@ -591,13 +582,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
-				C9E1B5142A204D29004706BD /* Treasures.plist in Resources */,
-				C9E1B5182A205A1D004706BD /* Invisibles.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
-				C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */,
-				C9E1B5162A20587D004706BD /* HiddenGems.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
+				C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */,
+				C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

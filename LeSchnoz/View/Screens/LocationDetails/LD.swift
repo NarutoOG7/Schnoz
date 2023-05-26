@@ -279,10 +279,13 @@ struct LD: View {
     }
     
     private func backButtonTapped() {
+        let searchLogic = SearchLogic.instance
         self.presentationMode.wrappedValue.dismiss()
         listResultsVM.selectedPlace = nil
         listResultsVM.resetPlaceImage()
         listResultsVM.shouldShowPlaceDetails = false
+        searchLogic.placeSearchText = ""
+        searchLogic.areaSearchText = ""
     }
     
     private func moreReviewsTapped() {

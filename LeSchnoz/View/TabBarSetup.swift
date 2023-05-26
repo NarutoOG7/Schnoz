@@ -160,7 +160,7 @@ struct TabBarSetup: View {
         
         var keys: NSDictionary?
 
-        if let path = Bundle.main.path(forResource: "HiddenKeys", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: K.GhostKeys.file, ofType: "plist") {
             keys = NSDictionary(contentsOfFile: path)
         }
             if let dict = keys {

@@ -149,4 +149,8 @@ enum K {
         static let isGuest = "isGuest"
         static let showTutorial = "shouldShowTutorial"
     }
+    
+    enum GhostKeys {
+        static let file = "GhostKeys"
+    }
 }
