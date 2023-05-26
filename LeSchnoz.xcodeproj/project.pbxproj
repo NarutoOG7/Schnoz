@@ -82,6 +82,7 @@
 		C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */; };
 		C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1B50B2A19927D004706BD /* SearchLogic.swift */; };
 		C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5112A204350004706BD /* GoogleService-Info.plist */; };
+		C9E1B5142A204D29004706BD /* Treasures.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5132A204D29004706BD /* Treasures.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 		C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchnozModel.swift; sourceTree = "<group>"; };
 		C9E1B50B2A19927D004706BD /* SearchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogic.swift; sourceTree = "<group>"; };
 		C9E1B5112A204350004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9E1B5132A204D29004706BD /* Treasures.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Treasures.plist; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +209,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
+				C9E1B5132A204D29004706BD /* Treasures.plist */,
 				C9E1B5112A204350004706BD /* GoogleService-Info.plist */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
@@ -583,6 +586,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
+				C9E1B5142A204D29004706BD /* Treasures.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
