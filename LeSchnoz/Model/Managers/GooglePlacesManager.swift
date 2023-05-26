@@ -24,6 +24,7 @@ class GooglePlacesManager: ObservableObject {
     
     init() {
         //        "AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
+//        AIzaSyAdQJU-ns2repAtrh6x6GsUMsWUkm4ON2k
         
         if let path = Bundle.main.path(forResource: "HiddenKeys", ofType: "plist") {
             keys = NSDictionary(contentsOfFile: path)

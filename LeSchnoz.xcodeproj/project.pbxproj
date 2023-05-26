@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6FC87B32421B8D2AE2B903D7 /* Pods_LeSchnoz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */; };
 		C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAD029E2577700C8971E /* AverageRating.swift */; };
-		C90DFAE129F0E34300C8971E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */; };
 		C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE329FC56D600C8971E /* FMAverage.swift */; };
 		C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE529FC572D00C8971E /* FMReviews.swift */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
@@ -81,13 +80,14 @@
 		C9AC616C29D6BF1E0006FF32 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616B29D6BF1E0006FF32 /* SearchType.swift */; };
 		C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */; };
 		C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */; };
+		C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1B50B2A19927D004706BD /* SearchLogic.swift */; };
+		C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5112A204350004706BD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3D26A0EB95F755DD6ED6ECDE /* Pods_LeSchnoz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeSchnoz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D3DCDEC49E064DB209E07C /* Pods-LeSchnoz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.debug.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.debug.xcconfig"; sourceTree = "<group>"; };
 		C90DFAD029E2577700C8971E /* AverageRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageRating.swift; sourceTree = "<group>"; };
-		C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C90DFAE329FC56D600C8971E /* FMAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAverage.swift; sourceTree = "<group>"; };
 		C90DFAE529FC572D00C8971E /* FMReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMReviews.swift; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
@@ -160,6 +160,8 @@
 		C9AC616B29D6BF1E0006FF32 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsVM.swift; sourceTree = "<group>"; };
 		C9D15F1529DCE92B00C42C44 /* SchnozModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchnozModel.swift; sourceTree = "<group>"; };
+		C9E1B50B2A19927D004706BD /* SearchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogic.swift; sourceTree = "<group>"; };
+		C9E1B5112A204350004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,7 +207,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
-				C90DFAE029F0E34300C8971E /* GoogleService-Info.plist */,
+				C9E1B5112A204350004706BD /* GoogleService-Info.plist */,
 				C99EEC30299C614400B77DBD /* HiddenKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
@@ -268,6 +270,7 @@
 				C99EEB2B299B19B300B77DBD /* ErrorManager.swift */,
 				C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */,
 				C98007D629C1580E00476D9B /* NetworkServices.swift */,
+				C9E1B50B2A19927D004706BD /* SearchLogic.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -581,7 +584,7 @@
 			files = (
 				C99EEC31299C614400B77DBD /* HiddenKeys.plist in Resources */,
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
-				C90DFAE129F0E34300C8971E /* GoogleService-Info.plist in Resources */,
+				C9E1B5122A204350004706BD /* GoogleService-Info.plist in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);
@@ -703,6 +706,7 @@
 				C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */,
 				C99EEBCE299B19B400B77DBD /* ReviewData.swift in Sources */,
 				C99EEBE5299B19B400B77DBD /* SlideOverCard.swift in Sources */,
+				C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */,
 				C99EEC1F299B1A4000B77DBD /* Constants.swift in Sources */,
 				C99EEBBD299B19B400B77DBD /* UserStore.swift in Sources */,
 				C99EEBE2299B19B400B77DBD /* Custom Fonts.swift in Sources */,

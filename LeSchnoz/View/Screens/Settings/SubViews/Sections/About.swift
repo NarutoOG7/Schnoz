@@ -52,7 +52,7 @@ struct About: View {
     
     private var privacyPolicy: some View {
         let view: AnyView
-        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-privacy-policy/4fac2ce8-7109-4893-a9d0-3f46e435630b/privacy") {
+        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-privacy-policy/4dc19f06-dfde-4b12-8989-896ef2e80db8/privacy") {
             view = AnyView(
                 Link(destination: url, label: {
                     Text("Privacy Policy")
@@ -68,7 +68,7 @@ struct About: View {
     
     private var termsOfUse: some View {
         let view: AnyView
-        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-terms-of-use/708fee21-7d29-4bfc-909c-22d1fca17b84/terms") {
+        if let url = URL(string: "https://doc-hosting.flycricket.io/schnoz-terms-of-use/cd5ec802-dae9-44b0-bf2e-3366837462dc/terms") {
             view = AnyView(
                 Link(destination: url, label: {
                     Text("Terms Of Use")

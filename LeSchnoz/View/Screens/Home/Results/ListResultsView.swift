@@ -12,11 +12,16 @@ struct ListResultsView: View {
     
     @Namespace var namespace
     
-    @State private var placeSearchText = ""
-    @State private var areaSearchText = ""
-    @State private var areaSearchLocation = ""
-    @State private var isEditingSearchArea = false
+    @FocusState private var focusedField: Field?
+
     
+//    
+//    @State private var placeSearchText = ""
+//    @State private var areaSearchText = ""
+//    @State private var areaSearchLocation = ""
+//    @State private var isEditingSearchArea = false
+    
+    @ObservedObject var searchLogic = SearchLogic.instance
     @ObservedObject var googlePlacesManager: GooglePlacesManager
     @ObservedObject var listResultsVM: ListResultsVM
     @ObservedObject var userStore: UserStore
@@ -29,22 +34,15 @@ struct ListResultsView: View {
             if listResultsVM.shouldShowPlaceDetails {
                 if let selectedPlace = listResultsVM.selectedPlace {
                     LD(location: selectedPlace)
-//                    EmptyView()
                 }
             } else {
                 VStack {
                     HStack {
                         backButton
                         VStack(spacing: 4) {
-                            searchField(title: "Bars, Restaraunts, Breweries, etc.", input: $placeSearchText)
-                                .onTapGesture {
-                                    self.isEditingSearchArea = false
-                                }
-                            
-                            searchField(title: "Near Me", input: $areaSearchText)
-                                .onTapGesture {
-                                    self.isEditingSearchArea = true
-                                }
+                            placesSearchField
+                            areaSearchField
+
                         }
                     }
                     list.overlay(listResultsVM.isLoading ? ProgressView() : nil)
@@ -54,25 +52,58 @@ struct ListResultsView: View {
                 .padding(.horizontal)
                 
                 
-                .onChange(of: placeSearchText) { newValue in
-                    performPlaceSearch(newValue)
+                .onChange(of: searchLogic.placeSearchText) { newValue in
+                    searchLogic.performPlaceSearch(newValue)
                 }
                 
-                .onChange(of: areaSearchText) { newValue in
+                .onChange(of: searchLogic.areaSearchText) { newValue in
                     if newValue == "" {
-                        self.areaSearchLocation = ""
-                        if placeSearchText == "" {
-                            self.handleNearby()
-                        } else {
-                            self.handleAutocompleteForQuery(placeSearchText)
-                        }
+                        searchLogic.placeSearch()
                     } else {
-                        performLocalitySearch(newValue)
+                        searchLogic.performLocalitySearch(newValue)
                     }
                 }
             }
         }
+        .onAppear {
+            if listResultsVM.searchBarTapped {
+                self.focusedField = .place
+            }
+        }
+    }
     
+    private var placesSearchField: some View {
+                
+        searchField(.place, input: $searchLogic.placeSearchText)
+            .onTapGesture {
+                searchLogic.isEditingSearchArea = false
+            }
+            .focused($focusedField, equals: .place)
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    Text("") // To Space out the Cancel Button
+                }
+            }
+    }
+    
+    private var areaSearchField: some View {
+        
+        searchField(.area, input: $searchLogic.areaSearchText)
+            .onTapGesture {
+                searchLogic.isEditingSearchArea = true
+            }
+            .focused($focusedField, equals: .area)
+
+            .toolbar {
+                
+                ToolbarItem(placement: .keyboard) {
+                        Button(action: keyboardCancelTapped) {
+                            Text("Cancel")
+                                .foregroundColor(oceanBlue.lightBlue)
+                        }
+                    }
+
+            }
     }
         
     private var list: some View {
@@ -80,7 +111,10 @@ struct ListResultsView: View {
             List(listResultsVM.schnozPlaces) { place in
                 
                 Button {
-                    cellTapped(place)
+                    if searchLogic.isEditingSearchArea {
+                        focusedField = .place
+                    }
+                    searchLogic.cellTapped(place)
                 } label: {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
@@ -104,19 +138,42 @@ struct ListResultsView: View {
     
     
     //MARK: - Search Field
-    private func searchField(title: String, input: Binding<String>) -> some View {
-        TextField(title, text: input)
-            .padding(.horizontal)
-            .frame(height: 45)
-            .background(
-        RoundedRectangle(cornerRadius: 20)
-            .fill(oceanBlue.lightBlue)
-            .padding(2)
-
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(oceanBlue.blue)))
+    private func searchField(_ field: Field, input: Binding<String>) -> some View {
+        let fieldIsFocused = field == focusedField
+        let hasCharacters: Bool = input.wrappedValue.count > 0
+return  ZStack {
             
+            TextField(field.title, text: input)
+                .padding(.horizontal)
+                .frame(height: 45)
+            
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(oceanBlue.lightBlue)
+                        .padding(2)
+                    
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(oceanBlue.blue)))
+            
+            HStack {
+                Spacer()
+                
+                Button {
+                    if self.focusedField == .place {
+                        searchLogic.placeSearchText = ""
+                    } else if self.focusedField == .area {
+                        searchLogic.areaSearchText = ""
+                    }
+                } label: {
+                    Text("Cancel")
+                        .foregroundColor(oceanBlue.grayPurp)
+                        .font(.avenirNextRegular(size: 16))
+                        .padding(.trailing)
+                }
+            }
+            .opacity(fieldIsFocused && hasCharacters ? 1 : 0)
+        }
 
     }
     
@@ -140,107 +197,38 @@ struct ListResultsView: View {
                 .foregroundColor(.black)
         }
         .matchedGeometryEffect(id: "search", in: namespace)
+        .padding(.trailing, 10)
     }
     
     //MARK: - Methods
     
-    private func cellTapped(_ place: SchnozPlace) {
-        if isEditingSearchArea {
-            let text =  place.primaryText ?? ""
-            areaSearchText = text
-            areaSearchLocation = text
-            performPlaceSearch(text)
-        } else {
-            listResultsVM.getPlaceImage(place) { image, error in
-                if let error = error {
-                    self.errorManager.message = error.localizedDescription
-                    self.errorManager.shouldDisplay = true
-                }
-                if let image = image {
-                    listResultsVM.placeImage = image
-                }
-            }
-                listResultsVM.shouldShowPlaceDetails = true
-                listResultsVM.selectedPlace = place
-        }
+    private func keyboardCancelTapped() {
+        searchLogic.isEditingSearchArea = false
+        self.focusedField = .none
     }
     
     private func backTapped() {
         withAnimation {
             listResultsVM.showSearchTableView = false
             listResultsVM.schnozPlaces = []
+            listResultsVM.searchBarTapped = false
         }
     }
 
-    
-    private func performLocalitySearch(_ query: String) {
-        if query != areaSearchLocation {
-//            isEditingSearchArea = true
-            googlePlacesManager.performAutocompleteQuery(query, isLocality: true) { results, error in
-                if let error = error {
-                    self.errorManager.message = error.localizedDescription
-                    self.errorManager.shouldDisplay = true
-                }
-                if let results = results {
-                    listResultsVM.schnozPlaces = results
-                }
-            }
-        }
-    }
-    
-    private func performPlaceSearch(_ query: String) {
-        if placeSearchText == "" {
-            if areaSearchText == "" {
-//                isEditingSearchArea = false
-                listResultsVM.schnozPlaces = []
-                self.handleNearby()
-            } else {
-                self.handleAutocompleteForQuery(self.areaSearchText)
-            }
-            
-            } else {
-                listResultsVM.searchType = nil
-                let currentCity = UserStore.instance.currentLocAsAddress?.city
-                let searchText = (areaSearchLocation == "" ? currentCity : areaSearchLocation) ?? ""
-                let queryText = searchText + " " + query
-                self.handleAutocompleteForQuery(queryText)
-            }
+    //MARK: - Focused Field
+    enum Field {
+        case place, area
         
-    }
-    
-    private func handleNearby() {
-        if listResultsVM.nearbyPlaces.isEmpty {
-            self.getNearby()
-        } else {
-            listResultsVM.schnozPlaces = listResultsVM.nearbyPlaces
-        }
-    }
-    
-   private func getNearby() {
-        NetworkServices.instance.getNearbyLocationsWithKeyword("food") { places, error in
-            if let error = error {
-                self.errorManager.message = error.localizedDescription
-                self.errorManager.shouldDisplay = true
-            }
-            if let places = places {
-                    listResultsVM.nearbyPlaces = places
-                    listResultsVM.schnozPlaces = places
-                listResultsVM.isLoading = false
+        var title: String {
+            switch self {
+            case .place:
+                return "Bars, Restaraunts, Breweries, etc."
+            case .area:
+                return "Near Me"
             }
         }
     }
-    
-    private func handleAutocompleteForQuery(_ query: String) {
-        googlePlacesManager.performAutocompleteQuery(query) { results, error in
-            if let error = error {
-                self.errorManager.message = error.localizedDescription
-                self.errorManager.shouldDisplay = true
-            }
-            if let results = results {
-                listResultsVM.schnozPlaces = results
-            }
-        }
-    }
+
 }
 
 struct ListResultsView_Previews: PreviewProvider {
@@ -250,4 +238,8 @@ struct ListResultsView_Previews: PreviewProvider {
                         userStore: UserStore(),
                         errorManager: ErrorManager())
     }
+}
+
+enum SearchFieldType {
+    case place, area
 }

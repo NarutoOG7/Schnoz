@@ -38,12 +38,11 @@ struct LD: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            ZStack {
+            ZStack(alignment: .leading) {
                 VStack(alignment: .leading, spacing: 7) {
                     title
                     address
                     avgRatingDisplay
-                    buttons
                     Spacer()
                     reviewHelper
                 }
@@ -51,50 +50,22 @@ struct LD: View {
                 .padding(.horizontal)
                 .padding(.vertical, imageMaxHeight + 36.0)
                 
-                
                 image
-                
-                VStack {
-                    HStack {
-                        backButton
-                        Spacer()
-                    }.padding(.horizontal)
-                        .padding(.top, 60)
-                    Spacer()
-                }
-                
-                .sheet(isPresented: $isSharing) {
-                    ShareActivitySheet(itemsToShare: [location?.primaryText ?? "SCHNOZ"])
-                }
-                
-                
-                .sheet(isPresented: $isShowingMoreReviews) {
-                    MoreReviewsSheet(placeID: location?.placeID ?? "", reviews: self.reviews)
-                }
+                backButton
             }
         }
         .edgesIgnoringSafeArea(.vertical)
         .navigationBarHidden(true)
         
+        .sheet(isPresented: $isShowingMoreReviews) {
+            MoreReviewsSheet(placeID: location?.placeID ?? "", reviews: self.reviews)
+        }
+        
         .task {
-//            if let location = location {
-//                listResultsVM.getPlaceImage(location) { image, error in
-//                    if let error = error {
-//                        
-//                    }
-//                    if let image = image {
-//                        listResultsVM.placeImage = image
-//                    }
-//                }
-//            }
-            firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
-                // Actually removed limit, fetches all
-
-                self.location?.schnozReviews = reviews
-                self.reviews = reviews
-            }
+            fetchFirebaseReviews()
         }
     }
+    
     
     //MARK: - SubViews
     
@@ -138,11 +109,12 @@ struct LD: View {
         }
     }
     
-    private var title: some View {
+    private var title:  some View {
         Text(location?.primaryText ?? "")
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
+        
     }
     
     
@@ -156,25 +128,19 @@ struct LD: View {
     private var avgRatingDisplay: some View {
         let total = location?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
-        return VStack(alignment: .leading) {
+        return VStack(alignment: .leading, spacing: 7) {
             Stars(color: oceanBlue.yellow,
                   rating: .constant(location?.averageRating?.avgRating ?? 0))
             
             Button(action: moreReviewsTapped) {
                 Text("(\(total) review\(textEnding))")
                     .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(oceanBlue.blue)
+                    .foregroundColor(oceanBlue.lightBlue)
             }.disabled(total == 0)
+            leaveAReviewView
+            
         }
     }
-    
-
-//    private var description: some View {
-//        Text(location.)
-//            .font(.avenirNext(size: 17))
-//            .lineLimit(nil)
-//            .foregroundColor(oceanBlue.blue)
-//    }
     
     private var reviewHelper: some View {
          VStack(alignment: .leading) {
@@ -188,7 +154,6 @@ struct LD: View {
                 }
             }
             HStack {
-                leaveAReviewView
                 if self.reviews.count > 1 {
                     moreReviewsButton
                 }
@@ -199,12 +164,6 @@ struct LD: View {
     }
     
     private var leaveAReviewView: some View {
-        
-        VStack(alignment: .leading) {
-            Text("Been here before?")
-                .italic()
-                .font(.avenirNextRegular(size: 17))
-                .foregroundColor(oceanBlue.blue)
             NavigationLink {
                 LocationReviewView(
                     isPresented: $isCreatingNewReview,
@@ -218,10 +177,8 @@ struct LD: View {
                 )
             } label: {
                 Text("Leave A Review")
-                    .underline()
                     .font(.avenirNextRegular(size: 17))
                     .foregroundColor(oceanBlue.lightBlue)
-            }
         }
     }
     
@@ -283,11 +240,19 @@ struct LD: View {
     }
     
     private var backButton: some View {
-        Button(action: backButtonTapped) {
-            Image(systemName: "chevron.left")
-                .resizable()
-                .frame(width: 25, height: 35)
-                .tint(oceanBlue.yellow)
+        VStack {
+            HStack {
+                
+                Button(action: backButtonTapped) {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 25, height: 35)
+                        .tint(oceanBlue.yellow)
+                }
+                Spacer()
+            }.padding(.horizontal)
+                .padding(.top, 60)
+            Spacer()
         }
     }
     
@@ -324,15 +289,19 @@ struct LD: View {
         self.isShowingMoreReviews = true
     }
     
+    private func fetchFirebaseReviews() {
+        firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
+            // Actually removed limit, fetches all
+            self.location?.schnozReviews = reviews
+            self.reviews = reviews
+        }
+    }
 }
 
 //MARK: - Previews
 struct LD_Previews: PreviewProvider {
     static var previews: some View {
-        LD(location: SchnozPlace(placeID: "PLace01"),
-           userStore: UserStore(),
-           firebaseManager: FirebaseManager(),
-           errorManager: ErrorManager())
+        LD(location: SchnozPlace(placeID: "PLace01"))
     }
 }
 

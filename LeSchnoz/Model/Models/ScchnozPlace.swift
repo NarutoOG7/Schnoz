@@ -88,10 +88,7 @@ class SchnozPlace: Hashable, Identifiable {
             self.averageRating = averageRating
         }
         
-        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, error in
-            if let error = error {
-                
-            }
+        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, _ in
             // will this code be synchronous??
             if let gmsPlace = gmsPlace {
                 self.gmsPlace = gmsPlace

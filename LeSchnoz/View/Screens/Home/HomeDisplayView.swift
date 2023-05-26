@@ -147,17 +147,13 @@ struct HomeDisplayView: View {
                     .font(.headline)
                     .foregroundColor(.gray)
                     .padding(.vertical)
-                 NavigationLink {
-                     LD(location: self.latestReviewPlace)
-                 } label: {
+                 Button(action: self.latestReviewTapped) {
                      ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
                         .frame(width:  geo.size.width - 60)
                  }
-
-//                 Button(action: latestReviewTapped) {
-//                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
-//                        .frame(width:  geo.size.width - 60)
-//                 }
+                 .onTapGesture {
+                     SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
+                 }
             }
         }
     
@@ -199,7 +195,7 @@ struct HomeDisplayView: View {
         } else {
             listResultsVM.schnozPlaces = listResultsVM.nearbyPlaces
         }
-        
+        listResultsVM.searchBarTapped = true
         withAnimation {
             listResultsVM.showSearchTableView = true
         }
@@ -208,7 +204,6 @@ struct HomeDisplayView: View {
     private func searchTypeTapped(_ searchType: SearchType) {
         listResultsVM.searchType = searchType
         
-//        DispatchQueue.main.async {
         if searchType.hasEmptyBucket {
                 
                 NetworkServices.instance.getNearbyLocationsWithKeyword(searchType.rawValue) { places, error in
@@ -231,10 +226,10 @@ struct HomeDisplayView: View {
     
     private func latestReviewTapped() {
         self.shouldNavigateToLDForLatestReview = true
+        SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
     }
     
     private func getSchnozPlaceFromLatestReview(_ latestReview: ReviewModel, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
-        let group = DispatchGroup()
         let schnozPlace = SchnozPlace(placeID: latestReview.locationID)
         FirebaseManager.instance.getAverageRatingForLocation(latestReview.locationID) { averageRating in
             schnozPlace.averageRating = averageRating

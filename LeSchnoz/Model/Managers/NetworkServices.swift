@@ -25,7 +25,6 @@ class NetworkServices: ObservableObject {
             let keyword = "keyword=\(keyword)"
             let location = "&location=\(currentLoc.asStringForURL())"
             let radius = "&radius=2500"
-            let rankby = "&rankby=distance"
             let type = "&type=restaraunt"
             let apiKey = "&key=AIzaSyCNe9u8z93wHJy2RNT8Ro46LhToyCG1jQE"
             let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + apiKey

@@ -27,6 +27,8 @@ class ListResultsVM: ObservableObject {
     @Published var dinnerPlaces: [SchnozPlace] = []
     @Published var nearbyPlaces: [SchnozPlace] = []
     
+    @Published var searchBarTapped = false
+    
     @Published var placeImage: Image = K.Images.placeholder
 
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
