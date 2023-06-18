@@ -88,6 +88,9 @@ class LoginVM: ObservableObject {
     private func handleError(_ error: K.ErrorHelper.Errors) {
         switch error {
             
+        case .usernameTaken:
+            self.setErrorMessage(.username, message: error.message())
+            
         case .incorrectEmail,
                 .unrecognizedEmail,
                 .emailIsBadlyFormatted,

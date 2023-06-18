@@ -40,7 +40,7 @@ struct NewSignup: View {
             accentColor: oceanBlue.lightBlue,
             icon: Image(systemName: "person.fill"),
             placeholderText: "Your Name",
-            errorMessage: "Please provide a name.")
+            errorMessage: signupVM.usernameErrorMessage)
         .focused($focusedField, equals: .username)
         .submitLabel(.next)
     }

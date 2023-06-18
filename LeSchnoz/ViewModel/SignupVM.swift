@@ -45,15 +45,21 @@ class SignupVM: ObservableObject {
         checkForErrorAndSendAppropriateErrorMessage()
         
         if fieldsAreFilled() {
-            auth.signUp(userName: usernameInput,
-                        email: emailInput,
-                        password: passwordInput,
-                        confirmPassword: confirmPasswordInput) { status, error in
-                if let error = error {
-                    self.handleError(error)
-                    completion(false)
-                }
-                completion(status)
+            auth.checkUsernameAvailability(username: usernameInput) { success in
+                guard success else { self.handleError(.usernameTaken)
+                    return }
+                
+                    self.auth.signUp(userName: self.usernameInput,
+                                     email: self.emailInput,
+                                     password: self.passwordInput,
+                                     confirmPassword: self.confirmPasswordInput) { status, error in
+                        if let error = error {
+                            self.handleError(error)
+                            completion(false)
+                        }
+                        completion(status)
+                    }
+                
             }
         }
         
@@ -75,6 +81,9 @@ class SignupVM: ObservableObject {
     
     private func handleError(_ error: K.ErrorHelper.Errors) {
         switch error {
+            
+        case .usernameTaken:
+            self.setErrorMessage(.username, message: K.ErrorHelper.Messages.Auth.usernameExists.rawValue)
             
         case .incorrectEmail,
                 .unrecognizedEmail,

@@ -34,7 +34,6 @@ struct Account: View {
                         .listRowBackground(Color.clear)
                 } else {
                     editProfile
-                    manageReviews
                     sendPasswordResetButton
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
@@ -84,20 +83,6 @@ struct Account: View {
                                                 errorManager: errorManager,
                                                 loginVM: loginVM)) {
             Text("Edit Profile")
-                .foregroundColor(oceanBlue.white)
-                .font(.avenirNext(size: 18))
-        }
-
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-    }
-    
-    private var manageReviews: some View {
-        NavigationLink(destination: ManageReviews(firebaseManager: firebaseManager,
-                                                  userStore: userStore,
-                                                  errorManager: errorManager,
-                                                 listResultsVM: listResultsVM)) {
-            Text("Manage Reviews")
                 .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 18))
         }

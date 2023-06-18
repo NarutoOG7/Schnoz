@@ -34,6 +34,7 @@ enum K {
         }
             
             enum Errors {
+                case usernameTaken
                 case unrecognizedEmail
                 case incorrectEmail
                 case insufficientPassword
@@ -49,6 +50,9 @@ enum K {
                     let authMessages = K.ErrorHelper.Messages.Auth.self
                     let networkMessages = K.ErrorHelper.Messages.Network.self
                     switch self {
+                        
+                    case .usernameTaken:
+                        return authMessages.usernameExists.rawValue
                         
                     case .unrecognizedEmail:
                         return authMessages.unrecognizedEmail.rawValue
@@ -92,6 +96,7 @@ enum K {
             }
             enum Auth: String {
                 case usernameBlank = "Please provide a name."
+                case usernameExists = "Username already exists."
                 case failToSignOut = "There was an error signing out of your account. Check your connection and try again."
                 case failedToSaveUser = "There was a problem saving the user"
                 
@@ -140,6 +145,8 @@ enum K {
         static let logo = Image("Logo")
         static let share = Image(systemName: "square.and.arrow.up")
         static let placeholder = Image(systemName: "photo")
+        static let simpleLogo = Image("SchnozLogoOutline")
+        
     }
     
     //MARK: - UserDefaults

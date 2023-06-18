@@ -30,6 +30,8 @@ class UserStore: ObservableObject {
     
     @Published var isGuest = UserDefaults.standard.bool(forKey: "isGuest")
     @Published var isSignedIn = UserDefaults.standard.bool(forKey: "signedIn")
+    @Published var isFirstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
+
     @Published var reviews: [ReviewModel] = []
     @Published var selectedLocationDistanceToUser: Double = 0
     @Published var user = User()

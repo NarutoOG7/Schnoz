@@ -13,7 +13,7 @@ import FirebaseFirestore
 class Authorization {
     
     static let instance = Authorization()
-        
+    
     let auth = Auth.auth()
     
     @ObservedObject var userStore = UserStore.instance
@@ -31,7 +31,7 @@ class Authorization {
         auth.signIn(withEmail: email, password: password) { authResult, error in
             
             if let error = error {
-                                
+                
                 switch error.localizedDescription {
                     
                 case let str where str.contains("no user record corresponding to this identifier"):
@@ -62,7 +62,7 @@ class Authorization {
                 let user = User(id: result.user.uid,
                                 name: result.user.displayName ?? "",
                                 email: result.user.email ?? "")
-                                
+                
                 DispatchQueue.main.async {
                     
                     self.userStore.isSignedIn = true
@@ -88,66 +88,72 @@ class Authorization {
         
         if confirmPassword == password {
             
-            auth.createUser(withEmail: email, password: password) { (result, error) in
+            self.checkUsernameAvailability(username: userName) { success in
+                guard success else { completion(success, .usernameTaken)
+                    return
+                }
                 
-                if let error = error {
-                                        
-                    switch error.localizedDescription {
-                        
-                    case let str where str.contains("network error has occurred"):
-                        completion(false, .troubleConnectingToFirebase)
-                        
-                    case let str where str.contains("email address is already in use"):
-                        completion(false, .emailInUse)
-                        
-                    case let str where str.contains("email address is badly formatted"):
-                        completion(false, .emailIsBadlyFormatted)
-                        
-                    case let str where str.contains("password must be 6 characters"):
-                        completion(false, .insufficientPassword)
-                        
-                    case let str where str.contains("passwords do not match"):
-                        completion(false, .passwordsDontMatch)
-                        
-                    default:
-                        completion(false, .firebaseTrouble)
-                    }
+                self.auth.createUser(withEmail: email, password: password) { (result, error) in
                     
-                } else {
-                    guard let result = result else {
-                        completion(false, .firebaseTrouble)
-                        return
-                    }
-                    
-                    let user = User(id: result.user.uid, name: userName, email: result.user.email ?? "")
-                    
-                    
-                    DispatchQueue.main.async {
+                    if let error = error {
                         
-                        self.userStore.isSignedIn = true
-                        self.userStore.user = user
-                        
-                        UserDefaults.standard.set(true, forKey: "signedIn")
-                        UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
-                        
-                        self.saveUserToUserDefaults(user: user) { error in
-                            if let _ = error {
-                                completion(false, .failedToSaveUser)
-                            }
+                        switch error.localizedDescription {
+                            
+                        case let str where str.contains("network error has occurred"):
+                            completion(false, .troubleConnectingToFirebase)
+                            
+                        case let str where str.contains("email address is already in use"):
+                            completion(false, .emailInUse)
+                            
+                        case let str where str.contains("email address is badly formatted"):
+                            completion(false, .emailIsBadlyFormatted)
+                            
+                        case let str where str.contains("password must be 6 characters"):
+                            completion(false, .insufficientPassword)
+                            
+                        case let str where str.contains("passwords do not match"):
+                            completion(false, .passwordsDontMatch)
+                            
+                        default:
+                            completion(false, .firebaseTrouble)
                         }
-                        completion(true, nil)
+                        
+                    } else {
+                        guard let result = result else {
+                            completion(false, .firebaseTrouble)
+                            return
+                        }
+                        
+                        let user = User(id: result.user.uid, name: userName, email: result.user.email ?? "")
+                        let firestoreUser = FirestoreUser(id: user.id, username: user.name)
+                        
+                        self.setCurrentUsersName(userName) { error in
+                            completion(false, .failedToSaveUser)
+                        }
+                        
+                        FirebaseManager.instance.addUserToFirestore(firestoreUser)
+                        
+                        DispatchQueue.main.async {
+                            
+                            self.userStore.isSignedIn = true
+                            self.userStore.user = user
+                            
+                            UserDefaults.standard.set(true, forKey: "signedIn")
+                            UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
+                            
+                            self.saveUserToUserDefaults(user: user) { error in
+                                if let _ = error {
+                                    completion(false, .failedToSaveUser)
+                                }
+                            }
+                            completion(true, nil)
+                        }
                     }
-                    
-                    
                 }
             }
             
-            setCurrentUsersName(userName) { error in
-               completion(false, .failedToSaveUser)
-            }
-            
         } else {
-          completion(false, .passwordsDontMatch)
+            completion(false, .passwordsDontMatch)
         }
     }
     
@@ -163,7 +169,7 @@ class Authorization {
             changeRequest.commitChanges { error in
                 
                 if let error = error {
-                                        
+                    
                     onError(.failedToSaveUser)
                 }
                 
@@ -176,6 +182,21 @@ class Authorization {
                         onError(.failedToSaveUser)
                     }
                 }
+            }
+        }
+    }
+    
+    func checkUsernameAvailability(username: String, completion: @escaping (Bool) -> Void) {
+        let usersCollection = Firestore.firestore().collection("Reviews")
+        
+        usersCollection.whereField("username", isEqualTo: username).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error checking username availability: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                let usernameExists = !snapshot!.isEmpty
+                print("usernameExists: \(usernameExists)")
+                completion(!usernameExists)
             }
         }
     }
@@ -304,5 +325,5 @@ class Authorization {
         }
     }
     
-
+    
 }

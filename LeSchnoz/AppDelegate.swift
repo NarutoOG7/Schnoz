@@ -12,8 +12,8 @@ import GooglePlaces
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
-    private var signedInUser = UserDefaults.standard.data(forKey: K.UserDefaults.user)
-    private var isGuest = UserDefaults.standard.data(forKey: K.UserDefaults.isGuest)
+//    private var signedInUser = UserDefaults.standard.data(forKey: K.UserDefaults.user)
+//    private var isGuest = UserDefaults.standard.data(forKey: K.UserDefaults.isGuest)
     
     @ObservedObject var locationManager = UserLocationManager.instance
     @ObservedObject var userStore = UserStore.instance
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         getUserIfSignedIn()
         
         checkIfIsGuest()
-
+        
         return true
     }
     
@@ -63,6 +63,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
         }
     }
-    
+
 
 }

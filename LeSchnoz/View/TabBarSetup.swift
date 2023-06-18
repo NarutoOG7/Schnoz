@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TabBarSetup: View {
+    
+    @AppStorage("userOnboarded") var userOnboarded: Bool = false
         
     @State private var selection = 0
     
@@ -40,17 +42,23 @@ struct TabBarSetup: View {
     var body: some View {
         ZStack {
             TabView(selection: $selection) {
-                exploreTab
+                homeTab
+                mySniffsTab
                 settingsTab
             }
-            
+            .task {
+                if !userOnboarded && !userStore.isGuest {
+                    self.assignFirestoreUser()
+                }
+
+            }
         }
         .accentColor(oceanBlue.white)
         
         
     }
     
-    private var exploreTab: some View {
+    private var homeTab: some View {
         
         NavigationView {
             
@@ -65,20 +73,47 @@ struct TabBarSetup: View {
                 HomeDisplayView(
                     userStore: userStore,
                     listResultsVM: listResultsVM)
-                .navigationTitle("Explore")
+                .navigationTitle("Home")
                 .navigationBarHidden(true)
             }
         }
         .background(Color.clear)
         
         .tabItem {
-            Text("Explore")
-            Image(systemName: "magnifyingglass")
+            Text("Home")
+            Image(systemName: "house")
                 .resizable()
-                .frame(width: 25, height: 25)
+//                .frame(width: 25, height: 25)
         }
         .tag(0)
         
+    }
+    
+    private var mySniffsTab: some View {
+        
+        NavigationView {
+            ManageReviews(firebaseManager: firebaseManager, userStore: userStore, errorManager: errorManager, listResultsVM: listResultsVM)
+            .navigationTitle("My Sniffs")
+            .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
+        }
+        .tabItem {
+            
+            Text("My Sniffs")
+//            Image("MySniffs")
+//            Image("LogoSmall")
+
+            image
+
+        }
+        .tag(1)
+
+    }
+    
+    private var image: some View {
+        Image("smallestSchnoz")
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .frame(width: 22, height: 25)
     }
 
     private var settingsTab: some View {
@@ -98,7 +133,7 @@ struct TabBarSetup: View {
                 .resizable()
                 .frame(width: 25, height: 25)
         }
-        .tag(3)
+        .tag(2)
 
     }
     
@@ -111,8 +146,18 @@ struct TabBarSetup: View {
         tabBarAppearance.barTintColor = UIColor(K.Colors.OceanBlue.blue)
         tabBarAppearance.unselectedItemTintColor = UIColor(K.Colors.OceanBlue.white.opacity(0.5))
         tabBarAppearance.tintColor = UIColor(K.Colors.OceanBlue.white)
-        ///This background color is to maintain the same color on scrolling.
-        tabBarAppearance.backgroundColor = UIColor(K.Colors.OceanBlue.blue).withAlphaComponent(0.92)
+//        ///This background color is to maintain the same color on scrolling.
+        tabBarAppearance.backgroundColor = UIColor(named: "TabBarColor")
+
+        
+//
+//        let appearance = UITabBarAppearance()
+//                      appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = UIColor(K.Colors.OceanBlue.blue)
+//                      UITabBar.appearance().standardAppearance = appearance
+//                      UITabBar.appearance().scrollEdgeAppearance = appearance
+
+
         
     }
     
@@ -172,15 +217,51 @@ struct TabBarSetup: View {
             }
            }
     }
+    
+    func checkIsFirstLaunch() {
+        if let data = UserDefaults.standard.data(forKey: "hasLaunchedBefore") {
+            
+            do {
+                let decoder = JSONDecoder()
+                let hasLaunchedBefore = try decoder.decode(Bool.self, from: data)
+                userStore.isFirstLaunch = !hasLaunchedBefore
+                if !hasLaunchedBefore {
+                    assignFirestoreUser()
+                }
+            } catch {
+                errorManager.shouldDisplay = true
+                errorManager.message = "Error"
+            }
+        } else {
+            assignFirestoreUser()
+        }
+    }
+    
+    func assignFirestoreUser() {
+        FirebaseManager.instance.doesUserExist(id: userStore.user.id) { exists in
+            if !exists {
+                let firestoreUser = FirestoreUser(id: self.userStore.user.id, username: self.userStore.user.name)
+                FirebaseManager.instance.addUserToFirestore(firestoreUser)
+                DispatchQueue.main.async {
+                    
+                    userOnboarded = true
+                }
+                
+//                UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+//                UserDefaults.standard.synchronize()
+            }
+        }
+    }
+    
 }
 
 //MARK: - Preview
 
 struct TabBarSetup_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarSetup(userStore: UserStore(),
-                    errorManager: ErrorManager(),
-                    loginVM: LoginVM())
+        TabBarSetup(userStore: UserStore.instance,
+                    errorManager: ErrorManager.instance,
+                    loginVM: LoginVM.instance)
     }
 }
 

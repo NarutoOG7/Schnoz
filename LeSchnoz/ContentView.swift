@@ -29,6 +29,7 @@ struct ContentView: View {
                         TabBarSetup(userStore: userStore,
                                     errorManager: errorManager,
                                     loginVM: loginVM)
+        
                     }
                 } else {
                     SignupLogin()
@@ -72,5 +73,6 @@ class ContentViewVM: ObservableObject {
         } else {
             self.showTutorial = false
         }
+    
     }
 }

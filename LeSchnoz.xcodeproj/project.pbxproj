@@ -11,6 +11,7 @@
 		C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAD029E2577700C8971E /* AverageRating.swift */; };
 		C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE329FC56D600C8971E /* FMAverage.swift */; };
 		C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE529FC572D00C8971E /* FMReviews.swift */; };
+		C95E918B2A3D4DB500833336 /* FMUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E918A2A3D4DB500833336 /* FMUsers.swift */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
 		C98007D729C1580E00476D9B /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D629C1580E00476D9B /* NetworkServices.swift */; };
 		C99EEB10299B121600B77DBD /* LeSchnozApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB0F299B121600B77DBD /* LeSchnozApp.swift */; };
@@ -90,6 +91,7 @@
 		C90DFAD029E2577700C8971E /* AverageRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageRating.swift; sourceTree = "<group>"; };
 		C90DFAE329FC56D600C8971E /* FMAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAverage.swift; sourceTree = "<group>"; };
 		C90DFAE529FC572D00C8971E /* FMReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMReviews.swift; sourceTree = "<group>"; };
+		C95E918A2A3D4DB500833336 /* FMUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMUsers.swift; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
 		C98007D629C1580E00476D9B /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		C99EEB0C299B121600B77DBD /* LeSchnoz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeSchnoz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +164,7 @@
 		C9E1B50B2A19927D004706BD /* SearchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogic.swift; sourceTree = "<group>"; };
 		C9E1B5192A205CD4004706BD /* GhostKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GhostKeys.plist; sourceTree = "<group>"; };
 		C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9E1B51D2A2073B0004706BD /* LeSchnoz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LeSchnoz.entitlements; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				C99EEB2C299B19B300B77DBD /* FirebaseManager.swift */,
+				C95E918A2A3D4DB500833336 /* FMUsers.swift */,
 				C90DFAE329FC56D600C8971E /* FMAverage.swift */,
 				C90DFAE529FC572D00C8971E /* FMReviews.swift */,
 			);
@@ -227,6 +231,7 @@
 		C99EEB0E299B121600B77DBD /* LeSchnoz */ = {
 			isa = PBXGroup;
 			children = (
+				C9E1B51D2A2073B0004706BD /* LeSchnoz.entitlements */,
 				C99EEC22299B1D8A00B77DBD /* AppDelegate.swift */,
 				C99EEC1E299B1A4000B77DBD /* Constants.swift */,
 				C99EEB1D299B19B300B77DBD /* Model */,
@@ -383,6 +388,7 @@
 			children = (
 				C99EEB6B299B19B400B77DBD /* Settings */,
 				C99EEB7C299B19B400B77DBD /* LocationDetails */,
+				C99EEB73299B19B400B77DBD /* ManageReviews.swift */,
 				C99EEB83299B19B400B77DBD /* Launch */,
 				C99EEB8A299B19B400B77DBD /* Home */,
 				C99EEBA1299B19B400B77DBD /* Review */,
@@ -421,7 +427,6 @@
 		C99EEB72299B19B400B77DBD /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				C99EEB73299B19B400B77DBD /* ManageReviews.swift */,
 				C99EEB74299B19B400B77DBD /* ProfilePage.swift */,
 				C99EEB75299B19B400B77DBD /* Account.swift */,
 				C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */,
@@ -671,6 +676,7 @@
 				C99EEB12299B121600B77DBD /* ContentView.swift in Sources */,
 				C9D15F1629DCE92B00C42C44 /* SchnozModel.swift in Sources */,
 				C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */,
+				C95E918B2A3D4DB500833336 /* FMUsers.swift in Sources */,
 				C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */,
 				C99EEBB6299B19B400B77DBD /* MapDetails.swift in Sources */,
 				C9AC616129D6BD160006FF32 /* AuthType.swift in Sources */,
@@ -851,6 +857,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LeSchnoz/LeSchnoz.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
@@ -858,24 +865,26 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby restaraunts and other locations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -885,6 +894,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LeSchnoz/LeSchnoz.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
@@ -892,24 +902,26 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby locaations.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show you nearby restaraunts and other locations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

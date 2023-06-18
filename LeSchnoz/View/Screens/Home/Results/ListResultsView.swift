@@ -27,6 +27,8 @@ struct ListResultsView: View {
     @ObservedObject var userStore: UserStore
     @ObservedObject var errorManager: ErrorManager
     
+    @Environment(\.colorScheme) var colorScheme
+    
     let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
@@ -143,18 +145,23 @@ struct ListResultsView: View {
         let hasCharacters: Bool = input.wrappedValue.count > 0
 return  ZStack {
             
-            TextField(field.title, text: input)
+            TextField("", text: input)
                 .padding(.horizontal)
                 .frame(height: 45)
-            
+                .placeholder(when: input.wrappedValue.isEmpty, placeholder: {
+                    Text(field.title)
+                        .foregroundColor(oceanBlue.black)
+                        .padding(.horizontal)
+                })
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(oceanBlue.lightBlue)
+                        .fill(oceanBlue.white)
                         .padding(2)
                     
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(oceanBlue.blue)))
+                                .fill(oceanBlue.black))
+                )
             
             HStack {
                 Spacer()
@@ -194,7 +201,7 @@ return  ZStack {
             Image(systemName: "xmark")
                 .resizable()
                 .frame(width: 25, height: 25)
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? oceanBlue.white : oceanBlue.blue)
         }
         .matchedGeometryEffect(id: "search", in: namespace)
         .padding(.trailing, 10)

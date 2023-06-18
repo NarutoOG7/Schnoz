@@ -32,7 +32,7 @@ struct About: View {
                     .padding(.bottom)
             }
             .listStyle(.plain)
-            .frame(minHeight: 80)
+            .frame(minHeight: 150)
             .modifier(DisabledScroll())
             .modifier(ClearListBackgroundMod())
         }

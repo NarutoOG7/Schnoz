@@ -24,10 +24,14 @@ struct HomeDisplayView: View {
     @State var shouldNavigateToLDForLatestReview = false
     
     @State var shouldShowSuccessMessage = false
+    
+    @Environment(\.colorScheme) var colorScheme
+
         
     let defaultReview = ReviewModel(id: "01", rating: 7, review: "Stinks like cigarette smoke and booze. To be fair, it is expected at Stanky's Place", title: "I guess it meets expectations?!", username: "MykalMayn", locationID: "00101", locationName: "Stanky's Place")
     
     var body: some View {
+
         GeometryReader { geo in
                 ZStack {
                     backgroundImage(geo)
@@ -36,19 +40,19 @@ struct HomeDisplayView: View {
             
                 .task {
                     guard Authorization.instance.isSignedIn else { return }
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
                         FirebaseManager.instance.getLatestReview { review, error in
+                            
+                            if let error = error {
+                                self.errorManager.message = error.localizedDescription
+                                self.errorManager.shouldDisplay = true
+                            }
+                            if let review = review {
+                                self.listResultsVM.latestReview = review
+                                self.latestReview = review
                                 
-                                if let error = error {
-                                    self.errorManager.message = error.localizedDescription
-                                    self.errorManager.shouldDisplay = true
-                                }
-                                if let review = review {
-                                    self.listResultsVM.latestReview = review
-                                    self.latestReview = review
-                                    
-                                    self.latestReviewPlace = SchnozPlace(latestReview: review)
-                                }
+                                self.latestReviewPlace = SchnozPlace(latestReview: review)
+                            }
                             
                         }
                     }
@@ -69,7 +73,10 @@ struct HomeDisplayView: View {
                     ForEach(SearchType.allCases.indices, id: \.self) { index in
                         searchTypeOptionView(SearchType.allCases[index], geo)
                         if index != SearchType.allCases.indices.last {
-                            Divider().frame(height: 80)
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 0.5, height: 80)
+                                .foregroundColor(colorScheme == .dark ? oceanBlue.yellow : oceanBlue.blue)
+//                            Divider().frame(height: 80)
                         }
                     }.listStyle(.insetGrouped)
                 }
@@ -98,7 +105,7 @@ struct HomeDisplayView: View {
 //                    .blur(radius: 1)
                     .overlay(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color.clear, Color.white]),
+                            gradient: Gradient(colors: [Color.clear, colorScheme == .dark ? Color.black : Color.white]),
                             startPoint: .center,
                             endPoint: .bottom
                         )
@@ -134,7 +141,7 @@ struct HomeDisplayView: View {
                 .frame(height: 36)
                 .shadow(color: Color.gray.opacity(0.3), radius: 10, x: 0, y: 5)
             )
-//            .padding()
+            .padding(.horizontal)
             .shadow(color: .white, radius: 10)
     }
     
@@ -145,7 +152,7 @@ struct HomeDisplayView: View {
              VStack(alignment: .leading) {
                 Text("Latest Review")
                     .font(.headline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(oceanBlue.blue)
                     .padding(.vertical)
                  Button(action: self.latestReviewTapped) {
                      ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())

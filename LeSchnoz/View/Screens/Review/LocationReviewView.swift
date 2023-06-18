@@ -40,20 +40,26 @@ struct LocationReviewView: View {
         ZStack {
             oceanBlue.blue
                 .edgesIgnoringSafeArea(.vertical)
-        
-            VStack(spacing: 20) {
-                stars
-                    .padding(.vertical, 20)
-                title
-                description
-                anonymousOption
-                submitButton
-                    .padding(.top, 35)
-            }
-            .padding()
-            .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
-            .navigationBarTitleDisplayMode(.inline)
             
+            if userStore.isGuest {
+                Text("Sign in to write reviews")
+                    .foregroundColor(oceanBlue.white)
+            } else {
+                
+                VStack(spacing: 20) {
+                    stars
+                        .padding(.vertical, 20)
+                    title
+                    description
+                    anonymousOption
+                    submitButton
+                        .padding(.top, 35)
+                }
+                .padding()
+                .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
+                .navigationBarTitleDisplayMode(.inline)
+                
+            }
         }
         .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
             Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
@@ -66,7 +72,7 @@ struct LocationReviewView: View {
             case .description:
                 focusedField = .username
             default: break
-            }
+        }
         }
     }
     

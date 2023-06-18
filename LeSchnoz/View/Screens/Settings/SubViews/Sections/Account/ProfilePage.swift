@@ -24,6 +24,12 @@ struct ProfilePage: View {
     
     @State var confirmDeleteAlertShouldShow = false
     
+    @State var usernameErrorMessage = ""
+    @State var emailErrorMessge = ""
+    
+    @State var shouldShowUsernameErrorMessage = false
+    @State var shouldShowEmailErrorMessage = false
+    
     @Environment(\.dismiss) var dismiss
     
     let oceanBlue = K.Colors.OceanBlue.self
@@ -55,29 +61,33 @@ struct ProfilePage: View {
     }
     
     private var displayName: some View {
-        HStack(alignment: .center, spacing: 24) {
-            Text("Name:")
-                .foregroundColor(oceanBlue.white)
-                .font(.avenirNext(size: 18))
-
+        VStack {
+            if self.shouldShowUsernameErrorMessage {
+                Text(usernameErrorMessage)
+                    .foregroundColor(.orange)
+            }
+            HStack(alignment: .center, spacing: 24) {
+                Text("Name:")
+                    .foregroundColor(oceanBlue.white)
+                    .font(.avenirNext(size: 18))
+                
                 
                 TextField("", text: $displayNameInput)
                     .placeholder(when: displayNameInput.isEmpty) {
                         Text(userStore.user.name)
                             .foregroundColor(oceanBlue.white)
                             .font(.avenirNext(size: 24))
-
+                        
                     }
                     .tint(oceanBlue.white)
                     .foregroundColor(oceanBlue.white)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
-                    .onChange(of: displayNameInput) { _ in
-                        wasEdited = true
-                    }
-            
-            }.padding()
+                    .onChange(of: displayNameInput, perform: wasEdited(_:))
+            }
+            .padding()
+        }
     }
     
     private var emailView: some View {
@@ -92,14 +102,14 @@ struct ProfilePage: View {
                             .foregroundColor(oceanBlue.white)
                             .font(.avenirNext(size: 24))
                     }
+                    .disabled(true)
                     .tint(oceanBlue.yellow)
                     .foregroundColor(oceanBlue.white)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .font(.avenirNext(size: 24))
-                    .onChange(of: emailInput) { _ in
-                        wasEdited = true
-                    }
+                    .onChange(of: emailInput, perform: wasEdited(_:))
+
             
         }.padding()
     }
@@ -127,23 +137,58 @@ struct ProfilePage: View {
             Text("Delete Account")
                 .font(.avenirNext(size: 16))
                 .fontWeight(.medium)
-                .foregroundColor(Color.red)
+                .foregroundColor(.orange)
+            
         }.padding(.horizontal)
         }
     }
     
     //MARK: - Methods
     
-    private func saveTapped() {
-        
+    private func wasEdited(_ value: String) {
+        if value == "" {
+            wasEdited = false
+        } else {
+            wasEdited = true
+        }
+    }
+    
+    private func handleUsernameAvailability(withCompletion completion: @escaping(Bool) -> Void) {
+        auth.checkUsernameAvailability(username: displayNameInput) { success in
+            
+            guard success else {
+                self.setErrorMessage(.username, Fields.username.errorMessage.1)
+                completion(false)
+                return
+            }
+            completion(success)
+        }
+    }
+    
+    private func setUserName() {
         auth.setCurrentUsersName(displayNameInput) { error in
             
             errorManager.shouldDisplay = true
-            
             errorManager.message = error.message()
-    
+            
         }
-        self.dismiss.callAsFunction()
+    }
+    
+    private func saveTapped() {
+        
+        if wasEdited {
+            if displayNameInput != "" {
+                self.handleUsernameAvailability { success in
+                    if success {
+                        setUserName()
+                        //                    self.dismiss.callAsFunction()
+                    }
+                }
+                
+            }
+
+            
+        }
     }
     
     
@@ -152,6 +197,50 @@ struct ProfilePage: View {
     }
     
 
+        private func fieldsAreFilled() -> Bool {
+            self.displayNameInput != "" && self.emailInput != ""
+        }
+    
+    enum Fields {
+
+        case username, email
+        
+        var errorMessage: (String,String) {
+            let messages = K.ErrorHelper.Messages.Auth.self
+            switch self {
+            case .username:
+                return (messages.usernameBlank.rawValue , messages.usernameExists.rawValue)
+            case .email:
+                return (messages.emailBlank.rawValue , messages.emailInUse.rawValue)
+            }
+        }
+    }
+    
+    private func setErrorMessage(_ field: Fields, _ message: String) {
+        switch field {
+        case .username:
+            self.usernameErrorMessage = message
+            self.shouldShowUsernameErrorMessage = true
+        case .email:
+            self.emailErrorMessge = message
+            self.shouldShowEmailErrorMessage = true
+        }
+    }
+    
+    private func checkForErrors() {
+        if displayNameInput == "" {
+            setErrorMessage(.username, Fields.username.errorMessage.0)
+        } else {
+            self.shouldShowUsernameErrorMessage = false
+        }
+        
+        if emailInput == "" {
+            setErrorMessage(.email, Fields.username.errorMessage.0)
+        } else {
+            self.shouldShowEmailErrorMessage = false
+        }
+    }
+    
     
 }
 
@@ -159,7 +248,7 @@ struct ProfilePage: View {
 struct ProfilePage_Previews: PreviewProvider {
     static var previews: some View {
         ProfilePage(userStore: UserStore(),
-                    errorManager: ErrorManager(),
+                    errorManager: ErrorManager.instance,
                     loginVM: LoginVM())
     }
 }

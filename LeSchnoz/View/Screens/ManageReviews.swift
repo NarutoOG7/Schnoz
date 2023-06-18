@@ -26,6 +26,10 @@ struct ManageReviews: View {
             oceanBlue.blue
                 .edgesIgnoringSafeArea(.all)
             
+            if userStore.isGuest {
+                Text("Sign in to create reveiws")
+                    .foregroundColor(oceanBlue.white)
+            } else 
             if userStore.reviews.isEmpty {
                 noReviews
             } else {
@@ -174,10 +178,11 @@ struct ManageReviews: View {
     }
     
     private func assignReviews() {
-        
-        if userStore.reviews == [] {
-            firebaseManager.getReviewsForUser(userStore.user) { review in
-                userStore.reviews.append(review)
+        if !userStore.isGuest {
+            if userStore.reviews == [] {
+                firebaseManager.getReviewsForUser(userStore.user) { review in
+                    userStore.reviews.append(review)
+                }
             }
         }
     }
