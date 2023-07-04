@@ -10,7 +10,7 @@ import GooglePlaces
 
 struct LD: View {
     
-    @State var location: SchnozPlace?
+//    @State var location: SchnozPlace?
     
     @State private var imageURL = URL(string: "")
     @State private var isSharing = false
@@ -20,7 +20,9 @@ struct LD: View {
     @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
     @State var firebaseErrorMessage = ""
-    @State var reviews: [ReviewModel] = []
+//    @State var reviews: [ReviewModel] = []
+    
+    @State var showGuestAlert = false
     
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var firebaseManager = FirebaseManager.instance
@@ -38,13 +40,13 @@ struct LD: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            ZStack(alignment: .leading) {
+            ZStack {
                 VStack(alignment: .leading, spacing: 7) {
                     title
                     address
                     avgRatingDisplay
-                    Spacer()
-                    reviewHelper
+                    listOfReviews
+//                    reviewHelper
                 }
                 .clipped()
                 .padding(.horizontal)
@@ -57,13 +59,17 @@ struct LD: View {
         .edgesIgnoringSafeArea(.vertical)
         .navigationBarHidden(true)
         
-        .sheet(isPresented: $isShowingMoreReviews) {
-            MoreReviewsSheet(placeID: location?.placeID ?? "", reviews: self.reviews)
-        }
         
-        .task {
-            fetchFirebaseReviews()
-        }
+//        .alert(isPresented: $showGuestAlert) {
+//                  Alert(title: Text("Sign In First"), message: Text("You must be signed in to leave reviews"), primaryButton: .default(Text("Sign In"), action: {
+//                      UserDefaults.standard.set(false, forKey: "signedIn")
+//                      userStore.isSignedIn = false
+//                      userStore.user = User()
+//                      UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
+//                  }), secondaryButton: .cancel())
+//              }
+        
+
     }
     
     
@@ -72,22 +78,25 @@ struct LD: View {
     private var header: some View {
         HStack {
             backButton
-                .padding(.horizontal)
-            Spacer()
+                .frame(width: 30, height: 30)
+                .padding(.leading)
+                .offset(y: imageMaxHeight / 6)
+
             headerText
-                .padding(.horizontal)
-            Spacer()
-            Spacer()
+                .padding(.leading, -40)
+                .padding(.trailing)
+                .offset(y: imageMaxHeight / 4)
+
         }
-        .offset(y: 80)
         
     }
     
     private var headerText: some View {
-        Text(location?.primaryText ?? "")
+        Text(ldvm.selectedLocation?.primaryText ?? "")
             .font(.avenirNext(size: 20))
             .fontWeight(.bold)
             .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
     }
     
     private var image: some View {
@@ -110,7 +119,7 @@ struct LD: View {
     }
     
     private var title:  some View {
-        Text(location?.primaryText ?? "")
+        Text(ldvm.selectedLocation?.primaryText ?? "")
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
@@ -119,18 +128,18 @@ struct LD: View {
     
     
     private var address: some View {
-        Text(location?.secondaryText ?? "")
+        Text(ldvm.selectedLocation?.secondaryText ?? "")
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
     }
     
     private var avgRatingDisplay: some View {
-        let total = location?.averageRating?.numberOfReviews ?? 0
+        let total = ldvm.selectedLocation?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
         return VStack(alignment: .leading, spacing: 7) {
             Stars(color: oceanBlue.yellow,
-                  rating: .constant(location?.averageRating?.avgRating ?? 0))
+                  rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
             
             Button(action: moreReviewsTapped) {
                 Text("(\(total) review\(textEnding))")
@@ -144,17 +153,17 @@ struct LD: View {
     
     private var reviewHelper: some View {
          VStack(alignment: .leading) {
-             if self.reviews.isEmpty {
+             if ldvm.reviews.isEmpty {
                 Text("No Reviews")
                     .font(.avenirNext(size: 17))
                     .foregroundColor(oceanBlue.blue)
             } else {
-                if let last = self.reviews.last {
+                if let last = ldvm.reviews.last {
                     ReviewCard(review: last)
                 }
             }
             HStack {
-                if self.reviews.count > 1 {
+                if ldvm.reviews.count > 1 {
                     moreReviewsButton
                 }
             }
@@ -164,21 +173,27 @@ struct LD: View {
     }
     
     private var leaveAReviewView: some View {
-            NavigationLink {
-                LocationReviewView(
-                    isPresented: $isCreatingNewReview,
-                    review: .constant(nil),
-                    location: $location,
-                    reviews: $reviews,
-                    isUpdatingReview: false,
-                    userStore: userStore,
-                    firebaseManager: firebaseManager,
-                    errorManager: errorManager
-                )
-            } label: {
-                Text("Leave A Review")
-                    .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(oceanBlue.lightBlue)
+        
+        NavigationLink {
+            LocationReviewView(
+                isPresented: $isCreatingNewReview,
+                review: .constant(nil),
+                location: $ldvm.selectedLocation,
+                reviews: $ldvm.reviews,
+                isUpdatingReview: false,
+                userStore: userStore,
+                firebaseManager: firebaseManager,
+                errorManager: errorManager
+            )
+        } label: {
+            Text("Leave A Review")
+                .font(.avenirNextRegular(size: 17))
+                .foregroundColor(oceanBlue.lightBlue)
+        }
+        .onTapGesture {
+            if userStore.isGuest {
+                self.showGuestAlert = true
+            }
         }
     }
     
@@ -191,6 +206,25 @@ struct LD: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
                     self.shouldShowFirebaseError = false
                 }
+            }
+    }
+    
+    
+    private var listOfReviews: some View {
+            List(ldvm.reviews) { review in
+                ReviewCell(review: review, isShowingLocationName: false)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .onAppear {
+                        let isLast = ldvm.reviews.last == review
+                        ldvm.listHasScrolledToBottom = isLast
+                    }
+            }
+            .scrollDisabled(true)
+            .frame(height: 250 * CGFloat(ldvm.reviews.count))
+                .modifier(ClearListBackgroundMod())
+            .onAppear {
+                ldvm.batchFirstCall()
             }
     }
     
@@ -250,10 +284,15 @@ struct LD: View {
                         .tint(oceanBlue.yellow)
                 }
                 Spacer()
-            }.padding(.horizontal)
+            }
+            .padding(.horizontal)
                 .padding(.top, 60)
             Spacer()
+
         }
+//        .frame(width: 25, height: 35)
+
+
     }
     
     
@@ -263,7 +302,7 @@ struct LD: View {
 
         var addressString: String {
             
-            location?.gmsPlace?.name?.replacingOccurrences(of: " ", with: "+") ?? ""
+            ldvm.selectedLocation?.gmsPlace?.name?.replacingOccurrences(of: " ", with: "+") ?? ""
         }
         
         guard let url = URL(string: "maps://?daddr=\(addressString)") else { return }
@@ -281,30 +320,31 @@ struct LD: View {
     private func backButtonTapped() {
         let searchLogic = SearchLogic.instance
         self.presentationMode.wrappedValue.dismiss()
-        listResultsVM.selectedPlace = nil
-        listResultsVM.resetPlaceImage()
+//        listResultsVM.selectedPlace = nil
+//        ldvm.selectedLocation = nil
+//        listResultsVM.resetPlaceImage()
         listResultsVM.shouldShowPlaceDetails = false
-        searchLogic.placeSearchText = ""
-        searchLogic.areaSearchText = ""
+//        searchLogic.placeSearchText = ""
+//        searchLogic.areaSearchText = ""
     }
     
     private func moreReviewsTapped() {
         self.isShowingMoreReviews = true
     }
     
-    private func fetchFirebaseReviews() {
-        firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
-            // Actually removed limit, fetches all
-            self.location?.schnozReviews = reviews
-            self.reviews = reviews
-        }
-    }
+//    private func fetchFirebaseReviews() {
+//        firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
+//            // Actually removed limit, fetches all
+//            self.location?.schnozReviews = reviews
+//            self.reviews = reviews
+//        }
+//    }
 }
 
 //MARK: - Previews
 struct LD_Previews: PreviewProvider {
     static var previews: some View {
-        LD(location: SchnozPlace(placeID: "PLace01"))
+        LD()
     }
 }
 

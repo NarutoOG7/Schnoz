@@ -12,24 +12,25 @@ import MapKit
 import GooglePlaces
 import Combine
 
-
 class FirebaseManager: ObservableObject {
     
     let constantToNeverTouch: Void = FirebaseApp.configure()
     
     static let instance = FirebaseManager()
     
+    var listeners: [String: ListenerRegistration] = [:]
+    
     @Published var latestReviewPublished = PassthroughSubject<DocumentSnapshot, Never>()
         
     @ObservedObject var errorManager = ErrorManager.instance
     @ObservedObject var userStore = UserStore.instance
+
     
     var db: Firestore?
     var listener: ListenerRegistration?
     var lastDocument: QueryDocumentSnapshot?
     var userReviewsLastDocument: QueryDocumentSnapshot?
     var locationReviewsLastDocument: QueryDocumentSnapshot?
-
     
     init() {
         db = Firestore.firestore()

@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct TabBarSetup: View {
     
     @AppStorage("userOnboarded") var userOnboarded: Bool = false
+    @AppStorage("userUpdatedWithReviewDetails") var userUpdatedWithReviewDetails: Bool = false
+
+    
+    @State private var isUpdateAvailable = false
         
     @State private var selection = 0
     
@@ -44,12 +49,45 @@ struct TabBarSetup: View {
             TabView(selection: $selection) {
                 homeTab
                 mySniffsTab
+                newsFeedTab
+                otherSniffers
                 settingsTab
             }
+            
+//            .appStoreOverlay(isPresented: $isUpdateAvailable) {
+//                SKOverlay.AppConfiguration(appIdentifier: Bundle.main.bundleIdentifier ?? "", position: .bottom)
+//               }
+            
+            .alert(isPresented: $isUpdateAvailable) {
+                      Alert(title: Text("New Update Available"), message: Text("Please update the app to the latest version."), primaryButton: .default(Text("Update"), action: {
+                          // Open the App Store to update the app
+//                          http://itunes.apple.com/lookup?bundleId=\(bundleID)"
+//                          "itms-apps://itunes.apple.com/app/idAPP_ID"
+                          if let url = AppStoreUpdateChecker.getNewVersionLink(),
+                             UIApplication.shared.canOpenURL(url) {
+                              UIApplication.shared.open(url)
+                          }
+                      }), secondaryButton: .cancel())
+                  }
+            
             .task {
+                
                 if !userOnboarded && !userStore.isGuest {
                     self.assignFirestoreUser()
                 }
+                
+                if !userUpdatedWithReviewDetails {
+                    self.updateUserWithReviewDetails()
+                }
+                
+                Task {
+                    
+                    if await AppStoreUpdateChecker.isNewVersionAvailable() {
+                        print("New version of app is availabe. Showing blocking alert!")
+                        self.isUpdateAvailable = true
+                    }
+                }
+
 
             }
         }
@@ -107,13 +145,48 @@ struct TabBarSetup: View {
         }
         .tag(1)
 
+
     }
+    
     
     private var image: some View {
         Image("smallestSchnoz")
             .resizable()
             .aspectRatio(1, contentMode: .fit)
             .frame(width: 22, height: 25)
+    }
+    
+    private var newsFeedTab: some View {
+        
+        NavigationView {
+            NewsFeedView()
+            .navigationTitle("News Feed")
+            .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
+        }
+        .tabItem {
+            Text("News Feed")
+            Image(systemName: "newspaper.fill")
+
+        }
+        .tag(2)
+
+    }
+    
+
+    private var otherSniffers: some View {
+        
+        NavigationView {
+            OtherSniffersView()
+            .navigationTitle("Other Sniffers")
+            .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
+        }
+        .tabItem {
+            Text("Other Sniffers")
+            Image(systemName: "figure.socialdance")
+
+        }
+        .tag(3)
+
     }
 
     private var settingsTab: some View {
@@ -133,7 +206,7 @@ struct TabBarSetup: View {
                 .resizable()
                 .frame(width: 25, height: 25)
         }
-        .tag(2)
+        .tag(4)
 
     }
     
@@ -179,7 +252,7 @@ struct TabBarSetup: View {
             appearance.shadowColor = .clear
             appearance.backButtonAppearance.normal.titleTextAttributes =
             [.foregroundColor : UIColor(oceanBlue.white)]
-            
+                        
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
             
@@ -190,7 +263,6 @@ struct TabBarSetup: View {
         
         let textViewAppearance = UITextField.appearance()
         textViewAppearance.backgroundColor = .clear
-        textViewAppearance.tintColor = UIColor(oceanBlue.yellow)
         
     }
     
@@ -218,25 +290,6 @@ struct TabBarSetup: View {
            }
     }
     
-    func checkIsFirstLaunch() {
-        if let data = UserDefaults.standard.data(forKey: "hasLaunchedBefore") {
-            
-            do {
-                let decoder = JSONDecoder()
-                let hasLaunchedBefore = try decoder.decode(Bool.self, from: data)
-                userStore.isFirstLaunch = !hasLaunchedBefore
-                if !hasLaunchedBefore {
-                    assignFirestoreUser()
-                }
-            } catch {
-                errorManager.shouldDisplay = true
-                errorManager.message = "Error"
-            }
-        } else {
-            assignFirestoreUser()
-        }
-    }
-    
     func assignFirestoreUser() {
         FirebaseManager.instance.doesUserExist(id: userStore.user.id) { exists in
             if !exists {
@@ -251,6 +304,16 @@ struct TabBarSetup: View {
 //                UserDefaults.standard.synchronize()
             }
         }
+    }
+    
+    func updateUserWithReviewDetails() {
+        var updatedUser = FirestoreUser(id: userStore.user.id, username: userStore.user.name)
+        firebaseManager.getReviewsForUser(userStore.user) { review in
+            updatedUser.handleAdditionOfReview(review)
+            firebaseManager.updateFirestoreUser(updatedUser)
+
+        }
+        userUpdatedWithReviewDetails = true
     }
     
 }

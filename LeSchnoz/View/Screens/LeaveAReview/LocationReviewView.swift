@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct LocationReviewView: View {
     
@@ -19,7 +20,7 @@ struct LocationReviewView: View {
     @State var pickerSelection: Int = 0
     @State var descriptionInput: String = ""
     @State var isAnonymous: Bool = false
-    @State var nameInput: String = ""
+//    @State var nameInput: String = ""
     
     @State var shouldShowTitleErrorMessage = false
     @State var shouldShowDescriptionErrorMessage = false
@@ -41,10 +42,10 @@ struct LocationReviewView: View {
             oceanBlue.blue
                 .edgesIgnoringSafeArea(.vertical)
             
-            if userStore.isGuest {
-                Text("Sign in to write reviews")
-                    .foregroundColor(oceanBlue.white)
-            } else {
+//            if userStore.isGuest {
+//                Text("Sign in to write reviews")
+//                    .foregroundColor(oceanBlue.white)
+//            } else {
                 
                 VStack(spacing: 20) {
                     stars
@@ -59,7 +60,7 @@ struct LocationReviewView: View {
                 .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
                 .navigationBarTitleDisplayMode(.inline)
                 
-            }
+//            }
         }
         .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
             Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
@@ -69,10 +70,15 @@ struct LocationReviewView: View {
             switch focusedField {
             case .title:
                 focusedField = .description
-            case .description:
-                focusedField = .username
+//            case .description:
+//                focusedField = .username
             default: break
         }
+        }
+        .onAppear {
+            let isGuest = userStore.isGuest
+            let isNameless = userStore.user.name == ""
+            self.isAnonymous = isGuest || isNameless
         }
     }
     
@@ -116,7 +122,7 @@ struct LocationReviewView: View {
         VStack(spacing: 12) {
             if !isAnonymous {
                 UserInputCellWithIcon(
-                    input: $nameInput,
+                    input: .constant(userStore.user.name),
                     shouldShowErrorMessage: .constant(false),
                     isSecured: .constant(false),
                     primaryColor: oceanBlue.yellow,
@@ -126,6 +132,7 @@ struct LocationReviewView: View {
                     errorMessage: "")
                 .focused($focusedField, equals: .username)
                 .submitLabel(.done)
+                .disabled(true)
             }
             Toggle(isOn: $isAnonymous) {
                 Text("Leave Review Anonymously?")
@@ -167,7 +174,9 @@ struct LocationReviewView: View {
     }
     
     private func reviewModel() -> ReviewModel {
-        let name = nameInput == "" ? userStore.user.name : nameInput
+//        let name = nameInput == "" ? userStore.user.name : nameInput
+        let userName = userStore.user.name
+        let name = userName == "" ? "Anonymous" : userName
         return ReviewModel(
             id: review?.id ?? UUID().uuidString,
             rating: pickerSelection,
@@ -180,6 +189,7 @@ struct LocationReviewView: View {
     
     private func update(_ rev: ReviewModel) {
         self.location?.placeID = review?.locationID ?? ""
+        var oldReview = ReviewModel()
         
         firebaseManager.updateReviewInFirestore(rev) { error in
             if let error = error {
@@ -190,9 +200,12 @@ struct LocationReviewView: View {
                 self.location?.schnozReviews[oldReviewIndex] = rev
             }
             if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
+                oldReview = self.reviews[reviewIndex]
                 self.reviews[reviewIndex] = rev
             }
             ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", isRemoving: false, isAddingNew: false)
+            var firestoreUser = FirestoreUser(user: userStore.user)
+            firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
             self.shouldShowSuccessMessage = true
         }
     }
@@ -216,6 +229,8 @@ struct LocationReviewView: View {
                     placeID: location.placeID,
                     isRemoving: false,
                     isAddingNew: true)
+                var firestoreUser = FirestoreUser(user: userStore.user)
+                firestoreUser.handleAdditionOfReview(rev)
                 self.shouldShowSuccessMessage = true
             }
         }
@@ -259,8 +274,8 @@ struct LocationReviewView: View {
     private func isUpdated() -> Bool {
         titleInput != review?.title ||
         descriptionInput != review?.review ||
-        pickerSelection != review?.rating ||
-        nameInput != review?.username
+        pickerSelection != review?.rating 
+//        nameInput != review?.username
     }
     
     //MARK: - Field
@@ -287,5 +302,66 @@ struct LocationReviewView_Previews: PreviewProvider {
 class LDVM: ObservableObject {
     static let instance = LDVM()
     
-    @Published var recentlyPublishedReview: ReviewModel?
+    @ObservedObject var firebaseManager = FirebaseManager.instance
+    
+    @Published var selectedLocation: SchnozPlace? 
+    @Published var reviews: [ReviewModel] = []
+    @Published var isFetchInProgress = false
+    @Published var lastDocumentOfLocationReviews: DocumentSnapshot?
+    
+    @Published var errorMessage = ""
+    @Published var shouldShowError = false
+    
+    @Published var sortingOption: ReviewSortingOption = .newest {
+        didSet {
+            if oldValue != sortingOption {
+                self.reviews = []
+                self.batchFirstCall()
+            }
+        }
+    }
+    
+    @Published var listHasScrolledToBottom = false {
+        willSet {
+            if newValue == true {
+                self.batchSubsequentCall()
+            }
+        }
+    }
+    
+    func batchFirstCall() {
+        if let selectedLocation = selectedLocation {
+            firebaseManager.batchFirstLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
+        }
+    }
+    
+    func batchSubsequentCall() {
+        if let selectedLocation = selectedLocation {
+            firebaseManager.nextPageLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
+        }
+    }
+
+    func handleReviewsCompletionWithError(reviews: [ReviewModel]?, error: Error?) {
+        DispatchQueue.main.async {
+            if let reviews = reviews {
+                for review in reviews {
+                    self.reviews.append(review)
+//                    self.location.schnozReviews.append(review)
+                }
+            }
+            
+            if let error = error {
+                self.handleError(error)
+            }
+        }
+    }
+    
+    func handleError(_ error: Error) {
+        self.errorMessage = error.localizedDescription
+        self.shouldShowError = true
+    }
 }

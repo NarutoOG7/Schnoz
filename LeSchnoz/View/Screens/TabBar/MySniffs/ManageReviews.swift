@@ -26,6 +26,7 @@ struct ManageReviews: View {
             oceanBlue.blue
                 .edgesIgnoringSafeArea(.all)
             
+            
             if userStore.isGuest {
                 Text("Sign in to create reveiws")
                     .foregroundColor(oceanBlue.white)
@@ -61,7 +62,7 @@ struct ManageReviews: View {
             getTotalReviewsCount()
         }
         
-        .navigationTitle("My Reviews")
+        .navigationTitle("My Sniffs")
         .navigationBarTitleDisplayMode(.large)
         
     }
@@ -99,42 +100,16 @@ struct ManageReviews: View {
     
     private func cellForReview(_ review: ReviewModel) -> some View {
         NavigationLink {
-            destinationLink(review)
+            ReviewDestinationLink(review: review, isPresented: $isEditingReview)
         } label: {
-            cellLabel(review)
+            ReviewCellLabel(review: review)
         }
 
     }
     
-    private func cellLabel(_ review: ReviewModel) -> some View {
-        VStack(alignment: .leading) {
-            Text(review.title)
-                .foregroundColor(oceanBlue.white)
-                .font(.avenirNext(size: 18))
-                .italic()
-            Text(review.locationName)
-                .foregroundColor(oceanBlue.lightBlue)
-                .font(.avenirNext(size: 16))
-                .italic()
-        }
-    }
+
     
-    private func destinationLink(_ review: ReviewModel) -> some View {
-        LocationReviewView(
-            isPresented: $isEditingReview,
-            review: .constant(review),
-            location: .constant(review.location ?? nil),
-            reviews: $userStore.reviews,
-            isUpdatingReview: true,
-            titleInput: review.title,
-            pickerSelection: review.rating,
-            descriptionInput: review.review,
-            isAnonymous: review.username == "Anonymous",
-            nameInput: review.username,
-            userStore: userStore,
-            firebaseManager: firebaseManager,
-            errorManager: errorManager)
-    }
+
     
     //MARK: - Buttons
     
@@ -171,6 +146,8 @@ struct ManageReviews: View {
                     ListResultsVM.instance.refreshData(review: review, averageRating: avg, placeID: review.locationID, isRemoving: true, isAddingNew: false)
                 }
             }
+            var firestoreUser = FirestoreUser(user: userStore.user)
+            firestoreUser.handleRemovalOfReview(review: review)
             firebaseManager.removeReviewFromFirestore(review)
         }
         userStore.reviews.remove(atOffsets: offsets)
@@ -203,5 +180,55 @@ struct ManageReviews_Previews: PreviewProvider {
                       userStore: UserStore(),
                       errorManager: ErrorManager(),
                       listResultsVM: ListResultsVM())
+    }
+}
+
+
+struct ReviewCellLabel: View {
+    
+    let review: ReviewModel
+    
+    let oceanBlue = K.Colors.OceanBlue.self
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(review.title)
+                .foregroundColor(oceanBlue.white)
+                .font(.avenirNext(size: 18))
+                .italic()
+            Text(review.locationName)
+                .foregroundColor(oceanBlue.lightBlue)
+                .font(.avenirNext(size: 16))
+                .italic()
+        }
+    }
+}
+
+
+struct ReviewDestinationLink: View {
+    
+    let review: ReviewModel
+    
+    @Binding var isPresented: Bool
+    
+    @ObservedObject var userStore = UserStore.instance
+    @ObservedObject var firebaseManager = FirebaseManager.instance
+    @ObservedObject var errorManager = ErrorManager.instance
+    
+    var body:  some View {
+        LocationReviewView(
+            isPresented: $isPresented,
+            review: .constant(review),
+            location: .constant(review.location ?? nil),
+            reviews: $userStore.reviews,
+            isUpdatingReview: true,
+            titleInput: review.title,
+            pickerSelection: review.rating,
+            descriptionInput: review.review,
+            isAnonymous: review.username == "Anonymous",
+//            nameInput: review.username,
+            userStore: userStore,
+            firebaseManager: firebaseManager,
+            errorManager: errorManager)
     }
 }

@@ -7,40 +7,68 @@
 
 import SwiftUI
 
+//struct Stars: View {
+//
+//    var count: Int = 5
+//
+//    var isEditable = false
+//
+//    let color: Color
+//
+//    @Binding var rating: Int
+//
+//
+//    var body: some View {
+//
+//         HStack {
+//
+//             ForEach(1...count, id: \.self) { index in
+//
+//                 Image(systemName: self.starImageNameFromRating(index))
+//                     .foregroundColor(color)
+//
+//                     .onTapGesture {
+//                         if isEditable {
+//                             self.rating = index
+//                         }
+//                     }
+//             }
+//        }
+//    }
+//
+//    private func starImageNameFromRating(_ index: Int) -> String {
+//            return index <= rating ? "star.fill" : "star"
+//    }
+//}
+
+
 struct Stars: View {
-    
     var count: Int = 5
-    
     var isEditable = false
-    
     let color: Color
-    
     @Binding var rating: Int
     
-    
     var body: some View {
-        
-         HStack {
-             
-             ForEach(1...count, id: \.self) { index in
-                 
-                 Image(systemName: self.starImageNameFromRating(index))
-                     .foregroundColor(color)
-                 
-                     .onTapGesture {
-                         if isEditable {
-                             self.rating = index
-                         }
-                     }
-             }
+        HStack(spacing: 2) {
+            ForEach(1...count, id: \.self) { index in
+                Image(systemName: self.starImageNameFromRating(index))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 16, height: 16)
+                    .foregroundColor(color)
+                    .onTapGesture {
+                        if isEditable {
+                            self.rating = index
+                        }
+                    }
+            }
         }
     }
     
     private func starImageNameFromRating(_ index: Int) -> String {
-            return index <= rating ? "star.fill" : "star"
+        return index <= rating ? "star.fill" : "star"
     }
 }
-
 
 struct FiveStars_Previews: PreviewProvider {
     static var previews: some View {

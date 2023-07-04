@@ -34,9 +34,8 @@ struct ListResultsView: View {
     var body: some View {
         Group {
             if listResultsVM.shouldShowPlaceDetails {
-                if let selectedPlace = listResultsVM.selectedPlace {
-                    LD(location: selectedPlace)
-                }
+                    LD()
+                
             } else {
                 VStack {
                     HStack {
@@ -124,6 +123,7 @@ struct ListResultsView: View {
                             Text(place.secondaryText ?? "")
                                 .font(.caption)
                         }
+                        Spacer()
                         singleStarReview(place)
                     }
                 }
@@ -148,9 +148,11 @@ return  ZStack {
             TextField("", text: input)
                 .padding(.horizontal)
                 .frame(height: 45)
+                .foregroundColor(oceanBlue.black)
+                .tint(oceanBlue.black)
                 .placeholder(when: input.wrappedValue.isEmpty, placeholder: {
                     Text(field.title)
-                        .foregroundColor(oceanBlue.black)
+                        .foregroundColor(oceanBlue.black.opacity(0.7))
                         .padding(.horizontal)
                 })
                 .background(

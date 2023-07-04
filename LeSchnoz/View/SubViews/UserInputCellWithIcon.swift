@@ -80,7 +80,7 @@ struct UserInputCellWithIcon: View {
     }
     
     private var textField: some View {
-        TextField("", text: self.$input)
+        TextField("", text: self.$input, axis: .vertical)
             .disableAutocorrection(true)
             .font(.avenirNext(size: 22)
                 .weight(boldText ? .bold : .regular))

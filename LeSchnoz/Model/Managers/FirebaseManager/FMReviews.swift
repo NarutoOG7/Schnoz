@@ -17,9 +17,9 @@ extension FirebaseManager {
     //MARK: - Reviews
     
     func stopListeningForLatestReview() {
-         listener?.remove()
-         listener = nil
-     }
+        listener?.remove()
+        listener = nil
+    }
     
     func getLatestReview(withCompletion completion: @escaping(ReviewModel?, Error?) -> Void) {
         
@@ -46,9 +46,9 @@ extension FirebaseManager {
                     }
                 }
         }
-
+        
     }
-
+    
     //MARK: - Add Remove Update
     
     func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
@@ -57,7 +57,7 @@ extension FirebaseManager {
         
         let timestamp = FieldValue.serverTimestamp()
         
-//        let id = review.title + review.username + review.locationID
+        //        let id = review.title + review.username + review.locationID
         
         db.collection("Reviews").document(review.id).setData([
             "id" : review.id,
@@ -84,7 +84,7 @@ extension FirebaseManager {
     func removeReviewFromFirestore(_ review: ReviewModel, withCompletion completion: @escaping(Error?) -> () = {_ in}) {
         
         guard let db = db else { return }
-                
+        
         db.collection("Reviews").document(review.id)
             .delete() { err in
                 
@@ -162,13 +162,13 @@ extension FirebaseManager {
         let collection = db.collection("Reviews")
             .whereField("userID", isEqualTo: user.id)
             .order(by: "timestamp", descending: false)
-//            .limit(to: 10)
+        //            .limit(to: 10)
         
         collection.getDocuments { snapshot, error in
             self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
         }
         
-
+        
     }
     
     func getNextPageOfUserReviews(withCompletion completion: @escaping(ReviewModel) -> Void) {
@@ -188,18 +188,18 @@ extension FirebaseManager {
         }
     }
     
-
+    
     
     func fetchTotalUserReviewsCount(withCompletion completion: @escaping(Int?, Error?) -> Void) {
         
         guard let db = db else { return }
         let countQuery = db.collection("Reviews").whereField("userID", isEqualTo: userStore.user.id).count
-             countQuery.getAggregation(source: .server, completion: { snapshot, error in
-                guard let snapshot = snapshot else {
-                    return completion(nil, error)
-                }
-                completion(Int(truncating: snapshot.count), nil)
-            })
+        countQuery.getAggregation(source: .server, completion: { snapshot, error in
+            guard let snapshot = snapshot else {
+                return completion(nil, error)
+            }
+            completion(Int(truncating: snapshot.count), nil)
+        })
     }
     
     //MARK: - Fetch Reviews For Location
@@ -216,96 +216,250 @@ extension FirebaseManager {
         }
     }
     
-    func fetchLatestTenReviewsForLocation(_ placeID: String, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
-        
+    
+    //MARK: - Location Reviews Feed
+    
+    func batchFirstLocationsReviews(location: SchnozPlace, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let ldvm = LDVM.instance
         guard let db = db else { return }
         
-        let query = db.collection("Reviews")
-            .whereField("locationID", isEqualTo: placeID)
-            .order(by: "timestamp", descending: false)
-//            .limit(to: 10)
-                        
-        query.getDocuments { (snapshot, error) in
+        let first = db.collection("Reviews")
+            .whereField("locationID", isEqualTo: location.placeID)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .limit(to: 15)
+        
+        first.addSnapshotListener { snapshot, error in
             
-            if let _ = error {
-                
-                self.errorManager.message = error?.localizedDescription ?? ""
-                self.errorManager.shouldDisplay = true
-                
-            } else if let snapshot = snapshot {
-                
-                var reviews: [ReviewModel] = []
-                
-                for doc in snapshot.documents {
-                    let dict = doc.data()
-                    let review = ReviewModel(dictionary: dict)
-                    reviews.append(review)
-                }
-                
-                self.locationReviewsLastDocument = snapshot.documents.last
-                completion(reviews)
+            guard let snapshot = snapshot else {
+                print("Error retrieving reviews: \(error.debugDescription)")
+                completion(nil, error)
+                return
             }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // The collection is empty.
+                return
+            }
+            ldvm.lastDocumentOfLocationReviews = lastSnapshot
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            
+            ldvm.lastDocumentOfLocationReviews = snapshot.documents.last
+            ldvm.isFetchInProgress = false
+            completion(reviews, nil)
         }
     }
     
-    func getNextPageOfLocationReviews(placeID: String, withCompletion completion: @escaping(ReviewModel) -> Void) {
+    func nextPageLocationsReviews(location: SchnozPlace, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let ldvm = LDVM.instance
+        guard let lastSnapshot = ldvm.lastDocumentOfLocationReviews,
+              let db = db else {
+            // No last snapshot available, so nothing to fetch.
+            return
+        }
         
-        if let locationReviewsLastDocument = locationReviewsLastDocument {
-            guard let db = db else { return }
-            
-            let collection = db.collection("Reviews")
-                .whereField("locationID", isEqualTo: placeID)
-                .limit(to: 10)
-                .start(afterDocument: locationReviewsLastDocument)
-            collection.getDocuments { snapshot, error in
-                self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
-                guard let querySnapshot = snapshot else {
-
-                    self.errorManager.message = "Check your network connection and try again."
-                    self.errorManager.shouldDisplay = true
-                    return
-                }
-                for doc in querySnapshot.documents {
-                    
-                    let dict = doc.data()
-                    
-                    let review = ReviewModel(dictionary: dict)
-                    self.locationReviewsLastDocument = doc
-                    completion(review)
-                    
-                }
+        let nextQuery = db.collection("Reviews")
+            .whereField("locationID", isEqualTo: location.placeID)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .start(afterDocument: lastSnapshot)
+            .limit(to: 15)
+        
+        nextQuery.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error retrieving next page of cities: \(error.debugDescription)")
+                return
             }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // No more documents available.
+                ldvm.lastDocumentOfLocationReviews = nil
+                return
+            }
+            
+            ldvm.lastDocumentOfLocationReviews = lastSnapshot
+            
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            ldvm.isFetchInProgress = false
+            completion(reviews, nil)
+        }
+    }
+    
+    
+  
+    
+    //MARK: - News Feed
+    
+    func batchFirstAllUsersReviews(_ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let newsFeedVM = NewsFeedVM.instance
+        guard let db = db else { return }
+        
+        let first = db.collection("Reviews")
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .limit(to: 15)
+        
+        
+        first.addSnapshotListener { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error retrieving reviews: \(error.debugDescription)")
+                return
+            }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // The collection is empty.
+                return
+            }
+            
+            newsFeedVM.lastDocumentOfAllReviewsBatchRequest = lastSnapshot
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            
+            
+            print(reviews.count)
+            newsFeedVM.lastDocumentOfAllReviewsBatchRequest = snapshot.documents.last
+            newsFeedVM.isFetchInProgress = false
+            completion(reviews, nil)
+        }
+    }
+    
+    func nextPageAllUsersReviews(_ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let newsFeedVM = NewsFeedVM.instance
+        guard let lastSnapshot = newsFeedVM.lastDocumentOfAllReviewsBatchRequest,
+              let db = db else {
+            // No last snapshot available, so nothing to fetch.
+            return
+        }
+        
+        
+        
+        let pageSize: Int = 15
+        let collectionRef = db.collection("Reviews")
+        
+        let nextQuery = collectionRef
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .start(afterDocument: lastSnapshot)
+            .limit(to: pageSize)
+        
+        nextQuery.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error retrieving next page of cities: \(error.debugDescription)")
+                return
+            }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // No more documents available.
+                newsFeedVM.lastDocumentOfAllReviewsBatchRequest = nil
+                return
+            }
+            
+            newsFeedVM.lastDocumentOfAllReviewsBatchRequest = lastSnapshot
+            
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            
+            print(reviews.count)
+            newsFeedVM.isFetchInProgress = false
+            completion(reviews, nil)
         }
     }
 
+    //MARK: - User's Feed
     
-    func getReviewsForLocation(_ placeID: String, withCompletion completion: @escaping ([ReviewModel]) -> (Void)) {
-        
+    func batchFirstUsersReviews(user: FirestoreUser, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let userDetailsVM = UserDetailsVM.instance
         guard let db = db else { return }
-
-        db.collection("Reviews")
-            .whereField("locationID", isEqualTo: placeID)
-            .getDocuments { snapshot, error in
-                
-                if let error = error {
-                    
-                    print(error.localizedDescription)
-                    self.errorManager.message = "Check your network connection and try again."
-                    self.errorManager.shouldDisplay = true
-                    
-                } else if let snapshot = snapshot {
-                    
-                    var reviews: [ReviewModel] = []
-                    
-                    for doc in snapshot.documents {
-                        let dict = doc.data()
-                        let review = ReviewModel(dictionary: dict)
-                        reviews.append(review)
-                    }
-                    
-                    completion(reviews)
-                }
-            }
         
+        let first = db.collection("Reviews")
+            .whereField("userID", isEqualTo: user.id)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .limit(to: 15)
+        
+        first.addSnapshotListener { snapshot, error in
+            
+            guard let snapshot = snapshot else {
+                print("Error retrieving reviews: \(error.debugDescription)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // The collection is empty.
+                return
+            }
+            userDetailsVM.lastDocumentOfUsersReviews = lastSnapshot
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            
+            userDetailsVM.lastDocumentOfUsersReviews = snapshot.documents.last
+            userDetailsVM.isFetchInProgress = false
+            completion(reviews, nil)
+        }
     }
+    
+    func nextPageUsersReviews(user: FirestoreUser, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+        let userDetailsVM = UserDetailsVM.instance
+        guard let lastSnapshot = userDetailsVM.lastDocumentOfUsersReviews,
+              let db = db else {
+            // No last snapshot available, so nothing to fetch.
+            return
+        }
+        
+        let nextQuery = db.collection("Reviews")
+            .whereField("userID", isEqualTo: user.id)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .start(afterDocument: lastSnapshot)
+            .limit(to: 15)
+        
+        nextQuery.getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error retrieving next page of cities: \(error.debugDescription)")
+                return
+            }
+            
+            guard let lastSnapshot = snapshot.documents.last else {
+                // No more documents available.
+                userDetailsVM.lastDocumentOfUsersReviews = nil
+                return
+            }
+            
+            userDetailsVM.lastDocumentOfUsersReviews = lastSnapshot
+            
+            var reviews: [ReviewModel] = []
+            
+            for doc in snapshot.documents {
+                let dict = doc.data()
+                let review = ReviewModel(dictionary: dict)
+                reviews.append(review)
+            }
+            userDetailsVM.isFetchInProgress = false
+            completion(reviews, nil)
+        }
+    }
+    
 }
+

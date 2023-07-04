@@ -59,7 +59,7 @@ struct HomeDisplayView: View {
                 }
         }
         .fullScreenCover(isPresented: $shouldNavigateToLDForLatestReview) {
-            LD(location: self.latestReviewPlace)
+            LD()
         }
     }
 
@@ -146,9 +146,6 @@ struct HomeDisplayView: View {
     }
     
     private func latestReview(_ geo: GeometryProxy) -> some View {
-        
-
-
              VStack(alignment: .leading) {
                 Text("Latest Review")
                     .font(.headline)
@@ -157,9 +154,6 @@ struct HomeDisplayView: View {
                  Button(action: self.latestReviewTapped) {
                      ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
                         .frame(width:  geo.size.width - 60)
-                 }
-                 .onTapGesture {
-                     SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
                  }
             }
         }
@@ -234,6 +228,7 @@ struct HomeDisplayView: View {
     private func latestReviewTapped() {
         self.shouldNavigateToLDForLatestReview = true
         SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
+        LDVM.instance.reviews = []
     }
     
     private func getSchnozPlaceFromLatestReview(_ latestReview: ReviewModel, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {

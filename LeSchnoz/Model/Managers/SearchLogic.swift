@@ -31,6 +31,7 @@ class SearchLogic: ObservableObject {
     @ObservedObject var listResultsVM = ListResultsVM.instance
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     @ObservedObject var errorManager = ErrorManager.instance
+    @ObservedObject var ldvm = LDVM.instance
     
 
     
@@ -117,6 +118,7 @@ class SearchLogic: ObservableObject {
         }
         self.listResultsVM.shouldShowPlaceDetails = true
         self.listResultsVM.selectedPlace = place
+        LDVM.instance.selectedLocation = place
     }
     
     func placeSearch() {
@@ -136,8 +138,16 @@ class SearchLogic: ObservableObject {
             self.areaSearchLocation = text
             self.performPlaceSearch(text)
         } else {
-            self.getImageForSelectedPlace(place)
-            listResultsVM.searchBarTapped = false
+            if ldvm.selectedLocation != place {
+                listResultsVM.resetPlaceImage()
+                self.getImageForSelectedPlace(place)
+                ldvm.selectedLocation = place
+                listResultsVM.selectedPlace = place
+                listResultsVM.searchBarTapped = false
+            }
+            ldvm.reviews = []
+            self.listResultsVM.shouldShowPlaceDetails = true
+
         }
     }
     
