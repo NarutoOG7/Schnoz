@@ -142,8 +142,11 @@ struct TabBarSetup: View {
             Text("My Sniffs")
             //            Image("MySniffs")
             //            Image("LogoSmall")
-            
-            image
+            if selection == 1 {
+                snifferImage
+            } else {
+                snifferDarkenedImage
+            }
             
         }
         .tag(1)
@@ -152,8 +155,15 @@ struct TabBarSetup: View {
     }
     
     
-    private var image: some View {
+    private var snifferImage: some View {
         Image("smallestSchnoz")
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .frame(width: 22, height: 25)
+    }
+    
+    private var snifferDarkenedImage: some View {
+        Image("FadedSchnozSVGNew")
             .resizable()
             .aspectRatio(1, contentMode: .fit)
             .frame(width: 22, height: 25)
