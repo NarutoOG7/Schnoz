@@ -18,32 +18,31 @@ struct ContentView: View {
     @ObservedObject var contentViewVM = ContentViewVM.instance
     
     var body: some View {
-
-                GeometryReader { geo in
-            ZStack {
-
-                                if userStore.isSignedIn {
-                    if contentViewVM.showTutorial {
-                        SplashScreen(contentViewVM: contentViewVM)
+        NavigationView {
+            GeometryReader { geo in
+                ZStack {
+                    
+                    if userStore.isSignedIn {
+                        if contentViewVM.showTutorial {
+                            SplashScreen(contentViewVM: contentViewVM)
+                        } else {
+                            TabBarSetup(userStore: userStore,
+                                        errorManager: errorManager,
+                                        loginVM: loginVM)
+                        }
                     } else {
-                        TabBarSetup(userStore: userStore,
-                                    errorManager: errorManager,
-                                    loginVM: loginVM)
-        
+                        SignupLogin()
+                        //                    CreativeSignInUp(loginVM: loginVM,
+                        //                                     userStore: userStore,
+                        //                                     errorManager: errorManager)
                     }
-                } else {
-                    SignupLogin()
-//                    CreativeSignInUp(loginVM: loginVM,
-//                                     userStore: userStore,
-//                                     errorManager: errorManager)
+                    
+                    errorBanner
+                        .offset(y: geo.size.height / 9)
+                    
                 }
-
-                errorBanner
-                    .offset(y: geo.size.height / 9)
-
             }
         }
-        
     }
     
     private var errorBanner: some View {

@@ -52,7 +52,7 @@
 		C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB68299B19B400B77DBD /* CircularButton.swift */; };
 		C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB69299B19B400B77DBD /* NotificationBanner.swift */; };
 		C99EEBE8299B19B400B77DBD /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB6E299B19B400B77DBD /* About.swift */; };
-		C99EEBEB299B19B400B77DBD /* ManageReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB73299B19B400B77DBD /* ManageReviews.swift */; };
+		C99EEBEB299B19B400B77DBD /* MySniffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB73299B19B400B77DBD /* MySniffs.swift */; };
 		C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB74299B19B400B77DBD /* ProfilePage.swift */; };
 		C99EEBED299B19B400B77DBD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB75299B19B400B77DBD /* Account.swift */; };
 		C99EEBEE299B19B400B77DBD /* ConfirmDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */; };
@@ -90,6 +90,10 @@
 		C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1B50B2A19927D004706BD /* SearchLogic.swift */; };
 		C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5192A205CD4004706BD /* GhostKeys.plist */; };
 		C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */; };
+		C9F225CF2A5764B10074AE89 /* MySniffsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */; };
+		C9F225D12A58AC5D0074AE89 /* LDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D02A58AC5D0074AE89 /* LDVM.swift */; };
+		C9F225D32A5A433F0074AE89 /* UserDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */; };
+		C9F225D52A5C979D0074AE89 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D42A5C979D0074AE89 /* Admin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,7 +144,7 @@
 		C99EEB68299B19B400B77DBD /* CircularButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
 		C99EEB69299B19B400B77DBD /* NotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
 		C99EEB6E299B19B400B77DBD /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
-		C99EEB73299B19B400B77DBD /* ManageReviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageReviews.swift; sourceTree = "<group>"; };
+		C99EEB73299B19B400B77DBD /* MySniffs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySniffs.swift; sourceTree = "<group>"; };
 		C99EEB74299B19B400B77DBD /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		C99EEB75299B19B400B77DBD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C99EEB76299B19B400B77DBD /* ConfirmDeleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDeleteView.swift; sourceTree = "<group>"; };
@@ -179,6 +183,10 @@
 		C9E1B5192A205CD4004706BD /* GhostKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GhostKeys.plist; sourceTree = "<group>"; };
 		C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C9E1B51D2A2073B0004706BD /* LeSchnoz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LeSchnoz.entitlements; sourceTree = "<group>"; };
+		C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySniffsVM.swift; sourceTree = "<group>"; };
+		C9F225D02A58AC5D0074AE89 /* LDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LDVM.swift; sourceTree = "<group>"; };
+		C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsVM.swift; sourceTree = "<group>"; };
+		C9F225D42A5C979D0074AE89 /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -257,7 +265,7 @@
 		C913A7122A479A7E00C1908E /* MySniffs */ = {
 			isa = PBXGroup;
 			children = (
-				C99EEB73299B19B400B77DBD /* ManageReviews.swift */,
+				C99EEB73299B19B400B77DBD /* MySniffs.swift */,
 			);
 			path = MySniffs;
 			sourceTree = "<group>";
@@ -463,6 +471,7 @@
 			children = (
 				C99EEB6D299B19B400B77DBD /* Sections */,
 				C99EEB7A299B19B400B77DBD /* Header.swift */,
+				C9F225D42A5C979D0074AE89 /* Admin.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -541,6 +550,9 @@
 				C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */,
 				C913A7052A44C1DA00C1908E /* NewsFeedVM.swift */,
 				C913A7072A47556B00C1908E /* AllSniffersVM.swift */,
+				C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */,
+				C9F225D02A58AC5D0074AE89 /* LDVM.swift */,
+				C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -752,13 +764,16 @@
 				C913A7042A43B8E400C1908E /* NewsFeedView.swift in Sources */,
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
 				C913A7082A47556B00C1908E /* AllSniffersVM.swift in Sources */,
+				C9F225D32A5A433F0074AE89 /* UserDetailsVM.swift in Sources */,
 				C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,
 				C9AC615B29D1DB670006FF32 /* SettingsVM.swift in Sources */,
+				C9F225CF2A5764B10074AE89 /* MySniffsVM.swift in Sources */,
 				C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */,
 				C913A70E2A479A1700C1908E /* SocialCell.swift in Sources */,
 				C99EEBB7299B19B400B77DBD /* NetworkManager.swift in Sources */,
-				C99EEBEB299B19B400B77DBD /* ManageReviews.swift in Sources */,
+				C9F225D52A5C979D0074AE89 /* Admin.swift in Sources */,
+				C99EEBEB299B19B400B77DBD /* MySniffs.swift in Sources */,
 				C99EEC2F299C5D0D00B77DBD /* GooglePlacesManager.swift in Sources */,
 				C99EEBE1299B19B400B77DBD /* Placeholder.swift in Sources */,
 				C99EEBE0299B19B400B77DBD /* CNPostalAddress.swift in Sources */,
@@ -784,6 +799,7 @@
 				C99EEBD9299B19B400B77DBD /* Binding.swift in Sources */,
 				C99EEBDA299B19B400B77DBD /* UnabreviatedString.swift in Sources */,
 				C99EEC1A299B19B400B77DBD /* LoginVM.swift in Sources */,
+				C9F225D12A58AC5D0074AE89 /* LDVM.swift in Sources */,
 				C99EEBDF299B19B400B77DBD /* LogoStyle.swift in Sources */,
 				C99EEBB4299B19B400B77DBD /* Authorization.swift in Sources */,
 				C95E918D2A4279C700833336 /* VersionUpdate.swift in Sources */,

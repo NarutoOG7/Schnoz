@@ -31,7 +31,6 @@ struct HomeDisplayView: View {
     let defaultReview = ReviewModel(id: "01", rating: 7, review: "Stinks like cigarette smoke and booze. To be fair, it is expected at Stanky's Place", title: "I guess it meets expectations?!", username: "MykalMayn", locationID: "00101", locationName: "Stanky's Place")
     
     var body: some View {
-
         GeometryReader { geo in
                 ZStack {
                     backgroundImage(geo)

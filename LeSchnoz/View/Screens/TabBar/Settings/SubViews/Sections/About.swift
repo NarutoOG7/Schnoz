@@ -30,9 +30,19 @@ struct About: View {
                     .listRowSeparator(.hidden)
 
                     .padding(.bottom)
+                
+//                NavigationLink(destination: {
+//                    Admin()
+//                }, label: {
+//                    Text("Admin")
+//                })
+//                    .listRowBackground(Color.clear)
+//                    .listRowSeparator(.hidden)
+//
+//                    .padding(.bottom)
             }
             .listStyle(.plain)
-            .frame(minHeight: 150)
+            .frame(minHeight: 350)
             .modifier(DisabledScroll())
             .modifier(ClearListBackgroundMod())
         }

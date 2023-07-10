@@ -9,13 +9,20 @@ import Foundation
 
 struct FirestoreUser: Identifiable, Hashable {
     
-    static let example = FirestoreUser(id: "1", username: "Spencer", reviewCount: 12, totalStarsGiven: 54, averageStarsGiven: 4.5)
+    static let example = FirestoreUser(id: "1", username: "Spencer", reviewCount: 5, totalStarsGiven: 21, averageStarsGiven: 4.01)
     
     var id: String
     var username: String
     var reviewCount: Int?
     var totalStarsGiven: Int?
     var averageStarsGiven: Double?
+    
+    var averageStarsAsString: String {
+        let average = self.averageStarsGiven ?? 0
+        let starsThruExactly = Int(exactly: average)
+        let starsCountFinal = starsThruExactly == nil ? "\(average)" : "\(starsThruExactly ?? 0)"
+        return starsCountFinal
+    }
     
     
     init(dict: [String:Any]) {
@@ -44,35 +51,45 @@ struct FirestoreUser: Identifiable, Hashable {
     }
     
     mutating func handleAdditionOfReview(_ review: ReviewModel) {
-        self.totalStarsGiven? += review.rating
-        self.reviewCount? += 1
-        if let reviewCount = self.reviewCount,
-           let starsCount = self.totalStarsGiven,
-           reviewCount > 0 {
-            self.averageStarsGiven? = Double(starsCount / reviewCount)
-        }
+        var newUser = self
+            newUser.totalStarsGiven? += review.rating
+            newUser.reviewCount? += 1
+            if let reviewCount = newUser.reviewCount,
+               let starsCount = newUser.totalStarsGiven,
+               reviewCount > 0 {
+                newUser.averageStarsGiven? = Double(starsCount / reviewCount)
+            }
+            
+        UserStore.instance.firestoreUser = newUser
+            FirebaseManager.instance.updateFirestoreUser(newUser)
+        
     }
     
     mutating func handleUpdateOfReview(oldReview: ReviewModel, newReview: ReviewModel) {
+        var newUser = self
         let starsDifference = newReview.rating - oldReview.rating
-        self.totalStarsGiven? += starsDifference
-        if let reviewCount = self.reviewCount,
-           let starsCount = self.totalStarsGiven,
+        newUser.totalStarsGiven? += starsDifference
+        if let reviewCount = newUser.reviewCount,
+           let starsCount = newUser.totalStarsGiven,
            reviewCount > 0 {
-            self.averageStarsGiven? = Double(starsCount / reviewCount)
+            newUser.averageStarsGiven? = Double(starsCount / reviewCount)
         }
+        UserStore.instance.firestoreUser = newUser
+        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
     
     mutating func handleRemovalOfReview(review: ReviewModel) {
-        self.totalStarsGiven? -= review.rating
-        self.reviewCount? -= 1
-        if let reviewCount = self.reviewCount,
-           let starsCount = self.totalStarsGiven,
+        var newUser = self
+        newUser.totalStarsGiven? -= review.rating
+        newUser.reviewCount? -= 1
+        if let reviewCount = newUser.reviewCount,
+           let starsCount = newUser.totalStarsGiven,
            reviewCount > 0 {
-            self.averageStarsGiven? = Double(starsCount / reviewCount)
+            newUser.averageStarsGiven? = Double(starsCount / reviewCount)
         }
+        UserStore.instance.firestoreUser = newUser
+        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
-    
 }
 
 extension FirebaseManager {
@@ -116,11 +133,25 @@ extension FirebaseManager {
         }
     }
     
+    
+    func getFirestoreUser(withCompletion completion: @escaping(FirestoreUser?, Error?) -> Void) {
+        guard let db = db else {  return }
+        db.collection("Users")
+            .whereField("id", isEqualTo: userStore.user.id)
+            .getDocuments
+        { snapshot, error in
+                guard let snapshot = snapshot,
+                       let doc = snapshot.documents.first else { completion(nil, error)
+                    return
+                }
+                let firestoreUser = FirestoreUser(dict: doc.data())
+                    completion(firestoreUser, nil)
+        }
+    }
+
+    
     func updateFirestoreUser(_ user: FirestoreUser, withCompletion completion: @escaping(K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
-        
-        
         guard let db = db else { return }
-        
         db.collection("Users").document(user.id)
             .updateData([
                 "id" : user.id,
@@ -128,28 +159,23 @@ extension FirebaseManager {
                 "totalStarsGiven" : user.totalStarsGiven ?? 0,
                 "averageStarsGiven" : user.averageStarsGiven ?? 0,
                 "totalReviewCount" : user.reviewCount ?? 0
-                
             ], completion: { err in
-                
-                if let err = err {
-                    print("Error updating review: \(err)")
+                if let _ = err {
                     completion(.updatingReview)
                 } else {
-                    print("User successfully updated!")
-                    
-                    let newUser = User(id: self.userStore.user.id,
-                                       name: self.userStore.user.name,
-                                       email: self.userStore.user.email,
-                                       reviewCount: user.reviewCount ?? 0,
-                                       totalStarsGiven: user.totalStarsGiven ?? 0,
-                                       averageStarsGiven: user.averageStarsGiven ?? 0)
-                    self.userStore.user = newUser
-                    Authorization.instance.saveUserToUserDefaults(user: newUser) { error in
-                        if let _ = error {
-                            self.errorManager.shouldDisplay = true
-                            self.errorManager.message = K.ErrorHelper.Messages.Auth.failedToSaveUser.rawValue
-                        }
-                    }
+//                    let newUser = User(id: self.userStore.user.id,
+//                                       name: self.userStore.user.name,
+//                                       email: self.userStore.user.email,
+//                                       reviewCount: user.reviewCount ?? 0,
+//                                       totalStarsGiven: user.totalStarsGiven ?? 0,
+//                                       averageStarsGiven: user.averageStarsGiven ?? 0)
+//                    self.userStore.user = newUser
+//                    Authorization.instance.saveUserToUserDefaults(user: newUser) { error in
+//                        if let _ = error {
+//                            self.errorManager.shouldDisplay = true
+//                            self.errorManager.message = K.ErrorHelper.Messages.Auth.failedToSaveUser.rawValue
+//                        }
+//                    }
                     
                     completion(nil)
                 }
@@ -161,7 +187,7 @@ extension FirebaseManager {
         guard let db = db else { return }
         
         let first = db.collection("Users")
-        //            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
             .limit(to: 15)
         
         
@@ -206,7 +232,8 @@ extension FirebaseManager {
         let collectionRef = db.collection("Reviews")
         
         let nextQuery = collectionRef
-        //            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
+//////            .whereField("totalReviewCount", isGreaterThanOrEqualTo: 1)
+            .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
             .start(afterDocument: lastSnapshot)
             .limit(to: pageSize)
         

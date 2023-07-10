@@ -132,7 +132,7 @@ class Authorization {
                         }
                         
                         FirebaseManager.instance.addUserToFirestore(firestoreUser)
-                        
+                        UserStore.instance.firestoreUser = firestoreUser
                         DispatchQueue.main.async {
                             
                             self.userStore.isSignedIn = true

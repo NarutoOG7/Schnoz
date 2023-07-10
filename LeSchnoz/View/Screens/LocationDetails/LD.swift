@@ -24,52 +24,92 @@ struct LD: View {
     
     @State var showGuestAlert = false
     
+    @State var showReviewSortActionSheet = false
+    
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager = ErrorManager.instance
     @ObservedObject var ldvm = LDVM.instance
     @ObservedObject var listResultsVM = ListResultsVM.instance
     
-    let imageMaxHeight = UIScreen.main.bounds.height * 0.38
+    let imageMaxHeight = UIScreen.main.bounds.height * 0.3
     let collapsedImageHeight: CGFloat = 10
     
     private let images = K.Images.self
     private let oceanBlue = K.Colors.OceanBlue.self
     
     @Environment(\.presentationMode) var presentationMode
+
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            ZStack {
-                VStack(alignment: .leading, spacing: 7) {
-                    title
-                    address
-                    avgRatingDisplay
-                    listOfReviews
-//                    reviewHelper
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                    ZStack {
+                        VStack(alignment: .leading, spacing: 7) {
+                            title
+                            address
+                            avgRatingDisplay
+                            sortReviewsButton
+                            listOfReviews
+                            Spacer(minLength: ldvm.reviews.count == 0 ? 500 : 300)
+                        }
+                        .padding(.horizontal)
+                        .clipped()
+                        .padding(.top, imageMaxHeight + 36.0)
+                        
+                        image
+                        backButton
+                    }
                 }
-                .clipped()
-                .padding(.horizontal)
-                .padding(.vertical, imageMaxHeight + 36.0)
-                
-                image
-                backButton
             }
-        }
-        .edgesIgnoringSafeArea(.vertical)
-        .navigationBarHidden(true)
+            
+            .edgesIgnoringSafeArea(.vertical)
+//            .navigationBarHidden(true)
+            
+            .actionSheet(isPresented: $showReviewSortActionSheet) {
+                ActionSheet(
+                    title: Text("Sort Options"),
+                    buttons: [
+                        .default(Text(ReviewSortingOption.newest.rawValue), action: {
+                            ldvm.sortingOption = .newest
+                        }),
+                        .default(Text(ReviewSortingOption.oldest.rawValue), action: {
+                            ldvm.sortingOption = .oldest
+                        }),
+                        .default(Text(ReviewSortingOption.best.rawValue), action: {
+                            ldvm.sortingOption = .best
+                        }),
+                        .default(Text(ReviewSortingOption.worst.rawValue), action: {
+                            ldvm.sortingOption = .worst
+                        }),
+                        .cancel()
+                        
+                    ]
+                )
+            }
         
-        
-//        .alert(isPresented: $showGuestAlert) {
-//                  Alert(title: Text("Sign In First"), message: Text("You must be signed in to leave reviews"), primaryButton: .default(Text("Sign In"), action: {
-//                      UserDefaults.standard.set(false, forKey: "signedIn")
-//                      userStore.isSignedIn = false
-//                      userStore.user = User()
-//                      UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
-//                  }), secondaryButton: .cancel())
-//              }
-        
-
+//            .fullScreenCover(isPresented: $ldvm.shouldShowLeaveAReviewView) {
+//                LocationReviewView(
+//                    isPresented: $isCreatingNewReview,
+//                    review: .constant(nil),
+//                    location: $ldvm.selectedLocation,
+//                    reviews: $ldvm.reviews,
+//                    isUpdatingReview: false,
+//                    userStore: userStore,
+//                    firebaseManager: firebaseManager,
+//                    errorManager: errorManager
+//                )
+//            }
+//
+            .alert(isPresented: $showGuestAlert) {
+                Alert(title: Text("Sign In First"), message: Text("You must be signed in to leave reviews"), primaryButton: .default(Text("Sign In"), action: {
+                    UserDefaults.standard.set(false, forKey: "signedIn")
+                    userStore.isSignedIn = false
+                    userStore.user = User()
+                    UserDefaults.standard.set(false, forKey: K.UserDefaults.isGuest)
+                }), secondaryButton: .cancel())
+            }
+            
     }
     
     
@@ -81,6 +121,8 @@ struct LD: View {
                 .frame(width: 30, height: 30)
                 .padding(.leading)
                 .offset(y: imageMaxHeight / 6)
+                .padding(.top, 50)
+
 
             headerText
                 .padding(.leading, -40)
@@ -88,6 +130,7 @@ struct LD: View {
                 .offset(y: imageMaxHeight / 4)
 
         }
+        .padding(.top, 25)
         
     }
     
@@ -101,6 +144,7 @@ struct LD: View {
     
     private var image: some View {
         GeometryReader { geo in
+            ZStack {
                 listResultsVM.placeImage
                     .resizable()
                     .aspectRatio(1.75, contentMode: .fill)
@@ -115,6 +159,10 @@ struct LD: View {
                     .offset(y: geo.frame(in: .global).origin.y < 0
                             ? abs(geo.frame(in: .global).origin.y)
                             : -geo.frame(in: .global).origin.y)
+//                header/
+//              .opacity(self.getBlurRadiusForImage(geo) - 0.35)
+
+            }
         }
     }
     
@@ -123,7 +171,7 @@ struct LD: View {
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
-        
+
     }
     
     
@@ -132,6 +180,7 @@ struct LD: View {
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
+
     }
     
     private var avgRatingDisplay: some View {
@@ -141,11 +190,9 @@ struct LD: View {
             Stars(color: oceanBlue.yellow,
                   rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
             
-            Button(action: moreReviewsTapped) {
-                Text("(\(total) review\(textEnding))")
-                    .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(oceanBlue.lightBlue)
-            }.disabled(total == 0)
+            Text("(\(total) review\(textEnding))")
+                .font(.avenirNextRegular(size: 17))
+                .foregroundColor(oceanBlue.lightBlue)
             leaveAReviewView
             
         }
@@ -162,18 +209,11 @@ struct LD: View {
                     ReviewCard(review: last)
                 }
             }
-            HStack {
-                if ldvm.reviews.count > 1 {
-                    moreReviewsButton
-                }
-            }
-                .padding(.vertical, 30)
             Spacer(minLength: 200)
         }
     }
     
     private var leaveAReviewView: some View {
-        
         NavigationLink {
             LocationReviewView(
                 isPresented: $isCreatingNewReview,
@@ -190,11 +230,12 @@ struct LD: View {
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.lightBlue)
         }
-        .onTapGesture {
-            if userStore.isGuest {
-                self.showGuestAlert = true
-            }
-        }
+
+//        Button(action: leaveAReviewTapped) {
+//            Text("Leave A Review")
+//                .font(.avenirNextRegular(size: 17))
+//                .foregroundColor(oceanBlue.lightBlue)
+//        }
     }
     
     private var firebaseErrorBanner: some View {
@@ -211,8 +252,8 @@ struct LD: View {
     
     
     private var listOfReviews: some View {
-            List(ldvm.reviews) { review in
-                ReviewCell(review: review, isShowingLocationName: false)
+        List(ldvm.reviews) { review in
+                ReviewCell(review: review, isShowingLocationName: false, needsToHandleColorScheme: true)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .onAppear {
@@ -220,10 +261,13 @@ struct LD: View {
                         ldvm.listHasScrolledToBottom = isLast
                     }
             }
-            .scrollDisabled(true)
-            .frame(height: 250 * CGFloat(ldvm.reviews.count))
+        .padding(.horizontal, -20)
+            .listStyle(.plain)
+            .frame(minHeight: 250 * CGFloat(ldvm.reviews.count))
+//            .scrollDisabled(true)
+//            .frame(height: 250 * CGFloat(ldvm.reviews.count))
                 .modifier(ClearListBackgroundMod())
-            .onAppear {
+            .task {
                 ldvm.batchFirstCall()
             }
     }
@@ -261,18 +305,6 @@ struct LD: View {
             clicked: shareTapped)
     }
     
-    private var moreReviewsButton: some View {
-        HStack {
-            Spacer()
-            Button(action: moreReviewsTapped) {
-                Text("More Reviews")
-                    .font(.avenirNextRegular(size: 17))
-                    .fontWeight(.medium)
-                    .foregroundColor(oceanBlue.blue)
-            }
-        }.padding(.vertical)
-    }
-    
     private var backButton: some View {
         VStack {
             HStack {
@@ -286,13 +318,24 @@ struct LD: View {
                 Spacer()
             }
             .padding(.horizontal)
-                .padding(.top, 60)
             Spacer()
 
         }
-//        .frame(width: 25, height: 35)
-
-
+    }
+    
+    private var sortReviewsButton: some View {
+        HStack {
+            Spacer()
+            Text("Sort by:")
+                .font(.caption)
+                .foregroundColor(oceanBlue.blue)
+            Button(action: sortReviewsTapped) {
+                Text(ldvm.sortingOption.rawValue)
+                    .font(.caption)
+                    .foregroundColor(oceanBlue.lightBlue)
+            }
+        }
+        .opacity(ldvm.reviews.count > 1 ? 1 : 0)
     }
     
     
@@ -318,18 +361,12 @@ struct LD: View {
     }
     
     private func backButtonTapped() {
-        let searchLogic = SearchLogic.instance
         self.presentationMode.wrappedValue.dismiss()
-//        listResultsVM.selectedPlace = nil
-//        ldvm.selectedLocation = nil
-//        listResultsVM.resetPlaceImage()
         listResultsVM.shouldShowPlaceDetails = false
-//        searchLogic.placeSearchText = ""
-//        searchLogic.areaSearchText = ""
     }
     
-    private func moreReviewsTapped() {
-        self.isShowingMoreReviews = true
+    private func sortReviewsTapped() {
+        showReviewSortActionSheet = true
     }
     
 //    private func fetchFirebaseReviews() {
@@ -339,6 +376,15 @@ struct LD: View {
 //            self.reviews = reviews
 //        }
 //    }
+    
+    private func leaveAReviewTapped() {
+        if userStore.isGuest {
+            self.showGuestAlert = true
+        } else {
+            ldvm.shouldShowLeaveAReviewView = true
+        }
+    }
+    
 }
 
 //MARK: - Previews

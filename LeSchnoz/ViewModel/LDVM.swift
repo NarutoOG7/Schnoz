@@ -1,32 +1,34 @@
 //
-//  NewsFeedVM.swift
+//  LDVM.swift
 //  LeSchnoz
 //
-//  Created by Spencer Belton on 6/22/23.
+//  Created by Spencer Belton on 7/7/23.
 //
 
 import SwiftUI
 import Firebase
 
-class NewsFeedVM: ObservableObject {
+class LDVM: ObservableObject {
+    static let instance = LDVM()
     
-    static let instance = NewsFeedVM()
+    @ObservedObject var firebaseManager = FirebaseManager.instance
     
-    @Published var isFetchInProgress = false
+    @Published var selectedLocation: SchnozPlace?
     @Published var reviews: [ReviewModel] = []
+    @Published var isFetchInProgress = false
+    @Published var lastDocumentOfLocationReviews: DocumentSnapshot?
     
     @Published var errorMessage = ""
     @Published var shouldShowError = false
-   
-    @Published var lastDocumentOfAllReviewsBatchRequest: DocumentSnapshot?
-
+    
+    @Published var shouldShowLeaveAReviewView = false
     
     @Published var sortingOption: ReviewSortingOption = .newest {
         didSet {
             if oldValue != sortingOption {
                 self.reviews = []
                 self.batchFirstCall()
-            } 
+            }
         }
     }
     
@@ -38,21 +40,20 @@ class NewsFeedVM: ObservableObject {
         }
     }
     
- 
-    
-    
-    @ObservedObject var firebaseManager = FirebaseManager.instance
-    
     func batchFirstCall() {
         self.reviews = []
-        firebaseManager.batchFirstAllUsersReviews(sortingOption) { reviews, error in
-            self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+        if let selectedLocation = selectedLocation {
+            firebaseManager.batchFirstLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
         }
     }
     
     func batchSubsequentCall() {
-        firebaseManager.nextPageAllUsersReviews(sortingOption) { reviews, error in
-            self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+        if let selectedLocation = selectedLocation {
+            firebaseManager.nextPageLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
         }
     }
 
@@ -63,8 +64,8 @@ class NewsFeedVM: ObservableObject {
                     self.reviews.append(review)
                 }
             }
-            
             if let error = error {
+                print(error.localizedDescription)
                 self.handleError(error)
             }
         }

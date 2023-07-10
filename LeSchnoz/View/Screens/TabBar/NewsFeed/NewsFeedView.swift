@@ -43,7 +43,6 @@ struct NewsFeedView: View {
         ZStack {
             background
             VStack {
-//                sortByButton
                 listOfReviews
             }
         }
@@ -89,38 +88,14 @@ struct NewsFeedView: View {
                         viewModel.listHasScrolledToBottom = isLast
                     }
             }
+//            .listStyle(.plain)
                 .modifier(ClearListBackgroundMod())
-            .onAppear {
+            .task {
                 viewModel.batchFirstCall()
             }
     }
     
-//    private var sortByButton: some View {
-//        HStack {
-//            HStack(spacing: 8) {
-//                Text("Sort by:")
-//                    .foregroundColor(oceanBlue.white)
-//                    .font(.avenirNext(size: 17))
-//
-//                Button(action: sortTapped) {
-//                    HStack {
-//                        Text("\(sortingOption.rawValue)")
-//                            .underline()
-//                            .foregroundColor(oceanBlue.white)
-//                            .fontWeight(.medium)
-//                            .font(.avenirNext(size: 17))
-//                        Image(systemName: "chevron.down")
-//                            .foregroundColor(oceanBlue.yellow)
-//                            .font(.caption)
-//
-//                    }
-//                }
-//            }
-//            .padding(.horizontal)
-//            Spacer()
-//        }
-//    }
-    
+
     
     private var sortByButton: some View {
         HStack {
@@ -133,42 +108,6 @@ struct NewsFeedView: View {
             }
         }
     }
-  
-    
-//    private var sortButton: some View {
-//            Picker("Sort By", selection: $sortingOption) {
-//                Text("Newest First").tag(SortingOption.newest)
-//                Text("Oldest First").tag(SortingOption.oldest)
-//                Text("Highest Rated").tag(SortingOption.best)
-//                Text("Lowest Rated").tag(SortingOption.worst)
-//
-//            }
-////            .frame(width: 200)
-//            .foregroundColor(oceanBlue.blue)
-//            .padding(.horizontal)
-//            .background(
-//                RoundedRectangle(cornerRadius: 10)
-//                    .fill(oceanBlue.white)
-//            )
-//
-//    }
-    
-
-//    private func cellForReview(_ review: ReviewModel) -> some View {
-//        let nameIsBlank = review.username == ""
-//        return VStack(alignment: .leading) {
-//            Text(nameIsBlank ? "Anonymous" : review.username)
-//                .font(.avenirNext(size: 19))
-//                .fontWeight(.bold)
-//                .foregroundColor(.red)
-//
-//            Text(review.locationName)
-//            Stars(count: 5, isEditable: false, color: .green, rating: .constant(review.rating))
-//            Text(review.title)
-//                .fontWeight(.bold)
-//            Text(review.review)
-//        }
-//    }
     
     private func sortTapped() {
         showActionSheet = true

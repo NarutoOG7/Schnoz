@@ -74,7 +74,7 @@ struct OtherSniffersView: View {
 
         }
         .modifier(ClearListBackgroundMod())
-        .onAppear {
+        .task {
             viewModel.batchFirstCall()
         }
 

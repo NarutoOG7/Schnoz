@@ -58,8 +58,6 @@ struct SocialCell: View {
     
     private var totalStars: some View {
         let starsCount = user.totalStarsGiven ?? 0
-        let userHasNoStars = starsCount == 0
-        
         return HStack {
             Text("Total Stars Given:")
                 .font(.avenirNext(size: 16))
@@ -72,21 +70,18 @@ struct SocialCell: View {
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)
                 .italic()
-//            Stars(count: 1, isEditable: false, color: oceanBlue.yellow, rating: .constant(starsCount))
-//                .padding(.bottom, 3)
         }
     }
     
     private var averageStars: some View {
-        let average = String(format: "%.2f", (user.averageStarsGiven ?? 0))
-       return HStack {
+        HStack {
             Text("Average Rating:")
                 .font(.avenirNext(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.lightBlue)
                 .italic()
             
-            Text(average)
+            Text(user.averageStarsAsString)
                 .font(.avenirNext(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)

@@ -54,10 +54,10 @@ extension FirebaseManager {
     func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         
         guard let db = db else { return }
-        
-        let timestamp = FieldValue.serverTimestamp()
-        
+                
         //        let id = review.title + review.username + review.locationID
+//        let timestamp = FieldValue.serverTimestamp()
+
         
         db.collection("Reviews").document(review.id).setData([
             "id" : review.id,
@@ -68,7 +68,7 @@ extension FirebaseManager {
             "username" : review.username,
             "locationID" : location.placeID,
             "locationName" : location.primaryText ?? "",
-            "timestamp" : timestamp
+            "timestamp" : review.timeStamp
             
         ]) { error in
             
@@ -385,12 +385,12 @@ extension FirebaseManager {
 
     //MARK: - User's Feed
     
-    func batchFirstUsersReviews(user: FirestoreUser, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+    func batchFirstUsersReviews(userID: String, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
         let userDetailsVM = UserDetailsVM.instance
         guard let db = db else { return }
         
         let first = db.collection("Reviews")
-            .whereField("userID", isEqualTo: user.id)
+            .whereField("userID", isEqualTo: userID)
             .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
             .limit(to: 15)
         
@@ -421,7 +421,7 @@ extension FirebaseManager {
         }
     }
     
-    func nextPageUsersReviews(user: FirestoreUser, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
+    func nextPageUsersReviews(userID: String, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
         let userDetailsVM = UserDetailsVM.instance
         guard let lastSnapshot = userDetailsVM.lastDocumentOfUsersReviews,
               let db = db else {
@@ -430,7 +430,7 @@ extension FirebaseManager {
         }
         
         let nextQuery = db.collection("Reviews")
-            .whereField("userID", isEqualTo: user.id)
+            .whereField("userID", isEqualTo: userID)
             .order(by: sortingOption.sortingQuery.query, descending: sortingOption.sortingQuery.descending)
             .start(afterDocument: lastSnapshot)
             .limit(to: 15)

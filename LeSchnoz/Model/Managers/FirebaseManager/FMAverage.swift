@@ -33,6 +33,33 @@ extension FirebaseManager {
             }
     }
     
+    func getAllAverageRatings(withCompletion completion: @escaping ([AverageRating]?) -> (Void)) {
+        
+        guard let db = db else { return }
+
+        db.collection("AverageRatings")
+            .getDocuments { snapshot, error in
+                
+                if let error = error {
+                    
+                    print(error.localizedDescription)
+                    self.errorManager.message = "Check your network connection and try again."
+                    self.errorManager.shouldDisplay = true
+                } else if let snapshot = snapshot {
+                    
+                    var averages: [AverageRating] = []
+                    for doc in snapshot.documents {
+                        
+                        let dict = doc.data()
+                        
+                        let average = AverageRating(dictionary: dict)
+                        averages.append(average)
+                    }
+                    completion(averages)
+                }
+            }
+    }
+    
     
     func addAverageRating(_ averageRating: AverageRating, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         

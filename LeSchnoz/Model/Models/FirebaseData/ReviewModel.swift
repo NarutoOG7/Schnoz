@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct ReviewModel: Hashable, Identifiable {
     
@@ -19,6 +20,7 @@ struct ReviewModel: Hashable, Identifiable {
     var locationID: String = ""
     var locationName: String = ""
     var location: SchnozPlace?
+    var timeStamp: Timestamp
     
     init(id: String = "",
          rating: Int = 0,
@@ -34,6 +36,10 @@ struct ReviewModel: Hashable, Identifiable {
         self.username = username
         self.locationID = locationID
         self.locationName = locationName
+        
+        let timestamp = Timestamp()
+        self.timeStamp = timestamp
+
     }
     
     init(dictionary: [String:Any]) {
@@ -44,5 +50,6 @@ struct ReviewModel: Hashable, Identifiable {
         self.title = dictionary["title"] as? String ?? ""
         self.locationID = dictionary["locationID"] as? String ?? ""
         self.locationName = dictionary["locationName"] as? String ?? ""
+        self.timeStamp = dictionary["timestamp"] as? Timestamp ?? Timestamp()
     }
 }

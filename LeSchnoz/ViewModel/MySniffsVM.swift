@@ -1,34 +1,26 @@
 //
-//  NewsFeedVM.swift
+//  MySniffsVM.swift
 //  LeSchnoz
 //
-//  Created by Spencer Belton on 6/22/23.
+//  Created by Spencer Belton on 7/6/23.
 //
 
 import SwiftUI
 import Firebase
 
-class NewsFeedVM: ObservableObject {
+
+class MySniffsVM: ObservableObject {
+    static let instance = MySniffsVM()
     
-    static let instance = NewsFeedVM()
-    
-    @Published var isFetchInProgress = false
-    @Published var reviews: [ReviewModel] = []
-    
-    @Published var errorMessage = ""
-    @Published var shouldShowError = false
-   
-    @Published var lastDocumentOfAllReviewsBatchRequest: DocumentSnapshot?
+    @ObservedObject var firebaseManager = FirebaseManager.instance
+    @ObservedObject var userStore = UserStore.instance
 
     
-    @Published var sortingOption: ReviewSortingOption = .newest {
-        didSet {
-            if oldValue != sortingOption {
-                self.reviews = []
-                self.batchFirstCall()
-            } 
-        }
-    }
+    @Published var reviews: [ReviewModel] = []
+    @Published var isFetchInProgress = false
+    @Published var lastDocumentOfMySniffs: DocumentSnapshot?
+    @Published var errorMessage = ""
+    @Published var shouldShowError = false
     
     @Published var listHasScrolledToBottom = false {
         willSet {
@@ -38,20 +30,31 @@ class NewsFeedVM: ObservableObject {
         }
     }
     
- 
-    
-    
-    @ObservedObject var firebaseManager = FirebaseManager.instance
+    @Published var sortingOption: ReviewSortingOption = .newest  {
+        didSet {
+            if oldValue != sortingOption {
+                self.reviews = []
+                self.batchFirstCall()
+            }
+        }
+    }
+
     
     func batchFirstCall() {
         self.reviews = []
-        firebaseManager.batchFirstAllUsersReviews(sortingOption) { reviews, error in
+        firebaseManager.batchFirstUsersReviews(
+            userID: userStore.user.id,
+                sortingOption)
+        { reviews, error in
             self.handleReviewsCompletionWithError(reviews: reviews, error: error)
         }
     }
     
     func batchSubsequentCall() {
-        firebaseManager.nextPageAllUsersReviews(sortingOption) { reviews, error in
+        firebaseManager.nextPageUsersReviews(
+            userID: userStore.user.id,
+            sortingOption)
+        { reviews, error in
             self.handleReviewsCompletionWithError(reviews: reviews, error: error)
         }
     }
@@ -60,10 +63,11 @@ class NewsFeedVM: ObservableObject {
         DispatchQueue.main.async {
             if let reviews = reviews {
                 for review in reviews {
-                    self.reviews.append(review)
+                    if !self.reviews.contains(review) { // doesn't contain
+                        self.reviews.append(review)
+                    }
                 }
             }
-            
             if let error = error {
                 self.handleError(error)
             }

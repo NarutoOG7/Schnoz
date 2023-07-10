@@ -17,8 +17,11 @@ struct ReviewCard: View {
         VStack(alignment: .leading,spacing: 7) {
             placeNameView
             title
-            stars
-                .padding(.bottom, 6)
+            HStack {
+                stars
+//                    .padding(.bottom, 6)
+                timestamp
+            }
             description
             name
                 .padding(.trailing, 15)
@@ -33,12 +36,15 @@ struct ReviewCard: View {
             .font(.avenirNext(size: 20))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
+            .multilineTextAlignment(.leading)
     }
     
     var placeNameView: some View {
         Text(review.locationName)
             .font(.avenirNext(size: 16))
             .foregroundColor(oceanBlue.blue)
+            .multilineTextAlignment(.leading)
+
     }
     
     var stars: some View {
@@ -51,6 +57,8 @@ struct ReviewCard: View {
             .font(.avenirNext(size: 17))
             .fontWeight(.light)
             .foregroundColor(oceanBlue.blue)
+            .multilineTextAlignment(.leading)
+
 //            .fixedSize(horizontal: true, vertical: false)
     }
     
@@ -61,7 +69,15 @@ struct ReviewCard: View {
                 .font(.avenirNext(size: 17))
                 .fontWeight(.medium)
                 .foregroundColor(oceanBlue.blue)
+                .multilineTextAlignment(.trailing)
+
         }
+    }
+    
+    var timestamp: some View {
+        Text(review.timeStamp.dateValue().timeAgoDisplay())
+            .foregroundColor(oceanBlue.blue)
+            .font(.caption)
     }
 }
 
@@ -74,5 +90,13 @@ struct ReviewCard_Previews: PreviewProvider {
                                        username: "ALA",
                                        locationID: "123",
                                        locationName: "Stanley Hotel"))
+        .padding()
+    }
+}
+extension Date {
+    func timeAgoDisplay() -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: self, relativeTo: Date())
     }
 }

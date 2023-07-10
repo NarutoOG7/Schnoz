@@ -39,6 +39,7 @@ class AllSniffersVM: ObservableObject {
 
     
     func batchFirstCall() {
+        self.users = []
         firebaseManager.batchFirstAllUsers(sortingOption) { users, error in
             self.handleUsersCompletionWithError(users: users, error: error)
         }
@@ -54,7 +55,9 @@ class AllSniffersVM: ObservableObject {
         DispatchQueue.main.async {
             if let users = users {
                 for user in users {
-                    self.users.append(user)
+                    if (user.reviewCount ?? 0) > 0 {
+                        self.users.append(user)
+                    }
                 }
             }
             
@@ -79,7 +82,7 @@ enum SniffersSortingOption: String {
         switch self {
             
         case .mostReviews:
-            return ("reviewCount", true)
+            return ("totalReviewCount", true)
         case .harshestCritic:
             return ("averageStarsGiven", false)
         case .topSupporters:
@@ -88,4 +91,5 @@ enum SniffersSortingOption: String {
         }
     }
 }
+
 

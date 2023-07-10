@@ -59,7 +59,13 @@ struct LocationReviewView: View {
                 .padding()
                 .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
                 .navigationBarTitleDisplayMode(.inline)
-                
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        backButton
+                    }
+                        
+                }
 //            }
         }
         .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
@@ -173,6 +179,25 @@ struct LocationReviewView: View {
         }
     }
     
+    private var backButton: some View {
+        VStack {
+            HStack {
+                
+                Button(action: backButtonTapped) {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 25, height: 35)
+                        .tint(oceanBlue.yellow)
+                }
+                Spacer()
+            }
+//            .padding(.horizontal)
+//                .padding(.top, 60)
+            Spacer()
+
+        }
+    }
+    
     private func reviewModel() -> ReviewModel {
 //        let name = nameInput == "" ? userStore.user.name : nameInput
         let userName = userStore.user.name
@@ -204,14 +229,18 @@ struct LocationReviewView: View {
                 self.reviews[reviewIndex] = rev
             }
             ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", isRemoving: false, isAddingNew: false)
-            var firestoreUser = FirestoreUser(user: userStore.user)
-            firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
+            if var firestoreUser = userStore.firestoreUser {
+                firestoreUser.handleUpdateOfReview( oldReview: oldReview, newReview: rev)
+            }
             self.shouldShowSuccessMessage = true
         }
     }
     
-    private func add(_ rev: ReviewModel) {
+    private func add(_ review: ReviewModel) {
         if let location = location {
+            let timestamp = Timestamp()
+            var rev = review
+            rev.timeStamp = timestamp
             firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
                 if let error = error {
                     self.errorManager.message = error.rawValue
@@ -221,7 +250,7 @@ struct LocationReviewView: View {
                 //            if !self.location.schnozReviews.contains(rev) {
                 //                self.location.schnozReviews.append(rev)
                 //            }
-                self.reviews.append(rev)
+//                self.reviews.append(rev)
                 self.location?.schnozReviews.append(rev)
                 ListResultsVM.instance.refreshData(
                     review: rev,
@@ -229,8 +258,9 @@ struct LocationReviewView: View {
                     placeID: location.placeID,
                     isRemoving: false,
                     isAddingNew: true)
-                var firestoreUser = FirestoreUser(user: userStore.user)
-                firestoreUser.handleAdditionOfReview(rev)
+                if var firestoreUser = userStore.firestoreUser {
+                    firestoreUser.handleAdditionOfReview(rev)
+                }
                 self.shouldShowSuccessMessage = true
             }
         }
@@ -278,6 +308,11 @@ struct LocationReviewView: View {
 //        nameInput != review?.username
     }
     
+    private func backButtonTapped() {
+        self.presentationMode.wrappedValue.dismiss()
+        LDVM.instance.shouldShowLeaveAReviewView = false
+    }
+    
     //MARK: - Field
     enum Field {
         case title, description, username
@@ -299,69 +334,3 @@ struct LocationReviewView_Previews: PreviewProvider {
 }
 
 
-class LDVM: ObservableObject {
-    static let instance = LDVM()
-    
-    @ObservedObject var firebaseManager = FirebaseManager.instance
-    
-    @Published var selectedLocation: SchnozPlace? 
-    @Published var reviews: [ReviewModel] = []
-    @Published var isFetchInProgress = false
-    @Published var lastDocumentOfLocationReviews: DocumentSnapshot?
-    
-    @Published var errorMessage = ""
-    @Published var shouldShowError = false
-    
-    @Published var sortingOption: ReviewSortingOption = .newest {
-        didSet {
-            if oldValue != sortingOption {
-                self.reviews = []
-                self.batchFirstCall()
-            }
-        }
-    }
-    
-    @Published var listHasScrolledToBottom = false {
-        willSet {
-            if newValue == true {
-                self.batchSubsequentCall()
-            }
-        }
-    }
-    
-    func batchFirstCall() {
-        if let selectedLocation = selectedLocation {
-            firebaseManager.batchFirstLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
-                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
-            })
-        }
-    }
-    
-    func batchSubsequentCall() {
-        if let selectedLocation = selectedLocation {
-            firebaseManager.nextPageLocationsReviews(location: selectedLocation, sortingOption, withCompletion: { reviews, error in
-                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
-            })
-        }
-    }
-
-    func handleReviewsCompletionWithError(reviews: [ReviewModel]?, error: Error?) {
-        DispatchQueue.main.async {
-            if let reviews = reviews {
-                for review in reviews {
-                    self.reviews.append(review)
-//                    self.location.schnozReviews.append(review)
-                }
-            }
-            
-            if let error = error {
-                self.handleError(error)
-            }
-        }
-    }
-    
-    func handleError(_ error: Error) {
-        self.errorMessage = error.localizedDescription
-        self.shouldShowError = true
-    }
-}

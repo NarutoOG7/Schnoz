@@ -65,7 +65,6 @@ class ListResultsVM: ObservableObject {
                         places[index].schnozReviews[oldReviewIndex] = review
                     }
                     places[index].averageRating = averageRating
-
                 }
             }
         }

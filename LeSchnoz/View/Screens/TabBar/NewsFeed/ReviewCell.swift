@@ -11,9 +11,12 @@ struct ReviewCell: View {
     
     let review: ReviewModel
     var isShowingLocationName = true
+    var isShowingUsername = true
+    var needsToHandleColorScheme = false
     let oceanBlue = K.Colors.OceanBlue.self
     
-    
+    @Environment(\.colorScheme) var colorScheme
+        
     var body: some View {
             
              VStack(alignment: .leading, spacing: 8) {
@@ -21,33 +24,38 @@ struct ReviewCell: View {
                  if isShowingLocationName {
                      locationName
                  }
-                Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
+                 HStack {
+                     Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
+                     timestamp
+                 }
                 reviewDescription
-                username
+                 if isShowingUsername {
+                     username
+                 }
                 Divider().overlay(oceanBlue.lightBlue)
                     .padding(.top)
                  
             }
         }
     private var title: some View {
-        Text(review.title)
+         Text(review.title)
             .font(.avenirNext(size: 18))
             .fontWeight(.bold)
-            .foregroundColor(oceanBlue.white)
+            .foregroundColor(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
     }
     
     private var locationName: some View {
         Text(review.locationName)
+            .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.lightBlue)
             .font(.avenirNext(size: 16))
-            .fontWeight(.bold)
-            .foregroundColor(oceanBlue.lightBlue)
+            .fontWeight(.medium)
             .italic()
     }
     
     private var reviewDescription: some View {
         Text(review.review)
             .font(.avenirNext(size: 16))
-            .foregroundColor(oceanBlue.white)
+            .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.blue)
             .lineLimit(nil)
         
     }
@@ -59,21 +67,40 @@ struct ReviewCell: View {
             Text(nameIsBlank || nameIsEmpty ? "Anonymous" : review.username)
                 .font(.avenirNext(size: 12))
                 .fontWeight(.bold)
-                .foregroundColor(oceanBlue.blue)
-                .padding(.vertical, 4)
+                .foregroundColor(shouldBeDark()  ? oceanBlue.blue : oceanBlue.white)                .padding(.vertical, 4)
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(oceanBlue.white)
+                        .fill(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
                 )
             
             Spacer()
         }
     }
+    
+    var timestamp: some View {
+        Text(review.timeStamp.dateValue().timeAgoDisplay())
+            .foregroundColor(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
+            .font(.caption)
+    }
+    
+    func shouldBeDark() -> Bool {
+        let isDarkMode = needsToHandleColorScheme && colorScheme == .dark
+        let noHandleOfColorScheme = !needsToHandleColorScheme
+        let shouldBeDark = isDarkMode || noHandleOfColorScheme
+        
+        return shouldBeDark
+    }
 }
 
 struct ReviewCell_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewCell(review: ReviewModel.example)
+        NavigationLink {
+            Text("Hello World")
+        } label: {
+            
+            ReviewCell(review: ReviewModel.example, needsToHandleColorScheme: true)
+        }
+        .padding()
     }
 }

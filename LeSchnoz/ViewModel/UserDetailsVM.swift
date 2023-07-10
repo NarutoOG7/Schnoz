@@ -1,32 +1,32 @@
 //
-//  NewsFeedVM.swift
+//  UserDetailsVM.swift
 //  LeSchnoz
 //
-//  Created by Spencer Belton on 6/22/23.
+//  Created by Spencer Belton on 7/8/23.
 //
 
 import SwiftUI
 import Firebase
 
-class NewsFeedVM: ObservableObject {
-    
-    static let instance = NewsFeedVM()
-    
-    @Published var isFetchInProgress = false
+
+class UserDetailsVM: ObservableObject {
+    static let instance = UserDetailsVM()
+    @ObservedObject var firebaseManager = FirebaseManager.instance
+
+    @Published var selectedUser: FirestoreUser?
     @Published var reviews: [ReviewModel] = []
+    @Published var isFetchInProgress = false
+    @Published var lastDocumentOfUsersReviews: DocumentSnapshot?
     
     @Published var errorMessage = ""
     @Published var shouldShowError = false
-   
-    @Published var lastDocumentOfAllReviewsBatchRequest: DocumentSnapshot?
-
     
     @Published var sortingOption: ReviewSortingOption = .newest {
         didSet {
             if oldValue != sortingOption {
                 self.reviews = []
                 self.batchFirstCall()
-            } 
+            }
         }
     }
     
@@ -38,21 +38,26 @@ class NewsFeedVM: ObservableObject {
         }
     }
     
- 
-    
-    
-    @ObservedObject var firebaseManager = FirebaseManager.instance
-    
     func batchFirstCall() {
         self.reviews = []
-        firebaseManager.batchFirstAllUsersReviews(sortingOption) { reviews, error in
-            self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+        if let selectedUser = selectedUser {
+            firebaseManager.batchFirstUsersReviews(
+                userID: selectedUser.id,
+                sortingOption,
+                withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
         }
     }
     
     func batchSubsequentCall() {
-        firebaseManager.nextPageAllUsersReviews(sortingOption) { reviews, error in
-            self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+        if let selectedUser = selectedUser {
+            firebaseManager.nextPageUsersReviews(
+                userID: selectedUser.id,
+                sortingOption,
+                withCompletion: { reviews, error in
+                self.handleReviewsCompletionWithError(reviews: reviews, error: error)
+            })
         }
     }
 
@@ -60,7 +65,9 @@ class NewsFeedVM: ObservableObject {
         DispatchQueue.main.async {
             if let reviews = reviews {
                 for review in reviews {
-                    self.reviews.append(review)
+                    if review.username != "Anonymous" {
+                        self.reviews.append(review)
+                    }
                 }
             }
             
@@ -74,4 +81,5 @@ class NewsFeedVM: ObservableObject {
         self.errorMessage = error.localizedDescription
         self.shouldShowError = true
     }
+    
 }

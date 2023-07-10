@@ -21,6 +21,8 @@ enum K {
             static let yellow = Color("OceanBlue/Yellow")
             static let black = Color("OceanBlue/Black")
             static let grayPurp = Color("OceanBlue/GrayPurp")
+            static let tabBarColor = Color("OceanBlue/TabBarColor")
+
         }
         
     }

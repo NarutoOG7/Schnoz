@@ -33,10 +33,6 @@ struct ListResultsView: View {
     
     var body: some View {
         Group {
-            if listResultsVM.shouldShowPlaceDetails {
-                    LD()
-                
-            } else {
                 VStack {
                     HStack {
                         backButton
@@ -51,7 +47,11 @@ struct ListResultsView: View {
                 }
                 .padding(.top, 10)
                 .padding(.horizontal)
+                .navigationBarHidden(true)
                 
+                .fullScreenCover(isPresented: $listResultsVM.shouldShowPlaceDetails ) {
+                    LD()
+                }
                 
                 .onChange(of: searchLogic.placeSearchText) { newValue in
                     searchLogic.performPlaceSearch(newValue)
@@ -65,7 +65,6 @@ struct ListResultsView: View {
                     }
                 }
             }
-        }
         .onAppear {
             if listResultsVM.searchBarTapped {
                 self.focusedField = .place
@@ -194,7 +193,7 @@ return  ZStack {
             Text("\(place.averageRating?.avgRating ?? 0)")
                 .foregroundColor(oceanBlue.yellow)
         }
-        .opacity(place.averageRating == nil ? 0 : 1)
+        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
     }
     
     //MARK: - Buttons

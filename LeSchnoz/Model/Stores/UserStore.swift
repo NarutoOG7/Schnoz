@@ -35,7 +35,7 @@ class UserStore: ObservableObject {
     @Published var reviews: [ReviewModel] = []
     @Published var selectedLocationDistanceToUser: Double = 0
     @Published var user = User()
-
+    @Published var firestoreUser: FirestoreUser?
     
     @Published var userSigningOut: Bool?
 }
