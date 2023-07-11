@@ -31,7 +31,7 @@ struct MySniffs: View {
             
             
             if userStore.isGuest {
-                Text("Sign in to create reveiws")
+                Text("Sign in to manage reveiws")
                     .foregroundColor(oceanBlue.white)
             } else
             if viewModel.reviews.isEmpty && !viewModel.isFetchInProgress {

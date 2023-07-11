@@ -30,7 +30,7 @@ struct LocationReviewView: View {
     @FocusState private var focusedField: Field?
     
     @ObservedObject var userStore: UserStore
-    @ObservedObject var firebaseManager: FirebaseManager
+    @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager: ErrorManager
     
     @Environment(\.presentationMode) var presentationMode
@@ -328,7 +328,6 @@ struct LocationReviewView_Previews: PreviewProvider {
                            reviews: .constant([ReviewModel]()),
                            isUpdatingReview: false,
                            userStore: UserStore(),
-                           firebaseManager: FirebaseManager(),
                            errorManager: ErrorManager())
     }
 }

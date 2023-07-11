@@ -88,19 +88,19 @@ struct LD: View {
                 )
             }
         
-//            .fullScreenCover(isPresented: $ldvm.shouldShowLeaveAReviewView) {
-//                LocationReviewView(
-//                    isPresented: $isCreatingNewReview,
-//                    review: .constant(nil),
-//                    location: $ldvm.selectedLocation,
-//                    reviews: $ldvm.reviews,
-//                    isUpdatingReview: false,
-//                    userStore: userStore,
-//                    firebaseManager: firebaseManager,
-//                    errorManager: errorManager
-//                )
-//            }
-//
+            .fullScreenCover(isPresented: $ldvm.shouldShowLeaveAReviewView) {
+                LocationReviewView(
+                    isPresented: $isCreatingNewReview,
+                    review: .constant(nil),
+                    location: $ldvm.selectedLocation,
+                    reviews: $ldvm.reviews,
+                    isUpdatingReview: false,
+                    userStore: userStore,
+                    firebaseManager: firebaseManager,
+                    errorManager: errorManager
+                )
+            }
+
             .alert(isPresented: $showGuestAlert) {
                 Alert(title: Text("Sign In First"), message: Text("You must be signed in to leave reviews"), primaryButton: .default(Text("Sign In"), action: {
                     UserDefaults.standard.set(false, forKey: "signedIn")
@@ -193,7 +193,11 @@ struct LD: View {
             Text("(\(total) review\(textEnding))")
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.lightBlue)
-            leaveAReviewView
+            if userStore.isGuest {
+                leaveAReviewGuestButton
+            } else {
+                leaveAReviewLink
+            }
             
         }
     }
@@ -213,29 +217,32 @@ struct LD: View {
         }
     }
     
-    private var leaveAReviewView: some View {
-        NavigationLink {
-            LocationReviewView(
-                isPresented: $isCreatingNewReview,
-                review: .constant(nil),
-                location: $ldvm.selectedLocation,
-                reviews: $ldvm.reviews,
-                isUpdatingReview: false,
-                userStore: userStore,
-                firebaseManager: firebaseManager,
-                errorManager: errorManager
-            )
-        } label: {
+    private var leaveAReviewLink: some View {
+
+             NavigationLink {
+                LocationReviewView(
+                    isPresented: $isCreatingNewReview,
+                    review: .constant(nil),
+                    location: $ldvm.selectedLocation,
+                    reviews: $ldvm.reviews,
+                    isUpdatingReview: false,
+                    userStore: userStore,
+                    firebaseManager: firebaseManager,
+                    errorManager: errorManager
+                )
+            } label: {
+                Text("Leave A Review")
+                    .font(.avenirNextRegular(size: 17))
+                    .foregroundColor(oceanBlue.lightBlue)
+            }
+    }
+    
+    private var leaveAReviewGuestButton: some View {
+        Button(action: leaveAReviewTapped) {
             Text("Leave A Review")
                 .font(.avenirNextRegular(size: 17))
                 .foregroundColor(oceanBlue.lightBlue)
         }
-
-//        Button(action: leaveAReviewTapped) {
-//            Text("Leave A Review")
-//                .font(.avenirNextRegular(size: 17))
-//                .foregroundColor(oceanBlue.lightBlue)
-//        }
     }
     
     private var firebaseErrorBanner: some View {
@@ -378,11 +385,11 @@ struct LD: View {
 //    }
     
     private func leaveAReviewTapped() {
-        if userStore.isGuest {
+//        if userStore.isGuest {
             self.showGuestAlert = true
-        } else {
-            ldvm.shouldShowLeaveAReviewView = true
-        }
+//        } else {
+//            ldvm.shouldShowLeaveAReviewView = true
+//        }
     }
     
 }

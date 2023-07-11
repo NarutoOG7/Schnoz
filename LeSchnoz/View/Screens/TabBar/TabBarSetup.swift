@@ -70,19 +70,20 @@ struct TabBarSetup: View {
                 self.assignFirestoreUser()
             }
             
-            if !userUpdatedWithReviewDetails {
-                self.updateUserWithReviewDetails()
-            }
             
-            FirebaseManager.instance.getFirestoreUser { firestoreUser, error in
-                if let firestoreUser = firestoreUser {
-                    userStore.firestoreUser = firestoreUser
+            if !userStore.isGuest {
+                if !userUpdatedWithReviewDetails {
+                    self.updateUserWithReviewDetails()
                 }
-                if let error = error {
-                    print(error.localizedDescription)
+                FirebaseManager.instance.getFirestoreUser { firestoreUser, error in
+                    if let firestoreUser = firestoreUser {
+                        userStore.firestoreUser = firestoreUser
+                    }
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
                 }
             }
-            
             
             Task {
                 

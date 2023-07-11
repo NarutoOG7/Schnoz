@@ -34,6 +34,7 @@ struct HomeDisplayView: View {
         GeometryReader { geo in
                 ZStack {
                     backgroundImage(geo)
+                        
                 searchStack(geo)
             }
             
@@ -100,7 +101,8 @@ struct HomeDisplayView: View {
                 Image("restaurant")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(.top)
+                    .edgesIgnoringSafeArea(.all)
+//                    .frame(width: geo.size.width + 20)
 //                    .blur(radius: 1)
                     .overlay(
                         LinearGradient(
@@ -133,7 +135,6 @@ struct HomeDisplayView: View {
                 .matchedGeometryEffect(id: "search", in: namespace)
                 
             }
-            .frame(width: geo.size.width - 60)
             .padding()
             .background(         RoundedRectangle(cornerRadius: 10)
                 .fill(oceanBlue.white)
