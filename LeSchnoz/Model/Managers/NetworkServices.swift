@@ -105,15 +105,26 @@ class NetworkServices: ObservableObject {
                     
                     
                     group.enter()
-                        GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
-                            if let error = error {
-                                completion(nil, error)
-                            }
-                            if let gmsPlace = gmsPlace {
-                                schnozPlace.gmsPlace = gmsPlace
-                            }
-                            group.leave()
+//                        GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
+//                            if let error = error {
+//                                completion(nil, error)
+//                            }
+//                            if let gmsPlace = gmsPlace {
+//                                schnozPlace.gmsPlace = gmsPlace
+//                            }
+//                            group.leave()
+//                        }
+                    
+                    GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            completion(nil, error)
                         }
+                        if let gmsPlace = gmsPlace {
+                            schnozPlace.gmsPlace = gmsPlace
+                        }
+                        group.leave()
+                    }
 
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in

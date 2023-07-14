@@ -13,8 +13,8 @@
 		C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90DFAE529FC572D00C8971E /* FMReviews.swift */; };
 		C913A7042A43B8E400C1908E /* NewsFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7032A43B8E400C1908E /* NewsFeedView.swift */; };
 		C913A7062A44C1DA00C1908E /* NewsFeedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7052A44C1DA00C1908E /* NewsFeedVM.swift */; };
-		C913A7082A47556B00C1908E /* AllSniffersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7072A47556B00C1908E /* AllSniffersVM.swift */; };
-		C913A70A2A475AFC00C1908E /* OtherSniffersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7092A475AFC00C1908E /* OtherSniffersView.swift */; };
+		C913A7082A47556B00C1908E /* TopSniffersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7072A47556B00C1908E /* TopSniffersVM.swift */; };
+		C913A70A2A475AFC00C1908E /* TopSniffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A7092A475AFC00C1908E /* TopSniffers.swift */; };
 		C913A70C2A476F2600C1908E /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70B2A476F2600C1908E /* UserDetailsView.swift */; };
 		C913A70E2A479A1700C1908E /* SocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70D2A479A1700C1908E /* SocialCell.swift */; };
 		C92E3F8F2A52882F00E90371 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92E3F8E2A52882F00E90371 /* ReviewCell.swift */; };
@@ -104,8 +104,8 @@
 		C90DFAE529FC572D00C8971E /* FMReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMReviews.swift; sourceTree = "<group>"; };
 		C913A7032A43B8E400C1908E /* NewsFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedView.swift; sourceTree = "<group>"; };
 		C913A7052A44C1DA00C1908E /* NewsFeedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedVM.swift; sourceTree = "<group>"; };
-		C913A7072A47556B00C1908E /* AllSniffersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSniffersVM.swift; sourceTree = "<group>"; };
-		C913A7092A475AFC00C1908E /* OtherSniffersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSniffersView.swift; sourceTree = "<group>"; };
+		C913A7072A47556B00C1908E /* TopSniffersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSniffersVM.swift; sourceTree = "<group>"; };
+		C913A7092A475AFC00C1908E /* TopSniffers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSniffers.swift; sourceTree = "<group>"; };
 		C913A70B2A476F2600C1908E /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
 		C913A70D2A479A1700C1908E /* SocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCell.swift; sourceTree = "<group>"; };
 		C92E3F8E2A52882F00E90371 /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
@@ -230,14 +230,14 @@
 			path = FirebaseManager;
 			sourceTree = "<group>";
 		};
-		C913A70F2A479A3000C1908E /* OtherSniffers */ = {
+		C913A70F2A479A3000C1908E /* TopSniffers */ = {
 			isa = PBXGroup;
 			children = (
-				C913A7092A475AFC00C1908E /* OtherSniffersView.swift */,
+				C913A7092A475AFC00C1908E /* TopSniffers.swift */,
 				C913A70B2A476F2600C1908E /* UserDetailsView.swift */,
 				C913A70D2A479A1700C1908E /* SocialCell.swift */,
 			);
-			path = OtherSniffers;
+			path = TopSniffers;
 			sourceTree = "<group>";
 		};
 		C913A7102A479A3D00C1908E /* NewsFeed */ = {
@@ -256,7 +256,7 @@
 				C99EEB8A299B19B400B77DBD /* Home */,
 				C913A7122A479A7E00C1908E /* MySniffs */,
 				C913A7102A479A3D00C1908E /* NewsFeed */,
-				C913A70F2A479A3000C1908E /* OtherSniffers */,
+				C913A70F2A479A3000C1908E /* TopSniffers */,
 				C99EEB6B299B19B400B77DBD /* Settings */,
 			);
 			path = TabBar;
@@ -549,7 +549,7 @@
 				C9AC615A29D1DB670006FF32 /* SettingsVM.swift */,
 				C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */,
 				C913A7052A44C1DA00C1908E /* NewsFeedVM.swift */,
-				C913A7072A47556B00C1908E /* AllSniffersVM.swift */,
+				C913A7072A47556B00C1908E /* TopSniffersVM.swift */,
 				C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */,
 				C9F225D02A58AC5D0074AE89 /* LDVM.swift */,
 				C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */,
@@ -734,7 +734,7 @@
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
 				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,
-				C913A70A2A475AFC00C1908E /* OtherSniffersView.swift in Sources */,
+				C913A70A2A475AFC00C1908E /* TopSniffers.swift in Sources */,
 				C99EEBF5299B19B400B77DBD /* ShareActivitySheet.swift in Sources */,
 				C99EEC12299B19B400B77DBD /* CreativeSignInUp.swift in Sources */,
 				C9AC615929D11E990006FF32 /* SettingsPage.swift in Sources */,
@@ -763,7 +763,7 @@
 				C99EEBCD299B19B400B77DBD /* User.swift in Sources */,
 				C913A7042A43B8E400C1908E /* NewsFeedView.swift in Sources */,
 				C99EEBE6299B19B400B77DBD /* CircularButton.swift in Sources */,
-				C913A7082A47556B00C1908E /* AllSniffersVM.swift in Sources */,
+				C913A7082A47556B00C1908E /* TopSniffersVM.swift in Sources */,
 				C9F225D32A5A433F0074AE89 /* UserDetailsVM.swift in Sources */,
 				C90DFAE429FC56D600C8971E /* FMAverage.swift in Sources */,
 				C99EEBCC299B19B400B77DBD /* Address.swift in Sources */,

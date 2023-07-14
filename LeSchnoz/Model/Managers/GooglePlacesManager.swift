@@ -188,6 +188,18 @@ class GooglePlacesManager: ObservableObject {
         })
     }
     
+    func getPlaceDetails(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
+        self.placesClient.lookUpPlaceID(placeID) { place, error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(nil, error)
+            }
+            if let place = place {
+                completion(place, nil)
+            }
+        }
+    }
+    
     func getPhotoForPlaceID(_ placeID: String, withCompletion completion: @escaping(UIImage?, Error?) -> Void) {
         
         self.placesClient.lookUpPlaceID(placeID) { (place, error) in

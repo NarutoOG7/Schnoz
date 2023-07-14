@@ -180,6 +180,7 @@ struct LD: View {
             .font(.avenirNextRegular(size: 19))
             .lineLimit(nil)
             .foregroundColor(oceanBlue.blue)
+            .lineLimit(1)
 
     }
     

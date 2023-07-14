@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct OtherSniffersView: View {
+struct TopSniffers: View {
     let oceanBlue = K.Colors.OceanBlue.self
     
-    @ObservedObject var viewModel = AllSniffersVM.instance
+    @ObservedObject var viewModel = TopSniffersVM.instance
     @ObservedObject var userDetailsVM = UserDetailsVM.instance
     
     @State var showActionSheet = false
@@ -74,8 +74,9 @@ struct OtherSniffersView: View {
 
         }
         .modifier(ClearListBackgroundMod())
-        .onAppear {
-            viewModel.batchFirstCall()
+        .task {
+                viewModel.batchFirstCall()
+            
         }
 
     }
@@ -101,7 +102,7 @@ struct OtherSniffersView: View {
 
 struct OtherSniffersView_Previews: PreviewProvider {
     static var previews: some View {
-        OtherSniffersView()
+        TopSniffers()
     }
 }
 

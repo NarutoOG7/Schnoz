@@ -28,8 +28,6 @@ struct MySniffs: View {
         ZStack {
             oceanBlue.blue
                 .edgesIgnoringSafeArea(.all)
-            
-            
             if userStore.isGuest {
                 Text("Sign in to manage reveiws")
                     .foregroundColor(oceanBlue.white)
@@ -38,7 +36,6 @@ struct MySniffs: View {
                 noReviews
             } else {
                 listOfReviews
-                //                        .padding(.vertical, 5)
                     .toolbar {
                         if viewModel.reviews.count > 1 {
                             sortReviewsButton
@@ -47,19 +44,16 @@ struct MySniffs: View {
                 
             }
         }
-        .onAppear {
-            viewModel.reviews = []
-            viewModel.batchFirstCall()
+        .task {
+                viewModel.batchFirstCall()
+            
         }
         .alert(isPresented: $shouldShowRemoveReviewConfirmation) {
             Alert(
-                title: Text("Delete items"),
-                message: Text("Are you sure you want to delete the selected items?"),
+                title: Text("Delete Review"),
+                message: Text("Are you sure you want to delete the selected review?"),
                 primaryButton: .destructive(Text("Delete")) {
-                    // delete selected items here
-                
                     self.delete(at: self.selectedIndexSet ?? IndexSet())
-                    //                    userStore.reviews.remove(atOffsets: selectedIndexSet ?? IndexSet())
                     selectedIndexSet = nil
                 },
                 secondaryButton: .cancel()
@@ -83,15 +77,11 @@ struct MySniffs: View {
                         viewModel.sortingOption = .worst
                     }),
                     .cancel()
-                    
                 ]
             )
         }
-        
-        
         .navigationTitle("My Sniffs")
         .navigationBarTitleDisplayMode(.large)
-        
     }
     
     private var noReviews: some View {
@@ -101,9 +91,7 @@ struct MySniffs: View {
     }
     
     private var listOfReviews: some View {
-        
         List {
-                        
             ForEach(0..<viewModel.reviews.count, id: \.self) { index in
                 cellForReview(viewModel.reviews[index])
                     .listRowBackground(Color.clear)
@@ -111,15 +99,11 @@ struct MySniffs: View {
                         let isLast = viewModel.reviews.endIndex == index
                         viewModel.listHasScrolledToBottom = isLast
                     }
-                
             }
             .onDelete(perform: { indexSet in
                 self.selectedIndexSet = indexSet
                 self.shouldShowRemoveReviewConfirmation = true
             })
-            
-            
-            //            .onDelete(perform: delete)
         }
         .modifier(ClearListBackgroundMod())
         .listStyle(.insetGrouped)
@@ -139,46 +123,27 @@ struct MySniffs: View {
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(.clear, lineWidth: 1)
-            ///  // // This will remove the stupid disclosure indicator that comes with a Navigation Link // //  ///
+            /// This will remove the stupid disclosure indicator that comes with a Navigation Link
         )
         
         
     }
     
-    //MARK: - Methods
     
-//    private func delete(at offsets: IndexSet) {
-//
-//        offsets.map { viewModel.reviews[$0] }.forEach { review in
-//
-//            firebaseManager.getAverageRatingForLocation(review.locationID) { avgRating in
-//                handleNewRating(avgRating, review)
-//            }
-//        }
-//        func handleNewRating(_ avgRating: AverageRating?, _ review: ReviewModel) {
-//            if var avgRating = avgRating {
-//                avgRating.totalStarCount -= review.rating
-//                avgRating.numberOfReviews -= 1
-//
-//                let noReviews = avgRating.numberOfReviews == 0
-//                noReviews ? firebaseManager.removeAverageRating(avgRating) : firebaseManager.addAverageRating(avgRating)
-//
-//                let avg = avgRating
-//                ListResultsVM.instance.refreshData(review: review, averageRating: avg, placeID: review.locationID, isRemoving: true, isAddingNew: false)
-//                if var firestoreUser = userStore.firestoreUser {
-//                    firestoreUser.handleRemovalOfReview(ogUser: firestoreUser, review: review)
-//                }
-//                firebaseManager.removeReviewFromFirestore(review)
-//                self.viewModel.reviews.removeAll(where: { $0 == review })
-//                LDVM.instance.reviews.removeAll(where: { $0 == review })
-//                userStore.reviews.remove(atOffsets: offsets)
-//                ListResultsVM.instance.latestReview = nil
-//                LDVM.instance.selectedLocation?.averageRating = avgRating
-
-//
-//            }
-//        }
-//    }
+    //MARK: - Buttons
+    
+    private var sortReviewsButton: some View {
+        HStack {
+            Spacer()
+            Button(action: sortReviewsTapped) {
+                Image(systemName: "slider.horizontal.3")
+                    .foregroundColor(oceanBlue.yellow)
+                    .font(.title3)
+            }
+        }
+    }
+    
+    //MARK: - Methods
     
     private func delete(at offsets: IndexSet) {
         offsets.map { viewModel.reviews[$0] }.forEach { review in
@@ -187,10 +152,7 @@ struct MySniffs: View {
                     average.totalStarCount -= review.rating
                     average.numberOfReviews -= 1
                     
-                    let noReviews = average.numberOfReviews == 0
-                    noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
-                    
-                    ListResultsVM.instance.refreshData(review: review, averageRating: average, placeID: review.locationID, isRemoving: true, isAddingNew: false)
+                    ListResultsVM.instance.refreshData(review: review, averageRating: average, placeID: review.locationID, refreshType: .remove)
                     LDVM.instance.selectedLocation?.averageRating = average
                     
                     // Firestore User
@@ -201,76 +163,15 @@ struct MySniffs: View {
                     // Remove Review
                     firebaseManager.removeReviewFromFirestore(review)
                     
+                    // Update or Remove AvgRating
+                    let noReviews = average.numberOfReviews == 0
+                    noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
+                    
                     // Refresh data
                     self.viewModel.reviews.removeAll(where: { $0 == review })
                     LDVM.instance.reviews.removeAll(where: { $0 == review })
-
                     userStore.reviews.remove(atOffsets: offsets)
                 }
-            }
-        }
-    }
-    
-//    private func delete(at offsets: IndexSet) {
-//        //        let group = DispatchGroup()
-//        //        group.enter()
-//        offsets.map { viewModel.reviews[$0] }.forEach { review in
-//            handleNewLocationAverage(review)
-//            handleFirestoreUserAverage(review)
-//            removeReviewFromFirestore(review)
-//            refreshData(review: review, offsets: offsets)
-//        }
-//    }
-    
-    private func handleNewLocationAverage(_ review: ReviewModel) {
-        firebaseManager.getAverageRatingForLocation(review.locationID) { oldAverage in
-            if var average = oldAverage {
-                average.totalStarCount -= review.rating
-                average.numberOfReviews -= 1
-
-                let noReviews = average.numberOfReviews == 0
-                noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
-
-                ListResultsVM.instance.refreshData(review: review, averageRating: average, placeID: review.locationID, isRemoving: true, isAddingNew: false)
-                LDVM.instance.selectedLocation?.averageRating = oldAverage
-            }
-        }
-    }
-    
-    private func handleFirestoreUserAverage(_ review: ReviewModel) {
-        if var firestoreUser = userStore.firestoreUser {
-            firestoreUser.handleRemovalOfReview(review: review)
-        }
-    }
-    
-    private func removeReviewFromFirestore(_ review: ReviewModel) {
-        firebaseManager.removeReviewFromFirestore(review) { error in
-            if let error = error {
-                
-            } else {
-                ListResultsVM.instance.latestReview = nil
-
-            }
-            
-        }
-        
-    }
-    
-    private func refreshData(review: ReviewModel, offsets: IndexSet) {
-        self.viewModel.reviews.removeAll(where: { $0 == review })
-        LDVM.instance.reviews.removeAll(where: { $0 == review })
-
-        userStore.reviews.remove(atOffsets: offsets)
-    }
-    
-    private var sortReviewsButton: some View {
-        HStack {
-            Spacer()
-            
-            Button(action: sortReviewsTapped) {
-                Image(systemName: "slider.horizontal.3")
-                    .foregroundColor(oceanBlue.yellow)
-                    .font(.title3)
             }
         }
     }

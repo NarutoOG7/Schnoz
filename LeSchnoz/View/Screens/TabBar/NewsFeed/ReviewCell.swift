@@ -7,6 +7,28 @@
 
 import SwiftUI
 
+
+//var body: some View {
+//
+//    VStack(alignment: .leading, spacing: 8) {
+//
+//        VStack(alignment: .leading, spacing: 4) {
+//            title
+//            HStack {
+//                Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
+//                timestamp
+//            }
+//            reviewDescription
+//            username
+//                .padding(.top, 10)
+//            locationName
+//            locationAddress
+//        }
+//        Divider().overlay(oceanBlue.lightBlue)
+//            .padding(.top)
+//    }
+//}
+
 struct ReviewCell: View {
     
     let review: ReviewModel
@@ -16,47 +38,68 @@ struct ReviewCell: View {
     let oceanBlue = K.Colors.OceanBlue.self
     
     @Environment(\.colorScheme) var colorScheme
-        
-    var body: some View {
             
-             VStack(alignment: .leading, spacing: 8) {
-                title
-                 if isShowingLocationName {
-                     locationName
-                 }
-                 HStack {
-                     Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
-                     timestamp
-                 }
-                reviewDescription
-                 if isShowingUsername {
-                     username
-                 }
-                Divider().overlay(oceanBlue.lightBlue)
-                    .padding(.top)
-                 
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 4) {
+            if isShowingLocationName {
+                locationName
+                locationAddress
             }
+
+           title
+                .padding(.top, 3)
+
+            HStack {
+                Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
+                timestamp
+            }
+           reviewDescription
+            if isShowingUsername {
+                username
+                    .padding(.top, 10)
+            }
+//           Divider().overlay(oceanBlue.lightBlue)
+//               .padding(.top)
+
         }
+    }
+  
     private var title: some View {
          Text(review.title)
             .font(.avenirNext(size: 18))
-            .fontWeight(.bold)
+            .multilineTextAlignment(.leading)
+            .fontWeight(.medium)
+            .italic()
             .foregroundColor(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
     }
     
     private var locationName: some View {
         Text(review.locationName)
-            .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.lightBlue)
+            .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.blue)
+            .font(.avenirNext(size: 19))
+            .fontWeight(.bold)
+            .multilineTextAlignment(.leading)
+
+    }
+    
+    private var locationAddress: some View {
+        Text(review.address.cityState())
+            .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.blue)
             .font(.avenirNext(size: 16))
-            .fontWeight(.medium)
-            .italic()
+//            .fontWeight(.medium)
+            .multilineTextAlignment(.leading)
+
     }
     
     private var reviewDescription: some View {
         Text(review.review)
             .font(.avenirNext(size: 16))
             .foregroundColor(shouldBeDark()  ? oceanBlue.white : oceanBlue.blue)
+            .fontWeight(.medium)
             .lineLimit(nil)
+            .multilineTextAlignment(.leading)
+
         
     }
     
@@ -64,17 +107,20 @@ struct ReviewCell: View {
         let nameIsEmpty = review.username.isEmpty
         let nameIsBlank = review.username == "" || review.username == " "
         return HStack {
+            Spacer()
+
             Text(nameIsBlank || nameIsEmpty ? "Anonymous" : review.username)
-                .font(.avenirNext(size: 12))
+                .font(.avenirNext(size: 14))
                 .fontWeight(.bold)
+//                .foregroundColor(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
                 .foregroundColor(shouldBeDark()  ? oceanBlue.blue : oceanBlue.white)                .padding(.vertical, 4)
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
+//                        .stroke(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
                         .fill(shouldBeDark() ? oceanBlue.white : oceanBlue.blue)
                 )
             
-            Spacer()
         }
     }
     
@@ -100,6 +146,9 @@ struct ReviewCell_Previews: PreviewProvider {
         } label: {
             
             ReviewCell(review: ReviewModel.example, needsToHandleColorScheme: true)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(K.Colors.OceanBlue.blue, lineWidth: 3))
         }
         .padding()
     }

@@ -26,9 +26,6 @@ struct HomeDisplayView: View {
     @State var shouldShowSuccessMessage = false
     
     @Environment(\.colorScheme) var colorScheme
-
-        
-    let defaultReview = ReviewModel(id: "01", rating: 7, review: "Stinks like cigarette smoke and booze. To be fair, it is expected at Stanky's Place", title: "I guess it meets expectations?!", username: "MykalMayn", locationID: "00101", locationName: "Stanky's Place")
     
     var body: some View {
         GeometryReader { geo in
@@ -82,6 +79,7 @@ struct HomeDisplayView: View {
                 }
                 latestReview(geo)
                     .padding(.top, -20)
+                    .padding(.horizontal)
                 Spacer()
             }
         }
@@ -152,8 +150,12 @@ struct HomeDisplayView: View {
                     .foregroundColor(oceanBlue.blue)
                     .padding(.vertical)
                  Button(action: self.latestReviewTapped) {
-                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
-                        .frame(width:  geo.size.width - 60)
+//                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
+                     ReviewCell(review: listResultsVM.latestReview ?? ReviewModel(), needsToHandleColorScheme: true)
+//                        .frame(width:  geo.size.width - 60)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 14)
+                            .strokeBorder(oceanBlue.blue, lineWidth: 3))
                  }
             }
         }

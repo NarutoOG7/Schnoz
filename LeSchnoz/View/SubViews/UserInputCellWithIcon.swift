@@ -82,7 +82,7 @@ struct UserInputCellWithIcon: View {
     private var textField: some View {
         TextField("", text: self.$input, axis: .vertical)
             .disableAutocorrection(true)
-            .font(.avenirNext(size: 22)
+            .font(.avenirNext(size: 19)
                 .weight(boldText ? .bold : .regular))
             .textInputAutocapitalization(.never)
             .foregroundColor(primaryColor)
@@ -102,7 +102,7 @@ struct UserInputCellWithIcon: View {
     private var secureFieldView: some View {
         SecureField(input, text: self.$input)
             .disableAutocorrection(true)
-            .font(.avenirNext(size: 22)
+            .font(.avenirNext(size: 19)
                 .weight(boldText ? .bold : .regular))
             .textInputAutocapitalization(.never)
             .foregroundColor(primaryColor)

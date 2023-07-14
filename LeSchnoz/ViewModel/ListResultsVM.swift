@@ -37,46 +37,47 @@ class ListResultsVM: ObservableObject {
 
     //MARK: - Refresh Data in Places Buckets
     
-    func refreshData(review: ReviewModel, averageRating: AverageRating?, placeID: String, isRemoving: Bool, isAddingNew: Bool) {
+    func refreshData(review: ReviewModel, averageRating: AverageRating?, placeID: String, refreshType: RefreshType) {
         updateReviewBuckets(&userStore.reviews)
         updateReviewInPlaces(&nearbyPlaces)
         updateReviewInPlaces(&schnozPlaces)
         updateReviewInPlaces(&breakfastPlaces)
         updateReviewInPlaces(&lunchPlaces)
         updateReviewInPlaces(&dinnerPlaces)
-
         
+      
         func updateReviewInPlaces(_ places: inout [SchnozPlace]) {
-
             if let index = places.firstIndex(where: { $0.placeID == placeID }) {
-                if isAddingNew {
-                    // Adding new review to all buckets where place exists
+                places[index].averageRating = averageRating
+
+                switch refreshType {
+                case .add:
                     if !places[index].schnozReviews.contains(review) {
                         places[index].schnozReviews.append(review)
                     }
-                    places[index].averageRating = averageRating
-                } else
-                if let oldReviewIndex = places[index].schnozReviews.firstIndex(where: { $0.id == review.id }) {
-                    if isRemoving {
-                        // Removing review from all buckets
+                case .remove:
+                    if let oldReviewIndex = places[index].schnozReviews.firstIndex(where: { $0.id == review.id }) {
                         places[index].schnozReviews.remove(at: oldReviewIndex)
-                    } else {
-                        // Updating old review in all buckets
+                    }
+                case .update:
+                    if let oldReviewIndex = places[index].schnozReviews.firstIndex(where: { $0.id == review.id }) {
                         places[index].schnozReviews[oldReviewIndex] = review
                     }
-                    places[index].averageRating = averageRating
                 }
             }
         }
+    
         
         func updateReviewBuckets(_ reviews: inout [ReviewModel]) {
-            if isAddingNew {
+            switch refreshType {
+            case .add:
                 reviews.append(review)
-            } else
-            if let oldReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
-                if isRemoving {
+            case .remove:
+                if let oldReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
                     reviews.remove(at: oldReviewIndex)
-                } else {
+                }
+            case .update:
+                if let oldReviewIndex = reviews.firstIndex(where: { $0.id == review.id }) {
                     reviews[oldReviewIndex] = review
                 }
             }
@@ -134,5 +135,9 @@ class ListResultsVM: ObservableObject {
       }
       
       return greetingText
+    }
+    
+    enum RefreshType {
+        case add, remove, update
     }
 }

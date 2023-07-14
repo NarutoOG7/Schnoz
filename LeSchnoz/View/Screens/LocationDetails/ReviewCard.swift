@@ -83,16 +83,11 @@ struct ReviewCard: View {
 
 struct ReviewCard_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewCard(review: ReviewModel(id: "",
-                                       rating: 4,
-                                       review: "Loved the room and it is soo haunted!",
-                                       title: "Definite Yes",
-                                       username: "ALA",
-                                       locationID: "123",
-                                       locationName: "Stanley Hotel"))
+        ReviewCard(review: ReviewModel.example)
         .padding()
     }
 }
+
 extension Date {
     func timeAgoDisplay() -> String {
         let formatter = RelativeDateTimeFormatter()

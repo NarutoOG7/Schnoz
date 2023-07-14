@@ -208,12 +208,14 @@ struct LocationReviewView: View {
             review: descriptionInput,
             title: titleInput,
             username: isAnonymous ? "Anonymous" : name,
+            userID: userStore.user.id,
             locationID:  review?.locationID ?? location?.placeID ?? "",
-            locationName: review?.locationName ?? location?.primaryText ?? "")
+            locationName: review?.locationName ?? location?.primaryText ?? "",
+            address: location?.address ?? Address())
     }
     
     private func update(_ rev: ReviewModel) {
-        self.location?.placeID = review?.locationID ?? ""
+//        self.location?.placeID = review?.locationID ?? ""
         var oldReview = ReviewModel()
         
         firebaseManager.updateReviewInFirestore(rev) { error in
@@ -228,7 +230,7 @@ struct LocationReviewView: View {
                 oldReview = self.reviews[reviewIndex]
                 self.reviews[reviewIndex] = rev
             }
-            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", isRemoving: false, isAddingNew: false)
+            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", refreshType: .update)
             if var firestoreUser = userStore.firestoreUser {
                 firestoreUser.handleUpdateOfReview( oldReview: oldReview, newReview: rev)
             }
@@ -237,11 +239,8 @@ struct LocationReviewView: View {
     }
     
     private func add(_ review: ReviewModel) {
-        if let location = location {
-            let timestamp = Timestamp()
             var rev = review
-            rev.timeStamp = timestamp
-            firebaseManager.addReviewToFirestoreBucket(rev, location: location) { error in
+        firebaseManager.addReviewToFirestoreBucket(rev, location) { error in
                 if let error = error {
                     self.errorManager.message = error.rawValue
                     self.errorManager.shouldDisplay = true
@@ -255,15 +254,14 @@ struct LocationReviewView: View {
                 ListResultsVM.instance.refreshData(
                     review: rev,
                     averageRating: updatedAverageRating(rev),
-                    placeID: location.placeID,
-                    isRemoving: false,
-                    isAddingNew: true)
+                    placeID: location?.placeID ?? rev.locationID,
+                    refreshType: .add)
                 if var firestoreUser = userStore.firestoreUser {
                     firestoreUser.handleAdditionOfReview(rev)
                 }
                 self.shouldShowSuccessMessage = true
             }
-        }
+        
     }
     
     func updatedAverageRating(_ rev: ReviewModel) -> AverageRating {

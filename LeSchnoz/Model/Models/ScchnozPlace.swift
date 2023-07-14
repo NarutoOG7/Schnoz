@@ -15,10 +15,14 @@ class SchnozPlace: Hashable, Identifiable {
     var secondaryText: String?
 //    var reviews: [ReviewModel]?
     var averageRating: AverageRating?
+    var address: Address?
     var gmsPlace: GMSPlace? {
         willSet {
             primaryText = newValue?.name
             secondaryText = newValue?.formattedAddress
+            if let addressComponents = newValue?.addressComponents {
+                self.address = Address(addressComponents: addressComponents)
+            }
         }
     }
     

@@ -8,8 +8,8 @@
 import SwiftUI
 import Firebase
 
-class AllSniffersVM: ObservableObject {
-    static let instance = AllSniffersVM()
+class TopSniffersVM: ObservableObject {
+    static let instance = TopSniffersVM()
     
     @ObservedObject var firebaseManager = FirebaseManager.instance
 
@@ -21,8 +21,8 @@ class AllSniffersVM: ObservableObject {
     @Published var shouldShowError = false
 
     @Published var sortingOption: SniffersSortingOption = .mostReviews {
-        didSet {
-            if oldValue != sortingOption {
+        willSet {
+            if newValue != sortingOption {
                 self.users = []
                 self.batchFirstCall()
             }
@@ -32,7 +32,9 @@ class AllSniffersVM: ObservableObject {
     @Published var listHasScrolledToBottom = false {
         willSet {
             if newValue == true {
-                self.batchSubsequentCall()
+                if users.count >= 15 {
+                    self.batchSubsequentCall()
+                }
             }
         }
     }
@@ -52,18 +54,22 @@ class AllSniffersVM: ObservableObject {
     }
 
     func handleUsersCompletionWithError(users: [FirestoreUser]?, error: Error?) {
-        DispatchQueue.main.async {
-            if let users = users {
-                for user in users {
-                    if (user.reviewCount ?? 0) > 0 {
-                        self.users.append(user)
+        if let users = users {
+            print(users)
+            print(self.users)
+            for user in users {
+                if (user.reviewCount ?? 0) > 0 {
+                    if !self.users.contains(user) {
+                        DispatchQueue.main.async {
+                            self.users.append(user)
+                        }
                     }
                 }
             }
-            
+        }
             if let error = error {
                 self.handleError(error)
-            }
+            
         }
     }
     

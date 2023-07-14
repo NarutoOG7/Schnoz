@@ -73,7 +73,11 @@ struct TabBarSetup: View {
             
             if !userStore.isGuest {
                 if !userUpdatedWithReviewDetails {
-                    self.updateUserWithReviewDetails()
+                    firebaseManager.doesUserExist(id: userStore.user.id) { exists in
+                        if !exists {
+                            self.updateUserWithReviewDetails()
+                        }
+                    }
                 }
                 FirebaseManager.instance.getFirestoreUser { firestoreUser, error in
                     if let firestoreUser = firestoreUser {
@@ -190,13 +194,13 @@ struct TabBarSetup: View {
     private var otherSniffers: some View {
         
         NavigationView {
-            OtherSniffersView()
-                .navigationTitle("Other Sniffers")
+            TopSniffers()
+                .navigationTitle("Top Sniffers")
                 .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
         }
         .tabItem {
-            Text("Other Sniffers")
-            Image(systemName: "figure.socialdance")
+            Text("Top Sniffers")
+            Image(systemName: "trophy")
             
         }
         .tag(3)
@@ -318,7 +322,8 @@ struct TabBarSetup: View {
     }
     
     func updateUserWithReviewDetails() {
-        var updatedUser = FirestoreUser(id: userStore.user.id, username: userStore.user.name)
+        // Create Firestore User if one doesn't exist
+        let updatedUser = FirestoreUser(id: userStore.user.id, username: userStore.user.name)
         firebaseManager.getReviewsForUser(userStore.user) { review in
             //            updatedUser.handleAdditionOfReview(review)
             firebaseManager.updateFirestoreUser(updatedUser)

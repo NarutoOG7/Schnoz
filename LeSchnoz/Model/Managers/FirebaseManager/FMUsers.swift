@@ -105,8 +105,9 @@ extension FirebaseManager {
                 print("Error checking username availability: \(error.localizedDescription)")
                 exists(false)
             } else {
-                let usernameExists = !snapshot!.isEmpty
-                exists(usernameExists)
+                let userExists = !snapshot!.isEmpty
+                print(userExists)
+                exists(userExists)
             }
         }
     }
@@ -183,7 +184,7 @@ extension FirebaseManager {
     }
     
     func batchFirstAllUsers(_ sortingOption: SniffersSortingOption, withCompletion completion: @escaping([FirestoreUser]?, Error?) -> Void) {
-        let allSniffersVM = AllSniffersVM.instance
+        let allSniffersVM = TopSniffersVM.instance
         guard let db = db else { return }
         
         let first = db.collection("Users")
@@ -219,7 +220,7 @@ extension FirebaseManager {
     }
     
     func nextPageAllUsers(_ sortingOption: SniffersSortingOption, withCompletion completion: @escaping([FirestoreUser]?, Error?) -> Void) {
-        let allSniffersVM = AllSniffersVM.instance
+        let allSniffersVM = TopSniffersVM.instance
         guard let lastSnapshot = allSniffersVM.lastDocumentOfAllUsers,
               let db = db else {
             // No last snapshot available, so nothing to fetch.
@@ -229,7 +230,7 @@ extension FirebaseManager {
         
         
         let pageSize: Int = 15
-        let collectionRef = db.collection("Reviews")
+        let collectionRef = db.collection("Users")
         
         let nextQuery = collectionRef
 //////            .whereField("totalReviewCount", isGreaterThanOrEqualTo: 1)

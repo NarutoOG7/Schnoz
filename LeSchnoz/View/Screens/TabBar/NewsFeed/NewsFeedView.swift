@@ -81,17 +81,16 @@ struct NewsFeedView: View {
     private var listOfReviews: some View {
             List(viewModel.reviews) { review in
                 ReviewCell(review: review)
-                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .onAppear {
                         let isLast = viewModel.reviews.last == review
                         viewModel.listHasScrolledToBottom = isLast
                     }
             }
-//            .listStyle(.plain)
                 .modifier(ClearListBackgroundMod())
             .task {
-                viewModel.batchFirstCall()
+                    viewModel.batchFirstCall()
+                
             }
     }
     

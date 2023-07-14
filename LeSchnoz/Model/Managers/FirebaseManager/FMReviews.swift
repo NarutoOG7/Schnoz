@@ -51,24 +51,25 @@ extension FirebaseManager {
     
     //MARK: - Add Remove Update
     
-    func addReviewToFirestoreBucket(_ review: ReviewModel, location: SchnozPlace, withcCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
+    func addReviewToFirestoreBucket(_ review: ReviewModel, _ location: SchnozPlace?, withCompletion completion: @escaping (K.ErrorHelper.Messages.Review?) -> () = {_ in}) {
         
         guard let db = db else { return }
                 
-        //        let id = review.title + review.username + review.locationID
-//        let timestamp = FieldValue.serverTimestamp()
-
-        
         db.collection("Reviews").document(review.id).setData([
             "id" : review.id,
-            "userID" : userStore.user.id,
+            "userID" : review.userID,
             "title" : review.title,
             "review" : review.review,
             "rating" : review.rating,
             "username" : review.username,
-            "locationID" : location.placeID,
-            "locationName" : location.primaryText ?? "",
-            "timestamp" : review.timeStamp
+            "locationID" : location?.placeID ?? review.locationID,
+            "locationName" : location?.primaryText ?? "",
+            "timestamp" : review.timeStamp,
+            "addressComp_street" : review.address.address,
+            "addressComp_city" : review.address.city,
+            "addressComp_state" : review.address.state,
+            "addressComp_country" : review.address.country,
+            "addressComp_zip" : review.address.zipCode
             
         ]) { error in
             
@@ -108,20 +109,22 @@ extension FirebaseManager {
         
         guard let db = db else { return }
         
-        let timestamp = FieldValue.serverTimestamp()
-        
         db.collection("Reviews").document(review.id)
             .updateData([
                 "id" : review.id,
-                "userID" : userStore.user.id,
+                "userID" : review.userID,
                 "title" : review.title,
                 "review" : review.review,
                 "rating" : review.rating,
                 "username" : review.username,
                 "locationID" : review.locationID,
                 "locationName" : review.locationName,
-                "timestamp" : timestamp
-                
+                "timestamp" : review.timeStamp,
+                "addressComp_street" : review.address.address,
+                "addressComp_city" : review.address.city,
+                "addressComp_state" : review.address.state,
+                "addressComp_country" : review.address.country,
+                "addressComp_zip" : review.address.zipCode
             ], completion: { err in
                 
                 if let err = err {
@@ -296,7 +299,7 @@ extension FirebaseManager {
     }
     
     
-  
+    
     
     //MARK: - News Feed
     
@@ -382,7 +385,7 @@ extension FirebaseManager {
             completion(reviews, nil)
         }
     }
-
+    
     //MARK: - User's Feed
     
     func batchFirstUsersReviews(userID: String, _ sortingOption: ReviewSortingOption, withCompletion completion: @escaping([ReviewModel]?, Error?) -> Void) {
@@ -460,6 +463,5 @@ extension FirebaseManager {
             completion(reviews, nil)
         }
     }
-    
-}
 
+}

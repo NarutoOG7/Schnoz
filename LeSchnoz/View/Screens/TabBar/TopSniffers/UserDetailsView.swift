@@ -135,14 +135,12 @@ struct UserDetailsView: View {
     private var listOfReviews: some View {
         List(userDetailsVM.reviews) { review in
                 ReviewCell(review: review)
-                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .onAppear {
                         let isLast = userDetailsVM.reviews.last == review
                         userDetailsVM.listHasScrolledToBottom = isLast
                     }
             }
-//        .listStyle(.plain)
             .modifier(ClearListBackgroundMod())
             .onAppear {
                 let isNewUser = userDetailsVM.selectedUser != self.user
