@@ -69,25 +69,53 @@ class SearchLogic: ObservableObject {
         }
     }
     
+//    func performPlaceSearch(_ query: String) {
+//
+//        if isEditingSearchArea {
+//            handleAreaSearch()
+//        } else {
+//            handlePlaceSearch()
+//        }
+//
+//        func handlePlaceSearch() {
+//            listResultsVM.searchType = nil
+//            let currentCity = UserStore.instance.currentLocAsAddress?.city ?? ""
+//            let currentState = UserStore.instance.currentLocAsAddress?.state ?? ""
+//            let searchText = (areaSearchLocation == "" ? currentCity + " \(currentState)" : areaSearchLocation)
+//            let queryText = searchText + " " + query
+//            self.handleAutocompleteForQuery(queryText)
+//        }
+//
+//        func handleAreaSearch() {
+//            if areaSearchText == "" {
+//                listResultsVM.schnozPlaces = []
+//                self.handleNearby()
+//            } else {
+//                self.handleAutocompleteForQuery(self.areaSearchText)
+//            }
+//        }
+//    }
+    
+    
     func performPlaceSearch(_ query: String) {
         
-        if placeSearchText == "" {
+        isEditingSearchArea = false
+        listResultsVM.schnozPlaces = []
+        if query == "" {
             if areaSearchText == "" {
-//                isEditingSearchArea = false
-                listResultsVM.schnozPlaces = []
                 self.handleNearby()
             } else {
                 self.handleAutocompleteForQuery(self.areaSearchText)
             }
-            
-            } else {
-                listResultsVM.searchType = nil
+        } else {
+            listResultsVM.searchType = nil
                 let currentCity = UserStore.instance.currentLocAsAddress?.city ?? ""
                 let currentState = UserStore.instance.currentLocAsAddress?.state ?? ""
                 let searchText = (areaSearchLocation == "" ? currentCity + " \(currentState)" : areaSearchLocation)
                 let queryText = searchText + " " + query
                 self.handleAutocompleteForQuery(queryText)
-            }
+
+        }
     }
     
     func performLocalitySearch(_ query: String) {

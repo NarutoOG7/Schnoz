@@ -28,7 +28,9 @@ class GooglePlacesManager: ObservableObject {
         }
         if let dict = keys {
             
+            
             if let placesAPI = dict["placesAPIKey"] as? String {
+                print(placesAPI)
                 GMSPlacesClient.provideAPIKey(placesAPI)
             }
         }
@@ -48,6 +50,7 @@ class GooglePlacesManager: ObservableObject {
             guard let strongSelf = self else { return }
             
             if let error = error {
+                print(error.localizedDescription)
                 strongSelf.error = error
             }
             
@@ -111,6 +114,7 @@ class GooglePlacesManager: ObservableObject {
         { results, error in
             
             if let error = error {
+                print(error.localizedDescription)
                 completion(nil, error)
             }
             
@@ -129,6 +133,15 @@ class GooglePlacesManager: ObservableObject {
 //                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
+                    
+//                    group.enter()
+//                    self.getPlaceDetails(result.placeID) { gmsPlace, error in
+//                        if let gmsPlace = gmsPlace {
+//                            schnozPlace.gmsPlace = gmsPlace
+//                        }
+//                        group.leave()
+//                    }
+                    
                     schnozResults.append(schnozPlace)
                 }
                 group.notify(queue: .main) {
@@ -149,6 +162,7 @@ class GooglePlacesManager: ObservableObject {
             
             //        self.placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: .all) { results, error in
             if let error = error {
+                print(error.localizedDescription)
                 completion(nil, error)
             }
             var schnozResults = [SchnozPlace]()
@@ -172,21 +186,21 @@ class GooglePlacesManager: ObservableObject {
     }
     
     
-    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
-        
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
-        
-        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
-            (place: GMSPlace?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                completion(nil, error)
-            }
-            if let place = place {
-                completion(place, nil)
-            }
-        })
-    }
+//    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
+//
+//        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
+//
+//        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
+//            (place: GMSPlace?, error: Error?) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                completion(nil, error)
+//            }
+//            if let place = place {
+//                completion(place, nil)
+//            }
+//        })
+//    }
     
     func getPlaceDetails(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
         self.placesClient.lookUpPlaceID(placeID) { place, error in

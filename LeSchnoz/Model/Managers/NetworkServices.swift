@@ -154,8 +154,9 @@ class NetworkServices: ObservableObject {
         let schnozPlace = SchnozPlace(placeID: placeID)
 
         group.enter()
-            GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
+            GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
                 if let error = error {
+                    print(error.localizedDescription)
                     completion(nil, error)
                 }
                 if let gmsPlace = gmsPlace {

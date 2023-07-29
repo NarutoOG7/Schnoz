@@ -65,7 +65,7 @@ struct SocialCell: View {
                 .foregroundColor(oceanBlue.lightBlue)
                 .italic()
             
-            Text("\(starsCount)")
+            Text(String(format: "%.1f", starsCount))
                 .font(.avenirNext(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)

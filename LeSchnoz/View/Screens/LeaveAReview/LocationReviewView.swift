@@ -17,7 +17,7 @@ struct LocationReviewView: View {
     
     @State var isUpdatingReview: Bool
     @State var titleInput: String = ""
-    @State var pickerSelection: Int = 0
+    @State var pickerSelection: CGFloat = 0
     @State var descriptionInput: String = ""
     @State var isAnonymous: Bool = false
 //    @State var nameInput: String = ""
@@ -38,55 +38,64 @@ struct LocationReviewView: View {
     let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
-        ZStack {
-            oceanBlue.blue
-                .edgesIgnoringSafeArea(.vertical)
-            
-//            if userStore.isGuest {
-//                Text("Sign in to write reviews")
-//                    .foregroundColor(oceanBlue.white)
-//            } else {
+            ZStack {
+                oceanBlue.blue
+                    .edgesIgnoringSafeArea(.vertical)
                 
+                //            if userStore.isGuest {
+                //                Text("Sign in to write reviews")
+                //                    .foregroundColor(oceanBlue.white)
+                //            } else {
                 VStack(spacing: 20) {
-                    stars
-                        .padding(.vertical, 20)
-                    title
-                    description
-                    anonymousOption
-                    submitButton
-                        .padding(.top, 35)
+                    GradientStars(fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
+//                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
+//                        .frame(width: 200)
+//                    GradientStars(fillPercent: $picker Selection, starSize: 40)
+                            .padding()
+                    //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
+                    //                            .frame(height: 60)
+                    //                            .padding(.vertical, 20)
+                        title
+                        description
+                        anonymousOption
+                        submitButton
+                            .padding(.top, 35)
+//                    }
                 }
-                .padding()
-                .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden()
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        backButton
-                    }
+                    .padding()
+                    .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarBackButtonHidden()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            backButton
+                        }
                         
+                    }
+                
+                //            }
+            }
+            .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
+                Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
+            })
+            
+            .onSubmit {
+                switch focusedField {
+                case .title:
+                    focusedField = .description
+                    //            case .description:
+                    //                focusedField = .username
+                default: break
                 }
-//            }
+            }
+            .onAppear {
+                let isGuest = userStore.isGuest
+                let isNameless = userStore.user.name == ""
+                self.isAnonymous = isGuest || isNameless
+            }
+            
         }
-        .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
-            Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
-        })
-        
-        .onSubmit {
-            switch focusedField {
-            case .title:
-                focusedField = .description
-//            case .description:
-//                focusedField = .username
-            default: break
-        }
-        }
-        .onAppear {
-            let isGuest = userStore.isGuest
-            let isNameless = userStore.user.name == ""
-            self.isAnonymous = isGuest || isNameless
-        }
-    }
+    
     
     private var title: some View {
         UserInputCellWithIcon(
@@ -102,13 +111,13 @@ struct LocationReviewView: View {
         .submitLabel(.next)
     }
     
-    private var stars: some View {
-        HStack {
-            Stars(isEditable: true,
-                  color: K.Colors.OceanBlue.yellow,
-                  rating: $pickerSelection)
-        }
-    }
+//    private var stars: some View {
+//        HStack {
+//            Stars(isEditable: true,
+//                  color: K.Colors.OceanBlue.yellow,
+//                  rating: $pickerSelection)
+//        }
+//    }
     
     private var description: some View {
          UserInputCellWithIcon(
@@ -204,7 +213,7 @@ struct LocationReviewView: View {
         let name = userName == "" ? "Anonymous" : userName
         return ReviewModel(
             id: review?.id ?? UUID().uuidString,
-            rating: pickerSelection,
+            rating: Double(pickerSelection),
             review: descriptionInput,
             title: titleInput,
             username: isAnonymous ? "Anonymous" : name,
@@ -257,7 +266,9 @@ struct LocationReviewView: View {
                     placeID: location?.placeID ?? rev.locationID,
                     refreshType: .add)
                 if var firestoreUser = userStore.firestoreUser {
-                    firestoreUser.handleAdditionOfReview(rev)
+                    let newUser = firestoreUser.handleAdditionOfReview(rev)
+                    userStore.firestoreUser = newUser
+                    firebaseManager.updateFirestoreUser(newUser)
                 }
                 self.shouldShowSuccessMessage = true
             }
@@ -302,7 +313,7 @@ struct LocationReviewView: View {
     private func isUpdated() -> Bool {
         titleInput != review?.title ||
         descriptionInput != review?.review ||
-        pickerSelection != review?.rating 
+        pickerSelection != CGFloat(review?.rating ?? 0)
 //        nameInput != review?.username
     }
     

@@ -37,7 +37,6 @@ struct HomeDisplayView: View {
             
                 .task {
                     guard Authorization.instance.isSignedIn else { return }
-                    DispatchQueue.main.async {
                         FirebaseManager.instance.getLatestReview { review, error in
                             
                             if let error = error {
@@ -45,6 +44,7 @@ struct HomeDisplayView: View {
                                 self.errorManager.shouldDisplay = true
                             }
                             if let review = review {
+                                DispatchQueue.main.async {
                                 self.listResultsVM.latestReview = review
                                 self.latestReview = review
                                 
@@ -239,7 +239,7 @@ struct HomeDisplayView: View {
             schnozPlace.averageRating = averageRating
         }
         
-        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, error in
+        GooglePlacesManager.instance.getPlaceDetails(latestReview.locationID) { gmsPlace, error in
             if let error = error {
                 completion(nil, error)
             }

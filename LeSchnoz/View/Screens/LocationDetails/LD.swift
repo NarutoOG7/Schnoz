@@ -187,20 +187,30 @@ struct LD: View {
     private var avgRatingDisplay: some View {
         let total = ldvm.selectedLocation?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
-        return VStack(alignment: .leading, spacing: 7) {
-            Stars(color: oceanBlue.yellow,
-                  rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
-            
-            Text("(\(total) review\(textEnding))")
-                .font(.avenirNextRegular(size: 17))
-                .foregroundColor(oceanBlue.lightBlue)
-            if userStore.isGuest {
-                leaveAReviewGuestButton
-            } else {
-                leaveAReviewLink
+        let avg = ldvm.selectedLocation?.averageRating?.avgRating ?? 0
+//        let avg = SchnozPlace.example.averageRating?.avgRating ?? 0
+        
+        let rating = (avg / 5) * 100
+        return
+            VStack(alignment: .leading, spacing: 7) {
+                GradientStars(fillPercent: .constant(rating), starSize: 0.007, spacing: -40)
+                    .frame(height: 40)
+                    .offset(x: -25)
+//                GradientStars(fillPercent: .constant(Float(ldvm.selectedLocation?.averageRating?.avgRating ?? 0)), starSize: 30)
+//                SlidingStarsGradient(fillPercent: .constant(Float(ldvm.selectedLocation?.averageRating?.avgRating ?? 0)), frame: (100, 60))
+                //            Stars(color: oceanBlue.yellow,
+                //                  rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
+                //
+                Text("(\(total) review\(textEnding))")
+                    .font(.avenirNextRegular(size: 17))
+                    .foregroundColor(oceanBlue.lightBlue)
+                if userStore.isGuest {
+                    leaveAReviewGuestButton
+                } else {
+                    leaveAReviewLink
+                }
             }
-            
-        }
+        
     }
     
     private var reviewHelper: some View {

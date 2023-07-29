@@ -19,7 +19,7 @@ struct SplashScreen: View {
             ZStack {
                 K.Colors.OceanBlue.blue
                     .edgesIgnoringSafeArea(.all)
-                VStack(spacing: 80) {
+                VStack(spacing: geo.size.height / 18) {
                     
                     headline
                         .padding(.bottom, 20)
@@ -28,6 +28,7 @@ struct SplashScreen: View {
                         .padding(.bottom, 30)
                     continueButton
                 }
+                .padding(.vertical)
 
             }
         }
@@ -44,15 +45,16 @@ struct SplashScreen: View {
     }
     
     private var badReviewView: some View {
-        reviewView(rating: 1,
+        reviewView(rating: 20,
                    message: Text("1 star means your clothes _**smelled like the restaraunt**_ when you left."))
+        
 //            .foregroundColor(oceanBlue.white)
 //            .font(.avenirNext(size: 20))
 //            .fontWeight(.semibold))
     }
     
     private var goodReviewView: some View {
-        reviewView(rating: 5,
+        reviewView(rating: 100,
                    message:
             Text("5 stars mean your clothes _**smelled the same**_ as when you walked in."))
 
@@ -60,8 +62,10 @@ struct SplashScreen: View {
 
     private func reviewView(rating: Int, message: Text) -> some View {
         VStack(spacing: 10) {
-            Stars(color: oceanBlue.yellow,
-                  rating: .constant(rating))
+//            Stars(color: oceanBlue.yellow,
+//                  rating: .constant(rating))
+            GradientStars(fillPercent: .constant(CGFloat((rating))), starSize: 0.007, spacing: -20)
+                .frame(height: 50)
             message
                 .foregroundColor(oceanBlue.white)
                 .font(.avenirNext(size: 20))

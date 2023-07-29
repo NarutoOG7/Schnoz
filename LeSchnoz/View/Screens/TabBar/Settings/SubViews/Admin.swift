@@ -68,7 +68,7 @@ struct Admin: View {
         FirebaseManager.instance.getAllAverageRatings { averages in
             for average in averages ?? [] {
                 group.enter()
-                GooglePlacesManager.instance.getPlaceFromID(average.id) { place, error in
+                GooglePlacesManager.instance.getPlaceDetails(average.id) { place, error in
                     defer {
                         group.leave()
                     }
@@ -91,7 +91,7 @@ struct Admin: View {
 
     
     private func getLocationName(_ searchText: String) {
-        GooglePlacesManager.instance.getPlaceFromID(searchText) { place, error in
+        GooglePlacesManager.instance.getPlaceDetails(searchText) { place, error in
             if let place = place {
                 self.searchResults.append(place.name ?? "" + " " + (place.formattedAddress ?? ""))
             }

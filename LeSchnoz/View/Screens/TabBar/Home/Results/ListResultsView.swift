@@ -109,11 +109,12 @@ struct ListResultsView: View {
     private var list: some View {
          VStack(alignment: .trailing) {
             List(listResultsVM.schnozPlaces) { place in
+//             List([SchnozPlace.example]) { place in
                 
                 Button {
-                    if searchLogic.isEditingSearchArea {
-                        focusedField = .place
-                    }
+//                    if searchLogic.isEditingSearchArea {
+//                        focusedField = .place
+//                    }
                     searchLogic.cellTapped(place)
                 } label: {
                     HStack {
@@ -123,7 +124,9 @@ struct ListResultsView: View {
                                 .font(.caption)
                         }
                         Spacer()
-                        singleStarReview(place)
+                        if place.averageRating != nil {
+                            singleStarReview(place)
+                        }
                     }
                 }
                 .id(place.placeID)
@@ -186,14 +189,28 @@ return  ZStack {
     }
     
     
+//    private func singleStarReview(_ place: SchnozPlace) -> some View {
+//        HStack {
+//            Image(systemName: "star.fill")
+//                .foregroundColor(oceanBlue.yellow)
+//            Text("\(place.averageRating?.avgRating ?? 0)")
+//                .foregroundColor(oceanBlue.yellow)
+//        }
+//        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
+//    }
+    
     private func singleStarReview(_ place: SchnozPlace) -> some View {
-        HStack {
-            Image(systemName: "star.fill")
-                .foregroundColor(oceanBlue.yellow)
-            Text("\(place.averageRating?.avgRating ?? 0)")
-                .foregroundColor(oceanBlue.yellow)
+        let rating = place.averageRating?.avgRating ?? 0
+        let ratingString = String(format: "%.1f", rating)
+        let percent = (rating / 5) * 100
+        return HStack {
+            GradientStars(fillPercent: .constant(percent), starCount: 1, starSize: 0.004, spacing: 0)
+                .frame(width: 70, height: 70)
+                .offset(x: 20)
+            Text(ratingString)
+                .foregroundColor(ratingTextColor(rating: rating))
         }
-        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
+//        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
     }
     
     //MARK: - Buttons
@@ -220,6 +237,18 @@ return  ZStack {
             listResultsVM.showSearchTableView = false
             listResultsVM.schnozPlaces = []
             listResultsVM.searchBarTapped = false
+        }
+    }
+    
+    private func ratingTextColor(rating: Double) -> Color {
+        switch rating {
+        case 0...2:
+            return .red
+        case 3:
+            return .orange
+        case 4...5:
+            return .green
+        default: return .orange
         }
     }
 

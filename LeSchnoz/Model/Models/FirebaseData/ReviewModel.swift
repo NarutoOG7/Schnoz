@@ -90,7 +90,7 @@ struct ReviewModel: Hashable, Identifiable {
     static let example = ReviewModel(id: "1", rating: 5, review: "Incredible ventilation! The staff is professional and nice and the food is great too!", title: "Exceptional", username: "Water Bottle", userID: "ETN", locationID: "K3", locationName: "The Shack", address: Address(address: "425 8th St", city: "Steamboat Springs", state: "Colorado", zipCode: "80477", country: "USA"))
 
     var id: String
-    var rating: Int = 0
+    var rating: Double = 0
     var review: String = ""
     var title: String = ""
     var username: String = ""
@@ -102,7 +102,7 @@ struct ReviewModel: Hashable, Identifiable {
     var address: Address
 
     init(id: String = "",
-         rating: Int = 0,
+         rating: Double = 0,
          review: String = "",
          title: String = "",
          username: String = "",
@@ -130,7 +130,7 @@ struct ReviewModel: Hashable, Identifiable {
         self.id = dictionary["id"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
         self.userID = dictionary["userID"] as? String ?? ""
-        self.rating = dictionary["rating"] as? Int ?? 0
+        self.rating = dictionary["rating"] as? Double ?? 0
         self.review = dictionary["review"] as? String ?? ""
         self.title = dictionary["title"] as? String ?? ""
         self.locationID = dictionary["locationID"] as? String ?? ""

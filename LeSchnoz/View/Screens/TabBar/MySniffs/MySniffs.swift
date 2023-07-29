@@ -231,7 +231,7 @@ struct ReviewDestinationLink: View {
             reviews: $userStore.reviews,
             isUpdatingReview: true,
             titleInput: review.title,
-            pickerSelection: review.rating,
+            pickerSelection: CGFloat((review.rating / 5) * 100),
             descriptionInput: review.review,
             isAnonymous: review.username == "Anonymous",
             //            nameInput: review.username,

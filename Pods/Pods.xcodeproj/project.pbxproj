@@ -25388,6 +25388,8 @@
 			dependencies = (
 			);
 			name = abseil;
+			packageProductDependencies = (
+			);
 			productName = absl;
 			productReference = BF96B57ADE05E8909F823BDF6868B3E3 /* absl.framework */;
 			productType = "com.apple.product-type.framework";
@@ -25565,6 +25567,9 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			packageReferences = (
+				C952D7002A66C62800C18D06 /* XCRemoteSwiftPackageReference "StarView" */,
+			);
 			productRefGroup = C0F3A6D34D2698598C6220CFF3EFC38C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -29661,6 +29666,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C952D7002A66C62800C18D06 /* XCRemoteSwiftPackageReference "StarView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EnesKaraosman/StarView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }

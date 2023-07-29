@@ -21,14 +21,15 @@ struct ContentView: View {
         NavigationView {
             GeometryReader { geo in
                 ZStack {
-                    
+
                     if userStore.isSignedIn {
                         if contentViewVM.showTutorial {
                             SplashScreen(contentViewVM: contentViewVM)
                         } else {
-                            TabBarSetup(userStore: userStore,
-                                        errorManager: errorManager,
-                                        loginVM: loginVM)
+                            HomeDisplayView(userStore: userStore, listResultsVM: ListResultsVM.instance)
+//                            TabBarSetup(userStore: userStore,
+//                                        errorManager: errorManager,
+//                                        loginVM: loginVM)
                         }
                     } else {
                         SignupLogin()
@@ -36,10 +37,10 @@ struct ContentView: View {
                         //                                     userStore: userStore,
                         //                                     errorManager: errorManager)
                     }
-                    
+
                     errorBanner
                         .offset(y: geo.size.height / 9)
-                    
+
                 }
             }
         }

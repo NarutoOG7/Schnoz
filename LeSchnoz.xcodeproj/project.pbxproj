@@ -18,6 +18,8 @@
 		C913A70C2A476F2600C1908E /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70B2A476F2600C1908E /* UserDetailsView.swift */; };
 		C913A70E2A479A1700C1908E /* SocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70D2A479A1700C1908E /* SocialCell.swift */; };
 		C92E3F8F2A52882F00E90371 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92E3F8E2A52882F00E90371 /* ReviewCell.swift */; };
+		C952D7072A66D63900C18D06 /* SlidingStarsGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952D7062A66D63900C18D06 /* SlidingStarsGradient.swift */; };
+		C952D73C2A6DD9B900C18D06 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */; };
 		C95E918B2A3D4DB500833336 /* FMUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E918A2A3D4DB500833336 /* FMUsers.swift */; };
 		C95E918D2A4279C700833336 /* VersionUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E918C2A4279C700833336 /* VersionUpdate.swift */; };
 		C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98007D429BE6C9200476D9B /* ListResultsView.swift */; };
@@ -109,6 +111,8 @@
 		C913A70B2A476F2600C1908E /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
 		C913A70D2A479A1700C1908E /* SocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCell.swift; sourceTree = "<group>"; };
 		C92E3F8E2A52882F00E90371 /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
+		C952D7062A66D63900C18D06 /* SlidingStarsGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingStarsGradient.swift; sourceTree = "<group>"; };
+		C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		C95E918A2A3D4DB500833336 /* FMUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMUsers.swift; sourceTree = "<group>"; };
 		C95E918C2A4279C700833336 /* VersionUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionUpdate.swift; sourceTree = "<group>"; };
 		C98007D429BE6C9200476D9B /* ListResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsView.swift; sourceTree = "<group>"; };
@@ -441,6 +445,7 @@
 				C99EEB67299B19B400B77DBD /* SlideOverCard.swift */,
 				C99EEB68299B19B400B77DBD /* CircularButton.swift */,
 				C99EEB69299B19B400B77DBD /* NotificationBanner.swift */,
+				C952D7062A66D63900C18D06 /* SlidingStarsGradient.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 				C99EEB83299B19B400B77DBD /* Splash */,
 				C99EEBA1299B19B400B77DBD /* LeaveAReview */,
 				C99EEBA6299B19B400B77DBD /* Login */,
+				C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -606,6 +612,8 @@
 			dependencies = (
 			);
 			name = LeSchnoz;
+			packageProductDependencies = (
+			);
 			productName = LeSchnoz;
 			productReference = C99EEB0C299B121600B77DBD /* LeSchnoz.app */;
 			productType = "com.apple.product-type.application";
@@ -637,6 +645,7 @@
 			packageReferences = (
 				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C952D73D2A71CBD900C18D06 /* XCRemoteSwiftPackageReference "StarView" */,
 			);
 			productRefGroup = C99EEB0D299B121600B77DBD /* Products */;
 			projectDirPath = "";
@@ -798,9 +807,11 @@
 				C99EEC13299B19B400B77DBD /* SignUp.swift in Sources */,
 				C99EEBD9299B19B400B77DBD /* Binding.swift in Sources */,
 				C99EEBDA299B19B400B77DBD /* UnabreviatedString.swift in Sources */,
+				C952D7072A66D63900C18D06 /* SlidingStarsGradient.swift in Sources */,
 				C99EEC1A299B19B400B77DBD /* LoginVM.swift in Sources */,
 				C9F225D12A58AC5D0074AE89 /* LDVM.swift in Sources */,
 				C99EEBDF299B19B400B77DBD /* LogoStyle.swift in Sources */,
+				C952D73C2A6DD9B900C18D06 /* StarRatingView.swift in Sources */,
 				C99EEBB4299B19B400B77DBD /* Authorization.swift in Sources */,
 				C95E918D2A4279C700833336 /* VersionUpdate.swift in Sources */,
 				C9AC616529D6BD760006FF32 /* NewLogin.swift in Sources */,
@@ -952,7 +963,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -989,7 +1000,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1025,6 +1036,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C952D73D2A71CBD900C18D06 /* XCRemoteSwiftPackageReference "StarView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EnesKaraosman/StarView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";

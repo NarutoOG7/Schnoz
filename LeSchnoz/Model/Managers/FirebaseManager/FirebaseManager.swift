@@ -14,7 +14,7 @@ import Combine
 
 class FirebaseManager: ObservableObject {
     
-    let constantToNeverTouch: Void = FirebaseApp.configure()
+//    let constantToNeverTouch: Void = FirebaseApp.configure()
     
     static let instance = FirebaseManager()
     
