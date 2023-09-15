@@ -47,14 +47,16 @@ struct LocationReviewView: View {
                 //                    .foregroundColor(oceanBlue.white)
                 //            } else {
                 VStack(spacing: 20) {
-                    GradientStars(fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
+                    GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
 //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
 //                        .frame(width: 200)
 //                    GradientStars(fillPercent: $picker Selection, starSize: 40)
-                            .padding()
+                        .padding(.horizontal)
+                        .frame(height: 70)
                     //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
                     //                            .frame(height: 60)
                     //                            .padding(.vertical, 20)
+                    starScore
                         title
                         description
                         anonymousOption
@@ -73,6 +75,17 @@ struct LocationReviewView: View {
                         
                     }
                 
+                    .task {
+                        if self.location?.gmsPlace == nil {
+                            GooglePlacesManager.instance.getPlaceDetails(location?.placeID ?? "") { gmsPlace, error in
+                                if let gmsplace = gmsPlace {
+                                    self.location?.gmsPlace = gmsplace
+                                }
+                            }
+                        }
+                    }
+                
+        
                 //            }
             }
             .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
@@ -95,6 +108,16 @@ struct LocationReviewView: View {
             }
             
         }
+    
+    private var starScore: some View {
+        let score = ((pickerSelection / 100) * 5)
+            return Text(String(format: "%.1f", score))
+                .fontWeight(.black)
+                .font(.title)
+                .foregroundColor(
+                    Double(score).ratingTextColor())
+        
+    }
     
     
     private var title: some View {
@@ -207,26 +230,62 @@ struct LocationReviewView: View {
         }
     }
     
+    
+    func addressFromSecondaryText(_ secondaryText: String) -> Address {
+        var address = Address()
+        // Split the address by commas
+        let addressComponents = secondaryText.components(separatedBy: ",")
+        if addressComponents.count == 4 {
+            
+            if let streetComponent = addressComponents.first {
+                address.address = streetComponent
+                print(address.address)
+                print(streetComponent)
+            }
+            let cityCompontent = addressComponents[1]
+            address.city = cityCompontent
+            
+            let stateComponent = addressComponents[2]
+            let trimmedComponent = stateComponent.trimmingCharacters(in: .whitespaces)
+            if trimmedComponent.rangeOfCharacter(from: .decimalDigits) != nil {
+                address.zipCode = trimmedComponent
+            } else {
+                address.state = trimmedComponent
+            }
+            
+            if let lastComponent = addressComponents.last {
+                address.country = lastComponent
+            }
+        }
+    return address
+    }
+    
     private func reviewModel() -> ReviewModel {
 //        let name = nameInput == "" ? userStore.user.name : nameInput
         let userName = userStore.user.name
         let name = userName == "" ? "Anonymous" : userName
+        let secondaryText = location?.secondaryText ?? ""
+        let altAddress = addressFromSecondaryText(secondaryText)
+        let firstAddressIsEmpty = location?.address == nil
+        let address = firstAddressIsEmpty ? altAddress : location?.address
+
         return ReviewModel(
             id: review?.id ?? UUID().uuidString,
-            rating: Double(pickerSelection),
+            rating: (Double(pickerSelection / 100))*5,
             review: descriptionInput,
             title: titleInput,
             username: isAnonymous ? "Anonymous" : name,
             userID: userStore.user.id,
             locationID:  review?.locationID ?? location?.placeID ?? "",
             locationName: review?.locationName ?? location?.primaryText ?? "",
-            address: location?.address ?? Address())
+            timestamp: review?.timeStamp ?? Timestamp(),
+            address: review?.address ?? address ?? Address())
     }
     
     private func update(_ rev: ReviewModel) {
 //        self.location?.placeID = review?.locationID ?? ""
-        var oldReview = ReviewModel()
-        
+        var oldReview: ReviewModel?
+
         firebaseManager.updateReviewInFirestore(rev) { error in
             if let error = error {
                 self.errorManager.message = error.rawValue
@@ -235,20 +294,27 @@ struct LocationReviewView: View {
             if let oldReviewIndex = self.location?.schnozReviews.firstIndex(where: { $0.id == review?.id }) {
                 self.location?.schnozReviews[oldReviewIndex] = rev
             }
-            if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
-                oldReview = self.reviews[reviewIndex]
-                self.reviews[reviewIndex] = rev
-            }
+//            if let reviewIndex = self.
+//            if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
+//                oldReview = self.reviews[reviewIndex]
+//                self.reviews[reviewIndex] = rev
+//            }
             ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", refreshType: .update)
-            if var firestoreUser = userStore.firestoreUser {
-                firestoreUser.handleUpdateOfReview( oldReview: oldReview, newReview: rev)
+            if var firestoreUser = userStore.firestoreUser, var oldReview = self.review {
+//                let newUser = firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
+                let difference = rev.rating - oldReview.rating
+                print(difference)
+                firestoreUser.totalStarsGiven? += difference
+                firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
+//                userStore.firestoreUser = newUser
+                firebaseManager.updateFirestoreUser(firestoreUser)
             }
             self.shouldShowSuccessMessage = true
         }
     }
     
     private func add(_ review: ReviewModel) {
-            var rev = review
+        let rev = review
         firebaseManager.addReviewToFirestoreBucket(rev, location) { error in
                 if let error = error {
                     self.errorManager.message = error.rawValue
@@ -266,9 +332,12 @@ struct LocationReviewView: View {
                     placeID: location?.placeID ?? rev.locationID,
                     refreshType: .add)
                 if var firestoreUser = userStore.firestoreUser {
-                    let newUser = firestoreUser.handleAdditionOfReview(rev)
-                    userStore.firestoreUser = newUser
-                    firebaseManager.updateFirestoreUser(newUser)
+//                    let newUser = firestoreUser.handleAdditionOfReview(rev)
+                    firestoreUser.totalStarsGiven? += rev.rating
+                    firestoreUser.reviewCount? += 1
+                    firestoreUser.averageStarsGiven = firestoreUser.averageStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
+//                    userStore.firestoreUser = newUser
+                    firebaseManager.updateFirestoreUser(firestoreUser)
                 }
                 self.shouldShowSuccessMessage = true
             }

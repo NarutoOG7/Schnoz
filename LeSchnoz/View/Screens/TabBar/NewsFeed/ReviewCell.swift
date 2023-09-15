@@ -51,14 +51,9 @@ struct ReviewCell: View {
                     .padding(.top, 3)
                 
                 HStack {
-//                    CustomStarRating(currentValue: .constant(review.rating), starSize: (100,50))
-                    GradientStars(fillPercent: .constant((review.rating / 5) * 100), starSize: 0.007, spacing: -40)
 
-//                    GradientStars(fillPercent: .constant(Float(review.rating)), starSize: 20)
-                    //                Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
-//                    SlidingStarsGradient(fillPercent: .constant(Float(review.rating)), frame: (100, 60))
-//                    StarRatingView(starCount: 5, totalPercentage: review.rating)
-//                                        .frame(width: 100, height: 60)
+                    GradientStars(isEditable: false, fillPercent: .constant((review.rating / 5) * 100), starSize: 0.007, spacing: -40)
+
                         .frame(height: 40)
                     timestamp
                 }

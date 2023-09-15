@@ -11,6 +11,7 @@ import SwiftUI
 
 struct GradientStars: View {
     
+    let isEditable: Bool
     @Binding var fillPercent: CGFloat
     @State var gradients: [Color] = [.orange]
     
@@ -22,7 +23,20 @@ struct GradientStars: View {
         GeometryReader { geo in
             LinearGradient(gradient: Gradient(colors: gradients), startPoint: .leading, endPoint: .trailing)
                 .mask(
-                    StarRatingView(starCount: starCount, totalPercentage: (fillPercent), style: .init(borderWidth: 1), starSize: starSize, spacing: spacing)
+//                    Group {
+//                        if self.isEditable {
+                                                    StarRatingView(starCount: starCount, totalPercentage: (fillPercent), style: .init(borderWidth: 1), starSize: starSize, spacing: spacing)
+//                        } else {
+//                            HStack {
+//                                ForEach(0..<starCount) { _ in
+//                                    Image(systemName: "star.fill")
+//
+//                                }
+//                                Spacer()
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//                    }
                 )
                 .gesture(
                     DragGesture().onChanged({ (value) in
@@ -48,9 +62,9 @@ struct GradientStars: View {
             
         case  ...60:     /// case ...3: ///
             self.gradients = [.red, .orange, .yellow, .yellow]
-        case 60...90:   /// case 3...4: ///
+        case 60...85:   /// case 3...4: ///
             self.gradients = [.yellow, .green]
-        case 90...100:  /// case 4...5: ///
+        case 85...100:  /// case 4...5: ///
             self.gradients = [.green]
         default:
             self.gradients = [.blue, .pink]
@@ -113,6 +127,6 @@ struct GradientStars: View {
 struct SlidingStarsGradient_Previews: PreviewProvider {
     static var previews: some View {
 //            SlidingStarsGradient(fillPercent: .constant(3.7), frame: (100, 40))
-        GradientStars(fillPercent: .constant((1 / 5) * 100), starSize: 0.01, spacing: 0)
+        GradientStars(isEditable: true, fillPercent: .constant((1 / 5) * 100), starSize: 0.01, spacing: 0)
     }
 }

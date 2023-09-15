@@ -17,8 +17,23 @@ struct FirestoreUser: Identifiable, Hashable {
     var totalStarsGiven: Double?
     var averageStarsGiven: Double?
     
-    var averageStarsAsString: String {
-        String(format: "%.1f", averageStarsGiven ?? 0)
+//    var averageStarsAsString: String {
+//        let average = averageStarsGiven ?? 0
+//        let intAVG = Int(average)
+//        let isWhole = Double(intAVG) == average
+//        let wholeString = String(intAVG)
+//        let doubleString = String(format: "%.1f", average)
+//        let finalAvg = isWhole ? wholeString : doubleString
+//        return finalAvg
+//    }
+    
+    func doubleAsStringWithIntFloor(_ double: Double) -> String {
+        let intAVG = Int(double)
+        let isWhole = Double(intAVG) == double
+        let wholeString = String(intAVG)
+        let doubleString = String(format: "%.1f", double)
+        let finalAvg = isWhole ? wholeString : doubleString
+        return finalAvg
     }
     
 //    var averageStarsAsString: String {
@@ -69,7 +84,7 @@ struct FirestoreUser: Identifiable, Hashable {
         
     }
     
-    mutating func handleUpdateOfReview(oldReview: ReviewModel, newReview: ReviewModel) {
+    mutating func handleUpdateOfReview(oldReview: ReviewModel, newReview: ReviewModel) -> FirestoreUser {
         var newUser = self
         let starsDifference = newReview.rating - oldReview.rating
         newUser.totalStarsGiven? += starsDifference
@@ -78,11 +93,12 @@ struct FirestoreUser: Identifiable, Hashable {
            reviewCount > 0 {
             newUser.averageStarsGiven? = starsCount / Double(reviewCount)
         }
-        UserStore.instance.firestoreUser = newUser
-        FirebaseManager.instance.updateFirestoreUser(newUser)
+        return newUser
+//        UserStore.instance.firestoreUser = newUser
+//        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
     
-    mutating func handleRemovalOfReview(review: ReviewModel) {
+    mutating func handleRemovalOfReview(review: ReviewModel) -> FirestoreUser {
         var newUser = self
         newUser.totalStarsGiven? -= review.rating
         newUser.reviewCount? -= 1
@@ -91,27 +107,32 @@ struct FirestoreUser: Identifiable, Hashable {
            reviewCount > 0 {
             newUser.averageStarsGiven? = starsCount / Double(reviewCount)
         }
-        UserStore.instance.firestoreUser = newUser
-        FirebaseManager.instance.updateFirestoreUser(newUser)
+        return newUser
+//        UserStore.instance.firestoreUser = newUser
+//        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
 }
 
 extension FirebaseManager {
     
-    func doesUserExist(id: String, _ exists: @escaping(Bool) -> Void) {
+    func doesUserExist(id: String, _ exists: @escaping(FirestoreUser?) -> Void) {
         
-        guard let db = db else { exists(false)
+        guard let db = db else { exists(nil)
             return }
         let usersCollection = db.collection("Users")
         
         usersCollection.whereField("id", isEqualTo: id).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error checking username availability: \(error.localizedDescription)")
-                exists(false)
+                exists(nil)
             } else {
-                let userExists = !snapshot!.isEmpty
-                print(userExists)
-                exists(userExists)
+                guard let snapshot = snapshot,
+                       let doc = snapshot.documents.first else { exists(nil)
+                    return
+                }
+                let firestoreUser = FirestoreUser(dict: doc.data())
+                    exists(firestoreUser)
+
             }
         }
     }

@@ -149,6 +149,8 @@ struct MySniffs: View {
         offsets.map { viewModel.reviews[$0] }.forEach { review in
             firebaseManager.getAverageRatingForLocation(review.locationID) { oldAverage in
                 if var average = oldAverage {
+                    print(average)
+                    print(review.rating)
                     average.totalStarCount -= review.rating
                     average.numberOfReviews -= 1
                     
@@ -157,7 +159,22 @@ struct MySniffs: View {
                     
                     // Firestore User
                     if var firestoreUser = userStore.firestoreUser {
-                        firestoreUser.handleRemovalOfReview(review: review)
+                        firestoreUser.totalStarsGiven? -= review.rating
+                        firestoreUser.reviewCount? -= 1
+                        if let reviewCount = firestoreUser.reviewCount,
+                           let starsCount = firestoreUser.totalStarsGiven,
+                           reviewCount > 0 {
+                            firestoreUser.averageStarsGiven? = starsCount / Double(reviewCount)
+                        }
+                     
+        //                userStore.firestoreUser = newUser
+                        firebaseManager.updateFirestoreUser(firestoreUser)
+                        
+                        
+//                        let newUser = firestoreUser.handleRemovalOfReview(review: review)
+//                        self.userStore.firestoreUser = newUser
+//                        firebaseManager.updateFirestoreUser(newUser)
+
                     }
                     
                     // Remove Review

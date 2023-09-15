@@ -11,7 +11,7 @@ import GooglePlaces
 class SchnozPlace: Hashable, Identifiable {
     
     static let example = SchnozPlace(placeID: "1", primaryText: "The Shack", secondaryText: "Steamboat Springs",
-                                     averageRating: AverageRating(placeID: "1", totalStarCount: 50, numberOfReviews: 10), address: Address())
+                                     averageRating: AverageRating(placeID: "1", totalStarCount: 50, numberOfReviews: 10), address: Address(), googleRating: 3.5)
     
     var placeID: String
     var primaryText: String?
@@ -19,10 +19,12 @@ class SchnozPlace: Hashable, Identifiable {
 //    var reviews: [ReviewModel]?
     var averageRating: AverageRating?
     var address: Address?
+    var googleRating: Double?
     var gmsPlace: GMSPlace? {
         willSet {
             primaryText = newValue?.name
             secondaryText = newValue?.formattedAddress
+            googleRating = Double(newValue?.rating ?? 0)
             if let addressComponents = newValue?.addressComponents {
                 self.address = Address(addressComponents: addressComponents)
             } else {
@@ -111,12 +113,36 @@ class SchnozPlace: Hashable, Identifiable {
 //        }
     }
     
-    init(placeID: String, primaryText: String, secondaryText: String, averageRating: AverageRating, address: Address) {
+    func letterForRating() -> String {
+        if let rating = googleRating {
+            switch rating {
+            case 0...1:
+                return "F"
+            case 1...2:
+                return "D"
+            case 2...3:
+                return "C"
+            case 3...4:
+                return "B"
+            case 4..<5:
+                return "A"
+            default:
+                return "A+"
+            }
+        }
+        return ""
+    }
+    
+    
+    init(placeID: String, primaryText: String, secondaryText: String, averageRating: AverageRating, address: Address, googleRating: Double) {
         self.placeID = placeID
         self.primaryText = primaryText
         self.secondaryText = secondaryText
         self.averageRating = averageRating
         self.address = address
+        self.googleRating = googleRating
     }
+    
+    
     
 }

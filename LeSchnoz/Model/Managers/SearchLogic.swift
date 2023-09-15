@@ -11,20 +11,9 @@ class SearchLogic: ObservableObject {
     static let instance = SearchLogic()
     
     
-    @Published var placeSearchText = "" {
-        willSet {
-            self.performPlaceSearch(newValue)
-        }
-    }
-    @Published var areaSearchText = "" {
-        willSet {
-            if newValue == "" {
-                self.placeSearch()
-            } else {
-                self.performLocalitySearch(newValue)
-            }
-        }
-    }
+    @Published var placeSearchText = ""
+    
+    @Published var areaSearchText = ""
     @Published var areaSearchLocation = ""
     @Published var isEditingSearchArea = false
     
@@ -55,6 +44,7 @@ class SearchLogic: ObservableObject {
         }
     }
     
+    
     func getNearby() {
         NetworkServices.instance.getNearbyLocationsWithKeyword("food") { places, error in
             if let error = error {
@@ -69,37 +59,11 @@ class SearchLogic: ObservableObject {
         }
     }
     
-//    func performPlaceSearch(_ query: String) {
-//
-//        if isEditingSearchArea {
-//            handleAreaSearch()
-//        } else {
-//            handlePlaceSearch()
-//        }
-//
-//        func handlePlaceSearch() {
-//            listResultsVM.searchType = nil
-//            let currentCity = UserStore.instance.currentLocAsAddress?.city ?? ""
-//            let currentState = UserStore.instance.currentLocAsAddress?.state ?? ""
-//            let searchText = (areaSearchLocation == "" ? currentCity + " \(currentState)" : areaSearchLocation)
-//            let queryText = searchText + " " + query
-//            self.handleAutocompleteForQuery(queryText)
-//        }
-//
-//        func handleAreaSearch() {
-//            if areaSearchText == "" {
-//                listResultsVM.schnozPlaces = []
-//                self.handleNearby()
-//            } else {
-//                self.handleAutocompleteForQuery(self.areaSearchText)
-//            }
-//        }
-//    }
+
     
     
     func performPlaceSearch(_ query: String) {
         
-        isEditingSearchArea = false
         listResultsVM.schnozPlaces = []
         if query == "" {
             if areaSearchText == "" {
@@ -159,12 +123,14 @@ class SearchLogic: ObservableObject {
     }
     
     func cellTapped(_ place: SchnozPlace) {
+        
         if isEditingSearchArea {
-            isEditingSearchArea = false
             let text =  place.primaryText ?? ""
             self.areaSearchText = text
             self.areaSearchLocation = text
+            isEditingSearchArea = false
             self.performPlaceSearch(text)
+            
         } else {
             if ldvm.selectedLocation != place {
                 listResultsVM.resetPlaceImage()
@@ -172,6 +138,7 @@ class SearchLogic: ObservableObject {
                 ldvm.selectedLocation = place
                 listResultsVM.selectedPlace = place
                 listResultsVM.searchBarTapped = false
+                ifNeededGrabGMSPlace()
             }
             ldvm.reviews = []
             self.listResultsVM.shouldShowPlaceDetails = true
@@ -180,6 +147,31 @@ class SearchLogic: ObservableObject {
     }
     
     
+    func ifNeededGrabGMSPlace() {
+        if ldvm.isQuerySearching {
+            GooglePlacesManager.instance.getPlaceDetails(ldvm.selectedLocation?.placeID ?? "") { gmsPlace, _ in
+                if let gmsPlace = gmsPlace {
+                    LDVM.instance.selectedLocation?.gmsPlace = gmsPlace
+                }
+            }
+        }
+    }
+    
 
+    func placeTextChanged(_ text: String) {
+        self.performPlaceSearch(text)
+        self.isEditingSearchArea = false
+        LDVM.instance.isQuerySearching = true
+    }
+    
+    func areaTextChanged(_ text: String) {
+        self.isEditingSearchArea = true
+        if text == "" {
+            self.placeSearch()
+        } else {
+            self.performLocalitySearch(text)
+        }
+    }
+    
 }
 

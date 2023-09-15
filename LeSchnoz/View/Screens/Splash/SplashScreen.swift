@@ -64,7 +64,7 @@ struct SplashScreen: View {
         VStack(spacing: 10) {
 //            Stars(color: oceanBlue.yellow,
 //                  rating: .constant(rating))
-            GradientStars(fillPercent: .constant(CGFloat((rating))), starSize: 0.007, spacing: -20)
+            GradientStars(isEditable: false, fillPercent: .constant(CGFloat((rating))), starSize: 0.007, spacing: -20)
                 .frame(height: 50)
             message
                 .foregroundColor(oceanBlue.white)

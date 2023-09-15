@@ -87,7 +87,7 @@ import Firebase
 
 struct ReviewModel: Hashable, Identifiable {
 
-    static let example = ReviewModel(id: "1", rating: 5, review: "Incredible ventilation! The staff is professional and nice and the food is great too!", title: "Exceptional", username: "Water Bottle", userID: "ETN", locationID: "K3", locationName: "The Shack", address: Address(address: "425 8th St", city: "Steamboat Springs", state: "Colorado", zipCode: "80477", country: "USA"))
+    static let example = ReviewModel(id: "1", rating: 5, review: "Incredible ventilation! The staff is professional and nice and the food is great too!", title: "Exceptional", username: "Water Bottle", userID: "ETN", locationID: "K3", locationName: "The Shack", timestamp: Timestamp(), address: Address(address: "425 8th St", city: "Steamboat Springs", state: "Colorado", zipCode: "80477", country: "USA"))
 
     var id: String
     var rating: Double = 0
@@ -109,6 +109,7 @@ struct ReviewModel: Hashable, Identifiable {
          userID: String = "",
          locationID: String = "",
          locationName: String = "",
+         timestamp: Timestamp = Timestamp(),
          address: Address = Address()) {
         self.id = id
         self.rating = rating
@@ -119,7 +120,6 @@ struct ReviewModel: Hashable, Identifiable {
         self.locationID = locationID
         self.locationName = locationName
 
-        let timestamp = Timestamp()
         self.timeStamp = timestamp
 
         self.address = address

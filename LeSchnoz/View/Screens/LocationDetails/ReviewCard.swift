@@ -19,7 +19,7 @@ struct ReviewCard: View {
                 placeNameView
                 title
                 HStack {
-                    GradientStars(fillPercent: .constant((review.rating / 5) * 100), starSize: 0.01, spacing: -15)
+                    GradientStars(isEditable: false, fillPercent: .constant((review.rating / 5) * 100), starSize: 0.01, spacing: -15)
 //                    CustomStarRating(currentValue: .constant(review.rating), starSize: (200,40))
 //                    StarRatingView(value: 5, stars: Int(review.rating))
 //                    SlidingStarsGradient(fillPercent: .constant(Float(review.rating)), frame: (200, 40))

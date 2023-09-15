@@ -34,11 +34,9 @@ struct TabBarSetup: View {
         self.errorManager = errorManager
         self.loginVM = loginVM
         
-        //        handleHiddenKeys()
         
         tabBarAppearance()
         
-        //        navigationAppearance()
         tableViewAppearance()
         
     }
@@ -301,8 +299,10 @@ struct TabBarSetup: View {
     }
     
     func assignFirestoreUser() {
-        firebaseManager.doesUserExist(id: userStore.user.id) { exists in
-            if !exists {
+        firebaseManager.doesUserExist(id: userStore.user.id) { fsUser in
+            if let fsUser = fsUser {
+                userStore.firestoreUser = fsUser
+            } else {
                 let firestoreUser = FirestoreUser(id: self.userStore.user.id, username: self.userStore.user.name)
                 updateUserWithReviewDetails(firestoreUser) { newUser in
                     firebaseManager.addUserToFirestore(newUser)

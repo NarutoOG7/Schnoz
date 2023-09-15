@@ -48,6 +48,7 @@ struct LD: View {
                         VStack(alignment: .leading, spacing: 7) {
                             title
                             address
+                            googleRating
                             avgRatingDisplay
                             sortReviewsButton
                             listOfReviews
@@ -62,10 +63,10 @@ struct LD: View {
                     }
                 }
             }
-            
             .edgesIgnoringSafeArea(.vertical)
 //            .navigationBarHidden(true)
             
+        
             .actionSheet(isPresented: $showReviewSortActionSheet) {
                 ActionSheet(
                     title: Text("Sort Options"),
@@ -171,17 +172,29 @@ struct LD: View {
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
+            .fixedSize(horizontal: false, vertical: true)
 
     }
     
     
     private var address: some View {
         Text(ldvm.selectedLocation?.secondaryText ?? "")
-            .font(.avenirNextRegular(size: 19))
-            .lineLimit(nil)
+            .font(.avenirNextRegular(size: 17))
             .foregroundColor(oceanBlue.blue)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
 
+    }
+    
+    private var googleRating: some View {
+//        let text = String(format: "%.1f", ldvm.selectedLocation?.googleRating ?? 0) + "/5"
+        let text = ldvm.selectedLocation?.letterForRating() ?? ""
+//        return HStack {
+//            Spacer()
+            return Text("Google Rating: \(text)")
+                .italic()
+                .foregroundColor(oceanBlue.blue)
+                .font(.avenirNext(size: 14))
+//        }
     }
     
     private var avgRatingDisplay: some View {
@@ -193,7 +206,7 @@ struct LD: View {
         let rating = (avg / 5) * 100
         return
             VStack(alignment: .leading, spacing: 7) {
-                GradientStars(fillPercent: .constant(rating), starSize: 0.007, spacing: -40)
+                GradientStars(isEditable: false, fillPercent: .constant(rating), starSize: 0.007, spacing: -40)
                     .frame(height: 40)
                     .offset(x: -25)
 //                GradientStars(fillPercent: .constant(Float(ldvm.selectedLocation?.averageRating?.avgRating ?? 0)), starSize: 30)
@@ -402,6 +415,7 @@ struct LD: View {
 //            ldvm.shouldShowLeaveAReviewView = true
 //        }
     }
+
     
 }
 

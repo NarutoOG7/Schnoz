@@ -134,9 +134,8 @@ enum K {
         }
         
         enum SearchTypes {
-            static let breakfast = Image("breakfast")
-            static let lunch = Image("lunch")
-            static let dinner = Image("dinner")
+
+            static let blueAll = Image(systemName: "fork.knife.circle")
             static let blueBreakfast = Image("blueBreakfast")
             static let blueLunch = Image("blueLunch")
             static let blueDinner = Image("blueDinner")

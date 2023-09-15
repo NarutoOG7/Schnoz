@@ -99,7 +99,7 @@ struct UserDetailsView: View {
     }
     
     private var totalStars: some View {
-        let starsCount = user.totalStarsGiven ?? 0
+        let starsCount = user.doubleAsStringWithIntFloor(user.totalStarsGiven ?? 0)
 
         return HStack {
             Text("Total Stars Given:")
@@ -108,7 +108,7 @@ struct UserDetailsView: View {
                 .foregroundColor(oceanBlue.blue)
                 .italic()
             
-            Text("\(starsCount)")
+            Text(starsCount)
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)
@@ -124,7 +124,7 @@ struct UserDetailsView: View {
                 .foregroundColor(oceanBlue.blue)
                 .italic()
             
-            Text(user.averageStarsAsString)
+            Text(user.doubleAsStringWithIntFloor(user.averageStarsGiven ?? 0))
                .font(.title3)
                .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)

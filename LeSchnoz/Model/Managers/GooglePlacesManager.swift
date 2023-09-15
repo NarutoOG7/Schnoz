@@ -5,6 +5,9 @@
 //  Created by Spencer Belton on 2/14/23.
 //
 
+//https://maps.googleapis.com/maps/api/place/autocomplete/json?keyword=westbrook+sim+city&type=food&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//https://maps.googleapis.com/maps/api/place/autocomplete/json?input=westbrook_sim_city&types=health&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+
 import SwiftUI
 import GooglePlaces
 import GoogleMaps
@@ -81,7 +84,16 @@ class GooglePlacesManager: ObservableObject {
     func autoFilter() -> GMSAutocompleteFilter {
         let filter = GMSAutocompleteFilter()
         
-        filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
+//        filter.types = ["food", "bar", "bowling_alley", "movie_theater", "point_of_interest"]
+///        meal_takeaway
+        filter.types = ["point_of_interest"]
+///        establishment
+//        filter.types = ["food"]
+//                        "bar",
+//                        "bowling_alley",
+//                        "amusement_park",
+//                        "movie_theater"]
+        
         
         return filter
     }
@@ -103,12 +115,12 @@ class GooglePlacesManager: ObservableObject {
     
     func performAutocompleteQuery(_ query: String, isLocality: Bool = false, withCompletion completion: @escaping ([SchnozPlace]?, Error?) -> Void) {
         
-        //        autoFilter { autoFilter in
         let group = DispatchGroup()
         
         let filter = isLocality ? self.localityFilter() : autoFilter()
+        let q = isLocality ? query :  query
         self.placesClient.findAutocompletePredictions(
-            fromQuery: query,
+            fromQuery: q,
             filter: filter,
             sessionToken: self.autocompleteSessionToken)
         { results, error in
@@ -129,19 +141,9 @@ class GooglePlacesManager: ObservableObject {
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(result.placeID) { averageRating in
                         schnozPlace.averageRating = averageRating
-//                    FirebaseManager.instance.getReviewsForLocation(result.placeID) { reviews in
-//                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
-                    
-//                    group.enter()
-//                    self.getPlaceDetails(result.placeID) { gmsPlace, error in
-//                        if let gmsPlace = gmsPlace {
-//                            schnozPlace.gmsPlace = gmsPlace
-//                        }
-//                        group.leave()
-//                    }
-                    
+
                     schnozResults.append(schnozPlace)
                 }
                 group.notify(queue: .main) {
@@ -149,8 +151,6 @@ class GooglePlacesManager: ObservableObject {
                 }
             }
         }
-        
-        //        }
     }
     
     func getMealType(searchType: SearchType, withCopletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
