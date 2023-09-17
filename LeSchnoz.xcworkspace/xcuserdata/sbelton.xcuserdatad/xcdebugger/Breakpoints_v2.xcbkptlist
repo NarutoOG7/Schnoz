@@ -287,38 +287,6 @@
             endingLineNumber = "172"
             landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DC8AA5BB-A018-47C6-A79A-F9D54DBD08A6 - e1277cd059de6474"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.NetworkServices.getGMSPlaceAndAvgRatingFromPlaceID(_: Swift.String, withCompletion: (Swift.Optional&lt;LeSchnoz.SchnozPlace&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/NetworkServices.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "173"
-                  endingLineNumber = "173"
-                  offsetFromSymbolStart = "644">
-               </Location>
-               <Location
-                  uuid = "DC8AA5BB-A018-47C6-A79A-F9D54DBD08A6 - 1fd1d084127d61c7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 () -&gt; () in LeSchnoz.NetworkServices.getGMSPlaceAndAvgRatingFromPlaceID(_: Swift.String, withCompletion: (Swift.Optional&lt;LeSchnoz.SchnozPlace&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/NetworkServices.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "174"
-                  endingLineNumber = "174"
-                  offsetFromSymbolStart = "60">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -383,6 +351,38 @@
             endingLineNumber = "51"
             landmarkName = "getNearbyLocation(withCompletion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 45712e65a4fbf4b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LeSchnoz.GooglePlacesManager.getNearbyLocation(withCompletion: (Swift.Optional&lt;Swift.Array&lt;LeSchnoz.SchnozPlace&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 2b53f7612229a43b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSPlaceLikelihood&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LeSchnoz.GooglePlacesManager.getNearbyLocation(withCompletion: (Swift.Optional&lt;Swift.Array&lt;LeSchnoz.SchnozPlace&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "LeSchnoz"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
