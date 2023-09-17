@@ -9,9 +9,7 @@ import SwiftUI
 import GooglePlaces
 
 struct LD: View {
-    
-//    @State var location: SchnozPlace?
-    
+        
     @State private var imageURL = URL(string: "")
     @State private var isSharing = false
     @State private var isCreatingNewReview = false
@@ -20,7 +18,6 @@ struct LD: View {
     @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
     @State var firebaseErrorMessage = ""
-//    @State var reviews: [ReviewModel] = []
     
     @State var showGuestAlert = false
     
@@ -64,8 +61,6 @@ struct LD: View {
                 }
             }
             .edgesIgnoringSafeArea(.vertical)
-//            .navigationBarHidden(true)
-            
         
             .actionSheet(isPresented: $showReviewSortActionSheet) {
                 ActionSheet(
@@ -160,9 +155,6 @@ struct LD: View {
                     .offset(y: geo.frame(in: .global).origin.y < 0
                             ? abs(geo.frame(in: .global).origin.y)
                             : -geo.frame(in: .global).origin.y)
-//                header/
-//              .opacity(self.getBlurRadiusForImage(geo) - 0.35)
-
             }
         }
     }
@@ -186,22 +178,17 @@ struct LD: View {
     }
     
     private var googleRating: some View {
-//        let text = String(format: "%.1f", ldvm.selectedLocation?.googleRating ?? 0) + "/5"
         let text = ldvm.selectedLocation?.letterForRating() ?? ""
-//        return HStack {
-//            Spacer()
             return Text("Google Rating: \(text)")
                 .italic()
                 .foregroundColor(oceanBlue.blue)
                 .font(.avenirNext(size: 14))
-//        }
     }
     
     private var avgRatingDisplay: some View {
         let total = ldvm.selectedLocation?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
         let avg = ldvm.selectedLocation?.averageRating?.avgRating ?? 0
-//        let avg = SchnozPlace.example.averageRating?.avgRating ?? 0
         
         let rating = (avg / 5) * 100
         return
@@ -209,11 +196,6 @@ struct LD: View {
                 GradientStars(isEditable: false, fillPercent: .constant(rating), starSize: 0.007, spacing: -40)
                     .frame(height: 40)
                     .offset(x: -25)
-//                GradientStars(fillPercent: .constant(Float(ldvm.selectedLocation?.averageRating?.avgRating ?? 0)), starSize: 30)
-//                SlidingStarsGradient(fillPercent: .constant(Float(ldvm.selectedLocation?.averageRating?.avgRating ?? 0)), frame: (100, 60))
-                //            Stars(color: oceanBlue.yellow,
-                //                  rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
-                //
                 Text("(\(total) review\(textEnding))")
                     .font(.avenirNextRegular(size: 17))
                     .foregroundColor(oceanBlue.lightBlue)
@@ -295,8 +277,6 @@ struct LD: View {
         .padding(.horizontal, -20)
             .listStyle(.plain)
             .frame(minHeight: 250 * CGFloat(ldvm.reviews.count))
-//            .scrollDisabled(true)
-//            .frame(height: 250 * CGFloat(ldvm.reviews.count))
                 .modifier(ClearListBackgroundMod())
             .task {
                 ldvm.batchFirstCall()
@@ -400,20 +380,9 @@ struct LD: View {
         showReviewSortActionSheet = true
     }
     
-//    private func fetchFirebaseReviews() {
-//        firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
-//            // Actually removed limit, fetches all
-//            self.location?.schnozReviews = reviews
-//            self.reviews = reviews
-//        }
-//    }
     
     private func leaveAReviewTapped() {
-//        if userStore.isGuest {
             self.showGuestAlert = true
-//        } else {
-//            ldvm.shouldShowLeaveAReviewView = true
-//        }
     }
 
     

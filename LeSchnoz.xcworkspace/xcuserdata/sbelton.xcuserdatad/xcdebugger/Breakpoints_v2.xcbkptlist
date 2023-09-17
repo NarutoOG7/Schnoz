@@ -315,13 +315,13 @@
             filePath = "LeSchnoz/Model/Managers/GooglePlacesManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "getMealType(searchType:withCopletion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "8910061F-3D9D-4D6D-8196-43D4B27E88FE - 3f6874d8d93b93d0"
+                  uuid = "8910061F-3D9D-4D6D-8196-43D4B27E88FE - 3f6874d8d93b9021"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -331,12 +331,12 @@
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "160"
-                  endingLineNumber = "160"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
                   offsetFromSymbolStart = "252">
                </Location>
                <Location
-                  uuid = "8910061F-3D9D-4D6D-8196-43D4B27E88FE - 716f6ae21a5e7131"
+                  uuid = "8910061F-3D9D-4D6D-8196-43D4B27E88FE - 716f6ae21a5e73c0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -346,8 +346,8 @@
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
+                  startingLineNumber = "179"
+                  endingLineNumber = "179"
                   offsetFromSymbolStart = "116">
                </Location>
             </Locations>

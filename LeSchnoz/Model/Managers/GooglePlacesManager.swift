@@ -153,6 +153,21 @@ class GooglePlacesManager: ObservableObject {
         }
     }
     
+    func getSchnozPlaceFromLocationID(_ locationID: String,
+                                      withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+        let schnozPlace = SchnozPlace(placeID: locationID)
+        
+        self.getPlaceDetails(locationID) { gmsPlace, error in
+            if let gmsPlace = gmsPlace {
+                schnozPlace.gmsPlace = gmsPlace
+                completion(schnozPlace, nil)
+            }
+            if let error = error {
+                completion(nil, error)
+            }
+        }
+    }
+    
     func getMealType(searchType: SearchType, withCopletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
         let filter = GMSAutocompleteFilter()
         filter.types = ["servesBreakfast"]

@@ -15,12 +15,13 @@ struct LocationReviewView: View {
     @Binding var location: SchnozPlace?
     @Binding var reviews: [ReviewModel]
     
+    @State var oldReview: ReviewModel?
     @State var isUpdatingReview: Bool
     @State var titleInput: String = ""
     @State var pickerSelection: CGFloat = 0
     @State var descriptionInput: String = ""
     @State var isAnonymous: Bool = false
-//    @State var nameInput: String = ""
+    //    @State var nameInput: String = ""
     
     @State var shouldShowTitleErrorMessage = false
     @State var shouldShowDescriptionErrorMessage = false
@@ -32,90 +33,99 @@ struct LocationReviewView: View {
     @ObservedObject var userStore: UserStore
     @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager: ErrorManager
+    @ObservedObject var ldvm = LDVM.instance
     
     @Environment(\.presentationMode) var presentationMode
-        
+    
     let oceanBlue = K.Colors.OceanBlue.self
     
     var body: some View {
-            ZStack {
-                oceanBlue.blue
-                    .edgesIgnoringSafeArea(.vertical)
-                
-                //            if userStore.isGuest {
-                //                Text("Sign in to write reviews")
-                //                    .foregroundColor(oceanBlue.white)
-                //            } else {
-                VStack(spacing: 20) {
-                    GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
-//                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
-//                        .frame(width: 200)
-//                    GradientStars(fillPercent: $picker Selection, starSize: 40)
-                        .padding(.horizontal)
-                        .frame(height: 70)
-                    //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
-                    //                            .frame(height: 60)
-                    //                            .padding(.vertical, 20)
-                    starScore
-                        title
-                        description
-                        anonymousOption
-                        submitButton
-                            .padding(.top, 35)
-//                    }
-                }
-                    .padding()
-                    .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationBarBackButtonHidden()
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            backButton
-                        }
-                        
-                    }
-                
-                    .task {
-                        if self.location?.gmsPlace == nil {
-                            GooglePlacesManager.instance.getPlaceDetails(location?.placeID ?? "") { gmsPlace, error in
-                                if let gmsplace = gmsPlace {
-                                    self.location?.gmsPlace = gmsplace
-                                }
-                            }
-                        }
-                    }
-                
-        
-                //            }
-            }
-            .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
-                Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
-            })
+        ZStack {
+            oceanBlue.blue
+                .edgesIgnoringSafeArea(.vertical)
             
-            .onSubmit {
-                switch focusedField {
-                case .title:
-                    focusedField = .description
-                    //            case .description:
-                    //                focusedField = .username
-                default: break
-                }
+            //            if userStore.isGuest {
+            //                Text("Sign in to write reviews")
+            //                    .foregroundColor(oceanBlue.white)
+            //            } else {
+            VStack(spacing: 20) {
+                GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
+                //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
+                //                        .frame(width: 200)
+                //                    GradientStars(fillPercent: $picker Selection, starSize: 40)
+                    .padding(.horizontal)
+                    .frame(height: 70)
+                //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
+                //                            .frame(height: 60)
+                //                            .padding(.vertical, 20)
+                starScore
+                title
+                description
+                anonymousOption
+                submitButton
+                    .padding(.top, 35)
+                //                    }
             }
-            .onAppear {
-                let isGuest = userStore.isGuest
-                let isNameless = userStore.user.name == ""
-                self.isAnonymous = isGuest || isNameless
+            .padding()
+            .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    backButton
+                }
+                
             }
             
+            .task {
+                self.oldReview = review
+                if self.location?.gmsPlace == nil {
+                    GooglePlacesManager.instance.getPlaceDetails(location?.placeID ?? "") { gmsPlace, error in
+                        if let gmsplace = gmsPlace {
+                            self.location?.gmsPlace = gmsplace
+                        }
+                    }
+                }
+                if self.location?.averageRating == nil {
+                    firebaseManager.getAverageRatingForLocation(location?.placeID ?? "") { avg in
+                        if let avg = avg {
+                            self.location?.averageRating = avg
+                        }
+                    }
+                }
+            }
+            
+            
+            //            }
         }
+        .alert("Success", isPresented: $shouldShowSuccessMessage, actions: {
+            Button("OK", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() })
+        })
+        
+        .onSubmit {
+            switch focusedField {
+            case .title:
+                focusedField = .description
+                //            case .description:
+                //                focusedField = .username
+            default: break
+            }
+        }
+        .onAppear {
+            let isGuest = userStore.isGuest
+            let isNameless = userStore.user.name == ""
+            self.isAnonymous = isGuest || isNameless
+        }
+        
+    }
     
     private var starScore: some View {
         let score = ((pickerSelection / 100) * 5)
-            return Text(String(format: "%.1f", score))
-                .fontWeight(.black)
-                .font(.title)
-                .foregroundColor(
-                    Double(score).ratingTextColor())
+        return Text(String(format: "%.1f", score))
+            .fontWeight(.black)
+            .font(.title)
+            .foregroundColor(
+                Double(score).ratingTextColor())
         
     }
     
@@ -134,16 +144,16 @@ struct LocationReviewView: View {
         .submitLabel(.next)
     }
     
-//    private var stars: some View {
-//        HStack {
-//            Stars(isEditable: true,
-//                  color: K.Colors.OceanBlue.yellow,
-//                  rating: $pickerSelection)
-//        }
-//    }
+    //    private var stars: some View {
+    //        HStack {
+    //            Stars(isEditable: true,
+    //                  color: K.Colors.OceanBlue.yellow,
+    //                  rating: $pickerSelection)
+    //        }
+    //    }
     
     private var description: some View {
-         UserInputCellWithIcon(
+        UserInputCellWithIcon(
             input: $descriptionInput,
             shouldShowErrorMessage: $shouldShowDescriptionErrorMessage,
             isSecured: .constant(false),
@@ -223,10 +233,10 @@ struct LocationReviewView: View {
                 }
                 Spacer()
             }
-//            .padding(.horizontal)
-//                .padding(.top, 60)
+            //            .padding(.horizontal)
+            //                .padding(.top, 60)
             Spacer()
-
+            
         }
     }
     
@@ -257,18 +267,18 @@ struct LocationReviewView: View {
                 address.country = lastComponent
             }
         }
-    return address
+        return address
     }
     
     private func reviewModel() -> ReviewModel {
-//        let name = nameInput == "" ? userStore.user.name : nameInput
+        //        let name = nameInput == "" ? userStore.user.name : nameInput
         let userName = userStore.user.name
         let name = userName == "" ? "Anonymous" : userName
         let secondaryText = location?.secondaryText ?? ""
         let altAddress = addressFromSecondaryText(secondaryText)
         let firstAddressIsEmpty = location?.address == nil
         let address = firstAddressIsEmpty ? altAddress : location?.address
-
+        
         return ReviewModel(
             id: review?.id ?? UUID().uuidString,
             rating: (Double(pickerSelection / 100))*5,
@@ -282,31 +292,35 @@ struct LocationReviewView: View {
             address: review?.address ?? address ?? Address())
     }
     
-    private func update(_ rev: ReviewModel) {
-//        self.location?.placeID = review?.locationID ?? ""
+    private func update(_ newRev: ReviewModel) {
+        //        self.location?.placeID = review?.locationID ?? ""
         var oldReview: ReviewModel?
-
-        firebaseManager.updateReviewInFirestore(rev) { error in
+        
+        firebaseManager.updateReviewInFirestore(newRev) { error in
             if let error = error {
                 self.errorManager.message = error.rawValue
                 self.errorManager.shouldDisplay = true
             }
             if let oldReviewIndex = self.location?.schnozReviews.firstIndex(where: { $0.id == review?.id }) {
-                self.location?.schnozReviews[oldReviewIndex] = rev
+                self.location?.schnozReviews[oldReviewIndex] = newRev
             }
-//            if let reviewIndex = self.
-//            if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
-//                oldReview = self.reviews[reviewIndex]
-//                self.reviews[reviewIndex] = rev
-//            }
-            ListResultsVM.instance.refreshData(review: rev, averageRating: updatedAverageRating(rev), placeID: location?.placeID ?? review?.locationID ?? "", refreshType: .update)
+            //            if let reviewIndex = self.
+            //            if let reviewIndex = self.reviews.firstIndex(where: { $0.id == rev.id }) {
+            //                oldReview = self.reviews[reviewIndex]
+            //                self.reviews[reviewIndex] = rev
+            //            }
+            ListResultsVM.instance.refreshData(review: newRev,
+                                               averageRating: updatedAverageRating(newRev, isUpdating: true),
+                                               placeID: location?.placeID ?? review?.locationID ?? "",
+                                               refreshType: .update)
             if var firestoreUser = userStore.firestoreUser, var oldReview = self.review {
-//                let newUser = firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
-                let difference = rev.rating - oldReview.rating
+                self.oldReview = oldReview
+                //                let newUser = firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
+                let difference = newRev.rating - oldReview.rating
                 print(difference)
                 firestoreUser.totalStarsGiven? += difference
                 firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
-//                userStore.firestoreUser = newUser
+                //                userStore.firestoreUser = newUser
                 firebaseManager.updateFirestoreUser(firestoreUser)
             }
             self.shouldShowSuccessMessage = true
@@ -316,50 +330,51 @@ struct LocationReviewView: View {
     private func add(_ review: ReviewModel) {
         let rev = review
         firebaseManager.addReviewToFirestoreBucket(rev, location) { error in
-                if let error = error {
-                    self.errorManager.message = error.rawValue
-                    self.errorManager.shouldDisplay = true
-                }
-                
-                //            if !self.location.schnozReviews.contains(rev) {
-                //                self.location.schnozReviews.append(rev)
-                //            }
-//                self.reviews.append(rev)
-                self.location?.schnozReviews.append(rev)
-                ListResultsVM.instance.refreshData(
-                    review: rev,
-                    averageRating: updatedAverageRating(rev),
-                    placeID: location?.placeID ?? rev.locationID,
-                    refreshType: .add)
-                if var firestoreUser = userStore.firestoreUser {
-//                    let newUser = firestoreUser.handleAdditionOfReview(rev)
-                    firestoreUser.totalStarsGiven? += rev.rating
-                    firestoreUser.reviewCount? += 1
-                    firestoreUser.averageStarsGiven = firestoreUser.averageStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
-//                    userStore.firestoreUser = newUser
-                    firebaseManager.updateFirestoreUser(firestoreUser)
-                }
-                self.shouldShowSuccessMessage = true
+            if let error = error {
+                self.errorManager.message = error.rawValue
+                self.errorManager.shouldDisplay = true
             }
+            
+            //            if !self.location.schnozReviews.contains(rev) {
+            //                self.location.schnozReviews.append(rev)
+            //            }
+            //                self.reviews.append(rev)
+            self.location?.schnozReviews.append(rev)
+            ListResultsVM.instance.refreshData(
+                review: rev,
+                averageRating: updatedAverageRating(rev, isUpdating: false),
+                placeID: location?.placeID ?? rev.locationID,
+                refreshType: .add)
+            if var firestoreUser = userStore.firestoreUser {
+                //                    let newUser = firestoreUser.handleAdditionOfReview(rev)
+                firestoreUser.totalStarsGiven? += rev.rating
+                firestoreUser.reviewCount? += 1
+                firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
+                //                    userStore.firestoreUser = newUser
+                firebaseManager.updateFirestoreUser(firestoreUser)
+            }
+            self.shouldShowSuccessMessage = true
+        }
         
     }
     
-    func updatedAverageRating(_ rev: ReviewModel) -> AverageRating {
+    func updatedAverageRating(_ rev: ReviewModel, isUpdating: Bool) -> AverageRating {
         let placeID = location?.placeID ?? review?.locationID ?? ""
         let preExistingAVG = self.location?.averageRating
-        let newAverageRating = AverageRating(placeID: placeID,
-                                             totalStarCount: 0,
-                                             numberOfReviews: 0)
-
+        let newAverageRating = AverageRating(placeID: placeID)
+        let differenceInRating = rev.rating - (oldReview?.rating ?? 0)
         var returnableAVG = preExistingAVG ?? newAverageRating
-            returnableAVG.totalStarCount += rev.rating
-            returnableAVG.numberOfReviews += 1
-//        returnableAVG.avgRating = returnableAVG.totalStarCount / newValue
-            firebaseManager.addAverageRating(returnableAVG)
-            return returnableAVG
+        returnableAVG.totalStarCount += differenceInRating
+        returnableAVG.numberOfReviews += isUpdating ? 0 : 1
+        returnableAVG.avgRating = returnableAVG.totalStarCount / Double(returnableAVG.numberOfReviews)
+
+        if ldvm.selectedLocation?.placeID == placeID {
+            ldvm.selectedLocation?.averageRating = returnableAVG
+        }
+        firebaseManager.addAverageRating(returnableAVG)
+        return returnableAVG
         
     }
-    
     private func requisiteFieldsAreFilled() -> Bool {
         return titleInput != "" && descriptionInput != ""
     }
@@ -383,7 +398,7 @@ struct LocationReviewView: View {
         titleInput != review?.title ||
         descriptionInput != review?.review ||
         pickerSelection != CGFloat(review?.rating ?? 0)
-//        nameInput != review?.username
+        //        nameInput != review?.username
     }
     
     private func backButtonTapped() {
@@ -400,13 +415,13 @@ struct LocationReviewView: View {
 struct LocationReviewView_Previews: PreviewProvider {
     static var previews: some View {
         LocationReviewView(
-                           isPresented: .constant(true),
-                           review: .constant(nil),
-                           location: .constant(SchnozPlace(placeID: "Place01")),
-                           reviews: .constant([ReviewModel]()),
-                           isUpdatingReview: false,
-                           userStore: UserStore(),
-                           errorManager: ErrorManager())
+            isPresented: .constant(true),
+            review: .constant(nil),
+            location: .constant(SchnozPlace(placeID: "Place01")),
+            reviews: .constant([ReviewModel]()),
+            isUpdatingReview: false,
+            userStore: UserStore(),
+            errorManager: ErrorManager())
     }
 }
 

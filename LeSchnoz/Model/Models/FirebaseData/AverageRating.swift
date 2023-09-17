@@ -21,10 +21,10 @@ struct AverageRating: Codable {
             }
         }
     }
-    
-    init(placeID: String,
-         totalStarCount: Double,
-         numberOfReviews: Int) {
+        
+    init(placeID: String = "",
+         totalStarCount: Double = 0,
+         numberOfReviews: Int = 0) {
         
         self.id = placeID
         self.totalStarCount = totalStarCount

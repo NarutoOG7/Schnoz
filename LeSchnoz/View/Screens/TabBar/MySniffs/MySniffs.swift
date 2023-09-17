@@ -21,6 +21,7 @@ struct MySniffs: View {
     @ObservedObject var errorManager: ErrorManager
     @ObservedObject var listResultsVM: ListResultsVM
     @ObservedObject var viewModel = MySniffsVM.instance
+    @ObservedObject var ldvm = LDVM.instance
     
     let oceanBlue = K.Colors.OceanBlue.self
     
@@ -148,16 +149,14 @@ struct MySniffs: View {
     private func delete(at offsets: IndexSet) {
         offsets.map { viewModel.reviews[$0] }.forEach { review in
             firebaseManager.getAverageRatingForLocation(review.locationID) { oldAverage in
+                /// Average
                 if var average = oldAverage {
-                    print(average)
-                    print(review.rating)
                     average.totalStarCount -= review.rating
                     average.numberOfReviews -= 1
-                    
                     ListResultsVM.instance.refreshData(review: review, averageRating: average, placeID: review.locationID, refreshType: .remove)
                     LDVM.instance.selectedLocation?.averageRating = average
                     
-                    // Firestore User
+                    /// Firestore User
                     if var firestoreUser = userStore.firestoreUser {
                         firestoreUser.totalStarsGiven? -= review.rating
                         firestoreUser.reviewCount? -= 1
@@ -166,25 +165,20 @@ struct MySniffs: View {
                            reviewCount > 0 {
                             firestoreUser.averageStarsGiven? = starsCount / Double(reviewCount)
                         }
-                     
-        //                userStore.firestoreUser = newUser
                         firebaseManager.updateFirestoreUser(firestoreUser)
-                        
-                        
-//                        let newUser = firestoreUser.handleRemovalOfReview(review: review)
-//                        self.userStore.firestoreUser = newUser
-//                        firebaseManager.updateFirestoreUser(newUser)
-
                     }
                     
-                    // Remove Review
+                    /// Remove Review
                     firebaseManager.removeReviewFromFirestore(review)
                     
-                    // Update or Remove AvgRating
+                    /// Update or Remove AvgRating
                     let noReviews = average.numberOfReviews == 0
                     noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
+                    if ldvm.selectedLocation?.placeID == average.id {
+                        ldvm.selectedLocation?.averageRating = average
+                    }
                     
-                    // Refresh data
+                    /// Refresh data
                     self.viewModel.reviews.removeAll(where: { $0 == review })
                     LDVM.instance.reviews.removeAll(where: { $0 == review })
                     userStore.reviews.remove(atOffsets: offsets)

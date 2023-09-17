@@ -397,7 +397,9 @@ extension FirebaseManager {
             
             for doc in snapshot.documents {
                 let dict = doc.data()
-                let review = ReviewModel(dictionary: dict)
+                var review = ReviewModel(dictionary: dict)
+                let schnozPlace = SchnozPlace(review: review)
+                review.location = schnozPlace
                 reviews.append(review)
             }
             
@@ -439,7 +441,9 @@ extension FirebaseManager {
             
             for doc in snapshot.documents {
                 let dict = doc.data()
-                let review = ReviewModel(dictionary: dict)
+                var review = ReviewModel(dictionary: dict)
+                let schnozPlace = SchnozPlace(review: review)
+                review.location = schnozPlace
                 reviews.append(review)
             }
             userDetailsVM.isFetchInProgress = false

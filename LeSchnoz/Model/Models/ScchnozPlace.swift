@@ -91,15 +91,15 @@ class SchnozPlace: Hashable, Identifiable {
         self.placeID = placeID
     }
 
-    // INIT From LatestReview
-    init(latestReview: ReviewModel) {
-        self.placeID = latestReview.locationID
+    // INIT From review
+    init(review: ReviewModel) {
+        self.placeID = review.locationID
 
         FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
             self.averageRating = averageRating
         }
         
-        GooglePlacesManager.instance.getPlaceDetails(latestReview.locationID) { gmsPlace, _ in
+        GooglePlacesManager.instance.getPlaceDetails(review.locationID) { gmsPlace, _ in
             if let gmsPlace = gmsPlace {
                 self.gmsPlace = gmsPlace
             }

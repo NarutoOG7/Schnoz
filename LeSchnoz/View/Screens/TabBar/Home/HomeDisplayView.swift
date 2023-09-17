@@ -48,7 +48,7 @@ struct HomeDisplayView: View {
                                 self.listResultsVM.latestReview = review
                                 self.latestReview = review
                                 
-                                self.latestReviewPlace = SchnozPlace(latestReview: review)
+                                self.latestReviewPlace = SchnozPlace(review: review)
                             }
                             
                         }
