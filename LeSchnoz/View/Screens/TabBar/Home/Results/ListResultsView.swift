@@ -12,9 +12,11 @@ struct ListResultsView: View {
     
     @Namespace var namespace
     
-    @FocusState private var focusedField: Field?
+    @FocusState private var focusedField: SearchFieldType?
+    @State var oldFocus = SearchFieldType.place
 
-    
+    @State var showPlaceSortActionSheet = false
+
 //    
 //    @State private var placeSearchText = ""
 //    @State private var areaSearchText = ""
@@ -42,6 +44,7 @@ struct ListResultsView: View {
 
                         }
                     }
+                    sortPlacesButton
                     list.overlay(listResultsVM.isLoading ? ProgressView() : nil)
                     
                 }
@@ -52,29 +55,44 @@ struct ListResultsView: View {
                 .fullScreenCover(isPresented: $listResultsVM.shouldShowPlaceDetails ) {
                     LD()
                 }
-                
-                .onChange(of: searchLogic.placeSearchText) { newValue in
-                    searchLogic.performPlaceSearch(newValue)
-                }
-                
-                .onChange(of: searchLogic.areaSearchText) { newValue in
-                    if newValue == "" {
-                        searchLogic.placeSearch()
-                    } else {
-                        searchLogic.performLocalitySearch(newValue)
-                    }
-                }
             }
         .onAppear {
             if listResultsVM.searchBarTapped {
                 self.focusedField = .place
             }
         }
+        .actionSheet(isPresented: $showPlaceSortActionSheet) {
+            ActionSheet(
+                title: Text("Sort Options"),
+                buttons: [
+                    .default(Text(ListResultsSortingOptions.best.rawValue), action: {
+                        listResultsVM.sortingOption = .best
+                    }),
+                    .default(Text(ListResultsSortingOptions.worst.rawValue), action: {
+                        listResultsVM.sortingOption = .worst
+                    }),
+                    .default(Text(ListResultsSortingOptions.none.rawValue), action: {
+                        listResultsVM.sortingOption = .none
+                    }),
+                    .cancel()
+                    
+                ]
+            )
+        }
+        
+
+
     }
     
     private var placesSearchField: some View {
                 
         searchField(.place, input: $searchLogic.placeSearchText)
+        
+            .onChange(of: searchLogic.placeSearchText,
+                      perform: { newValue in
+                searchLogic.placeTextChanged(newValue)
+            })
+        
             .onTapGesture {
                 searchLogic.isEditingSearchArea = false
             }
@@ -89,32 +107,35 @@ struct ListResultsView: View {
     private var areaSearchField: some View {
         
         searchField(.area, input: $searchLogic.areaSearchText)
+            .onChange(of: searchLogic.areaSearchText) { newValue in
+                searchLogic.areaTextChanged(newValue)
+            }
             .onTapGesture {
                 searchLogic.isEditingSearchArea = true
             }
             .focused($focusedField, equals: .area)
-
+        
             .toolbar {
-                
                 ToolbarItem(placement: .keyboard) {
-                        Button(action: keyboardCancelTapped) {
-                            Text("Cancel")
-                                .foregroundColor(oceanBlue.lightBlue)
-                        }
+                    Button(action: keyboardCancelTapped) {
+                        Text("Cancel")
+                            .foregroundColor(oceanBlue.lightBlue)
                     }
-
+                }
             }
     }
         
     private var list: some View {
          VStack(alignment: .trailing) {
             List(listResultsVM.schnozPlaces) { place in
+//             List([SchnozPlace.example]) { place in
                 
                 Button {
-                    if searchLogic.isEditingSearchArea {
-                        focusedField = .place
-                    }
+//                    if searchLogic.isEditingSearchArea {
+//                        focusedField = .place
+//                    }
                     searchLogic.cellTapped(place)
+                    
                 } label: {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
@@ -123,7 +144,15 @@ struct ListResultsView: View {
                                 .font(.caption)
                         }
                         Spacer()
-                        singleStarReview(place)
+///                        place.averageRating != nil ||
+                        ///
+                        ///
+                        let averageIsEmpty = place.averageRating == nil
+                        let reviewCountIsZero = place.averageRating?.numberOfReviews == 0
+                        let hasReviews = reviewCountIsZero || !averageIsEmpty
+                        if hasReviews {
+                            singleStarReview(place)
+                        }
                     }
                 }
                 .id(place.placeID)
@@ -139,11 +168,58 @@ struct ListResultsView: View {
     
     
     //MARK: - Search Field
-    private func searchField(_ field: Field, input: Binding<String>) -> some View {
+//    private func searchField(_ field: Field, input: Binding<String>) -> some View {
+//        let fieldIsFocused = field == focusedField
+//        let hasCharacters: Bool = input.wrappedValue.count > 0
+//return  ZStack {
+//
+//            TextField("", text: input)
+//                .padding(.horizontal)
+//                .frame(height: 45)
+//                .foregroundColor(oceanBlue.black)
+//                .tint(oceanBlue.black)
+//                .placeholder(when: input.wrappedValue.isEmpty, placeholder: {
+//                    Text(field.title)
+//                        .foregroundColor(oceanBlue.black.opacity(0.7))
+//                        .padding(.horizontal)
+//                })
+//                .background(
+//                    RoundedRectangle(cornerRadius: 20)
+//                        .fill(oceanBlue.white)
+//                        .padding(2)
+//
+//                        .background(
+//                            RoundedRectangle(cornerRadius: 20)
+////                                .fill(oceanBlue.black))
+//                                .fill(colorScheme == .dark ? oceanBlue.lightBlue : oceanBlue.black))
+//                )
+//
+//            HStack {
+//                Spacer()
+//
+//                Button {
+//                    if self.focusedField == .place {
+//                        searchLogic.placeSearchText = ""
+//                    } else if self.focusedField == .area {
+//                        searchLogic.areaSearchText = ""
+//                    }
+//                } label: {
+//                    Text("Cancel")
+//                        .foregroundColor(oceanBlue.grayPurp)
+//                        .font(.avenirNextRegular(size: 16))
+//                        .padding(.trailing)
+//                }
+//            }
+//            .opacity(fieldIsFocused && hasCharacters ? 1 : 0)
+//        }
+//
+//    }
+    
+    private func searchField(_ field: SearchFieldType, input: Binding<String>) -> some View {
         let fieldIsFocused = field == focusedField
         let hasCharacters: Bool = input.wrappedValue.count > 0
-return  ZStack {
-            
+
+        return ZStack {
             TextField("", text: input)
                 .padding(.horizontal)
                 .frame(height: 45)
@@ -154,23 +230,25 @@ return  ZStack {
                         .foregroundColor(oceanBlue.black.opacity(0.7))
                         .padding(.horizontal)
                 })
+
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(oceanBlue.white)
                         .padding(2)
-                    
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(oceanBlue.black))
+                                .fill(colorScheme == .dark ? oceanBlue.lightBlue : oceanBlue.black))
                 )
-            
+
             HStack {
                 Spacer()
-                
+
                 Button {
-                    if self.focusedField == .place {
+                    // Clear the text based on the active search field
+                    switch field {
+                    case .place:
                         searchLogic.placeSearchText = ""
-                    } else if self.focusedField == .area {
+                    case .area:
                         searchLogic.areaSearchText = ""
                     }
                 } label: {
@@ -182,18 +260,31 @@ return  ZStack {
             }
             .opacity(fieldIsFocused && hasCharacters ? 1 : 0)
         }
-
     }
     
     
+//    private func singleStarReview(_ place: SchnozPlace) -> some View {
+//        HStack {
+//            Image(systemName: "star.fill")
+//                .foregroundColor(oceanBlue.yellow)
+//            Text("\(place.averageRating?.avgRating ?? 0)")
+//                .foregroundColor(oceanBlue.yellow)
+//        }
+//        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
+//    }
+    
     private func singleStarReview(_ place: SchnozPlace) -> some View {
-        HStack {
-            Image(systemName: "star.fill")
-                .foregroundColor(oceanBlue.yellow)
-            Text("\(place.averageRating?.avgRating ?? 0)")
-                .foregroundColor(oceanBlue.yellow)
+        let rating = place.averageRating?.avgRating ?? 0
+        let ratingString = String(format: "%.1f", rating)
+        let percent = (rating / 5) * 100
+        return HStack {
+            GradientStars(isEditable: false, fillPercent: .constant(percent), starCount: 1, starSize: 0.004, spacing: 0)
+                .frame(width: 70, height: 70)
+                .offset(x: 20)
+            Text(ratingString)
+                .foregroundColor(rating.ratingTextColor())
         }
-        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
+//        .opacity(place.averageRating == nil || place.averageRating?.avgRating == 0 ? 0 : 1)
     }
     
     //MARK: - Buttons
@@ -208,7 +299,25 @@ return  ZStack {
         .padding(.trailing, 10)
     }
     
+    private var sortPlacesButton: some View {
+        HStack {
+            Spacer()
+            Text("Sort By: ")
+                .foregroundColor(colorScheme == .dark ? oceanBlue.white : oceanBlue.black)                .font(.subheadline)
+            Button(action: sortPlacesTapped) {
+                Text(listResultsVM.sortingOption.rawValue)
+                    .foregroundColor(oceanBlue.lightBlue)                .font(.subheadline)
+            }
+        }
+    }
+
+    
     //MARK: - Methods
+    
+    
+    private func sortPlacesTapped() {
+        showPlaceSortActionSheet = true
+    }
     
     private func keyboardCancelTapped() {
         searchLogic.isEditingSearchArea = false
@@ -222,20 +331,22 @@ return  ZStack {
             listResultsVM.searchBarTapped = false
         }
     }
+    
+
 
     //MARK: - Focused Field
-    enum Field {
-        case place, area
-        
-        var title: String {
-            switch self {
-            case .place:
-                return "Bars, Restaraunts, Breweries, etc."
-            case .area:
-                return "Near Me"
-            }
-        }
-    }
+//    enum Field {
+//        case place, area
+//
+//        var title: String {
+//            switch self {
+//            case .place:
+//                return "Bars, Restaraunts, Breweries, etc."
+//            case .area:
+//                return "Near Me"
+//            }
+//        }
+//    }
 
 }
 
@@ -250,4 +361,36 @@ struct ListResultsView_Previews: PreviewProvider {
 
 enum SearchFieldType {
     case place, area
+    
+    var identifier: SearchFieldType {
+        switch self {
+        case .place:
+            return .place
+        case .area:
+            return .area
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .place:
+            return "Bars, Restaraunts, Breweries, etc."
+        case .area:
+            return "Near Me"
+        }
+    }
+}
+
+extension Double {
+    func ratingTextColor() -> Color {
+        switch self {
+        case 0...1.5:
+            return .red
+        case 3...4.25:
+            return .yellow
+        case 4.25...5:
+            return .green
+        default: return .orange
+        }
+    }
 }

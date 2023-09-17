@@ -3,6 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>placesAPIKey</key>
+	<string>AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA</string>
+	<key>mapsKey</key>
+	<string>AIzaSyAdQJU-ns2repAtrh6x6GsUMsWUkm4ON2k</string>
+	<key>altKey</key>
+	<string>AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA</string>
+	<key>oldKey</key>
 	<string>AIzaSyB4onMG1Vevz9pnUV5TiKgc2beoEDT1Rtw</string>
+	<key>newKey</key>
+	<string>AIzaSyBng4dC56JrOJ5Onv4hmzVypskIaHSTneE</string>
 </dict>
 </plist>

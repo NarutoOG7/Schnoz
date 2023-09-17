@@ -57,7 +57,8 @@ struct SocialCell: View {
     }
     
     private var totalStars: some View {
-        let starsCount = user.totalStarsGiven ?? 0
+//        let starsCount = user.totalStarsGiven ?? 0
+        let starsCount = user.doubleAsStringWithIntFloor(user.totalStarsGiven ?? 0)
         return HStack {
             Text("Total Stars Given:")
                 .font(.avenirNext(size: 16))
@@ -65,7 +66,7 @@ struct SocialCell: View {
                 .foregroundColor(oceanBlue.lightBlue)
                 .italic()
             
-            Text("\(starsCount)")
+            Text(starsCount)
                 .font(.avenirNext(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)
@@ -81,7 +82,7 @@ struct SocialCell: View {
                 .foregroundColor(oceanBlue.lightBlue)
                 .italic()
             
-            Text(user.averageStarsAsString)
+            Text(user.doubleAsStringWithIntFloor(user.averageStarsGiven ?? 0))
                 .font(.avenirNext(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(oceanBlue.white)

@@ -11,8 +11,6 @@ import StoreKit
 struct TabBarSetup: View {
     
     @AppStorage("userOnboarded") var userOnboarded: Bool = false
-    @AppStorage("userUpdatedWithReviewDetails") var userUpdatedWithReviewDetails: Bool = false
-    
     
     @State private var isUpdateAvailable = false
     
@@ -36,11 +34,9 @@ struct TabBarSetup: View {
         self.errorManager = errorManager
         self.loginVM = loginVM
         
-        //        handleHiddenKeys()
         
         tabBarAppearance()
         
-        //        navigationAppearance()
         tableViewAppearance()
         
     }
@@ -66,40 +62,34 @@ struct TabBarSetup: View {
         
         .task {
             
-            if !userOnboarded && !userStore.isGuest {
-                self.assignFirestoreUser()
-            }
-            
-            
             if !userStore.isGuest {
-                if !userUpdatedWithReviewDetails {
-                    firebaseManager.doesUserExist(id: userStore.user.id) { exists in
-                        if !exists {
-                            self.updateUserWithReviewDetails()
+                if userOnboarded {
+                    
+                    FirebaseManager.instance.getFirestoreUser { firestoreUser, error in
+                        if let firestoreUser = firestoreUser {
+                            userStore.firestoreUser = firestoreUser
+                        }
+                        if let error = error {
+                            print(error.localizedDescription)
                         }
                     }
-                }
-                FirebaseManager.instance.getFirestoreUser { firestoreUser, error in
-                    if let firestoreUser = firestoreUser {
-                        userStore.firestoreUser = firestoreUser
-                    }
-                    if let error = error {
-                        print(error.localizedDescription)
-                    }
+                } else {
+                    self.assignFirestoreUser()
                 }
             }
-            
-            Task {
+//        }
+        
+
+//            Task {
                 
-                if await AppStoreUpdateChecker.isNewVersionAvailable() {
-                    print("New version of app is availabe. Showing blocking alert!")
-                    self.isUpdateAvailable = true
-                }
+//                if await AppStoreUpdateChecker.isNewVersionAvailable() {
+//                    print("New version of app is availabe. Showing blocking alert!")
+//                    self.isUpdateAvailable = true
+//                }
             }
-            
-            
-        }
         .accentColor(oceanBlue.white)
+            
+            
         
         
     }
@@ -309,29 +299,34 @@ struct TabBarSetup: View {
     }
     
     func assignFirestoreUser() {
-        firebaseManager.doesUserExist(id: userStore.user.id) { exists in
-            if !exists {
+        firebaseManager.doesUserExist(id: userStore.user.id) { fsUser in
+            if let fsUser = fsUser {
+                userStore.firestoreUser = fsUser
+            } else {
                 let firestoreUser = FirestoreUser(id: self.userStore.user.id, username: self.userStore.user.name)
-                firebaseManager.addUserToFirestore(firestoreUser)
-                DispatchQueue.main.async {
-                    userStore.firestoreUser = firestoreUser
-                    userOnboarded = true
+                updateUserWithReviewDetails(firestoreUser) { newUser in
+                    firebaseManager.addUserToFirestore(newUser)
+                    DispatchQueue.main.async {
+                        userStore.firestoreUser = newUser
+                        userOnboarded = true
+                    }
                 }
             }
         }
     }
     
-    func updateUserWithReviewDetails() {
-        // Create Firestore User if one doesn't exist
-        let updatedUser = FirestoreUser(id: userStore.user.id, username: userStore.user.name)
-        firebaseManager.getReviewsForUser(userStore.user) { review in
-            //            updatedUser.handleAdditionOfReview(review)
-            firebaseManager.updateFirestoreUser(updatedUser)
-            
+    func updateUserWithReviewDetails(_ firestoreUser: FirestoreUser, withCompletion completion: @escaping(FirestoreUser) -> Void) {
+        
+        var user = firestoreUser
+        firebaseManager.getReviewsForUser(userStore.user) { reviews in
+//            firestoreUser.reviewCount += 1
+            for review in reviews {
+                user = user.handleAdditionOfReview(review)
+            }
+            userStore.firestoreUser = user
+            completion(user)
         }
-        userUpdatedWithReviewDetails = true
     }
-    
 }
 
 //MARK: - Preview

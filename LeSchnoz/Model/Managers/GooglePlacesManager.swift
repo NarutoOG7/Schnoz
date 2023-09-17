@@ -5,6 +5,9 @@
 //  Created by Spencer Belton on 2/14/23.
 //
 
+//https://maps.googleapis.com/maps/api/place/autocomplete/json?keyword=westbrook+sim+city&type=food&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//https://maps.googleapis.com/maps/api/place/autocomplete/json?input=westbrook_sim_city&types=health&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+
 import SwiftUI
 import GooglePlaces
 import GoogleMaps
@@ -28,7 +31,9 @@ class GooglePlacesManager: ObservableObject {
         }
         if let dict = keys {
             
+            
             if let placesAPI = dict["placesAPIKey"] as? String {
+                print(placesAPI)
                 GMSPlacesClient.provideAPIKey(placesAPI)
             }
         }
@@ -48,6 +53,7 @@ class GooglePlacesManager: ObservableObject {
             guard let strongSelf = self else { return }
             
             if let error = error {
+                print(error.localizedDescription)
                 strongSelf.error = error
             }
             
@@ -78,7 +84,16 @@ class GooglePlacesManager: ObservableObject {
     func autoFilter() -> GMSAutocompleteFilter {
         let filter = GMSAutocompleteFilter()
         
-        filter.types = ["food", "bar", "bowling_alley", "movie_theater"]
+//        filter.types = ["food", "bar", "bowling_alley", "movie_theater", "point_of_interest"]
+///        meal_takeaway
+        filter.types = ["point_of_interest"]
+///        establishment
+//        filter.types = ["food"]
+//                        "bar",
+//                        "bowling_alley",
+//                        "amusement_park",
+//                        "movie_theater"]
+        
         
         return filter
     }
@@ -100,17 +115,18 @@ class GooglePlacesManager: ObservableObject {
     
     func performAutocompleteQuery(_ query: String, isLocality: Bool = false, withCompletion completion: @escaping ([SchnozPlace]?, Error?) -> Void) {
         
-        //        autoFilter { autoFilter in
         let group = DispatchGroup()
         
         let filter = isLocality ? self.localityFilter() : autoFilter()
+        let q = isLocality ? query :  query
         self.placesClient.findAutocompletePredictions(
-            fromQuery: query,
+            fromQuery: q,
             filter: filter,
             sessionToken: self.autocompleteSessionToken)
         { results, error in
             
             if let error = error {
+                print(error.localizedDescription)
                 completion(nil, error)
             }
             
@@ -125,10 +141,9 @@ class GooglePlacesManager: ObservableObject {
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(result.placeID) { averageRating in
                         schnozPlace.averageRating = averageRating
-//                    FirebaseManager.instance.getReviewsForLocation(result.placeID) { reviews in
-//                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
+
                     schnozResults.append(schnozPlace)
                 }
                 group.notify(queue: .main) {
@@ -136,8 +151,21 @@ class GooglePlacesManager: ObservableObject {
                 }
             }
         }
+    }
+    
+    func getSchnozPlaceFromLocationID(_ locationID: String,
+                                      withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+        let schnozPlace = SchnozPlace(placeID: locationID)
         
-        //        }
+        self.getPlaceDetails(locationID) { gmsPlace, error in
+            if let gmsPlace = gmsPlace {
+                schnozPlace.gmsPlace = gmsPlace
+                completion(schnozPlace, nil)
+            }
+            if let error = error {
+                completion(nil, error)
+            }
+        }
     }
     
     func getMealType(searchType: SearchType, withCopletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
@@ -149,6 +177,7 @@ class GooglePlacesManager: ObservableObject {
             
             //        self.placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: .all) { results, error in
             if let error = error {
+                print(error.localizedDescription)
                 completion(nil, error)
             }
             var schnozResults = [SchnozPlace]()
@@ -172,21 +201,21 @@ class GooglePlacesManager: ObservableObject {
     }
     
     
-    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
-        
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
-        
-        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
-            (place: GMSPlace?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                completion(nil, error)
-            }
-            if let place = place {
-                completion(place, nil)
-            }
-        })
-    }
+//    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
+//
+//        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
+//
+//        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
+//            (place: GMSPlace?, error: Error?) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                completion(nil, error)
+//            }
+//            if let place = place {
+//                completion(place, nil)
+//            }
+//        })
+//    }
     
     func getPlaceDetails(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
         self.placesClient.lookUpPlaceID(placeID) { place, error in

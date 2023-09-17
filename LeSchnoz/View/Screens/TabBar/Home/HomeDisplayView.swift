@@ -37,7 +37,6 @@ struct HomeDisplayView: View {
             
                 .task {
                     guard Authorization.instance.isSignedIn else { return }
-                    DispatchQueue.main.async {
                         FirebaseManager.instance.getLatestReview { review, error in
                             
                             if let error = error {
@@ -45,14 +44,18 @@ struct HomeDisplayView: View {
                                 self.errorManager.shouldDisplay = true
                             }
                             if let review = review {
+                                DispatchQueue.main.async {
                                 self.listResultsVM.latestReview = review
                                 self.latestReview = review
                                 
-                                self.latestReviewPlace = SchnozPlace(latestReview: review)
+                                self.latestReviewPlace = SchnozPlace(review: review)
                             }
                             
                         }
                     }
+//                    listResultsVM.searchRegion = ""
+//                    SearchLogic.instance.areaSearchLocation = ""
+
                 }
         }
         .fullScreenCover(isPresented: $shouldNavigateToLDForLatestReview) {
@@ -168,7 +171,10 @@ struct HomeDisplayView: View {
                 searchType.image
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
-                    .frame(width: geo.size.width / 6)
+                    .frame(width: geo.size.width / 10)
+                    .foregroundColor(oceanBlue.lightBlue)
+                    .fontWeight(.ultraLight)
+//                    .frame(width: geo.size.width / 6)
                 Text(searchType.rawValue.capitalized)
                     .font(.footnote)
                     .foregroundColor(oceanBlue.lightBlue)
@@ -206,17 +212,18 @@ struct HomeDisplayView: View {
     
     private func searchTypeTapped(_ searchType: SearchType) {
         listResultsVM.searchType = searchType
-        
+
         if searchType.hasEmptyBucket {
-                
-                NetworkServices.instance.getNearbyLocationsWithKeyword(searchType.rawValue) { places, error in
+            let isAllSearch = searchType == .all
+            let keyword = isAllSearch ? "Food" : searchType.rawValue
+                NetworkServices.instance.getNearbyLocationsWithKeyword(keyword) { places, error in
                     if let error = error {
                         self.errorManager.message = error.localizedDescription
                         self.errorManager.shouldDisplay = true
                     }
                     if let places = places {
                         searchType.addPlacesToBucket(places)
-                        
+
                             listResultsVM.schnozPlaces = places
                         listResultsVM.isLoading = false
                     }
@@ -227,28 +234,38 @@ struct HomeDisplayView: View {
         listResultsVM.showSearchTableView = true
     }
     
+//    private func searchTypeTapped(_ searchType: SearchType) {
+//        listResultsVM.searchType = searchType
+//
+//        if searchType.hasEmptyBucket {
+//            let isAllSearch = searchType == .all
+//            let keyword = isAllSearch ? "food" : searchType.rawValue // food
+//            GooglePlacesManager.instance.performAutocompleteQuery(keyword) { places, error in
+//                    if let error = error {
+//                        self.errorManager.message = error.localizedDescription
+//                        self.errorManager.shouldDisplay = true
+//                    }
+//                    if let places = places {
+//                        searchType.addPlacesToBucket(places)
+//
+//                            listResultsVM.schnozPlaces = places
+//                        listResultsVM.isLoading = false
+//                    }
+//                }
+//        } else {
+//            listResultsVM.schnozPlaces = searchType.places
+//        }
+//        listResultsVM.showSearchTableView = true
+//    }
+    
     private func latestReviewTapped() {
         self.shouldNavigateToLDForLatestReview = true
         SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
         LDVM.instance.reviews = []
+        LDVM.instance.selectedLocation = self.latestReviewPlace
     }
     
-    private func getSchnozPlaceFromLatestReview(_ latestReview: ReviewModel, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
-        let schnozPlace = SchnozPlace(placeID: latestReview.locationID)
-        FirebaseManager.instance.getAverageRatingForLocation(latestReview.locationID) { averageRating in
-            schnozPlace.averageRating = averageRating
-        }
-        
-        GooglePlacesManager.instance.getPlaceFromID(latestReview.locationID) { gmsPlace, error in
-            if let error = error {
-                completion(nil, error)
-            }
-            // will this code be synchronous??
-            if let gmsPlace = gmsPlace {
-                schnozPlace.gmsPlace = gmsPlace
-            }
-        }
-    }
+
 }
 
 struct HomeDisplayView_Previews: PreviewProvider {

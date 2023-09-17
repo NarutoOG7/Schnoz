@@ -9,10 +9,12 @@ import SwiftUI
 import GooglePlaces
 
 enum SearchType: String, CaseIterable {
-    case breakfast, lunch, dinner
+    case all, breakfast, lunch, dinner
     
     var field: GMSPlaceField {
         switch self {
+        case .all:
+            return .dineIn
         case .breakfast:
             return .servesBreakfast
         case .lunch:
@@ -25,6 +27,8 @@ enum SearchType: String, CaseIterable {
     var image: Image {
         let images = K.Images.SearchTypes.self
         switch self {
+            case .all:
+            return images.blueAll
         case .breakfast:
             return images.blueBreakfast
         case .lunch:
@@ -37,6 +41,8 @@ enum SearchType: String, CaseIterable {
     var hasEmptyBucket: Bool {
         let listResultsVM = ListResultsVM.instance
         switch self {
+        case .all:
+            return listResultsVM.nearbyPlaces.isEmpty
         case .breakfast:
             return listResultsVM.breakfastPlaces.isEmpty
         case .lunch:
@@ -49,6 +55,8 @@ enum SearchType: String, CaseIterable {
     var places: [SchnozPlace] {
         let listResultsVM = ListResultsVM.instance
         switch self {
+        case .all:
+            return listResultsVM.nearbyPlaces
         case .breakfast:
             return listResultsVM.breakfastPlaces
         case .lunch:
@@ -61,6 +69,8 @@ enum SearchType: String, CaseIterable {
     func addPlacesToBucket(_ places: [SchnozPlace]) {
         let listResultsVM = ListResultsVM.instance
         switch self {
+        case .all:
+            listResultsVM.nearbyPlaces = places
         case .breakfast:
             listResultsVM.breakfastPlaces = places
         case .lunch:

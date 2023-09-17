@@ -21,7 +21,7 @@ class UserLocationManager: NSObject, ObservableObject {
     @ObservedObject var errorManager = ErrorManager.instance
     
     var locationManager: CLLocationManager?
-    var firebaseManager = FirebaseManager.instance
+//    var firebaseManager = FirebaseManager.instance
     
     func checkIfLocationServicesIsEnabled() {
         

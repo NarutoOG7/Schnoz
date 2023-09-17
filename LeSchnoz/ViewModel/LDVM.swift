@@ -21,6 +21,8 @@ class LDVM: ObservableObject {
     @Published var errorMessage = ""
     @Published var shouldShowError = false
     
+    @Published var isQuerySearching = false
+    
     @Published var shouldShowLeaveAReviewView = false
     
     @Published var sortingOption: ReviewSortingOption = .newest {

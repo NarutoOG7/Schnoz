@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import StarView
 
 
 //var body: some View {
@@ -40,29 +41,34 @@ struct ReviewCell: View {
     @Environment(\.colorScheme) var colorScheme
             
     var body: some View {
+            VStack(alignment: .leading, spacing: 4) {
+                if isShowingLocationName {
+                    locationName
+                    locationAddress
+                }
+                
+                title
+                    .padding(.top, 3)
+                
+                HStack {
+
+                    GradientStars(isEditable: false, fillPercent: .constant((review.rating / 5) * 100), starSize: 0.007, spacing: -40)
+
+                        .frame(height: 40)
+                    timestamp
+                }
+                .offset(x: -20)
+
+                reviewDescription
+                if isShowingUsername {
+                    username
+                        .padding(.top, 10)
+                }
+                //           Divider().overlay(oceanBlue.lightBlue)
+                //               .padding(.top)
+                
+            }
         
-        VStack(alignment: .leading, spacing: 4) {
-            if isShowingLocationName {
-                locationName
-                locationAddress
-            }
-
-           title
-                .padding(.top, 3)
-
-            HStack {
-                Stars(count: 5, isEditable: false, color: oceanBlue.yellow, rating: .constant(review.rating))
-                timestamp
-            }
-           reviewDescription
-            if isShowingUsername {
-                username
-                    .padding(.top, 10)
-            }
-//           Divider().overlay(oceanBlue.lightBlue)
-//               .padding(.top)
-
-        }
     }
   
     private var title: some View {

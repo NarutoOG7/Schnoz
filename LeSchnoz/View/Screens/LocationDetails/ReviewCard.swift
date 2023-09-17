@@ -6,30 +6,36 @@
 //
 
 import SwiftUI
+//import StarView
 
 struct ReviewCard: View {
     
     let review: ReviewModel
     
     let oceanBlue = K.Colors.OceanBlue.self
-        
+            
     var body: some View {
-        VStack(alignment: .leading,spacing: 7) {
-            placeNameView
-            title
-            HStack {
-                stars
-//                    .padding(.bottom, 6)
-                timestamp
+            VStack(alignment: .leading,spacing: 7) {
+                placeNameView
+                title
+                HStack {
+                    GradientStars(isEditable: false, fillPercent: .constant((review.rating / 5) * 100), starSize: 0.01, spacing: -15)
+//                    CustomStarRating(currentValue: .constant(review.rating), starSize: (200,40))
+//                    StarRatingView(value: 5, stars: Int(review.rating))
+//                    SlidingStarsGradient(fillPercent: .constant(Float(review.rating)), frame: (200, 40))
+                    
+                    //                    .padding(.bottom, 6)
+                    timestamp
+                }
+                description
+                name
+                    .padding(.trailing, 15)
             }
-            description
-            name
-                .padding(.trailing, 15)
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 14)
+                .strokeBorder(oceanBlue.blue, lineWidth: 3))
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 14)
-            .strokeBorder(oceanBlue.blue, lineWidth: 3))
-    }
+    
     
     var title: some View {
         Text(review.title)
@@ -47,10 +53,10 @@ struct ReviewCard: View {
 
     }
     
-    var stars: some View {
-        Stars(color: oceanBlue.yellow,
-               rating: .constant(review.rating))
-    }
+//    var stars: some View {
+////        Stars(color: oceanBlue.yellow,
+////               rating: .constant(review.rating))
+//    }
     
     var description: some View {
         Text(review.review)

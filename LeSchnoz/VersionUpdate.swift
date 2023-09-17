@@ -43,6 +43,7 @@ struct AppStoreUpdateChecker {
         guard let bundleID = Bundle.main.bundleIdentifier,
                 let currentVersionNumber = Bundle.main.releaseVersionNumber,
                 let url = URL(string: "http://itunes.apple.com/lookup?bundleId=\(bundleID)") else {
+            print("error: invalid inputs")
             // Invalid inputs
             return false
         }
@@ -59,7 +60,7 @@ struct AppStoreUpdateChecker {
             return currentVersionNumber != latestVersionNumber
         }
         catch {
-            // TODO: Handle error
+            print("error with newVersionCheck: \(error.localizedDescription)")
             return false
         }
     }

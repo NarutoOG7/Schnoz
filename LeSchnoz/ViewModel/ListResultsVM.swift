@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum ListResultsSortingOptions: String {
+    case best = "Highest Rated"
+    case worst = "Lowest Rated"
+    case none = "None"
+
+}
+
 
 class ListResultsVM: ObservableObject {
     static let instance = ListResultsVM()
@@ -34,6 +41,23 @@ class ListResultsVM: ObservableObject {
     @ObservedObject var googlePlacesManager = GooglePlacesManager.instance
     @ObservedObject var userLocManager = UserLocationManager.instance
     @ObservedObject var userStore = UserStore.instance
+    
+    @Published var sortingOption: ListResultsSortingOptions = .none {
+        didSet {
+            if oldValue == .none {
+                self.unfilteredPlaces = schnozPlaces
+            }
+            switch sortingOption {
+            case .best:
+                self.schnozPlaces = schnozPlaces.sorted(by: { $0.averageRating?.avgRating ?? 0 > $1.averageRating?.avgRating ?? 0 })
+            case .worst:
+                self.schnozPlaces = schnozPlaces.sorted(by: { $0.averageRating?.avgRating ?? 0 < $1.averageRating?.avgRating ?? 0 })
+            case .none:
+                self.schnozPlaces = unfilteredPlaces
+            }
+            }
+        }
+    private var unfilteredPlaces: [SchnozPlace] = []
 
     //MARK: - Refresh Data in Places Buckets
     
@@ -44,6 +68,8 @@ class ListResultsVM: ObservableObject {
         updateReviewInPlaces(&breakfastPlaces)
         updateReviewInPlaces(&lunchPlaces)
         updateReviewInPlaces(&dinnerPlaces)
+        LDVM.instance.selectedLocation?.schnozReviews.append(review)
+        LDVM.instance.selectedLocation?.averageRating = averageRating
         
       
         func updateReviewInPlaces(_ places: inout [SchnozPlace]) {

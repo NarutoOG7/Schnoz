@@ -34,14 +34,26 @@ class NetworkServices: ObservableObject {
         }
     }
     
+//https://maps.googleapis.com/maps/api/place/queryautocomplete/json
+//  ?input=pizza%20near%20par
+//  &key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//    
+//https://maps.googleapis.com/maps/api/place/qeuryautocomplete/json?input=Sim&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//
+//https://maps.googleapis.com/maps/api/place/autocomplete/json?input=fort%collins&location=37.76999%2C-122.44696&radius=500&types=food&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//    
+//https://maps.googleapis.com/maps/api/place/textsearch/json?query=sim%city%20in%20Westbrook&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
+//    
     func getFullURL(_ keyword: String, withCompletion completion: @escaping(URL?, Error?) -> Void) {
+        print(listResultsVM.searchRegion)
         if let currentLoc = UserStore.instance.currentLocation?.coordinate {
             let keyword = "keyword=\(keyword)"
             let location = "&location=\(currentLoc.asStringForURL())"
             let radius = "&radius=2500"
             let api = "&key=\(apiKey)"
-            let type = "&type=restaraunt"
+            let type = "&type=food"
             let stringURL = (baseURL?.absoluteString ?? "") + keyword + location + radius + type + api
+            print(stringURL)
             if let fullURL = URL(string: stringURL) {
                 print(fullURL.absoluteString)
                 completion(fullURL, nil)
@@ -51,7 +63,7 @@ class NetworkServices: ObservableObject {
                 let fullURL = self.baseURL?.appending(queryItems: [URLQueryItem(name: "keyword", value: keyword),
                                                                    URLQueryItem(name: "location", value: cloc.coordinate.asStringForURL()),
                                                                    URLQueryItem(name: "radius", value: "1500"),
-                                                                   URLQueryItem(name: "type", value: "restaraunt"),
+                                                                   URLQueryItem(name: "type", value: "food"),
                                                                    URLQueryItem(name: "key", value: self.apiKey)])
                 completion(fullURL, nil)
             }
@@ -70,6 +82,7 @@ class NetworkServices: ObservableObject {
                 completion(nil, error)
             }
             if let url = url {
+                print(url)
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     if let error = error {
                         completion(nil, error)
@@ -154,8 +167,9 @@ class NetworkServices: ObservableObject {
         let schnozPlace = SchnozPlace(placeID: placeID)
 
         group.enter()
-            GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
+            GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
                 if let error = error {
+                    print(error.localizedDescription)
                     completion(nil, error)
                 }
                 if let gmsPlace = gmsPlace {

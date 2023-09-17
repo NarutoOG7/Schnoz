@@ -14,26 +14,45 @@ struct FirestoreUser: Identifiable, Hashable {
     var id: String
     var username: String
     var reviewCount: Int?
-    var totalStarsGiven: Int?
+    var totalStarsGiven: Double?
     var averageStarsGiven: Double?
     
-    var averageStarsAsString: String {
-        let average = self.averageStarsGiven ?? 0
-        let starsThruExactly = Int(exactly: average)
-        let starsCountFinal = starsThruExactly == nil ? "\(average)" : "\(starsThruExactly ?? 0)"
-        return starsCountFinal
+//    var averageStarsAsString: String {
+//        let average = averageStarsGiven ?? 0
+//        let intAVG = Int(average)
+//        let isWhole = Double(intAVG) == average
+//        let wholeString = String(intAVG)
+//        let doubleString = String(format: "%.1f", average)
+//        let finalAvg = isWhole ? wholeString : doubleString
+//        return finalAvg
+//    }
+    
+    func doubleAsStringWithIntFloor(_ double: Double) -> String {
+        let intAVG = Int(double)
+        let isWhole = Double(intAVG) == double
+        let wholeString = String(intAVG)
+        let doubleString = String(format: "%.1f", double)
+        let finalAvg = isWhole ? wholeString : doubleString
+        return finalAvg
     }
+    
+//    var averageStarsAsString: String {
+//        let average = self.averageStarsGiven ?? 0
+//        let starsThruExactly = Int(exactly: average)
+//        let starsCountFinal = starsThruExactly == nil ? "\(average)" : "\(starsThruExactly ?? 0)"
+//        return starsCountFinal
+//    }
     
     
     init(dict: [String:Any]) {
         self.id = dict["id"] as? String ?? ""
         self.username = dict["username"] as? String ?? ""
         self.reviewCount = dict["totalReviewCount"] as? Int ?? 0
-        self.totalStarsGiven = dict["totalStarsGiven"] as? Int ?? 0
+        self.totalStarsGiven = dict["totalStarsGiven"] as? Double ?? 0
         self.averageStarsGiven = dict["averageStarsGiven"] as? Double ?? 0
     }
     
-    init(id: String = "", username: String = "", reviewCount: Int = 0, totalStarsGiven: Int = 0, averageStarsGiven: Double = 0) {
+    init(id: String = "", username: String = "", reviewCount: Int = 0, totalStarsGiven: Double = 0, averageStarsGiven: Double = 0) {
         self.id = id
         self.username = username
         self.reviewCount = reviewCount
@@ -50,64 +69,70 @@ struct FirestoreUser: Identifiable, Hashable {
         self.averageStarsGiven = user.averageStarsGiven
     }
     
-    mutating func handleAdditionOfReview(_ review: ReviewModel) {
+    mutating func handleAdditionOfReview(_ review: ReviewModel) -> FirestoreUser {
         var newUser = self
             newUser.totalStarsGiven? += review.rating
             newUser.reviewCount? += 1
             if let reviewCount = newUser.reviewCount,
                let starsCount = newUser.totalStarsGiven,
                reviewCount > 0 {
-                newUser.averageStarsGiven? = Double(starsCount / reviewCount)
+                newUser.averageStarsGiven? = starsCount / Double(reviewCount)
             }
-            
-        UserStore.instance.firestoreUser = newUser
-            FirebaseManager.instance.updateFirestoreUser(newUser)
+            return newUser
+//        UserStore.instance.firestoreUser = newUser
+//            FirebaseManager.instance.updateFirestoreUser(newUser)
         
     }
     
-    mutating func handleUpdateOfReview(oldReview: ReviewModel, newReview: ReviewModel) {
+    mutating func handleUpdateOfReview(oldReview: ReviewModel, newReview: ReviewModel) -> FirestoreUser {
         var newUser = self
         let starsDifference = newReview.rating - oldReview.rating
         newUser.totalStarsGiven? += starsDifference
         if let reviewCount = newUser.reviewCount,
            let starsCount = newUser.totalStarsGiven,
            reviewCount > 0 {
-            newUser.averageStarsGiven? = Double(starsCount / reviewCount)
+            newUser.averageStarsGiven? = starsCount / Double(reviewCount)
         }
-        UserStore.instance.firestoreUser = newUser
-        FirebaseManager.instance.updateFirestoreUser(newUser)
+        return newUser
+//        UserStore.instance.firestoreUser = newUser
+//        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
     
-    mutating func handleRemovalOfReview(review: ReviewModel) {
+    mutating func handleRemovalOfReview(review: ReviewModel) -> FirestoreUser {
         var newUser = self
         newUser.totalStarsGiven? -= review.rating
         newUser.reviewCount? -= 1
         if let reviewCount = newUser.reviewCount,
            let starsCount = newUser.totalStarsGiven,
            reviewCount > 0 {
-            newUser.averageStarsGiven? = Double(starsCount / reviewCount)
+            newUser.averageStarsGiven? = starsCount / Double(reviewCount)
         }
-        UserStore.instance.firestoreUser = newUser
-        FirebaseManager.instance.updateFirestoreUser(newUser)
+        return newUser
+//        UserStore.instance.firestoreUser = newUser
+//        FirebaseManager.instance.updateFirestoreUser(newUser)
     }
 }
 
 extension FirebaseManager {
     
-    func doesUserExist(id: String, _ exists: @escaping(Bool) -> Void) {
+    func doesUserExist(id: String, _ exists: @escaping(FirestoreUser?) -> Void) {
         
-        guard let db = db else { exists(false)
+        guard let db = db else { exists(nil)
             return }
         let usersCollection = db.collection("Users")
         
         usersCollection.whereField("id", isEqualTo: id).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error checking username availability: \(error.localizedDescription)")
-                exists(false)
+                exists(nil)
             } else {
-                let userExists = !snapshot!.isEmpty
-                print(userExists)
-                exists(userExists)
+                guard let snapshot = snapshot,
+                       let doc = snapshot.documents.first else { exists(nil)
+                    return
+                }
+                let firestoreUser = FirestoreUser(dict: doc.data())
+                    exists(firestoreUser)
+
             }
         }
     }

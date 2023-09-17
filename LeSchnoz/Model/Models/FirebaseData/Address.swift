@@ -36,6 +36,7 @@ struct Address: Codable, Hashable {
         self.country = country
         self.zipCode = zip
     }
+  
 //
 //    init(addressComponents: [GMSAddressComponent]) {
 //            for comp in addressComponents {

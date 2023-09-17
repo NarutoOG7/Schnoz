@@ -109,6 +109,15 @@
       }
     },
     {
+      "identity" : "starview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/EnesKaraosman/StarView",
+      "state" : {
+        "revision" : "02208cf0b78b62eed4dde83b385c35da9c766944",
+        "version" : "1.0.4"
+      }
+    },
+    {
       "identity" : "swift-protobuf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",

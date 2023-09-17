@@ -139,7 +139,7 @@ extension FirebaseManager {
     
     //MARK: - Fetch Reviews For User
     
-    func handleQuerySnapshot(_ querySnapshot: QuerySnapshot?, _ error: Error?, withCompletion completion: @escaping(ReviewModel) -> Void) -> Void {
+    func handleQuerySnapshot(_ querySnapshot: QuerySnapshot?, _ error: Error?, withCompletion completion: @escaping([ReviewModel]) -> Void) -> Void {
         
         guard let querySnapshot = querySnapshot else {
             
@@ -147,18 +147,19 @@ extension FirebaseManager {
             self.errorManager.shouldDisplay = true
             return
         }
+        var reviews: [ReviewModel] = []
         for doc in querySnapshot.documents {
             
             let dict = doc.data()
             
             let review = ReviewModel(dictionary: dict)
             self.userReviewsLastDocument = doc
-            completion(review)
-            
+            reviews.append(review)
         }
+        completion(reviews)
     }
     
-    func getReviewsForUser(_ user: User, withCompletion completion: @escaping(_ review: ReviewModel) -> Void) {
+    func getReviewsForUser(_ user: User, withCompletion completion: @escaping(_ review: [ReviewModel]) -> Void) {
         
         guard let db = db else { return }
         
@@ -174,25 +175,7 @@ extension FirebaseManager {
         
     }
     
-    func getNextPageOfUserReviews(withCompletion completion: @escaping(ReviewModel) -> Void) {
-        
-        if let userReviewsLastDocument = userReviewsLastDocument {
-            guard let db = db else { return }
-            
-            let collection = db.collection("Reviews")
-                .whereField("userID", isEqualTo: userStore.user.id)
-                .order(by: "timestamp", descending: false)
-                .limit(to: 10)
-            
-            collection.start(atDocument: userReviewsLastDocument)
-            collection.getDocuments { snapshot, error in
-                self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
-            }
-        }
-    }
-    
-    
-    
+
     func fetchTotalUserReviewsCount(withCompletion completion: @escaping(Int?, Error?) -> Void) {
         
         guard let db = db else { return }
@@ -414,7 +397,9 @@ extension FirebaseManager {
             
             for doc in snapshot.documents {
                 let dict = doc.data()
-                let review = ReviewModel(dictionary: dict)
+                var review = ReviewModel(dictionary: dict)
+                let schnozPlace = SchnozPlace(review: review)
+                review.location = schnozPlace
                 reviews.append(review)
             }
             
@@ -456,7 +441,9 @@ extension FirebaseManager {
             
             for doc in snapshot.documents {
                 let dict = doc.data()
-                let review = ReviewModel(dictionary: dict)
+                var review = ReviewModel(dictionary: dict)
+                let schnozPlace = SchnozPlace(review: review)
+                review.location = schnozPlace
                 reviews.append(review)
             }
             userDetailsVM.isFetchInProgress = false

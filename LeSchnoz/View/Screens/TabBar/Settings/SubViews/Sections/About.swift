@@ -30,7 +30,7 @@ struct About: View {
                     .listRowSeparator(.hidden)
 
                     .padding(.bottom)
-                
+//                
 //                NavigationLink(destination: {
 //                    Admin()
 //                }, label: {

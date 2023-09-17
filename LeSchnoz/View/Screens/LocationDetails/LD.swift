@@ -9,9 +9,7 @@ import SwiftUI
 import GooglePlaces
 
 struct LD: View {
-    
-//    @State var location: SchnozPlace?
-    
+        
     @State private var imageURL = URL(string: "")
     @State private var isSharing = false
     @State private var isCreatingNewReview = false
@@ -20,7 +18,6 @@ struct LD: View {
     @State var shouldShowFirebaseError = false
     @State var shouldShowSuccessMessage = false
     @State var firebaseErrorMessage = ""
-//    @State var reviews: [ReviewModel] = []
     
     @State var showGuestAlert = false
     
@@ -48,6 +45,7 @@ struct LD: View {
                         VStack(alignment: .leading, spacing: 7) {
                             title
                             address
+                            googleRating
                             avgRatingDisplay
                             sortReviewsButton
                             listOfReviews
@@ -62,10 +60,8 @@ struct LD: View {
                     }
                 }
             }
-            
             .edgesIgnoringSafeArea(.vertical)
-//            .navigationBarHidden(true)
-            
+        
             .actionSheet(isPresented: $showReviewSortActionSheet) {
                 ActionSheet(
                     title: Text("Sort Options"),
@@ -159,9 +155,6 @@ struct LD: View {
                     .offset(y: geo.frame(in: .global).origin.y < 0
                             ? abs(geo.frame(in: .global).origin.y)
                             : -geo.frame(in: .global).origin.y)
-//                header/
-//              .opacity(self.getBlurRadiusForImage(geo) - 0.35)
-
             }
         }
     }
@@ -171,36 +164,48 @@ struct LD: View {
             .font(.avenirNext(size: 34))
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
+            .fixedSize(horizontal: false, vertical: true)
 
     }
     
     
     private var address: some View {
         Text(ldvm.selectedLocation?.secondaryText ?? "")
-            .font(.avenirNextRegular(size: 19))
-            .lineLimit(nil)
+            .font(.avenirNextRegular(size: 17))
             .foregroundColor(oceanBlue.blue)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
 
+    }
+    
+    private var googleRating: some View {
+        let text = ldvm.selectedLocation?.letterForRating() ?? ""
+            return Text("Google Rating: \(text)")
+                .italic()
+                .foregroundColor(oceanBlue.blue)
+                .font(.avenirNext(size: 14))
     }
     
     private var avgRatingDisplay: some View {
         let total = ldvm.selectedLocation?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
-        return VStack(alignment: .leading, spacing: 7) {
-            Stars(color: oceanBlue.yellow,
-                  rating: .constant(ldvm.selectedLocation?.averageRating?.avgRating ?? 0))
-            
-            Text("(\(total) review\(textEnding))")
-                .font(.avenirNextRegular(size: 17))
-                .foregroundColor(oceanBlue.lightBlue)
-            if userStore.isGuest {
-                leaveAReviewGuestButton
-            } else {
-                leaveAReviewLink
+        let avg = ldvm.selectedLocation?.averageRating?.avgRating ?? 0
+        
+        let rating = (avg / 5) * 100
+        return
+            VStack(alignment: .leading, spacing: 7) {
+                GradientStars(isEditable: false, fillPercent: .constant(rating), starSize: 0.007, spacing: -40)
+                    .frame(height: 40)
+                    .offset(x: -25)
+                Text("(\(total) review\(textEnding))")
+                    .font(.avenirNextRegular(size: 17))
+                    .foregroundColor(oceanBlue.lightBlue)
+                if userStore.isGuest {
+                    leaveAReviewGuestButton
+                } else {
+                    leaveAReviewLink
+                }
             }
-            
-        }
+        
     }
     
     private var reviewHelper: some View {
@@ -272,8 +277,6 @@ struct LD: View {
         .padding(.horizontal, -20)
             .listStyle(.plain)
             .frame(minHeight: 250 * CGFloat(ldvm.reviews.count))
-//            .scrollDisabled(true)
-//            .frame(height: 250 * CGFloat(ldvm.reviews.count))
                 .modifier(ClearListBackgroundMod())
             .task {
                 ldvm.batchFirstCall()
@@ -377,21 +380,11 @@ struct LD: View {
         showReviewSortActionSheet = true
     }
     
-//    private func fetchFirebaseReviews() {
-//        firebaseManager.fetchLatestTenReviewsForLocation(self.location?.placeID ?? "") { reviews in
-//            // Actually removed limit, fetches all
-//            self.location?.schnozReviews = reviews
-//            self.reviews = reviews
-//        }
-//    }
     
     private func leaveAReviewTapped() {
-//        if userStore.isGuest {
             self.showGuestAlert = true
-//        } else {
-//            ldvm.shouldShowLeaveAReviewView = true
-//        }
     }
+
     
 }
 
