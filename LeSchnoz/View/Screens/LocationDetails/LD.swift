@@ -23,11 +23,17 @@ struct LD: View {
     
     @State var showReviewSortActionSheet = false
     
+    @State var yelp: YelpLocationDetailsModel?
+    @State var tripAdvisor: TALocationDetails?
+
+    
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var firebaseManager = FirebaseManager.instance
     @ObservedObject var errorManager = ErrorManager.instance
     @ObservedObject var ldvm = LDVM.instance
     @ObservedObject var listResultsVM = ListResultsVM.instance
+    @ObservedObject var yelpManager = YelpManager.instance
+    
     
     let imageMaxHeight = UIScreen.main.bounds.height * 0.3
     let collapsedImageHeight: CGFloat = 10
@@ -45,8 +51,13 @@ struct LD: View {
                         VStack(alignment: .leading, spacing: 7) {
                             title
                             address
-                            googleRating
+                            websiteLink
                             avgRatingDisplay
+                            priceLevelView
+                                .padding(.vertical, -5)
+                            otherPlatformsRatings
+                                .padding(.bottom)
+                            Divider()
                             sortReviewsButton
                             listOfReviews
                             Spacer(minLength: ldvm.reviews.count == 0 ? 500 : 300)
@@ -61,6 +72,36 @@ struct LD: View {
                 }
             }
             .edgesIgnoringSafeArea(.vertical)
+        
+//            .onAppear {
+//                if let location = ldvm.selectedLocation {
+//                    yelpManager.setMatch(schnozPlace: location)
+//                }
+//            }
+        
+//            .onAppear {
+//                yelpManager.matchLocationToYelp(schnozPlace: ldvm.selectedLocation ?? SchnozPlace(placeID: "")) { match, error in
+//                    if let match = match {
+//                        print(match.alias)
+//                    }
+//                }
+//            }
+
+            .onAppear {
+                if let location = ldvm.selectedLocation {
+                    YelpManager.instance.getYelpFromSchnozPlace(location) { yelp, error in
+                        if let yelp = yelp {
+                            self.yelp = yelp
+                        }
+                    }
+                    
+                    TripAdvisorManger.instance.getTAFromSchnozPlace(location) { tripAdvisor, error in
+                        if let tripAdvisor = tripAdvisor {
+                            self.tripAdvisor = tripAdvisor
+                        }
+                    }
+                }
+            }
         
             .actionSheet(isPresented: $showReviewSortActionSheet) {
                 ActionSheet(
@@ -177,14 +218,7 @@ struct LD: View {
 
     }
     
-    private var googleRating: some View {
-        let text = ldvm.selectedLocation?.letterForRating() ?? ""
-            return Text("Google Rating: \(text)")
-                .italic()
-                .foregroundColor(oceanBlue.blue)
-                .font(.avenirNext(size: 14))
-    }
-    
+
     private var avgRatingDisplay: some View {
         let total = ldvm.selectedLocation?.averageRating?.numberOfReviews ?? 0
         let textEnding = total == 1 ? "" : "s"
@@ -251,6 +285,26 @@ struct LD: View {
         }
     }
     
+    private var priceLevelView: some View {
+        if let priceLevel = ldvm.selectedLocation?.gmsPlace?.priceLevel {
+            if priceLevel.rawValue > 0 {
+                let range = 0..<(priceLevel.rawValue + 1)
+                var dollarString = ""
+                print(priceLevel.hashValue)
+                for _ in range {
+                    dollarString.append("$")
+                }
+                return Text(dollarString)
+                    .frame(height: 40)
+                    .foregroundColor(oceanBlue.blue)
+            }
+        }
+            return Text("")
+                .frame(height: 0)
+                .foregroundColor(oceanBlue.blue)
+
+    }
+    
     private var firebaseErrorBanner: some View {
 
             NotificationBanner(message: $firebaseErrorMessage,
@@ -281,6 +335,20 @@ struct LD: View {
             .task {
                 ldvm.batchFirstCall()
             }
+    }
+    
+
+    
+    @ViewBuilder
+    private var websiteLink: some View {
+        if let url = ldvm.selectedLocation?.gmsPlace?.website {
+            Link(destination: url) {
+                Text("Check out their website")
+                    .underline()
+                    .foregroundColor(oceanBlue.lightBlue)
+                    .font(.avenirNext(size: 14))
+            }
+        }
     }
     
     //MARK: - Buttons
@@ -349,6 +417,7 @@ struct LD: View {
         .opacity(ldvm.reviews.count > 1 ? 1 : 0)
     }
     
+
     
     //MARK: - Methods
     
@@ -429,3 +498,92 @@ extension LD {
     }
 }
 
+
+//MARK: - Other Review Options
+extension LD {
+    
+    private var otherPlatformsRatings: some View {
+        VStack(alignment: .leading, spacing: 4) {
+//            Text("Other Platform Ratings:")
+//                .italic()
+//                .foregroundColor(oceanBlue.lightBlue)
+//                .font(.avenirNext(size: 13))
+//            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 5) {
+                    yelpRating
+                    tripAdvisorRating
+                    googleRating
+//                }
+            }
+        }
+    }
+//    private var otherPlatformsRatings: some View {
+//        VStack(alignment: .leading, spacing: 4) {
+//                    yelpRating
+//            googleRating
+//                    tripAdvisorRating
+//        }
+//    }
+    
+    private var googleRating: some View {
+        let place = ldvm.selectedLocation
+        let name = place?.gmsPlace?.name ?? ""
+        let addressComponents = (place?.secondaryText?.components(separatedBy: ","))
+        let street = addressComponents?.first ?? ""
+        let city = addressComponents?[1] ?? ""
+        let query = "\(name) \(street) \(city)"
+        let encodedString = query.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""
+        let urlString = "https://google.com/search?q=\(encodedString)"
+        let rating = ldvm.selectedLocation?.googleRating ?? 0
+        print(urlString)
+        return otherRatingViews(rating: rating, ratingName: "Google", website: urlString, color: Color("GoogleYellow"))
+    }
+    
+    private var yelpRating: some View {
+        let rating = yelp?.rating ?? 0
+        return otherRatingViews(rating: rating, ratingName: "Yelp", website: yelp?.url ?? "", color: Color("Yelp"))
+    }
+    
+    private var tripAdvisorRating: some View {
+        let ratingDouble = Double(tripAdvisor?.rating ?? "") ?? 0
+        return otherRatingViews(rating: ratingDouble, ratingName: "Trip Advisor", website: tripAdvisor?.url ?? "", color: Color("TripAdvisor"))
+    }
+    
+    
+    @ViewBuilder
+    private func otherRatingViews(rating: Double, ratingName: String, website: String, color: Color) -> some View {
+        if let url = URL(string: website) {
+            let ratingString = String(format: "%.0f", rating)
+             Link(destination: url) {
+                 HStack {
+                     Text("\(ratingName): \(ratingString)/5" )
+                         .italic()
+                         .foregroundColor(color)
+                         .font(.avenirNext(size: 14))
+//                     Image(systemName: "arrow.up.right")
+//                         .italic()
+//                         .foregroundColor(oceanBlue.lightBlue)
+//                         .font(.avenirNext(size: 14))
+                 }
+            }
+             .padding(10)
+             .background(RoundedRectangle(cornerRadius: 20)
+                 .strokeBorder(color, lineWidth: 2))
+        }
+    }
+    
+//    @ViewBuilder
+//    private func otherRatingViews(rating: Double, ratingName: String, website: String, color: Color) -> some View {
+//        if let url = URL(string: website) {
+//            let ratingString = String(format: "%.0f", rating)
+//             Link(destination: url) {
+//                 HStack {
+//                     Text("\(ratingName): \(ratingString)/5" )
+//                         .italic()
+//                         .foregroundColor(color)
+//                         .font(.avenirNext(size: 14))
+//                 }
+//            }
+//        }
+//    }
+}

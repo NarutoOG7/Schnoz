@@ -51,7 +51,7 @@ class SchnozPlace: Hashable, Identifiable {
             self.getAvgRatingIntAndString().number
         } set { }
     }
-    
+        
     func getAvgRatingIntAndString() -> (number: Double, string: String) {
         
         var avgRatingString = ""

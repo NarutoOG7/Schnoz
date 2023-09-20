@@ -224,6 +224,8 @@ class GooglePlacesManager: ObservableObject {
                 completion(nil, error)
             }
             if let place = place {
+                print(place.placeID)
+                print(place.name)
                 completion(place, nil)
             }
         }

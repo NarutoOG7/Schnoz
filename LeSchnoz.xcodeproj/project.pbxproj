@@ -78,6 +78,10 @@
 		C99EEC3A299EA3DC00B77DBD /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */; };
 		C99EEC6629B165E600B77DBD /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC6529B165E600B77DBD /* UserDefaults.swift */; };
 		C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99EEC8129B2A14100B77DBD /* TapGesture.swift */; };
+		C9A0864C2AB8176A00C2CC14 /* YelpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0864B2AB8176A00C2CC14 /* YelpManager.swift */; };
+		C9A0864F2ABA955F00C2CC14 /* YelpLocationMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0864E2ABA955F00C2CC14 /* YelpLocationMatch.swift */; };
+		C9A086512ABA958F00C2CC14 /* YelpLocationDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A086502ABA958F00C2CC14 /* YelpLocationDetailsModel.swift */; };
+		C9A086542ABA95C100C2CC14 /* TripAdvisorManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */; };
 		C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */; };
 		C9AC615929D11E990006FF32 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615829D11E990006FF32 /* SettingsPage.swift */; };
 		C9AC615B29D1DB670006FF32 /* SettingsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615A29D1DB670006FF32 /* SettingsVM.swift */; };
@@ -171,6 +175,10 @@
 		C99EEC39299EA3DC00B77DBD /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		C99EEC6529B165E600B77DBD /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C99EEC8129B2A14100B77DBD /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
+		C9A0864B2AB8176A00C2CC14 /* YelpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpManager.swift; sourceTree = "<group>"; };
+		C9A0864E2ABA955F00C2CC14 /* YelpLocationMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpLocationMatch.swift; sourceTree = "<group>"; };
+		C9A086502ABA958F00C2CC14 /* YelpLocationDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpLocationDetailsModel.swift; sourceTree = "<group>"; };
+		C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripAdvisorManger.swift; sourceTree = "<group>"; };
 		C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDisplayView.swift; sourceTree = "<group>"; };
 		C9AC615829D11E990006FF32 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		C9AC615A29D1DB670006FF32 /* SettingsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVM.swift; sourceTree = "<group>"; };
@@ -341,6 +349,8 @@
 				C99EEC2E299C5D0D00B77DBD /* GooglePlacesManager.swift */,
 				C98007D629C1580E00476D9B /* NetworkServices.swift */,
 				C9E1B50B2A19927D004706BD /* SearchLogic.swift */,
+				C9A0864B2AB8176A00C2CC14 /* YelpManager.swift */,
+				C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -356,6 +366,8 @@
 		C99EEB34299B19B300B77DBD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C9A086522ABA95A900C2CC14 /* TripAdvisor */,
+				C9A0864D2ABA955100C2CC14 /* Yelp */,
 				C99EEB41299B19B300B77DBD /* FirebaseData */,
 				C9AC616829D6BE780006FF32 /* ScchnozPlace.swift */,
 			);
@@ -560,6 +572,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C9A0864D2ABA955100C2CC14 /* Yelp */ = {
+			isa = PBXGroup;
+			children = (
+				C9A0864E2ABA955F00C2CC14 /* YelpLocationMatch.swift */,
+				C9A086502ABA958F00C2CC14 /* YelpLocationDetailsModel.swift */,
+			);
+			path = Yelp;
+			sourceTree = "<group>";
+		};
+		C9A086522ABA95A900C2CC14 /* TripAdvisor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TripAdvisor;
+			sourceTree = "<group>";
+		};
 		C9AC616629D6BDC90006FF32 /* NewSignupLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +765,7 @@
 				C99EEC8229B2A14100B77DBD /* TapGesture.swift in Sources */,
 				C99EEC17299B19B400B77DBD /* SignupVM.swift in Sources */,
 				C99EEC11299B19B400B77DBD /* LogIn.swift in Sources */,
+				C9A0864F2ABA955F00C2CC14 /* YelpLocationMatch.swift in Sources */,
 				C99EEBBC299B19B400B77DBD /* FirebaseManager.swift in Sources */,
 				C99EEC23299B1D8B00B77DBD /* AppDelegate.swift in Sources */,
 				C99EEBEC299B19B400B77DBD /* ProfilePage.swift in Sources */,
@@ -763,6 +792,7 @@
 				C90DFAD129E2577700C8971E /* AverageRating.swift in Sources */,
 				C99EEBE8299B19B400B77DBD /* About.swift in Sources */,
 				C9AC616929D6BE780006FF32 /* ScchnozPlace.swift in Sources */,
+				C9A086512ABA958F00C2CC14 /* YelpLocationDetailsModel.swift in Sources */,
 				C99EEBFA299B19B400B77DBD /* SplashScreen.swift in Sources */,
 				C99EEBDE299B19B400B77DBD /* ClearListBackgroundMod.swift in Sources */,
 				C99EEBCD299B19B400B77DBD /* User.swift in Sources */,
@@ -777,6 +807,7 @@
 				C98007D529BE6C9200476D9B /* ListResultsView.swift in Sources */,
 				C913A70E2A479A1700C1908E /* SocialCell.swift in Sources */,
 				C99EEBB7299B19B400B77DBD /* NetworkManager.swift in Sources */,
+				C9A086542ABA95C100C2CC14 /* TripAdvisorManger.swift in Sources */,
 				C9F225D52A5C979D0074AE89 /* Admin.swift in Sources */,
 				C99EEBEB299B19B400B77DBD /* MySniffs.swift in Sources */,
 				C99EEC2F299C5D0D00B77DBD /* GooglePlacesManager.swift in Sources */,
@@ -801,6 +832,7 @@
 				C99EEBED299B19B400B77DBD /* Account.swift in Sources */,
 				C913A70C2A476F2600C1908E /* UserDetailsView.swift in Sources */,
 				C99EEC13299B19B400B77DBD /* SignUp.swift in Sources */,
+				C9A0864C2AB8176A00C2CC14 /* YelpManager.swift in Sources */,
 				C99EEBD9299B19B400B77DBD /* Binding.swift in Sources */,
 				C99EEBDA299B19B400B77DBD /* UnabreviatedString.swift in Sources */,
 				C952D7072A66D63900C18D06 /* SlidingStarsGradient.swift in Sources */,

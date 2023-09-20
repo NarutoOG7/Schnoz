@@ -315,12 +315,15 @@ struct LocationReviewView: View {
                                                refreshType: .update)
             if var firestoreUser = userStore.firestoreUser, var oldReview = self.review {
                 self.oldReview = oldReview
-                //                let newUser = firestoreUser.handleUpdateOfReview(oldReview: oldReview, newReview: rev)
                 let difference = newRev.rating - oldReview.rating
-                print(difference)
                 firestoreUser.totalStarsGiven? += difference
-                firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
-                //                userStore.firestoreUser = newUser
+                
+                let totalStars = firestoreUser.totalStarsGiven ?? 1
+                let reviewCount = Double(firestoreUser.reviewCount ?? 1)
+                let avg =  totalStars / reviewCount
+                
+                firestoreUser.averageStarsGiven = avg
+                userStore.firestoreUser = firestoreUser
                 firebaseManager.updateFirestoreUser(firestoreUser)
             }
             self.shouldShowSuccessMessage = true
@@ -346,11 +349,13 @@ struct LocationReviewView: View {
                 placeID: location?.placeID ?? rev.locationID,
                 refreshType: .add)
             if var firestoreUser = userStore.firestoreUser {
-                //                    let newUser = firestoreUser.handleAdditionOfReview(rev)
+
                 firestoreUser.totalStarsGiven? += rev.rating
                 firestoreUser.reviewCount? += 1
                 firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
                 //                    userStore.firestoreUser = newUser
+
+                userStore.firestoreUser = firestoreUser
                 firebaseManager.updateFirestoreUser(firestoreUser)
             }
             self.shouldShowSuccessMessage = true

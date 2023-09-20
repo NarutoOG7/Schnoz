@@ -165,6 +165,7 @@ struct MySniffs: View {
                            reviewCount > 0 {
                             firestoreUser.averageStarsGiven? = starsCount / Double(reviewCount)
                         }
+                        userStore.firestoreUser = firestoreUser
                         firebaseManager.updateFirestoreUser(firestoreUser)
                     }
                     
