@@ -12,11 +12,20 @@ class YelpManager: ObservableObject {
     
     static let instance = YelpManager()
     
-    let headers = [
-        "accept": "application/json",
-        "Authorization": "Bearer xxx"
-    ]
+    private var apiKey = ""
+    private var keys: NSDictionary?
     
+    init() {
+        if let path = Bundle.main.path(forResource: K.GhostKeys.file, ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = keys {
+            
+            if let yelpAPI = dict["yelpKey"] as? String {
+                self.apiKey = yelpAPI
+            }
+        }
+    }
  
     
     func getYelpFromSchnozPlace(_ schnozPlace: SchnozPlace, withCompletion completion: @escaping(YelpLocationDetailsModel?, Error?) -> Void) {
@@ -53,8 +62,12 @@ class YelpManager: ObservableObject {
     
     private func getYelpPlaceDetailsFromYelpID(_ yelpID: String, withCompletion completion: @escaping(YelpLocationDetailsModel?, Error?) -> Void) {
         
+        let headers = [
+            "accept": "application/json",
+            "Authorization": "Bearer \(apiKey)"
+        ]
         let urlString = "https://api.yelp.com/v3/businesses/\(yelpID)"
-        print(urlString)
+        
         if let url = NSURL(string: urlString) {
             let request = NSMutableURLRequest(url: url as URL,
                                               cachePolicy: .useProtocolCachePolicy,
@@ -89,6 +102,11 @@ class YelpManager: ObservableObject {
     private func matchLocationToYelp(schnozPlace: SchnozPlace, withCompletion completion: @escaping(YelpLocationMatch?, Error?) -> Void) {
         
         if let url = buildURLFromSchnozPlace(schnozPlace) {
+            
+            let headers = [
+                "accept": "application/json",
+                "Authorization": "Bearer \(apiKey)"
+            ]
         
             let request = NSMutableURLRequest(url: url as URL,
                                               cachePolicy: .useProtocolCachePolicy,
@@ -110,7 +128,6 @@ class YelpManager: ObservableObject {
                             
                         }
                         guard let businesses = dict.value(forKey: "businesses") as? [NSDictionary] else {
-                            print(error?.localizedDescription)
                             completion(nil, error)
                             return
                         }

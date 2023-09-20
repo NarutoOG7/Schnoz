@@ -44,6 +44,21 @@ class TripAdvisorManger {
     
     let headers = ["accept": "application/json"]
     
+    private var apiKey = ""
+    private var keys: NSDictionary?
+    
+    init() {
+        if let path = Bundle.main.path(forResource: K.GhostKeys.file, ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = keys {
+            
+            if let taKey = dict["tripAdvisorsKey"] as? String {
+                self.apiKey = taKey
+            }
+        }
+    }
+    
     func getTAFromSchnozPlace(_ schnozPlace: SchnozPlace, withCompletion completion: @escaping(TALocationDetails?, Error?) -> Void) {
         var taModel: TALocationDetails?
         let group = DispatchGroup()
@@ -74,9 +89,7 @@ class TripAdvisorManger {
     }
     
     private func locationDetails(_ match: TAMatchInfo, withCompletion completion: @escaping(TALocationDetails?, Error?) -> Void) {
-        
-        let apiKey = ""
-        
+                
         let locale = Locale()
         let language = locale.language.languageCode?.identifier ?? ""
         let currency = locale.currency?.identifier ?? ""
@@ -180,9 +193,7 @@ class TripAdvisorManger {
     }
     
     private func queryItems(_ schnozPlace: SchnozPlace) -> [URLQueryItem] {
-        
-        let apiKey = ""
-        
+                
         var queryItems = [URLQueryItem]()
         
         let api = URLQueryItem(name: "key", value: apiKey)

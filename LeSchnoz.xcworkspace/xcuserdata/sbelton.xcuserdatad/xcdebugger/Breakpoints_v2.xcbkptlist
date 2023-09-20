@@ -260,22 +260,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D2507167-CAA9-43DD-96DB-5263E07F5A29"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/NetworkServices.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "parseJSONTres(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "DC8AA5BB-A018-47C6-A79A-F9D54DBD08A6"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -283,8 +267,8 @@
             filePath = "LeSchnoz/Model/Managers/NetworkServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -299,8 +283,8 @@
             filePath = "LeSchnoz/Model/Managers/NetworkServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -347,13 +331,13 @@
             filePath = "LeSchnoz/Model/Managers/GooglePlacesManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "getNearbyLocation(withCompletion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 45712e65a4fbf4b3"
+                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 45712e65a4fbf4d6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -363,12 +347,12 @@
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
                   offsetFromSymbolStart = "192">
                </Location>
                <Location
-                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 2b53f7612229a43b"
+                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 2b53f7612229a45e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -378,8 +362,8 @@
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
                   offsetFromSymbolStart = "268">
                </Location>
             </Locations>
@@ -395,8 +379,8 @@
             filePath = "LeSchnoz/Model/Managers/TripAdvisorManger.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "locationDetails(_:withCompletion:)"
             landmarkType = "7">
          </BreakpointContent>

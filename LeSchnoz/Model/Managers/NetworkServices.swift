@@ -34,16 +34,6 @@ class NetworkServices: ObservableObject {
         }
     }
     
-//https://maps.googleapis.com/maps/api/place/queryautocomplete/json
-//  ?input=pizza%20near%20par
-//  &key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-//    
-//https://maps.googleapis.com/maps/api/place/qeuryautocomplete/json?input=Sim&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-//
-//https://maps.googleapis.com/maps/api/place/autocomplete/json?input=fort%collins&location=37.76999%2C-122.44696&radius=500&types=food&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-//    
-//https://maps.googleapis.com/maps/api/place/textsearch/json?query=sim%city%20in%20Westbrook&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-//    
     func getFullURL(_ keyword: String, withCompletion completion: @escaping(URL?, Error?) -> Void) {
         print(listResultsVM.searchRegion)
         if let currentLoc = UserStore.instance.currentLocation?.coordinate {
@@ -118,16 +108,7 @@ class NetworkServices: ObservableObject {
                     
                     
                     group.enter()
-//                        GooglePlacesManager.instance.getPlaceFromID(placeID) { gmsPlace, error in
-//                            if let error = error {
-//                                completion(nil, error)
-//                            }
-//                            if let gmsPlace = gmsPlace {
-//                                schnozPlace.gmsPlace = gmsPlace
-//                            }
-//                            group.leave()
-//                        }
-                    
+
                     GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
                         if let error = error {
                             print(error.localizedDescription)
@@ -142,9 +123,6 @@ class NetworkServices: ObservableObject {
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
                         schnozPlace.averageRating = averageRating
-
-//                    FirebaseManager.instance.getReviewsForLocation(placeID) { reviews in
-//                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
                     

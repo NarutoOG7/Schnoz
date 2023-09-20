@@ -5,9 +5,6 @@
 //  Created by Spencer Belton on 2/14/23.
 //
 
-//https://maps.googleapis.com/maps/api/place/autocomplete/json?keyword=westbrook+sim+city&type=food&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-//https://maps.googleapis.com/maps/api/place/autocomplete/json?input=westbrook_sim_city&types=health&key=AIzaSyCaqdMVqLmooHNH4Fpc53t3eEh-2YNPVHA
-
 import SwiftUI
 import GooglePlaces
 import GoogleMaps
@@ -66,9 +63,6 @@ class GooglePlacesManager: ObservableObject {
                     group.enter()
                     FirebaseManager.instance.getAverageRatingForLocation(result.place.placeID ?? "") { averageRating in
                         schnozPlace.averageRating = averageRating
-                    
-//                    FirebaseManager.instance.getReviewsForLocation(result.place.placeID ?? "") { reviews in
-//                        schnozPlace.schnozReviews = reviews
                         group.leave()
                     }
                     schnozResults.append(schnozPlace)
@@ -167,55 +161,6 @@ class GooglePlacesManager: ObservableObject {
             }
         }
     }
-    
-    func getMealType(searchType: SearchType, withCopletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
-        let filter = GMSAutocompleteFilter()
-        filter.types = ["servesBreakfast"]
-    
-        self.placesClient.findAutocompletePredictions(fromQuery: "Fort Collins", filter: filter, sessionToken: autocompleteSessionToken) { results, error in
-            
-            
-            //        self.placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: .all) { results, error in
-            if let error = error {
-                print(error.localizedDescription)
-                completion(nil, error)
-            }
-            var schnozResults = [SchnozPlace]()
-            if let results = results {
-                for result in results {
-                    
-                    let schnozPlace = SchnozPlace(placeID: result.placeID)
-                    //                    schnozPlace.gmsPlace = result.place
-                    schnozPlace.primaryText = result.attributedPrimaryText.string
-                    FirebaseManager.instance.getAverageRatingForLocation(schnozPlace.placeID) { avgRating in
-                        schnozPlace.averageRating = avgRating
-                    }
-//                    FirebaseManager.instance.getReviewsForLocation(schnozPlace.placeID) { reviews in
-//                        schnozPlace.schnozReviews = reviews
-//                    }
-                    schnozResults.append(schnozPlace)
-                }
-                completion(schnozResults, nil)
-            }
-        }
-    }
-    
-    
-//    func getPlaceFromID(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
-//
-//        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt64(UInt(GMSPlaceField.name.rawValue) | UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.formattedAddress.rawValue)))
-//
-//        self.placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken: nil, callback: {
-//            (place: GMSPlace?, error: Error?) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                completion(nil, error)
-//            }
-//            if let place = place {
-//                completion(place, nil)
-//            }
-//        })
-//    }
     
     func getPlaceDetails(_ placeID: String, withCompletion completion: @escaping(GMSPlace?, Error?) -> Void) {
         self.placesClient.lookUpPlaceID(placeID) { place, error in
