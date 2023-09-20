@@ -82,6 +82,7 @@
 		C9A0864F2ABA955F00C2CC14 /* YelpLocationMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0864E2ABA955F00C2CC14 /* YelpLocationMatch.swift */; };
 		C9A086512ABA958F00C2CC14 /* YelpLocationDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A086502ABA958F00C2CC14 /* YelpLocationDetailsModel.swift */; };
 		C9A086542ABA95C100C2CC14 /* TripAdvisorManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */; };
+		C9A086562ABB38E500C2CC14 /* SchnozGhostKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9A086552ABB38E500C2CC14 /* SchnozGhostKeys.plist */; };
 		C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */; };
 		C9AC615929D11E990006FF32 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615829D11E990006FF32 /* SettingsPage.swift */; };
 		C9AC615B29D1DB670006FF32 /* SettingsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC615A29D1DB670006FF32 /* SettingsVM.swift */; };
@@ -179,6 +180,7 @@
 		C9A0864E2ABA955F00C2CC14 /* YelpLocationMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpLocationMatch.swift; sourceTree = "<group>"; };
 		C9A086502ABA958F00C2CC14 /* YelpLocationDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpLocationDetailsModel.swift; sourceTree = "<group>"; };
 		C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripAdvisorManger.swift; sourceTree = "<group>"; };
+		C9A086552ABB38E500C2CC14 /* SchnozGhostKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SchnozGhostKeys.plist; sourceTree = "<group>"; };
 		C9AC615629CBE8340006FF32 /* HomeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDisplayView.swift; sourceTree = "<group>"; };
 		C9AC615829D11E990006FF32 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		C9AC615A29D1DB670006FF32 /* SettingsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVM.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			children = (
 				C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */,
 				C9E1B5192A205CD4004706BD /* GhostKeys.plist */,
+				C9A086552ABB38E500C2CC14 /* SchnozGhostKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
 				C99EEB0D299B121600B77DBD /* Products */,
 				4D06D5FB5BC0E37911755A9E /* Pods */,
@@ -689,6 +692,7 @@
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
 				C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */,
+				C9A086562ABB38E500C2CC14 /* SchnozGhostKeys.plist in Resources */,
 				C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
 			);
