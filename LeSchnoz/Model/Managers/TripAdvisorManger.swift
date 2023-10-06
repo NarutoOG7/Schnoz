@@ -73,6 +73,7 @@ class TripAdvisorManger {
                 group.enter()
                 self.locationDetails(match) { details, error in
                     if let error = error {
+                        print(error.localizedDescription)
                         completion(nil, error)
                     }
                     if let details = details {

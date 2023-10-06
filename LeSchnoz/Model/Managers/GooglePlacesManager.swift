@@ -80,7 +80,8 @@ class GooglePlacesManager: ObservableObject {
         
 //        filter.types = ["food", "bar", "bowling_alley", "movie_theater", "point_of_interest"]
 ///        meal_takeaway
-        filter.types = ["point_of_interest"]
+        filter.types = ["establishment"]
+///        "point_of_interest"
 ///        establishment
 //        filter.types = ["food"]
 //                        "bar",

@@ -73,7 +73,6 @@ class YelpManager: ObservableObject {
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
             request.httpMethod = "GET"
-            request.allHTTPHeaderFields = headers
             let session = URLSession.shared
             let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 if let error = error {

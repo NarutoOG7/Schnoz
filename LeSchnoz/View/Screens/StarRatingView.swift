@@ -32,7 +32,7 @@ public struct StarRatingView: View {
     }
     
     private let starCount: Int
-    private let totalPercentage: CGFloat
+   @State var totalPercentage: CGFloat
     private let style: Style
     private let starSize: CGFloat
     private let spacing: CGFloat
@@ -85,7 +85,12 @@ public struct StarRatingView: View {
                         borderWidth: self.style.lineWidth,
                         starExtrusion: self.style.starExtrusion
                     )
+                    
                 )
+                .onTapGesture {
+                    /// not firing?
+                    self.totalPercentage = CGFloat(idx)
+                }
             }
         }
     }

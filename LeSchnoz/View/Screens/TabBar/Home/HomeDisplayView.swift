@@ -154,7 +154,7 @@ struct HomeDisplayView: View {
                     .padding(.vertical)
                  Button(action: self.latestReviewTapped) {
 //                     ReviewCard(review: listResultsVM.latestReview ?? ReviewModel())
-                     ReviewCell(review: listResultsVM.latestReview ?? ReviewModel(), needsToHandleColorScheme: true)
+                     ReviewCell(review: listResultsVM.latestReview ?? ReviewModel(), needsToHandleColorScheme: true, isNavigatable: true)
 //                        .frame(width:  geo.size.width - 60)
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 14)
@@ -260,9 +260,9 @@ struct HomeDisplayView: View {
     
     private func latestReviewTapped() {
         self.shouldNavigateToLDForLatestReview = true
-        SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
-        LDVM.instance.reviews = []
-        LDVM.instance.selectedLocation = self.latestReviewPlace
+//        SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
+//        LDVM.instance.reviews = []
+//        LDVM.instance.selectedLocation = self.latestReviewPlace
     }
     
 

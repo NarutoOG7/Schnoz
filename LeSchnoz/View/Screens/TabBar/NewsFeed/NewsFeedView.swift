@@ -80,7 +80,7 @@ struct NewsFeedView: View {
     
     private var listOfReviews: some View {
             List(viewModel.reviews) { review in
-                ReviewCell(review: review)
+                ReviewCell(review: review, isNavigatable: true)
                     .listRowBackground(Color.clear)
                     .onAppear {
                         let isLast = viewModel.reviews.last == review

@@ -36,11 +36,20 @@ struct ReviewCell: View {
     var isShowingLocationName = true
     var isShowingUsername = true
     var needsToHandleColorScheme = false
+    var isNavigatable = false
     let oceanBlue = K.Colors.OceanBlue.self
+    
+    @State var showLocationDetailsPage = false
     
     @Environment(\.colorScheme) var colorScheme
             
     var body: some View {
+        Button {
+            if isNavigatable {
+                getPlaceDetails()
+            }
+        } label: {
+            
             VStack(alignment: .leading, spacing: 4) {
                 if isShowingLocationName {
                     locationName
@@ -51,14 +60,14 @@ struct ReviewCell: View {
                     .padding(.top, 3)
                 
                 HStack {
-
+                    
                     GradientStars(isEditable: false, fillPercent: .constant((review.rating / 5) * 100), starSize: 0.007, spacing: -40)
-
+                    
                         .frame(height: 40)
                     timestamp
                 }
                 .offset(x: -20)
-
+                
                 reviewDescription
                 if isShowingUsername {
                     username
@@ -68,7 +77,10 @@ struct ReviewCell: View {
                 //               .padding(.top)
                 
             }
-        
+        }
+        .fullScreenCover(isPresented: $showLocationDetailsPage) {
+            LD()
+        }
     }
   
     private var title: some View {
@@ -142,6 +154,13 @@ struct ReviewCell: View {
         let shouldBeDark = isDarkMode || noHandleOfColorScheme
         
         return shouldBeDark
+    }
+    
+    func getPlaceDetails() {
+        let loc = SchnozPlace(review: review)
+        LDVM.instance.selectedLocation = loc
+        SearchLogic.instance.getImageForSelectedPlace(loc)
+        self.showLocationDetailsPage = true
     }
 }
 

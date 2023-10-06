@@ -48,6 +48,14 @@ struct GradientStars: View {
                         self.fillPercent = newPercentage
                     })
                 )
+                .onTapGesture { value in
+                    let width = geo.size.width
+                    let currentX = value.x
+                    var newPercentage = 100 * currentX / width
+                    newPercentage = max(0, newPercentage) // Lowerbound safety
+                    newPercentage = min(100, newPercentage) // Upperbound safety
+                    self.fillPercent = newPercentage
+                }
                 .onChange(of: fillPercent) { newValue in
                     assignGradientsWithPercent(newValue)
                 }

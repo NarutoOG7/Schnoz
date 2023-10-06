@@ -73,18 +73,12 @@ class SearchLogic: ObservableObject {
             }
         } else {
             listResultsVM.searchType = nil
-                let currentCity = UserStore.instance.currentLocAsAddress?.city ?? ""
-                let currentState = UserStore.instance.currentLocAsAddress?.state ?? ""
-                let searchText = (areaSearchLocation == "" ? currentCity + " \(currentState)" : areaSearchLocation)
-                let queryText = searchText + " " + query
-                self.handleAutocompleteForQuery(queryText)
-
+            self.handleAutocompleteForQuery(query)
         }
     }
     
     func performLocalitySearch(_ query: String) {
         if query != areaSearchLocation {
-//            isEditingSearchArea = true
             googlePlacesManager.performAutocompleteQuery(query, isLocality: true) { results, error in
                 if let error = error {
                     self.errorManager.message = error.localizedDescription
@@ -125,7 +119,9 @@ class SearchLogic: ObservableObject {
     func cellTapped(_ place: SchnozPlace) {
         
         if isEditingSearchArea {
-            let text =  place.primaryText ?? ""
+            let primary =  place.primaryText ?? ""
+            let secondary = place.secondaryText ?? ""
+            let text = "\(primary) \(secondary)"
             self.areaSearchText = text
             self.areaSearchLocation = text
             isEditingSearchArea = false

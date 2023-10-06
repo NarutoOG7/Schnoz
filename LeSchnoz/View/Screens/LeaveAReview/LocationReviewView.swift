@@ -48,7 +48,7 @@ struct LocationReviewView: View {
             //                Text("Sign in to write reviews")
             //                    .foregroundColor(oceanBlue.white)
             //            } else {
-            VStack(spacing: 20) {
+            VStack(alignment: .leading, spacing: 20) {
                 GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
                 //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
                 //                        .frame(width: 200)
@@ -121,11 +121,15 @@ struct LocationReviewView: View {
     
     private var starScore: some View {
         let score = ((pickerSelection / 100) * 5)
-        return Text(String(format: "%.1f", score))
-            .fontWeight(.black)
-            .font(.title)
-            .foregroundColor(
-                Double(score).ratingTextColor())
+        return HStack {
+            Spacer()
+            Text(String(format: "%.1f", score))
+                .fontWeight(.black)
+                .font(.title)
+                .foregroundColor(
+                    Double(score).ratingTextColor())
+            Spacer()
+        }
         
     }
     

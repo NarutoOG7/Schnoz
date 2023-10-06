@@ -117,7 +117,7 @@ struct MySniffs: View {
         NavigationLink {
             ReviewDestinationLink(review: review, isPresented: $isEditingReview)
         } label: {
-            ReviewCell(review: review, isShowingUsername: false)
+            ReviewCell(review: review, isShowingUsername: false, isNavigatable: true)
         }
 
         .padding(.trailing, -30)

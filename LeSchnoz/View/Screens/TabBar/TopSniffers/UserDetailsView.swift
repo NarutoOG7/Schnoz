@@ -134,7 +134,7 @@ struct UserDetailsView: View {
 
     private var listOfReviews: some View {
         List(userDetailsVM.reviews) { review in
-                ReviewCell(review: review)
+                ReviewCell(review: review, isNavigatable: true)
                     .listRowBackground(Color.clear)
                     .onAppear {
                         let isLast = userDetailsVM.reviews.last == review
