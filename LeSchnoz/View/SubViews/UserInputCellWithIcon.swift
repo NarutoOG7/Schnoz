@@ -85,6 +85,7 @@ struct UserInputCellWithIcon: View {
             .font(.avenirNext(size: 19)
                 .weight(boldText ? .bold : .regular))
             .textInputAutocapitalization(.never)
+            .multilineTextAlignment(.leading)
             .foregroundColor(primaryColor)
             .tint(accentColor)
             .placeholder(when: input.isEmpty) {

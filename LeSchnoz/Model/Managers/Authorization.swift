@@ -128,7 +128,7 @@ class Authorization {
                         let firestoreUser = FirestoreUser(id: user.id, username: user.name)
                         
                         self.setCurrentUsersName(userName) { error in
-                            completion(false, .failedToSaveUser)
+                                completion(false, .failedToSaveUser)                            
                         }
                         
                         FirebaseManager.instance.addUserToFirestore(firestoreUser)
@@ -160,6 +160,8 @@ class Authorization {
     
     func setCurrentUsersName(_ name: String, onError: @escaping(K.ErrorHelper.Errors) -> Void) {
         
+        let firebaseManager = FirebaseManager.instance
+        
         if let currentUser = auth.currentUser {
             
             let changeRequest = currentUser.createProfileChangeRequest()
@@ -175,6 +177,20 @@ class Authorization {
                 
                 self.userStore.user.name = name
                 
+                
+                firebaseManager.updateUsernameInReviews()
+                
+                firebaseManager.getFirestoreUser { firestoreUser, error in
+                    
+                    print(firestoreUser)
+                    if let firestoreUser = firestoreUser {
+                        var newFirestoreUser = firestoreUser
+                        newFirestoreUser.username = name
+                        
+                        firebaseManager.updateFirestoreUser(newFirestoreUser)
+                        
+                    }
+                }
                 self.saveUserToUserDefaults(user: self.userStore.user) { error in
                     
                     if let _ = error {

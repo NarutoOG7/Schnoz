@@ -208,6 +208,7 @@ extension FirebaseManager {
             })
     }
     
+    
     func batchFirstAllUsers(_ sortingOption: SniffersSortingOption, withCompletion completion: @escaping([FirestoreUser]?, Error?) -> Void) {
         let allSniffersVM = TopSniffersVM.instance
         guard let db = db else { return }

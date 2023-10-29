@@ -20,7 +20,7 @@ struct LocationReviewView: View {
     @State var titleInput: String = ""
     @State var pickerSelection: CGFloat = 0
     @State var descriptionInput: String = ""
-    @State var isAnonymous: Bool = false
+//    @State var isAnonymous: Bool = false
     //    @State var nameInput: String = ""
     
     @State var shouldShowTitleErrorMessage = false
@@ -48,7 +48,7 @@ struct LocationReviewView: View {
             //                Text("Sign in to write reviews")
             //                    .foregroundColor(oceanBlue.white)
             //            } else {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .center, spacing: 20) {
                 GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
                 //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
                 //                        .frame(width: 200)
@@ -61,7 +61,7 @@ struct LocationReviewView: View {
                 starScore
                 title
                 description
-                anonymousOption
+//                anonymousOption
                 submitButton
                     .padding(.top, 35)
                 //                    }
@@ -111,11 +111,11 @@ struct LocationReviewView: View {
             default: break
             }
         }
-        .onAppear {
-            let isGuest = userStore.isGuest
-            let isNameless = userStore.user.name == ""
-            self.isAnonymous = isGuest || isNameless
-        }
+//        .onAppear {
+//            let isGuest = userStore.isGuest
+//            let isNameless = userStore.user.name == ""
+//            self.isAnonymous = isGuest || isNameless
+//        }
         
     }
     
@@ -170,45 +170,44 @@ struct LocationReviewView: View {
         .submitLabel(.next)
     }
     
-    private var anonymousOption: some View {
-        VStack(spacing: 12) {
-            if !isAnonymous {
-                UserInputCellWithIcon(
-                    input: .constant(userStore.user.name),
-                    shouldShowErrorMessage: .constant(false),
-                    isSecured: .constant(false),
-                    primaryColor: oceanBlue.yellow,
-                    accentColor: oceanBlue.white,
-                    icon: nil,
-                    placeholderText: userStore.user.name,
-                    errorMessage: "")
-                .focused($focusedField, equals: .username)
-                .submitLabel(.done)
-                .disabled(true)
-            }
-            Toggle(isOn: $isAnonymous) {
-                Text("Leave Review Anonymously?")
-                    .italic()
-                    .font(.avenirNextRegular(size: 17))
-                    .foregroundColor(oceanBlue.yellow)
-            }.padding(.horizontal)
-                .tint(oceanBlue.yellow)
-        }
-    }
+//    private var anonymousOption: some View {
+//        VStack(spacing: 12) {
+//            if !isAnonymous {
+//                UserInputCellWithIcon(
+//                    input: .constant(userStore.user.name),
+//                    shouldShowErrorMessage: .constant(false),
+//                    isSecured: .constant(false),
+//                    primaryColor: oceanBlue.yellow,
+//                    accentColor: oceanBlue.white,
+//                    icon: nil,
+//                    placeholderText: userStore.user.name,
+//                    errorMessage: "")
+//                .focused($focusedField, equals: .username)
+//                .submitLabel(.done)
+//                .disabled(true)
+//            }
+//            Toggle(isOn: $isAnonymous) {
+//                Text("Leave Review Anonymously?")
+//                    .italic()
+//                    .font(.avenirNextRegular(size: 17))
+//                    .foregroundColor(oceanBlue.yellow)
+//            }.padding(.horizontal)
+//                .tint(oceanBlue.yellow)
+//        }
+//    }
     
     private var submitButton: some View {
         let isReview = review != nil
         let isDisabled = !requisiteFieldsAreFilled() || !isUpdated()
-        let color = isDisabled ? oceanBlue.blue.opacity(0.1) : oceanBlue.yellow
+        let color = isDisabled ? oceanBlue.yellow.opacity(0.5) : oceanBlue.yellow
         return Button(action: submitTapped) {
-            Text(isReview && isUpdated() ? "Update" : "Submit")
-                .foregroundColor(color)
-                .font(.avenirNextRegular(size: 20))
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(color))
-            
+                Text(isReview && isUpdated() ? "Update" : "Submit")
+                    .foregroundColor(color)
+                    .font(.avenirNextRegular(size: 20))
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(color))
         }
         .disabled(isDisabled)
     }
@@ -275,9 +274,8 @@ struct LocationReviewView: View {
     }
     
     private func reviewModel() -> ReviewModel {
-        //        let name = nameInput == "" ? userStore.user.name : nameInput
         let userName = userStore.user.name
-        let name = userName == "" ? "Anonymous" : userName
+//        let name = userName == "" ? "Anonymous" : userName
         let secondaryText = location?.secondaryText ?? ""
         let altAddress = addressFromSecondaryText(secondaryText)
         let firstAddressIsEmpty = location?.address == nil
@@ -288,7 +286,7 @@ struct LocationReviewView: View {
             rating: (Double(pickerSelection / 100))*5,
             review: descriptionInput,
             title: titleInput,
-            username: isAnonymous ? "Anonymous" : name,
+            username: userName,
             userID: userStore.user.id,
             locationID:  review?.locationID ?? location?.placeID ?? "",
             locationName: review?.locationName ?? location?.primaryText ?? "",
@@ -317,20 +315,26 @@ struct LocationReviewView: View {
                                                averageRating: updatedAverageRating(newRev, isUpdating: true),
                                                placeID: location?.placeID ?? review?.locationID ?? "",
                                                refreshType: .update)
-            if var firestoreUser = userStore.firestoreUser, var oldReview = self.review {
-                self.oldReview = oldReview
-                let difference = newRev.rating - oldReview.rating
-                firestoreUser.totalStarsGiven? += difference
-                
-                let totalStars = firestoreUser.totalStarsGiven ?? 1
-                let reviewCount = Double(firestoreUser.reviewCount ?? 1)
-                let avg =  totalStars / reviewCount
-                
-                firestoreUser.averageStarsGiven = avg
-                userStore.firestoreUser = firestoreUser
-                firebaseManager.updateFirestoreUser(firestoreUser)
+            firebaseManager.getFirestoreUser { firestoreUser, error in
+                if var firestoreUser = firestoreUser,
+                   var oldReview = self.review {
+                    self.oldReview = oldReview
+                    let difference = newRev.rating - oldReview.rating
+                    firestoreUser.totalStarsGiven? += difference
+                    
+                    let totalStars = firestoreUser.totalStarsGiven ?? 1
+                    let reviewCount = Double(firestoreUser.reviewCount ?? 1)
+                    let avg =  totalStars / reviewCount
+                    print("avg: \(avg)")
+                    print("totalStars: \(totalStars)")
+                    print("totalReviews: \(reviewCount)")
+
+                    firestoreUser.averageStarsGiven = avg
+                    userStore.firestoreUser = firestoreUser
+                    firebaseManager.updateFirestoreUser(firestoreUser)
+                }
+                self.shouldShowSuccessMessage = true
             }
-            self.shouldShowSuccessMessage = true
         }
     }
     
@@ -352,19 +356,26 @@ struct LocationReviewView: View {
                 averageRating: updatedAverageRating(rev, isUpdating: false),
                 placeID: location?.placeID ?? rev.locationID,
                 refreshType: .add)
-            if var firestoreUser = userStore.firestoreUser {
-
-                firestoreUser.totalStarsGiven? += rev.rating
-                firestoreUser.reviewCount? += 1
-                firestoreUser.averageStarsGiven = firestoreUser.totalStarsGiven ?? 1 / Double(firestoreUser.reviewCount ?? 1)
-                //                    userStore.firestoreUser = newUser
-
-                userStore.firestoreUser = firestoreUser
-                firebaseManager.updateFirestoreUser(firestoreUser)
+            firebaseManager.getFirestoreUser { firestoreUser, error in
+                if var firestoreUser = firestoreUser {
+                    
+                    firestoreUser.totalStarsGiven? += rev.rating
+                    firestoreUser.reviewCount? += 1
+                    let totalStars = firestoreUser.totalStarsGiven ?? 1
+                    let totalReviews = firestoreUser.reviewCount ?? 1
+                    let avg = totalStars / Double(totalReviews)
+                    firestoreUser.averageStarsGiven = avg
+                    print("avg: \(avg)")
+                    print("totalStars: \(totalStars)")
+                    print("totalReviews: \(totalReviews)")
+                    //                    userStore.firestoreUser = newUser
+                    
+                    userStore.firestoreUser = firestoreUser
+                    firebaseManager.updateFirestoreUser(firestoreUser)
+                }
+                self.shouldShowSuccessMessage = true
             }
-            self.shouldShowSuccessMessage = true
         }
-        
     }
     
     func updatedAverageRating(_ rev: ReviewModel, isUpdating: Bool) -> AverageRating {

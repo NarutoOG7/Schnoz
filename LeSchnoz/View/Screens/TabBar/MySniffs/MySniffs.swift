@@ -157,32 +157,34 @@ struct MySniffs: View {
                     LDVM.instance.selectedLocation?.averageRating = average
                     
                     /// Firestore User
-                    if var firestoreUser = userStore.firestoreUser {
-                        firestoreUser.totalStarsGiven? -= review.rating
-                        firestoreUser.reviewCount? -= 1
-                        if let reviewCount = firestoreUser.reviewCount,
-                           let starsCount = firestoreUser.totalStarsGiven,
-                           reviewCount > 0 {
-                            firestoreUser.averageStarsGiven? = starsCount / Double(reviewCount)
+                    firebaseManager.getFirestoreUser { firestoreUser, error in
+                        if var firestoreUser = firestoreUser {
+                            firestoreUser.totalStarsGiven? -= review.rating
+                            firestoreUser.reviewCount? -= 1
+                            if let reviewCount = firestoreUser.reviewCount,
+                               let starsCount = firestoreUser.totalStarsGiven,
+                               reviewCount > 0 {
+                                firestoreUser.averageStarsGiven? = starsCount / Double(reviewCount)
+                            }
+                            userStore.firestoreUser = firestoreUser
+                            firebaseManager.updateFirestoreUser(firestoreUser)
                         }
-                        userStore.firestoreUser = firestoreUser
-                        firebaseManager.updateFirestoreUser(firestoreUser)
+                        
+                        /// Remove Review
+                        firebaseManager.removeReviewFromFirestore(review)
+                        
+                        /// Update or Remove AvgRating
+                        let noReviews = average.numberOfReviews == 0
+                        noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
+                        if ldvm.selectedLocation?.placeID == average.id {
+                            ldvm.selectedLocation?.averageRating = average
+                        }
+                        
+                        /// Refresh data
+                        self.viewModel.reviews.removeAll(where: { $0 == review })
+                        LDVM.instance.reviews.removeAll(where: { $0 == review })
+                        userStore.reviews.remove(atOffsets: offsets)
                     }
-                    
-                    /// Remove Review
-                    firebaseManager.removeReviewFromFirestore(review)
-                    
-                    /// Update or Remove AvgRating
-                    let noReviews = average.numberOfReviews == 0
-                    noReviews ? firebaseManager.removeAverageRating(average) : firebaseManager.addAverageRating(average)
-                    if ldvm.selectedLocation?.placeID == average.id {
-                        ldvm.selectedLocation?.averageRating = average
-                    }
-                    
-                    /// Refresh data
-                    self.viewModel.reviews.removeAll(where: { $0 == review })
-                    LDVM.instance.reviews.removeAll(where: { $0 == review })
-                    userStore.reviews.remove(atOffsets: offsets)
                 }
             }
         }
@@ -245,7 +247,7 @@ struct ReviewDestinationLink: View {
             titleInput: review.title,
             pickerSelection: CGFloat((review.rating / 5) * 100),
             descriptionInput: review.review,
-            isAnonymous: review.username == "Anonymous",
+//            isAnonymous: review.username == "Anonymous",
             //            nameInput: review.username,
             userStore: userStore,
             firebaseManager: firebaseManager,

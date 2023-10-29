@@ -206,6 +206,7 @@ struct LD: View {
             .fontWeight(.medium)
             .foregroundColor(oceanBlue.blue)
             .fixedSize(horizontal: false, vertical: true)
+            .multilineTextAlignment(.leading)
 
     }
     
@@ -215,6 +216,7 @@ struct LD: View {
             .font(.avenirNextRegular(size: 17))
             .foregroundColor(oceanBlue.blue)
             .fixedSize(horizontal: false, vertical: true)
+            .multilineTextAlignment(.leading)
 
     }
     

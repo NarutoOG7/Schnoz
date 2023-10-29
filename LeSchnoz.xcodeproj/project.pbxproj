@@ -95,11 +95,11 @@
 		C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */; };
 		C9E1B50C2A19927D004706BD /* SearchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1B50B2A19927D004706BD /* SearchLogic.swift */; };
 		C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B5192A205CD4004706BD /* GhostKeys.plist */; };
-		C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */; };
 		C9F225CF2A5764B10074AE89 /* MySniffsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */; };
 		C9F225D12A58AC5D0074AE89 /* LDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D02A58AC5D0074AE89 /* LDVM.swift */; };
 		C9F225D32A5A433F0074AE89 /* UserDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */; };
 		C9F225D52A5C979D0074AE89 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D42A5C979D0074AE89 /* Admin.swift */; };
+		FF41E60B2AEC3C04007EBEAA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF41E60A2AEC3C04007EBEAA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,13 +193,13 @@
 		C9AC616D29D6BF980006FF32 /* ListResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListResultsVM.swift; sourceTree = "<group>"; };
 		C9E1B50B2A19927D004706BD /* SearchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogic.swift; sourceTree = "<group>"; };
 		C9E1B5192A205CD4004706BD /* GhostKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GhostKeys.plist; sourceTree = "<group>"; };
-		C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Library/Mobile Documents/com~apple~CloudDocs/KonohaKoders/Upwork/Jasper Brown/Firebase/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C9E1B51D2A2073B0004706BD /* LeSchnoz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LeSchnoz.entitlements; sourceTree = "<group>"; };
 		C9F225CE2A5764B10074AE89 /* MySniffsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySniffsVM.swift; sourceTree = "<group>"; };
 		C9F225D02A58AC5D0074AE89 /* LDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LDVM.swift; sourceTree = "<group>"; };
 		C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsVM.swift; sourceTree = "<group>"; };
 		C9F225D42A5C979D0074AE89 /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
+		FF41E60A2AEC3C04007EBEAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,7 +285,7 @@
 		C99EEB03299B121600B77DBD = {
 			isa = PBXGroup;
 			children = (
-				C9E1B51B2A205E9A004706BD /* GoogleService-Info.plist */,
+				FF41E60A2AEC3C04007EBEAA /* GoogleService-Info.plist */,
 				C9E1B5192A205CD4004706BD /* GhostKeys.plist */,
 				C9A086552ABB38E500C2CC14 /* SchnozGhostKeys.plist */,
 				C99EEB0E299B121600B77DBD /* LeSchnoz */,
@@ -632,16 +632,14 @@
 				C99EEB08299B121600B77DBD /* Sources */,
 				C99EEB09299B121600B77DBD /* Frameworks */,
 				C99EEB0A299B121600B77DBD /* Resources */,
-				7A4B6BC139BD795E49331BB8 /* [CP] Embed Pods Frameworks */,
-				2CC8138B9431EA5B493450D2 /* [CP] Copy Pods Resources */,
+				11AA00AC0455C4380C7D87FF /* [CP] Embed Pods Frameworks */,
+				50814000123778D39F153C30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = LeSchnoz;
-			packageProductDependencies = (
-			);
 			productName = LeSchnoz;
 			productReference = C99EEB0C299B121600B77DBD /* LeSchnoz.app */;
 			productType = "com.apple.product-type.application";
@@ -671,7 +669,7 @@
 			);
 			mainGroup = C99EEB03299B121600B77DBD;
 			packageReferences = (
-				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */,
 				C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C952D73D2A71CBD900C18D06 /* XCRemoteSwiftPackageReference "StarView" */,
 			);
@@ -691,17 +689,34 @@
 			files = (
 				C99EEBF9299B19B400B77DBD /* LaunchScreen.storyboard in Resources */,
 				C99EEB17299B121700B77DBD /* Preview Assets.xcassets in Resources */,
-				C9E1B51C2A205E9A004706BD /* GoogleService-Info.plist in Resources */,
 				C9A086562ABB38E500C2CC14 /* SchnozGhostKeys.plist in Resources */,
 				C9E1B51A2A205CD4004706BD /* GhostKeys.plist in Resources */,
 				C99EEB14299B121700B77DBD /* Assets.xcassets in Resources */,
+				FF41E60B2AEC3C04007EBEAA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CC8138B9431EA5B493450D2 /* [CP] Copy Pods Resources */ = {
+		11AA00AC0455C4380C7D87FF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		50814000123778D39F153C30 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -738,23 +753,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7A4B6BC139BD795E49331BB8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -980,7 +978,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = 49L7U244PC;
+				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -1017,7 +1015,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = 49L7U244PC;
+				DEVELOPMENT_TEAM = Q4449HJNAM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -1076,7 +1074,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
 			requirement = {

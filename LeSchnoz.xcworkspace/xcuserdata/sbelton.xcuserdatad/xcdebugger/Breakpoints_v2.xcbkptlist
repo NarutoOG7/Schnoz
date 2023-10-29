@@ -1,404 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "F3A2E3B3-3F32-41F5-A72C-7DE06C3BC358"
+   uuid = "8E2F9986-EE68-42D6-A326-B7544F248CEA"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "86E9BBA4-ED45-476E-B4BF-EF1603A041F4"
+            uuid = "305F0BB8-CE77-416B-8A45-BE99C5E3D5F0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/ExploreByList/GoogleDataTable.swift"
+            filePath = "LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "GoogleCoordinator"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "993F5467-BEB1-4D69-8D1A-1778D5DE247E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/SearchViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "changeSearchText()"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DE66A436-8998-424A-909A-E6A53FFE4AA3"
-            shouldBeEnabled = "No"
+            uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/SearchViewController.swift"
+            filePath = "LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
-            landmarkName = "changeSearchText()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
-         <BreakpointContent
-            uuid = "1E0FB38A-DFFB-4E0E-9D0F-AEA4FD1C4A52"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            symbolName = ""
-            moduleName = "">
-            <Locations>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8F0BD3E6-223F-487F-81AC-F885C048FBB2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "getAverageRatingForLocation(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "00E9C94C-6A47-4B18-8A21-A81401164F9E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
-            landmarkName = "getAverageRatingForLocation(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/FirebaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "updateReviewInFirestore(_:withCompletion:)"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
+            landmarkName = "add(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D - 3e4057f154c3c52f"
+                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 98188dca2a7b7df9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in default argument 1 of LeSchnoz.FirebaseManager.updateReviewInFirestore(_: LeSchnoz.ReviewModel, withCompletion: (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.FirestoreUser&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in LeSchnoz.LocationReviewView.add(LeSchnoz.ReviewModel) -&gt; ()"
                   moduleName = "LeSchnoz"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/FirebaseManager.swift"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "139"
-                  endingLineNumber = "139"
-                  offsetFromSymbolStart = "12">
+                  startingLineNumber = "371"
+                  endingLineNumber = "371"
+                  offsetFromSymbolStart = "1672">
                </Location>
                <Location
-                  uuid = "D782A4CF-6F6E-4E29-AD54-1BC3E1365B2D - 5c2348c62b5afc63"
+                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 98188dca2a7b7db7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.FirebaseManager.updateReviewInFirestore(_: LeSchnoz.ReviewModel, withCompletion: (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.FirestoreUser&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in LeSchnoz.LocationReviewView.add(LeSchnoz.ReviewModel) -&gt; ()"
                   moduleName = "LeSchnoz"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/FirebaseManager.swift"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "141"
-                  endingLineNumber = "141"
-                  offsetFromSymbolStart = "180">
+                  startingLineNumber = "373"
+                  endingLineNumber = "373"
+                  offsetFromSymbolStart = "1624">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B4F7C689-FF57-4D7C-BA0D-7A98C0878BA0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/LocationDetails/MoreReviewsSheet.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "moreTapped()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "moreTapped()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521 - ccc81d6b8ef0762e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.ManageReviews.moreTapped() -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "149"
-                  endingLineNumber = "149"
-                  offsetFromSymbolStart = "160">
-               </Location>
-               <Location
-                  uuid = "8C57F80A-0BB8-41FB-BD02-34E55BF8A521 - 8cbb80fd9d3c5b78"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (LeSchnoz.ReviewModel) -&gt; () in LeSchnoz.ManageReviews.moreTapped() -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/Settings/SubViews/Sections/Account/ManageReviews.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "120">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D964A00E-3AC3-4807-B754-A1D31D928B0E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/TabBarSetup.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C583124D-603B-4A01-B692-222984E9F7B5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/TabBarSetup.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
-            landmarkName = "updateUserWithReviewDetails()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CABC5DB2-FBED-45AA-95E5-A49ADCC05B70"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/TabBarSetup.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
-            landmarkName = "updateUserWithReviewDetails()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DC8AA5BB-A018-47C6-A79A-F9D54DBD08A6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/NetworkServices.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "461E00D4-175A-417C-B4FF-EF37B31F3390"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/NetworkServices.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "getGMSPlaceAndAvgRatingFromPlaceID(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EB4465CA-08D5-4CC4-9980-CDD09C7E8154"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/FirebaseManager/FMReviews.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "getLatestReview(withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5FBCFA2D-0A53-4DF1-B6B9-8219AFB2017F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/VersionUpdate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "isNewVersionAvailable()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/GooglePlacesManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "getNearbyLocation(withCompletion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 45712e65a4fbf4d6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.GooglePlacesManager.getNearbyLocation(withCompletion: (Swift.Optional&lt;Swift.Array&lt;LeSchnoz.SchnozPlace&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "192">
-               </Location>
-               <Location
-                  uuid = "5757D731-C177-4705-AD47-CC9B99A04EDE - 2b53f7612229a45e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.GMSPlaceLikelihood&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in LeSchnoz.GooglePlacesManager.getNearbyLocation(withCompletion: (Swift.Optional&lt;Swift.Array&lt;LeSchnoz.SchnozPlace&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/Model/Managers/GooglePlacesManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "268">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "96BD3CA3-6FF2-4E83-94BB-DC098DA7AFD1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/TripAdvisorManger.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "locationDetails(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5E446858-9556-4012-B88E-649D49FE18EE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/View/Screens/StarRatingView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -166,13 +166,16 @@ struct ProfilePage: View {
     }
     
     private func setUserName() {
+        
         auth.setCurrentUsersName(displayNameInput) { error in
             
-            errorManager.shouldDisplay = true
-            errorManager.message = error.message()
+                errorManager.shouldDisplay = true
+                errorManager.message = error.message()
+                
             
         }
     }
+
     
     private func saveTapped() {
         

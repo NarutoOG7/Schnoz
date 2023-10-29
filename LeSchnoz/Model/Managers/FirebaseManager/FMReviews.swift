@@ -137,6 +137,20 @@ extension FirebaseManager {
             })
     }
     
+    func updateUsernameInReviews() {
+        
+        self.getReviewsForUser(userStore.user) { reviews in
+            reviews.forEach { rev in
+                var review = rev
+                review.username = self.userStore.user.name
+                self.updateReviewInFirestore(review)
+            }
+            
+        }
+    }
+    
+    
+    
     //MARK: - Fetch Reviews For User
     
     func handleQuerySnapshot(_ querySnapshot: QuerySnapshot?, _ error: Error?, withCompletion completion: @escaping([ReviewModel]) -> Void) -> Void {
