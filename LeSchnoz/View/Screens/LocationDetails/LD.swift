@@ -45,6 +45,7 @@ struct LD: View {
 
     
     var body: some View {
+                
         NavigationView {
             ScrollView(showsIndicators: false) {
                     ZStack {

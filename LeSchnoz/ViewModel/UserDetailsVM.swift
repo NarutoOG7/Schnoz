@@ -45,6 +45,7 @@ class UserDetailsVM: ObservableObject {
                 userID: selectedUser.id,
                 sortingOption,
                 withCompletion: { reviews, error in
+                    print(reviews?.forEach({ $0.title }))
                 self.handleReviewsCompletionWithError(reviews: reviews, error: error)
             })
         }

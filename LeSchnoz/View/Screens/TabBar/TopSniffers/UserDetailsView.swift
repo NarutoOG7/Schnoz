@@ -152,6 +152,7 @@ struct UserDetailsView: View {
                 }
 
             }
+
     }
     
     

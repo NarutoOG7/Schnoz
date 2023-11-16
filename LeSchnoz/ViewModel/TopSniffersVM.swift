@@ -55,8 +55,6 @@ class TopSniffersVM: ObservableObject {
 
     func handleUsersCompletionWithError(users: [FirestoreUser]?, error: Error?) {
         if let users = users {
-            print(users)
-            print(self.users)
             for user in users {
                 if (user.reviewCount ?? 0) > 0 {
                     if !self.users.contains(user) {

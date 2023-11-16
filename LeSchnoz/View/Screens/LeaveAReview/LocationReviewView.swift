@@ -48,33 +48,38 @@ struct LocationReviewView: View {
             //                Text("Sign in to write reviews")
             //                    .foregroundColor(oceanBlue.white)
             //            } else {
-            VStack(alignment: .center, spacing: 20) {
-                GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
-                //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
-                //                        .frame(width: 200)
-                //                    GradientStars(fillPercent: $picker Selection, starSize: 40)
-                    .padding(.horizontal)
-                    .frame(height: 70)
-                //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
-                //                            .frame(height: 60)
-                //                            .padding(.vertical, 20)
-                starScore
-                title
-                description
-//                anonymousOption
-                submitButton
-                    .padding(.top, 35)
-                //                    }
-            }
-            .padding()
-            .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    backButton
+            ScrollView {
+                VStack(alignment: .center, spacing: 35) {
+//                    Spacer()
+                    GradientStars(isEditable: true, fillPercent: $pickerSelection, starSize: 0.01, spacing: -15)
+                    //                    CustomStarRating(currentValue: $pickerSelection, starSize: (200,40))
+                    //                        .frame(width: 200)
+                    //                    GradientStars(fillPercent: $picker Selection, starSize: 40)
+                        .padding(.horizontal)
+                        .frame(height: 70)
+                    //                        SlidingStarsGradient(fillPercent: $pickerSelection, frame: (100, 60))
+                    //                            .frame(height: 60)
+                    //                            .padding(.vertical, 20)
+                    starScore
+                    title
+                    description
+                    //                anonymousOption
+                    Spacer()
+                    submitButton
+                        .padding(.top, 70)
+                    //                    }
                 }
-                
+                .padding()
+                .padding(.top, 35)
+                .navigationTitle(review?.locationName ?? location?.primaryText ?? "")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        backButton
+                    }
+                    
+                }
             }
             
             .task {
@@ -379,22 +384,45 @@ struct LocationReviewView: View {
     }
     
     func updatedAverageRating(_ rev: ReviewModel, isUpdating: Bool) -> AverageRating {
-        let placeID = location?.placeID ?? review?.locationID ?? ""
-        let preExistingAVG = self.location?.averageRating
-        let newAverageRating = AverageRating(placeID: placeID)
-        let differenceInRating = rev.rating - (oldReview?.rating ?? 0)
-        var returnableAVG = preExistingAVG ?? newAverageRating
-        returnableAVG.totalStarCount += differenceInRating
-        returnableAVG.numberOfReviews += isUpdating ? 0 : 1
-        returnableAVG.avgRating = returnableAVG.totalStarCount / Double(returnableAVG.numberOfReviews)
-
-        if ldvm.selectedLocation?.placeID == placeID {
-            ldvm.selectedLocation?.averageRating = returnableAVG
+        if let placeID = location?.placeID ?? review?.locationID {
+            if var preExistingAVG = self.location?.averageRating {
+                // if location's review data exists
+                let isOldReview = oldReview != nil
+                let differenceInRating = rev.rating - (oldReview?.rating ?? 0)
+                preExistingAVG.totalStarCount += isOldReview ? differenceInRating : rev.rating
+                preExistingAVG.numberOfReviews += isOldReview ? 0 : 1
+                preExistingAVG.avgRating = preExistingAVG.totalStarCount / Double(preExistingAVG.numberOfReviews)
+                return preExistingAVG
+                
+            } else {
+                // otherwise, create new average
+                var newAverage = AverageRating(placeID: placeID)
+                newAverage.numberOfReviews = 1
+                newAverage.totalStarCount = rev.rating
+                newAverage.avgRating = newAverage.totalStarCount / Double(newAverage.numberOfReviews)
+                return newAverage
+            }
         }
-        firebaseManager.addAverageRating(returnableAVG)
-        return returnableAVG
-        
+        return AverageRating()
     }
+    
+//    func updatedAverageRating(_ rev: ReviewModel, isUpdating: Bool) -> AverageRating {
+//        let placeID = location?.placeID ?? review?.locationID ?? ""
+//        let preExistingAVG = self.location?.averageRating
+//        let newAverageRating = AverageRating(placeID: placeID)
+//        let differenceInRating = rev.rating - (oldReview?.rating ?? 0)
+//        var returnableAVG = preExistingAVG ?? newAverageRating
+//        returnableAVG.totalStarCount += differenceInRating
+//        returnableAVG.numberOfReviews += isUpdating ? 0 : 1
+//        returnableAVG.avgRating = returnableAVG.totalStarCount / Double(returnableAVG.numberOfReviews)
+//
+//        if ldvm.selectedLocation?.placeID == placeID {
+//            ldvm.selectedLocation?.averageRating = returnableAVG
+//        }
+//        firebaseManager.addAverageRating(returnableAVG)
+//        return returnableAVG
+//        
+//    }
     private func requisiteFieldsAreFilled() -> Bool {
         return titleInput != "" && descriptionInput != ""
     }

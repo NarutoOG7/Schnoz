@@ -669,7 +669,7 @@
 			);
 			mainGroup = C99EEB03299B121600B77DBD;
 			packageReferences = (
-				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */,
+				C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				C99EEC32299C635F00B77DBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C952D73D2A71CBD900C18D06 /* XCRemoteSwiftPackageReference "StarView" */,
 			);
@@ -978,7 +978,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -993,7 +993,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1015,7 +1015,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Schnoz;
@@ -1030,7 +1030,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1074,7 +1074,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */ = {
+		C99EEC1B299B1A1500B77DBD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
 			requirement = {
