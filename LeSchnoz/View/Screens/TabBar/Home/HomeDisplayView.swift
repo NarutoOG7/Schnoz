@@ -21,7 +21,6 @@ struct HomeDisplayView: View {
     
     @State var latestReview: ReviewModel?
     @State var latestReviewPlace: SchnozPlace?
-    @State var shouldNavigateToLDForLatestReview = false
     
     @State var shouldShowSuccessMessage = false
     
@@ -58,7 +57,7 @@ struct HomeDisplayView: View {
 
                 }
         }
-        .fullScreenCover(isPresented: $shouldNavigateToLDForLatestReview) {
+        .fullScreenCover(isPresented: $listResultsVM.shouldShowPlaceDetails) {
             LD()
         }
     }
@@ -259,7 +258,7 @@ struct HomeDisplayView: View {
 //    }
     
     private func latestReviewTapped() {
-        self.shouldNavigateToLDForLatestReview = true
+        self.listResultsVM.shouldShowPlaceDetails = true
 //        SearchLogic.instance.getImageForSelectedPlace(self.latestReviewPlace ?? SchnozPlace(placeID: ""))
 //        LDVM.instance.reviews = []
 //        LDVM.instance.selectedLocation = self.latestReviewPlace

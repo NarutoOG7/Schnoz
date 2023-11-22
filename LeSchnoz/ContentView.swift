@@ -26,16 +26,13 @@ struct ContentView: View {
                         if contentViewVM.showTutorial {
                             SplashScreen(contentViewVM: contentViewVM)
                         } else {
-//                            HomeDisplayView(userStore: userStore, listResultsVM: ListResultsVM.instance)
+
                             TabBarSetup(userStore: userStore,
                                         errorManager: errorManager,
                                         loginVM: loginVM)
                         }
                     } else {
                         SignupLogin()
-                        //                    CreativeSignInUp(loginVM: loginVM,
-                        //                                     userStore: userStore,
-                        //                                     errorManager: errorManager)
                     }
 
                     errorBanner

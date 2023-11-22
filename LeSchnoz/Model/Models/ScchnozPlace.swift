@@ -143,6 +143,23 @@ class SchnozPlace: Hashable, Identifiable {
         self.googleRating = googleRating
     }
     
-    
+    static func makeSchnozPlace(_ notification: [String: AnyObject], _ completion: @escaping(SchnozPlace?) -> Void) {
+      guard
+        let placeID = notification["placeID"] as? String
+      else {
+        completion(nil)
+          return
+      }
+        
+        GooglePlacesManager.instance.getSchnozPlaceFromLocationID(placeID) { schnozPlace, error in
+            if let schnozPlace = schnozPlace {
+                NotificationCenter.default.post(
+                    name:  Notification.Name(rawValue: "RefreshNewsFeedNotification"),
+                    object: self)
+                
+                completion(schnozPlace)
+            }
+        }
+    }
     
 }

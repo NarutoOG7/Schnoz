@@ -13,44 +13,55 @@ class UserLocationManager: NSObject, ObservableObject {
     
     static let instance = UserLocationManager()
         
-    @Published var displayedLocationRoute: MKRoute!
     @Published var locationServicesEnabled = false
     
+    @Published var region = MKCoordinateRegion(
+        center: .init(latitude: 37.334_900, longitude: -122.009_020),
+        span: .init(latitudeDelta: 0.2, longitudeDelta: 0.2)
+    )
     
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var errorManager = ErrorManager.instance
     
-    var locationManager: CLLocationManager?
+    private let locationManager = CLLocationManager()
 //    var firebaseManager = FirebaseManager.instance
     
-    func checkIfLocationServicesIsEnabled() {
-        
-//        DispatchQueue.global().async {
-            
-            
-            if CLLocationManager.locationServicesEnabled() {
-                
-                //        if locationServicesEnabled {
-                
-                let locManager = CLLocationManager()
-                locManager.activityType = .automotiveNavigation
-                locManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-                locManager.delegate = self
-                
-                self.locationManager = locManager
-                
-            } else {
-                self.errorManager.message = "You have denied the app permission to use your location."
-                self.errorManager.shouldDisplay = true
-                self.checkLocationAuthorization()
-            }
-//        }
+    override init() {
+        super.init()
+        self.locationManager.delegate = self
+        self.locationManager.distanceFilter = CLLocationDistance(15)
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+
+        self.checkLocationAuthorization()
     }
+
+    
+//    func checkIfLocationServicesIsEnabled() {
+//        
+////        DispatchQueue.global().async {
+//            
+//            
+//            if CLLocationManager.locationServicesEnabled() {
+//                
+//                //        if locationServicesEnabled {
+//                
+//                let locManager = CLLocationManager()
+//                locManager.activityType = .automotiveNavigation
+//                locManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+//                locManager.delegate = self
+//                
+//                self.locationManager = locManager
+//                
+//            } else {
+//                self.errorManager.message = "You have denied the app permission to use your location."
+//                self.errorManager.shouldDisplay = true
+//                self.checkLocationAuthorization()
+//            }
+////        }
+//    }
     
     private func checkLocationAuthorization() {
-        
-        guard let locationManager = locationManager else { return }
-        
+                
         switch locationManager.authorizationStatus {
             
         case .notDetermined:
@@ -75,7 +86,7 @@ class UserLocationManager: NSObject, ObservableObject {
             print("DEBUG: Auth when in use")
             
             if let currentLoc = locationManager.location {
-                
+                locationManager.startUpdatingLocation()
                 locationServicesEnabled = true
                 
                 userStore.currentLocation = currentLoc
@@ -86,9 +97,9 @@ class UserLocationManager: NSObject, ObservableObject {
         }
     }
     
-    func requestLocation() {
-        locationManager?.requestLocation()
-    }
+//    func requestLocation() {
+//        locationManager.requestLocation()
+//    }
     
 }
 
@@ -97,9 +108,25 @@ class UserLocationManager: NSObject, ObservableObject {
 
 extension UserLocationManager: CLLocationManagerDelegate {
     
+    func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
+//
+        print("Paused")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locations.last.map {
+            region = MKCoordinateRegion(
+                center: $0.coordinate,
+                span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            )
+        }
         userStore.currentLocation = locations.last
         ListResultsVM.instance.currentLocationChanged = true
+        print(locations.last?.coordinate)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
     
     //MARK: - Handling user loction choice
