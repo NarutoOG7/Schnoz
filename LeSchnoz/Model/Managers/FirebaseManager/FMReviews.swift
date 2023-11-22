@@ -465,4 +465,17 @@ extension FirebaseManager {
         }
     }
 
+    func getAllReviews(withCompletion completion: @escaping(_ review: [ReviewModel]) -> Void) {
+        
+        guard let db = db else { return }
+        
+        let collection = db.collection("Reviews")
+            .order(by: "timestamp", descending: false)
+        
+        collection.getDocuments { snapshot, error in
+            self.handleQuerySnapshot(snapshot, error, withCompletion: completion)
+        }
+        
+        
+    }
 }

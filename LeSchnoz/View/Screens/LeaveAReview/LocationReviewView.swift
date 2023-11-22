@@ -343,12 +343,25 @@ struct LocationReviewView: View {
         }
     }
     
-    private func add(_ review: ReviewModel) {
-        let rev = review
+    private func add(_ rev: ReviewModel) {
         firebaseManager.addReviewToFirestoreBucket(rev, location) { error in
             if let error = error {
                 self.errorManager.message = error.rawValue
                 self.errorManager.shouldDisplay = true
+            }
+            
+            if self.location?.averageRating == nil {
+                let placeID = self.location?.placeID ?? ""
+                let average = AverageRating(placeID: placeID, totalStarCount: rev.rating, numberOfReviews: 1)
+                self.firebaseManager.addAverageRating(average)
+            } else {
+                let newRatingDifference = -(oldReview?.rating ?? 0) + rev.rating
+                self.location?.averageRating?.totalStarCount += newRatingDifference
+                self.location?.averageRating?.avgRating = (self.location?.averageRating?.totalStarCount ?? 1) / Double((self.location?.averageRating?.numberOfReviews ?? 1))
+
+                if let averageRating = self.location?.averageRating {
+                    self.firebaseManager.updateAverageRating(averageRating)
+                }
             }
             
             //            if !self.location.schnozReviews.contains(rev) {
@@ -377,6 +390,7 @@ struct LocationReviewView: View {
                     
                     userStore.firestoreUser = firestoreUser
                     firebaseManager.updateFirestoreUser(firestoreUser)
+                    
                 }
                 self.shouldShowSuccessMessage = true
             }

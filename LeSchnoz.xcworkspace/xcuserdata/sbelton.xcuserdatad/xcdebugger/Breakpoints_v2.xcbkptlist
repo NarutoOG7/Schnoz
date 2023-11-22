@@ -62,28 +62,28 @@
             filePath = "LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
             landmarkName = "add(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 98188dca2a7b7c12"
+                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 5326edd0aecf2b78"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.FirestoreUser&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in LeSchnoz.LocationReviewView.add(LeSchnoz.ReviewModel) -&gt; ()"
+                  symbolName = "closure #1 (Swift.Optional&lt;LeSchnoz.K.ErrorHelper.Messages.Review&gt;) -&gt; () in LeSchnoz.LocationReviewView.add(LeSchnoz.ReviewModel) -&gt; ()"
                   moduleName = "LeSchnoz"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "378"
-                  endingLineNumber = "378"
-                  offsetFromSymbolStart = "1624">
+                  startingLineNumber = "383"
+                  endingLineNumber = "383"
+                  offsetFromSymbolStart = "1372">
                </Location>
                <Location
-                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 98188dca2a7b7c12"
+                  uuid = "8B360C6C-F15D-4AA0-8D0B-0E00146C6E81 - 98188dca2a7b7e45"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -93,8 +93,8 @@
                   urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "378"
-                  endingLineNumber = "378"
+                  startingLineNumber = "391"
+                  endingLineNumber = "391"
                   offsetFromSymbolStart = "1644">
                </Location>
             </Locations>
@@ -436,69 +436,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "47BD4563-7979-4F7C-AEA4-10A190A79FC1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "47BD4563-7979-4F7C-AEA4-10A190A79FC1 - c620ff42e61970ad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "163"
-                  endingLineNumber = "163"
-                  offsetFromSymbolStart = "136">
-               </Location>
-               <Location
-                  uuid = "47BD4563-7979-4F7C-AEA4-10A190A79FC1 - c620ff42e61970ad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "163"
-                  endingLineNumber = "163"
-                  offsetFromSymbolStart = "156">
-               </Location>
-               <Location
-                  uuid = "47BD4563-7979-4F7C-AEA4-10A190A79FC1 - c620ff42e61970ad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "163"
-                  endingLineNumber = "163"
-                  offsetFromSymbolStart = "152">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "E110C68A-5B05-42B8-A7C9-735C59F266F0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -515,47 +452,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C46CF8A1-B1D8-4854-A839-DB1CA2687A72"
+            uuid = "2F1E6ECC-A8C9-4165-AC6F-375BE9991905"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/AppDelegate.swift"
+            filePath = "LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
+            startingLineNumber = "409"
+            endingLineNumber = "409"
+            landmarkName = "updatedAverageRating(_:isUpdating:)"
+            landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "C46CF8A1-B1D8-4854-A839-DB1CA2687A72 - c620ff42e6197131"
+                  uuid = "2F1E6ECC-A8C9-4165-AC6F-375BE9991905 - 25036891bd3d99da"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  symbolName = "LeSchnoz.LocationReviewView.updatedAverageRating(_: LeSchnoz.ReviewModel, isUpdating: Swift.Bool) -&gt; LeSchnoz.AverageRating"
                   moduleName = "LeSchnoz"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "167"
-                  endingLineNumber = "167"
-                  offsetFromSymbolStart = "636">
+                  startingLineNumber = "403"
+                  endingLineNumber = "403"
+                  offsetFromSymbolStart = "2200">
                </Location>
                <Location
-                  uuid = "C46CF8A1-B1D8-4854-A839-DB1CA2687A72 - c620ff42e6197131"
+                  uuid = "2F1E6ECC-A8C9-4165-AC6F-375BE9991905 - 25036891bd3d9810"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
+                  symbolName = "LeSchnoz.LocationReviewView.updatedAverageRating(_: LeSchnoz.ReviewModel, isUpdating: Swift.Bool) -&gt; LeSchnoz.AverageRating"
                   moduleName = "LeSchnoz"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
+                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "167"
-                  endingLineNumber = "167"
-                  offsetFromSymbolStart = "616">
+                  startingLineNumber = "409"
+                  endingLineNumber = "409"
+                  offsetFromSymbolStart = "1872">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -563,145 +500,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "25ACA109-5667-47DB-92B3-CEE9C6E444F4"
+            uuid = "84164998-378D-402A-986F-4EA3B68DE712"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/AppDelegate.swift"
+            filePath = "LeSchnoz/View/Screens/LeaveAReview/LocationReviewView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "25ACA109-5667-47DB-92B3-CEE9C6E444F4 - c620ff42e6197110"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "168"
-                  endingLineNumber = "168"
-                  offsetFromSymbolStart = "944">
-               </Location>
-               <Location
-                  uuid = "25ACA109-5667-47DB-92B3-CEE9C6E444F4 - c620ff42e6197110"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "168"
-                  endingLineNumber = "168"
-                  offsetFromSymbolStart = "776">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E5D46B90-C603-4599-81C1-803838A78443"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E5D46B90-C603-4599-81C1-803838A78443 - c620ff42e61972ff"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "177"
-                  endingLineNumber = "177"
-                  offsetFromSymbolStart = "1480">
-               </Location>
-               <Location
-                  uuid = "E5D46B90-C603-4599-81C1-803838A78443 - 4c6bb3d9a77bfc86"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;LeSchnoz.SchnozPlace&gt;) -&gt; () in LeSchnoz.AppDelegate.userNotificationCenter(_: __C.UNUserNotificationCenter, didReceive: __C.UNNotificationResponse, withCompletionHandler: () -&gt; ()) -&gt; ()"
-                  moduleName = "LeSchnoz"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sbelton/Desktop/LeSchnoz/LeSchnoz/AppDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "173"
-                  endingLineNumber = "173"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "79BF487C-D9D5-4C7F-B13D-86266190713B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/GooglePlacesManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "getSchnozPlaceFromLocationID(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F83DBF90-B08D-4CF6-9628-F9430D18F08B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Managers/GooglePlacesManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "getSchnozPlaceFromLocationID(_:withCompletion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E790C7E3-3F91-4198-A599-32E55D7355D4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LeSchnoz/Model/Models/ScchnozPlace.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "makeSchnozPlace(_:_:)"
-            landmarkType = "7">
+            startingLineNumber = "417"
+            endingLineNumber = "417"
+            landmarkName = "updatedAverageRating(_:isUpdating:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

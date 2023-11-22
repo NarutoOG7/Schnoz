@@ -17,9 +17,13 @@ struct AverageRating: Codable {
             if newValue == 0 {
                 self.avgRating = 0
             } else {
-                self.avgRating = totalStarCount / Double(newValue)
+                self.avgRating = getAvg(totalStars: totalStarCount, totalReviews: newValue)
             }
         }
+    }
+    
+    func getAvg(totalStars: Double, totalReviews: Int) -> Double {
+        totalStars / Double(totalReviews)
     }
         
     init(placeID: String = "",

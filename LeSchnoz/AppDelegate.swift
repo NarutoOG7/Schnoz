@@ -169,9 +169,20 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 
 
                     SchnozPlace.makeSchnozPlace(aps) { schnozPlace in
-                        DispatchQueue.main.async {
-                            LDVM.instance.selectedLocation = schnozPlace
-                            ListResultsVM.instance.shouldShowPlaceDetails = true
+                        if let schnozPlace = schnozPlace {
+                            DispatchQueue.main.async {
+                                LDVM.instance.selectedLocation = schnozPlace
+                                ListResultsVM.instance.shouldShowPlaceDetails = true
+                            }
+                            ListResultsVM.instance.getPlaceImage(schnozPlace) { image, error in
+                                if let error = error {
+                                    self.errorManager.message = error.localizedDescription
+                                    self.errorManager.shouldDisplay = true
+                                }
+                                if let image = image {
+                                    ListResultsVM.instance.placeImage = image
+                                }
+                            }
                         }
                     }
             }

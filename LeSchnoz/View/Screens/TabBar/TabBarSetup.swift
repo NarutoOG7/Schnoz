@@ -62,6 +62,10 @@ struct TabBarSetup: View {
         
         .task {
             
+            FirebaseManager.instance.resetAllAverages { status, error in
+                print(error?.localizedDescription)
+            }
+            
             if !userStore.isGuest {
                 if userOnboarded {
                     

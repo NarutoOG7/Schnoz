@@ -96,4 +96,50 @@ extension FirebaseManager {
         }
     }
 
+    
+    func updateAverageRating(_ avg: AverageRating, withCompletion completion: @escaping(Error?) -> () = {_ in}) {
+
+        guard let db = db else { return }
+        
+        db.collection("AverageRatings").document(avg.id)
+            .updateData([
+                "id" : avg.id,
+                "avgRating" : avg.avgRating,
+                "numberOfReviews" : avg.numberOfReviews,
+                "totalStarCount" : avg.totalStarCount
+            ], completion: { err in
+                
+                if let err = err {
+                    print("Error updating review: \(err)")
+                    completion(err)
+                } else {
+                    print("Review successfully updated!")
+                    completion(nil)
+                }
+            })
+    }
+    
+    func resetAllAverages(withSuccess success: @escaping(Bool, Error?) -> Void) {
+        self.getAllReviews { reviews in
+            var averages: [AverageRating] = []
+            
+            for review in reviews {
+                if var averageRating = averages.first(where: { $0.id == review.locationID }) {
+                    averageRating.totalStarCount += review.rating
+                    averageRating.numberOfReviews += 1
+                    averageRating.avgRating = averageRating.getAvg(totalStars: averageRating.totalStarCount, totalReviews: averageRating.numberOfReviews)
+                    averages.append(averageRating)
+                } else {
+                    let newAverageRating = AverageRating(placeID: review.locationID, totalStarCount: review.rating, numberOfReviews: 1)
+                    averages.append(newAverageRating)
+                }
+            }
+            
+            for average in averages {
+                self.addAverageRating(average) { error in
+                    print(error?.rawValue)
+                }
+            }
+        }
+    }
 }
