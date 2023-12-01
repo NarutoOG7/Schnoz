@@ -30,6 +30,28 @@ struct ContentView: View {
                             TabBarSetup(userStore: userStore,
                                         errorManager: errorManager,
                                         loginVM: loginVM)
+                            
+                            .task {
+                                FirebaseManager.instance.getAnnotations { annotations in
+                                    if let annotations = annotations {
+                                        UserLocationManager.instance.annotations = annotations
+                                    }
+                                }
+                                
+                                ProximityTimerManager.instance.setupNotificationObserver()
+                            }
+                        
+                            .onReceive(ProximityTimerManager.instance.timer) { time in
+                                                        
+                                GooglePlacesManager.instance.getClosestEstablishment { place, error in
+                                    if let place = place {
+                                        print(place.primaryText)
+                                        ProximityTimerManager.instance.postCustomNotification(place)
+                                        ProximityTimerManager.instance.timer.upstream.connect().cancel()
+                                    }
+                                }
+                                //                                FirebaseManager.instance.writeTime(time)
+                            }
                         }
                     } else {
                         SignupLogin()
@@ -49,7 +71,10 @@ struct ContentView: View {
                                   errorManager: errorManager)
 
     }
+    
+
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

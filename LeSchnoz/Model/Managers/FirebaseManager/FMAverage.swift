@@ -125,11 +125,13 @@ extension FirebaseManager {
             
             for review in reviews {
                 if var averageRating = averages.first(where: { $0.id == review.locationID }) {
+                    // if new averages already had an average for location ID
                     averageRating.totalStarCount += review.rating
                     averageRating.numberOfReviews += 1
                     averageRating.avgRating = averageRating.getAvg(totalStars: averageRating.totalStarCount, totalReviews: averageRating.numberOfReviews)
                     averages.append(averageRating)
                 } else {
+                    // else create a new average for location
                     let newAverageRating = AverageRating(placeID: review.locationID, totalStarCount: review.rating, numberOfReviews: 1)
                     averages.append(newAverageRating)
                 }

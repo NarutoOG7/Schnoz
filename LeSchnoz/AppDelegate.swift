@@ -47,21 +47,19 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func launchedFromNotification(_ launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
         // Check if launched from notification
         let notificationOption = launchOptions?[.remoteNotification]
-        print(notificationOption)
-        // 1
-        if
-            let notification = notificationOption as? [String: AnyObject] {
-            print(notification)
-//          let aps = notification["aps"] as? [String: AnyObject] {
-          // 2
-            SchnozPlace.makeSchnozPlace(notification) { schnozPlace in
-                DispatchQueue.main.async {
-                    LDVM.instance.selectedLocation = schnozPlace
+        
+        if let notification = notificationOption as? [String: AnyObject] {
+
+            if let placeID = notification["placeID"] as? String {
+                SchnozPlace.makeSchnozPlace(placeID) { schnozPlace in
+                    DispatchQueue.main.async {
+                        LDVM.instance.selectedLocation = schnozPlace
+                        ListResultsVM.instance.shouldShowPlaceDetails = true
+
+                    }
+                    
                 }
             }
-          
-          // 3
-//          (window?.rootViewController as? LD)
         }
 
     }
@@ -135,20 +133,20 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
       print("Failed to register: \(error)")
     }
     
-    func application(_ application: UIApplication, 
-                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                     fetchCompletionHandler completionHandler: @escaping(UIBackgroundFetchResult) -> Void) {
-        
-      guard let aps = userInfo["aps"] as? [String: AnyObject] else {
-        completionHandler(.failed)
-        return
-      }
-        SchnozPlace.makeSchnozPlace(aps) { schnozPlace in
-            DispatchQueue.main.async {
-                LDVM.instance.selectedLocation = schnozPlace
-            }
-        }
-    }
+//    func application(_ application: UIApplication, 
+//                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+//                     fetchCompletionHandler completionHandler: @escaping(UIBackgroundFetchResult) -> Void) {
+//        
+//      guard let aps = userInfo["aps"] as? [String: AnyObject] else {
+//        completionHandler(.failed)
+//        return
+//      }
+//        SchnozPlace.makeSchnozPlace(aps) { schnozPlace in
+//            DispatchQueue.main.async {
+//                LDVM.instance.selectedLocation = schnozPlace
+//            }
+//        }
+//    }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, 
                                 willPresent notification: UNNotification,
@@ -160,33 +158,34 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
+        
+        
         print("Here")
         let userInfo = response.notification.request.content.userInfo
 
         print(userInfo)
-        if let aps = userInfo as? [String: AnyObject] {
-                print("Custom data received: \(aps)")
+        if let aps = userInfo as? [String: AnyObject],
+        let placeID = aps["placeID"] as? String {
 
 
-                    SchnozPlace.makeSchnozPlace(aps) { schnozPlace in
+                    SchnozPlace.makeSchnozPlace(placeID) { schnozPlace in
                         if let schnozPlace = schnozPlace {
                             DispatchQueue.main.async {
                                 LDVM.instance.selectedLocation = schnozPlace
                                 ListResultsVM.instance.shouldShowPlaceDetails = true
-                            }
-                            ListResultsVM.instance.getPlaceImage(schnozPlace) { image, error in
-                                if let error = error {
-                                    self.errorManager.message = error.localizedDescription
-                                    self.errorManager.shouldDisplay = true
-                                }
-                                if let image = image {
-                                    ListResultsVM.instance.placeImage = image
-                                }
                             }
                         }
                     }
             }
         completionHandler()
     }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+         // Perform your background fetch tasks here
+         // This is where you can update your data or perform other tasks
+
+         // Call the completion handler when the task is complete
+         completionHandler(.newData)
+     }
     
 }

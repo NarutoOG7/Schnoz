@@ -49,6 +49,7 @@ struct TabBarSetup: View {
                 newsFeedTab
                 otherSniffers
                 settingsTab
+                mapTab
             }
         }
         .alert(isPresented: $isUpdateAvailable) {
@@ -61,11 +62,7 @@ struct TabBarSetup: View {
         }
         
         .task {
-            
-            FirebaseManager.instance.resetAllAverages { status, error in
-                print(error?.localizedDescription)
-            }
-            
+ 
             if !userStore.isGuest {
                 if userOnboarded {
                     
@@ -221,6 +218,23 @@ struct TabBarSetup: View {
         .tag(4)
         
     }
+    
+    private var mapTab: some View {
+        
+        NavigationView {
+            MapViewUI()
+            .navigationBarColor(backgroundColor: nil, titleColor: oceanBlue.white)
+        }
+        .tabItem {
+            Text("Map")
+            Image(systemName: "world")
+                .resizable()
+                .frame(width: 25, height: 25)
+        }
+        .tag(5)
+        
+    }
+    
     
     
     //MARK: - Appearance Helpers

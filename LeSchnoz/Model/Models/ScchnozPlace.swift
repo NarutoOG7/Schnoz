@@ -5,7 +5,7 @@
 //  Created by Spencer Belton on 3/31/23.
 //
 
-import Foundation
+import SwiftUI
 import GooglePlaces
 
 class SchnozPlace: Hashable, Identifiable {
@@ -143,23 +143,62 @@ class SchnozPlace: Hashable, Identifiable {
         self.googleRating = googleRating
     }
     
-    static func makeSchnozPlace(_ notification: [String: AnyObject], _ completion: @escaping(SchnozPlace?) -> Void) {
-      guard
-        let placeID = notification["placeID"] as? String
-      else {
-        completion(nil)
-          return
-      }
+    static func makeSchnozPlace(_ placeID: String, _ completion: @escaping(SchnozPlace?) -> Void) {
         
         GooglePlacesManager.instance.getSchnozPlaceFromLocationID(placeID) { schnozPlace, error in
             if let schnozPlace = schnozPlace {
-                NotificationCenter.default.post(
-                    name:  Notification.Name(rawValue: "RefreshNewsFeedNotification"),
-                    object: self)
                 
+                GooglePlacesManager.instance.getPhotoForPlaceID(schnozPlace.placeID) { uiImage, error in
+                    if let uiImage = uiImage {
+                        ListResultsVM.instance.placeImage = Image(uiImage: uiImage)
+                    }
+                }
+                
+                FirebaseManager.instance.getAverageRatingForLocation(schnozPlace.placeID) { average in
+                    if let average = average {
+                        schnozPlace.averageRating = average
+                    }
+                }
                 completion(schnozPlace)
             }
         }
     }
     
+    static func makeSchnozPlace(_ gmsPlace: GMSPlaceLikelihood, _ completion: @escaping(SchnozPlace?) -> Void) {
+        
+        let schnozPlace = SchnozPlace(placeID: gmsPlace.place.placeID ?? "")
+        schnozPlace.primaryText = gmsPlace.place.name
+        schnozPlace.secondaryText = gmsPlace.place.formattedAddress
+        
+        FirebaseManager.instance.getAverageRatingForLocation(gmsPlace.place.placeID ?? "") { averageRating in
+            schnozPlace.averageRating = averageRating
+        }
+        
+        GooglePlacesManager.instance.getPhotoForPlaceID(gmsPlace.place.placeID ?? "") { uiImage, error in
+            if let uiImage = uiImage {
+                ListResultsVM.instance.placeImage = Image(uiImage: uiImage)
+            }
+        }
+        
+        completion(schnozPlace)
+    }
+    
+    static func makeSchnozPlace(_ gmsPlace: GMSAutocompletePrediction, _ completion: @escaping(SchnozPlace?) -> Void) {
+        
+        let schnozPlace = SchnozPlace(placeID: gmsPlace.placeID)
+        schnozPlace.primaryText = gmsPlace.attributedPrimaryText.string
+        schnozPlace.secondaryText = gmsPlace.attributedSecondaryText?.string
+        
+        FirebaseManager.instance.getAverageRatingForLocation(gmsPlace.placeID) { averageRating in
+            schnozPlace.averageRating = averageRating
+        }
+        
+        GooglePlacesManager.instance.getPhotoForPlaceID(gmsPlace.placeID) { uiImage, error in
+            if let uiImage = uiImage {
+                ListResultsVM.instance.placeImage = Image(uiImage: uiImage)
+            }
+        }
+        
+        completion(schnozPlace)
+    }
 }

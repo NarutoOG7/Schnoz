@@ -18,6 +18,8 @@
 		C913A70C2A476F2600C1908E /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70B2A476F2600C1908E /* UserDetailsView.swift */; };
 		C913A70E2A479A1700C1908E /* SocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913A70D2A479A1700C1908E /* SocialCell.swift */; };
 		C92E3F8F2A52882F00E90371 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92E3F8E2A52882F00E90371 /* ReviewCell.swift */; };
+		C931AE962B111F3100E0AF3E /* ProximityTimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931AE952B111F3100E0AF3E /* ProximityTimerManager.swift */; };
+		C931AE992B1137DB00E0AF3E /* MapViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C931AE982B1137DB00E0AF3E /* MapViewUI.swift */; };
 		C952D7072A66D63900C18D06 /* SlidingStarsGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952D7062A66D63900C18D06 /* SlidingStarsGradient.swift */; };
 		C952D73C2A6DD9B900C18D06 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */; };
 		C95E918B2A3D4DB500833336 /* FMUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95E918A2A3D4DB500833336 /* FMUsers.swift */; };
@@ -99,7 +101,6 @@
 		C9F225D12A58AC5D0074AE89 /* LDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D02A58AC5D0074AE89 /* LDVM.swift */; };
 		C9F225D32A5A433F0074AE89 /* UserDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */; };
 		C9F225D52A5C979D0074AE89 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F225D42A5C979D0074AE89 /* Admin.swift */; };
-		C9FE0ADD2B0C0C5600191086 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0ADC2B0C0C5600191086 /* Map.swift */; };
 		C9FE0ADF2B0C6AF300191086 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0ADE2B0C6AF300191086 /* NotificationManager.swift */; };
 		FF41E60B2AEC3C04007EBEAA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF41E60A2AEC3C04007EBEAA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -118,6 +119,9 @@
 		C913A70D2A479A1700C1908E /* SocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCell.swift; sourceTree = "<group>"; };
 		C92E3F8E2A52882F00E90371 /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		C931AE942B0DC01500E0AF3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C931AE952B111F3100E0AF3E /* ProximityTimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityTimerManager.swift; sourceTree = "<group>"; };
+		C931AE972B112AC900E0AF3E /* LocationSimulation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LocationSimulation.gpx; sourceTree = "<group>"; };
+		C931AE982B1137DB00E0AF3E /* MapViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUI.swift; sourceTree = "<group>"; };
 		C952D7062A66D63900C18D06 /* SlidingStarsGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingStarsGradient.swift; sourceTree = "<group>"; };
 		C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		C95E918A2A3D4DB500833336 /* FMUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMUsers.swift; sourceTree = "<group>"; };
@@ -201,7 +205,6 @@
 		C9F225D02A58AC5D0074AE89 /* LDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LDVM.swift; sourceTree = "<group>"; };
 		C9F225D22A5A433F0074AE89 /* UserDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsVM.swift; sourceTree = "<group>"; };
 		C9F225D42A5C979D0074AE89 /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
-		C9FE0ADC2B0C0C5600191086 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		C9FE0ADE2B0C6AF300191086 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E96B906E87664EC885F4B2BD /* Pods-LeSchnoz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeSchnoz.release.xcconfig"; path = "Target Support Files/Pods-LeSchnoz/Pods-LeSchnoz.release.xcconfig"; sourceTree = "<group>"; };
 		FF41E60A2AEC3C04007EBEAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -342,6 +345,7 @@
 				C99EEB2D299B19B300B77DBD /* Stores */,
 				C99EEB34299B19B300B77DBD /* Models */,
 				C99EEC6529B165E600B77DBD /* UserDefaults.swift */,
+				C931AE972B112AC900E0AF3E /* LocationSimulation.gpx */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -361,6 +365,7 @@
 				C9A0864B2AB8176A00C2CC14 /* YelpManager.swift */,
 				C9A086532ABA95C100C2CC14 /* TripAdvisorManger.swift */,
 				C9FE0ADE2B0C6AF300191086 /* NotificationManager.swift */,
+				C931AE952B111F3100E0AF3E /* ProximityTimerManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -478,7 +483,7 @@
 				C99EEBA1299B19B400B77DBD /* LeaveAReview */,
 				C99EEBA6299B19B400B77DBD /* Login */,
 				C952D73B2A6DD9B900C18D06 /* StarRatingView.swift */,
-				C9FE0ADC2B0C0C5600191086 /* Map.swift */,
+				C931AE982B1137DB00E0AF3E /* MapViewUI.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -788,7 +793,6 @@
 				C99EEBE7299B19B400B77DBD /* NotificationBanner.swift in Sources */,
 				C913A7062A44C1DA00C1908E /* NewsFeedVM.swift in Sources */,
 				C95E918B2A3D4DB500833336 /* FMUsers.swift in Sources */,
-				C9FE0ADD2B0C0C5600191086 /* Map.swift in Sources */,
 				C9AC615729CBE8340006FF32 /* HomeDisplayView.swift in Sources */,
 				C99EEBB6299B19B400B77DBD /* MapDetails.swift in Sources */,
 				C9AC616129D6BD160006FF32 /* AuthType.swift in Sources */,
@@ -839,6 +843,7 @@
 				C99EEBCA299B19B400B77DBD /* ReviewModel.swift in Sources */,
 				C9AC615F29D5EB1C0006FF32 /* SignupLogin.swift in Sources */,
 				C99EEC0E299B19B400B77DBD /* LocationReviewView.swift in Sources */,
+				C931AE992B1137DB00E0AF3E /* MapViewUI.swift in Sources */,
 				C9AC616E29D6BF980006FF32 /* ListResultsVM.swift in Sources */,
 				C9FE0ADF2B0C6AF300191086 /* NotificationManager.swift in Sources */,
 				C99EEBED299B19B400B77DBD /* Account.swift in Sources */,
@@ -857,6 +862,7 @@
 				C9AC616529D6BD760006FF32 /* NewLogin.swift in Sources */,
 				C99EEBB5299B19B400B77DBD /* UserLocationManager.swift in Sources */,
 				C90DFAE629FC572D00C8971E /* FMReviews.swift in Sources */,
+				C931AE962B111F3100E0AF3E /* ProximityTimerManager.swift in Sources */,
 				C99EEBEE299B19B400B77DBD /* ConfirmDeleteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -988,7 +994,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LeSchnoz/Info.plist;
@@ -1004,8 +1010,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Konoha.schnoz;
+				MARKETING_VERSION = 2.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1026,7 +1032,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeSchnoz/Preview Content\"";
-				DEVELOPMENT_TEAM = Q4449HJNAM;
+				DEVELOPMENT_TEAM = 49L7U244PC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LeSchnoz/Info.plist;
@@ -1042,8 +1048,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Konoha.schnoz;
+				MARKETING_VERSION = 2.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnozapp.schnoz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

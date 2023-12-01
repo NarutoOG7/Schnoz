@@ -9,6 +9,8 @@ import MapKit
 import SwiftUI
 import AVFAudio
 
+extension MKAnnotationView: Identifiable {}
+
 class UserLocationManager: NSObject, ObservableObject {
     
     static let instance = UserLocationManager()
@@ -19,6 +21,8 @@ class UserLocationManager: NSObject, ObservableObject {
         center: .init(latitude: 37.334_900, longitude: -122.009_020),
         span: .init(latitudeDelta: 0.2, longitudeDelta: 0.2)
     )
+    @Published var annotations: [MKAnnotation] = []
+
     
     @ObservedObject var userStore = UserStore.instance
     @ObservedObject var errorManager = ErrorManager.instance
@@ -31,7 +35,8 @@ class UserLocationManager: NSObject, ObservableObject {
         self.locationManager.delegate = self
         self.locationManager.distanceFilter = CLLocationDistance(15)
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.showsBackgroundLocationIndicator = true
         self.checkLocationAuthorization()
     }
 
@@ -86,7 +91,7 @@ class UserLocationManager: NSObject, ObservableObject {
             print("DEBUG: Auth when in use")
             
             if let currentLoc = locationManager.location {
-                locationManager.startUpdatingLocation()
+                locationManager.startMonitoringSignificantLocationChanges()
                 locationServicesEnabled = true
                 
                 userStore.currentLocation = currentLoc
@@ -114,16 +119,39 @@ extension UserLocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locations.last.map {
-            region = MKCoordinateRegion(
-                center: $0.coordinate,
-                span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            )
-        }
+
         userStore.currentLocation = locations.last
         ListResultsVM.instance.currentLocationChanged = true
-        print(locations.last?.coordinate)
+        
+        if let speed = locations.last?.speed {
+            if speed < 0.1 {
+                ProximityTimerManager.instance.initializeTimer()
+                // reseting timer
+            }
+        }
+
     }
+    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        locations.last.map {
+//            region = MKCoordinateRegion(
+//                center: $0.coordinate,
+//                span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)
+//            )
+//        }
+//        userStore.currentLocation = locations.last
+//        ListResultsVM.instance.currentLocationChanged = true
+//        print(locations.last?.coordinate)
+////        FirebaseManager.instance.writeTime(Date())
+////        ProximityTimerManager.instance.initializeTimer()
+////        
+//        let anno = MKPointAnnotation()
+//        anno.coordinate = locations.last?.coordinate ?? CLLocationCoordinate2D()
+//        
+//        self.annotations.append(anno)
+//        
+//        FirebaseManager.instance.saveAnnotation(anno)
+//    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)

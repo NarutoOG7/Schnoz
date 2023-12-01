@@ -105,6 +105,54 @@ class FirebaseManager: ObservableObject {
             }
         }
     }
+ 
+    func writeTime(_ time: Date) {
+        guard let db = db else { return }
+
+        let data: [String:Any] = [ "time" : time.formatted(date: .abbreviated, time: .complete) ]
+        
+        db.collection("Time").document(time.formatted(date: .abbreviated, time: .complete)).setData(data, merge: true) { _ in }
+    }
     
+    func saveAnnotation(_ anno: MKAnnotation) {
+        guard let db = db else { return }
+
+        let data: [String:Any] = [ "latitude" : anno.coordinate.latitude,
+                                   "longitude" : anno.coordinate.longitude]
+        
+        db.collection("Annotations").document(UUID().uuidString).setData(data, merge: true) { _ in }
+    }
+    
+    func getAnnotations(withCompletion completion: @escaping ([MKAnnotation]?) -> (Void)) {
+        
+        guard let db = db else { return }
+
+        db.collection("Annotations")
+            .getDocuments { snapshot, error in
+                
+                if let error = error {
+                    
+                    print(error.localizedDescription)
+                    self.errorManager.message = "Check your network connection and try again."
+                    self.errorManager.shouldDisplay = true
+                } else if let snapshot = snapshot {
+                    
+                    var annotations: [MKAnnotation] = []
+                    for doc in snapshot.documents {
+                        
+                        let dict = doc.data()
+                        
+                        let latitude = dict["latitude"] as? Double ?? 0
+                        let longitude = dict["longitude"] as? Double ?? 0
+
+                        let anno = MKPointAnnotation()
+                        anno.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        
+                        annotations.append(anno)
+                    }
+                    completion(annotations)
+                }
+            }
+    }
 }
 

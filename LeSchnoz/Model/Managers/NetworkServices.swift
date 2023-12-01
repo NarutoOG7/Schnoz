@@ -104,6 +104,7 @@ class NetworkServices: ObservableObject {
                 for place in places {
                     let placeID = place["place_id"] as? String ?? ""
                     
+                    
                     let schnozPlace = SchnozPlace(placeID: placeID)
                     
                     
@@ -139,33 +140,33 @@ class NetworkServices: ObservableObject {
         }
     }
     
-    func getGMSPlaceAndAvgRatingFromPlaceID(_ placeID: String, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
-        let group = DispatchGroup()
-        
-        let schnozPlace = SchnozPlace(placeID: placeID)
-
-        group.enter()
-            GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    completion(nil, error)
-                }
-                if let gmsPlace = gmsPlace {
-                    schnozPlace.gmsPlace = gmsPlace
-                }
-                group.leave()
-            }
-        
-        group.enter()
-        FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
-            schnozPlace.averageRating = averageRating
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            completion(schnozPlace, nil)
-        }
-    }
+//    func getGMSPlaceAndAvgRatingFromPlaceID(_ placeID: String, withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+//        let group = DispatchGroup()
+//        
+//        let schnozPlace = SchnozPlace(placeID: placeID)
+//
+//        group.enter()
+//            GooglePlacesManager.instance.getPlaceDetails(placeID) { gmsPlace, error in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    completion(nil, error)
+//                }
+//                if let gmsPlace = gmsPlace {
+//                    schnozPlace.gmsPlace = gmsPlace
+//                }
+//                group.leave()
+//            }
+//        
+//        group.enter()
+//        FirebaseManager.instance.getAverageRatingForLocation(placeID) { averageRating in
+//            schnozPlace.averageRating = averageRating
+//            group.leave()
+//        }
+//        
+//        group.notify(queue: .main) {
+//            completion(schnozPlace, nil)
+//        }
+//    }
 }
 
 extension CLLocationCoordinate2D {

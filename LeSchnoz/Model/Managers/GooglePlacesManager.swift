@@ -39,6 +39,42 @@ class GooglePlacesManager: ObservableObject {
     }
     
     
+    func getClosestEstablishment(withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
+        
+        if let currentLocation = UserStore.instance.currentLocation {
+            
+            placesClient
+                .currentPlace(callback: { likelihoodList, error in
+                    if let error = error {
+                        completion(nil, error)
+                    }
+                    
+                    guard
+                        let list = likelihoodList?.likelihoods,
+                        let first = list.first,
+                        let _ = first.place.types?.contains("restaurant")
+                            
+                    else {
+                        completion(nil, NSError(domain: "Proximity", code: 0))
+                        return
+                    }
+                    let establishmentLocation = CLLocation(latitude: first.place.coordinate.latitude, longitude: first.place.coordinate.longitude)
+                    let distance = currentLocation.distance(from: establishmentLocation)
+                    
+                    if distance < 100 {
+                        let schnozPlace = SchnozPlace(placeID: first.place.placeID ?? "")
+                        schnozPlace.primaryText = first.place.name
+                        schnozPlace.secondaryText = first.place.formattedAddress
+                        FirebaseManager.instance.getAverageRatingForLocation(first.place.placeID ?? "") { averageRating in
+                            schnozPlace.averageRating = averageRating
+                            completion(schnozPlace, nil)
+                        }
+                    }
+                    
+                })
+        }
+    }
+    
     func getNearbyLocation(withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
         
         let placeFields: GMSPlaceField = [.name, .formattedAddress]
@@ -74,6 +110,34 @@ class GooglePlacesManager: ObservableObject {
             
         }
     }
+    
+//    func getNearbyLocation(withCompletion completion: @escaping([SchnozPlace]?, Error?) -> Void) {
+//        
+//        let placeFields: GMSPlaceField = [.name, .formattedAddress]
+//
+//        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: placeFields) { [weak self] (results, error) in
+//            
+//            guard let strongSelf = self else { return }
+//            
+//            if let error = error {
+//                print(error.localizedDescription)
+//                strongSelf.error = error
+//            }
+//            
+//            var schnozResults = [SchnozPlace]()
+//            if let results = results {
+//                for result in results {
+//                    SchnozPlace.makeSchnozPlace(result) { schnozPlace in
+//                        if let schnozPlace = schnozPlace {
+//                            schnozResults.append(schnozPlace)
+//                        }
+//                    }
+//                }
+//            }
+//            completion(schnozResults, nil)
+//            
+//        }
+//    }
     
     func autoFilter() -> GMSAutocompleteFilter {
         let filter = GMSAutocompleteFilter()
@@ -148,6 +212,35 @@ class GooglePlacesManager: ObservableObject {
         }
     }
     
+//    func performAutocompleteQuery(_ query: String, isLocality: Bool = false, withCompletion completion: @escaping ([SchnozPlace]?, Error?) -> Void) {
+//        
+//        let filter = isLocality ? self.localityFilter() : autoFilter()
+//        let q = isLocality ? query :  query
+//        self.placesClient.findAutocompletePredictions(
+//            fromQuery: q,
+//            filter: filter,
+//            sessionToken: self.autocompleteSessionToken)
+//        { results, error in
+//            
+//            if let error = error {
+//                print(error.localizedDescription)
+//                completion(nil, error)
+//            }
+//            
+//            var schnozResults = [SchnozPlace]()
+//            if let results = results {
+//                for result in results {
+//                    
+//                    SchnozPlace.makeSchnozPlace(result) { schnozPlace in
+//                        if let schnozPlace = schnozPlace {
+//                            schnozResults.append(schnozPlace)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
     func getSchnozPlaceFromLocationID(_ locationID: String,
                                       withCompletion completion: @escaping(SchnozPlace?, Error?) -> Void) {
         let schnozPlace = SchnozPlace(placeID: locationID)
@@ -170,8 +263,6 @@ class GooglePlacesManager: ObservableObject {
                 completion(nil, error)
             }
             if let place = place {
-                print(place.placeID)
-                print(place.name)
                 completion(place, nil)
             }
         }

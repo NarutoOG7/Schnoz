@@ -34,6 +34,7 @@ struct AverageRating: Codable {
         self.totalStarCount = totalStarCount
         self.numberOfReviews = numberOfReviews
         
+        self.avgRating = totalStarCount / Double(numberOfReviews)
 //        let avgRating = totalStarCount / numberOfReviews
 //        self.avgRating = avgRating
     }
