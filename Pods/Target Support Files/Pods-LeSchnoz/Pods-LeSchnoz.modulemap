@@ -1,0 +1,6 @@
+framework module Pods_LeSchnoz {
+  umbrella header "Pods-LeSchnoz-umbrella.h"
+
+  export *
+  module * { export * }
+}

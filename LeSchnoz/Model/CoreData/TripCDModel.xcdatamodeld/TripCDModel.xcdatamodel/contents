@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDDestination" representedClassName="CDDestination" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="completedDestination" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTrip"/>
+        <relationship name="destinations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTrip" inverseName="destinations" inverseEntity="CDTrip"/>
+        <relationship name="endPoint" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip" inverseName="endPoint" inverseEntity="CDTrip"/>
+        <relationship name="nextDestination" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip"/>
+        <relationship name="remainingDestinations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTrip"/>
+        <relationship name="startPoint" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip" inverseName="startPoint" inverseEntity="CDTrip"/>
+    </entity>
+    <entity name="CDPoint" representedClassName="CDPoint" syncable="YES" codeGenerationType="class">
+        <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="polyline" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPolyline" inverseName="points" inverseEntity="CDPolyline"/>
+    </entity>
+    <entity name="CDPolyline" representedClassName="CDPolyline" syncable="YES" codeGenerationType="class">
+        <attribute name="routeID" optional="YES" attributeType="String"/>
+        <relationship name="points" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPoint" inverseName="polyline" inverseEntity="CDPoint"/>
+        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRoute" inverseName="polyline" inverseEntity="CDRoute"/>
+    </entity>
+    <entity name="CDRoute" representedClassName="CDRoute" syncable="YES" codeGenerationType="class">
+        <attribute name="collectionID" optional="YES" attributeType="String"/>
+        <attribute name="distanceInMeters" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="travelTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="tripPosition" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="currentRoute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip"/>
+        <relationship name="polyline" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPolyline" inverseName="route" inverseEntity="CDPolyline"/>
+        <relationship name="steps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDStep" inverseName="route" inverseEntity="CDStep"/>
+        <relationship name="trip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip" inverseName="routes" inverseEntity="CDTrip"/>
+    </entity>
+    <entity name="CDStep" representedClassName="CDStep" syncable="YES" codeGenerationType="class">
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="remainingSteps" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTrip" inverseName="remainingSteps" inverseEntity="CDTrip"/>
+        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRoute" inverseName="steps" inverseEntity="CDRoute"/>
+    </entity>
+    <entity name="CDTrip" representedClassName="CDTrip" syncable="YES" codeGenerationType="class">
+        <attribute name="completedDestinationsIndices" optional="YES" attributeType="Transformable"/>
+        <attribute name="completedStepCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentRouteIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentStepIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="nextDestinationIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remainingDestinationsIndices" optional="YES" attributeType="Transformable"/>
+        <attribute name="totalStepCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tripState" optional="YES" attributeType="String"/>
+        <attribute name="userID" optional="YES" attributeType="String"/>
+        <relationship name="destinations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDDestination" inverseName="destinations" inverseEntity="CDDestination"/>
+        <relationship name="endPoint" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDDestination" inverseName="endPoint" inverseEntity="CDDestination"/>
+        <relationship name="remainingSteps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDStep" inverseName="remainingSteps" inverseEntity="CDStep"/>
+        <relationship name="routes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDRoute" inverseName="trip" inverseEntity="CDRoute"/>
+        <relationship name="startPoint" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDDestination" inverseName="startPoint" inverseEntity="CDDestination"/>
+    </entity>
+</model>
